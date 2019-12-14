@@ -45,9 +45,12 @@ showUD2GF env sentence = do
   let devtree = combineTrees env devtree1
   putStrLn $ prLinesRTree (prDevNode 4) devtree
 
-  let besttree = head (splitDevTree devtree)
-  putStrLn $ prLinesRTree (prDevNode 1) besttree
+  let besttree0 = head (splitDevTree devtree)
+  putStrLn $ prLinesRTree (prDevNode 1) besttree0
 
+  let besttree = addBackups besttree0
+  putStrLn $ prLinesRTree (prDevNode 1) besttree
+  
   let ts0 = devtree2abstrees besttree
   putStrLn $ unlines $ map prAbsTree ts0
 
@@ -56,8 +59,8 @@ showUD2GF env sentence = do
 
   return ts
 
-mkEnv pgf absl cncl = initUDEnv {pgfGrammar = pgf, absLabels = absl, cncLabels = cncl}
 
+{-
 -- the pipeline
 ud2gf :: UDEnv -> UDTree -> [PGF.Expr]
 ud2gf env =
@@ -65,22 +68,24 @@ ud2gf env =
   . devtree2abstrees
   . transformDevTree env
   . udtree2devtree
-
+-}
 
 -- developing tree on the way from UD to GF
 type DevTree = RTree DevNode
 data DevNode = DevNode {
-  devStatus :: [UDId],                  -- indices of subtrees used in the best abstree in DevTrees --- redundant
-  devWord   :: String,                  -- the original word
-  devTrees  :: [(AbsTree,(CId,[UDId]))], -- trees constructed at this node, with types and used words
-  devLemma  :: String,                     -- invariant: devStatus = max (by length) usedSubtrees
-  devPOS    :: String,
-  devFeats  :: [UDData],
-  devLabel  :: String,
-  devIndex  :: UDId,   -- position in the original sentence
+  devStatus     :: [UDId],         -- indices of words used in the best abstree in DevTrees --- redundant
+  devWord       :: String,         -- the original word
+  devAbsTrees   :: [AbsTreeInfo],  -- trees constructed at this node, with types and used words
+  devLemma      :: String, 
+  devPOS        :: String,
+  devFeats      :: [UDData],
+  devLabel      :: String,
+  devIndex      :: UDId,   -- position in the original sentence
   devNeedBackup :: Bool  -- if this node needs to be covered by Backup
  }
   deriving Show
+
+type AbsTreeInfo = (AbsTree,(Cat,[UDId]))
 
 -- n shows how many trees are to be shown
 prDevNode n d = unwords [
@@ -91,44 +96,79 @@ prDevNode n d = unwords [
   devPOS d,
   devLabel d,
   "(" ++ unwords (intersperse ";"
-    [prAbsTree e ++ " : " ++ showCId c ++ prtStatus us | (e,(c,us)) <- take n (devTrees d)]) ++ ")",
-  show (length (devTrees d))
+    [prAbsTree e ++ " : " ++ showCId c ++ prtStatus us | (e,(c,us)) <- take n (devAbsTrees d)]) ++ ")",
+  show (length (devAbsTrees d))
   ]
+
+devtree2abstrees :: DevTree -> [AbsTree]
+devtree2abstrees = map fst . devAbsTrees . root
+
+-- to be applied to a DevTree with just one tree at each node
+addBackups :: DevTree -> DevTree
+addBackups tr@(RTree dn trs) = case map (backup . addBackups) trs of
+  btrs -> RTree (dn{devAbsTrees = [replaceInfo [(t,ai) | (_,(t,Just ai)) <- btrs] (theAbsTreeInfo tr)]}) (map fst btrs)
+  
+ where
+
+  replaceInfo :: [(AbsTree,AbsTreeInfo)] -> AbsTreeInfo -> AbsTreeInfo
+  replaceInfo btrs ai@(ast,(cat,usage)) =
+    (replace btrs ast,(cat,sort (nub (concat (usage:map (snd . snd . snd) btrs)))))
+
+  replace :: [(AbsTree,AbsTreeInfo)] -> AbsTree -> AbsTree
+  replace btrs tr@(RTree f trs) = case lookup tr btrs of
+    Just (btr,(c,_)) -> appBackup c btr tr
+    _ -> RTree f (map (replace btrs) trs)
+
+  backup :: DevTree -> (DevTree,(AbsTree,Maybe AbsTreeInfo))
+  backup t@(RTree d ts) =
+    let ai@(ast,_) = theAbsTreeInfo t in
+    (t,(ast, mkBackupList ai [theAbsTreeInfo u | u <- ts, devNeedBackup (root u)]))
+
+  mkBackupList :: AbsTreeInfo -> [AbsTreeInfo] -> Maybe AbsTreeInfo
+  mkBackupList ai@(ast,(cat,usage)) ts =
+    case unzip [(mkBackup a c,us) | (a,(c,us)) <- ts] of
+      ([],_) -> Nothing
+      (bs,uss) -> Just (foldr cons nil bs, (cat,sort (nub (concat uss))))
+
+  mkBackup ast cat = RTree (mkCId (showCId cat ++ "Backup")) [ast]
+
+  cons t u = RTree (mkCId "ConsBackup") [t,u]
+  nil = RTree (mkCId "BaseBackup") []
+
+  appBackup :: Cat -> AbsTree -> AbsTree -> AbsTree
+  appBackup cat b t = RTree (mkCId ("AddBackup" ++ showCId cat)) [b,t]
+
+
+-- call this to make sure that the abs tree info is unique
+theAbsTreeInfo :: DevTree -> AbsTreeInfo
+theAbsTreeInfo dt = case devAbsTrees (root dt) of
+  [t] -> t
+  _ -> error $ "no unique abstree in " ++ prDevNode 2 (root dt)
 
 -- split trees showing just one GF tree in each DevTree
 splitDevTree :: DevTree -> [DevTree]
 splitDevTree tr@(RTree dn trs) =
-  [RTree (dn{devTrees = [t]}) (map (chase t) trs) | t <- devTrees dn]
+  [RTree (dn{devAbsTrees = [t]}) (map (chase t) trs) | t <- devAbsTrees dn]
  where
   chase (ast,(cat,usage)) tr@(RTree d ts) = case elem (devIndex d) usage of
-    True -> case sortOn ((1000-) . sizeRTree . fst) [dt | dt@(t,_) <- devTrees d, isSubRTree t ast] of
-      t:_ -> RTree (d{devTrees = [t]}) (map (chase t) ts)
+    True -> case sortOn ((1000-) . sizeRTree . fst) [dt | dt@(t,_) <- devAbsTrees d, isSubRTree t ast] of
+      t:_ -> RTree (d{devAbsTrees = [t]}) (map (chase t) ts)
       _ -> error $ "wrong indexing in\n" ++ prLinesRTree (prDevNode 1) tr
-    False -> RTree (d{devNeedBackup = True}) ts
+    False -> head $ splitDevTree $ RTree (d{devNeedBackup = True}) ts ---- head
 
 prtStatus udids =  "[" ++ concat (intersperse "," (map prt udids)) ++ "]"
 
-devtree2abstrees :: DevTree -> [AbsTree]
-devtree2abstrees = map fst . devTrees . root
-
-
--- this is the main function
-transformDevTree :: UDEnv -> DevTree -> DevTree
-transformDevTree env =
-    addBackups
-  . combineTrees env
-  . analyseWords env
 
 -- order collected abstract trees by completeness; applied internally in combineTree at each node
 rankDevTree :: DevTree -> DevTree
-rankDevTree tr@(RTree dn dts) = RTree dn{devTrees = rankSort (devTrees dn)} dts
+rankDevTree tr@(RTree dn dts) = RTree dn{devAbsTrees = rankSort (devAbsTrees dn)} dts
  where
   rankSort = sortOn ((100-) . rank) -- descending order of rank
   rank (t,(c,us)) = length us
 
 -- omit (t2,(cat,usage2)) if there is (t1,(cat,usage1)) such that usage2 is a subset of usage1
 pruneDevTree :: DevTree -> DevTree
-pruneDevTree  tr@(RTree dn dts) = RTree dn{devTrees = pruneCatGroups (groupCat (devTrees dn))} dts
+pruneDevTree  tr@(RTree dn dts) = RTree dn{devAbsTrees = pruneCatGroups (groupCat (devAbsTrees dn))} dts
  where
   cat = fst . snd
   usage = snd . snd
@@ -140,9 +180,6 @@ pruneDevTree  tr@(RTree dn dts) = RTree dn{devTrees = pruneCatGroups (groupCat (
     _ -> grp  
   pruneCatGroups = concatMap (prune [])
   
-addBackups :: DevTree -> DevTree
-addBackups = id ----
-
 data FunInfo = FunInfo {
   funFun   :: Fun,
   funTyp   :: LabelledType,
@@ -170,7 +207,7 @@ combineTrees env =
 
   keepTrying :: DevTree -> DevTree
   keepTrying tr = case tryCombine (allFunsLocal tr)  tr of
-    tr' | devTrees (root tr') /= devTrees (root tr) -> keepTrying tr'
+    tr' | devAbsTrees (root tr') /= devAbsTrees (root tr) -> keepTrying tr'
     _ -> traceNoPrint (prDevNode 3 . root) "built" $ pruneDevTree $ rankDevTree tr
 
   tryCombine :: [FunInfo] -> DevTree -> DevTree
@@ -186,7 +223,7 @@ combineTrees env =
         -- for head and each immediate subtree, build the list of its already built abstrees, each with type and label
         -- argalts :: [[Arg]] -- one list for root and for each subtree
         let argalts = [
-                       [ArgInfo i us (c, devLabel r) e | (e,(c,us)) <- devTrees r]
+                       [ArgInfo i us (c, devLabel r) e | (e,(c,us)) <- devAbsTrees r]
                            |
                              (i,r) <- (0,dn{devLabel = head_Label}) :  -- number the arguments: root node 0, args 1,..
                                                  [(i,r) | (i,r) <- zip [1..] (map root ts)]
@@ -224,9 +261,9 @@ combineTrees env =
   addAbsTree :: FunInfo -> DevTree -> DevTree
   addAbsTree finfo tr@(RTree dn ts) =
     RTree dn{
-      devTrees = let
+      devAbsTrees = let
                    acu = (funTree finfo,(fst (funTyp finfo),funUsage finfo))
-                   dts = devTrees dn
+                   dts = devAbsTrees dn
                  in
                  if elem acu dts  -- the same tree with the same usage of subtrees is not added again
                     || length dts > 10 ---- debug
@@ -250,7 +287,7 @@ analyseWords :: UDEnv -> DevTree -> DevTree
 analyseWords env = mapRTree lemma2fun
  where
   lemma2fun dn = dn {
-    devTrees = [(t,(c,[devIndex dn])) | (t,c) <- getWordTrees (devLemma dn) (cats (devPOS dn))],
+    devAbsTrees = [(t,(c,[devIndex dn])) | (t,c) <- getWordTrees (devLemma dn) (cats (devPOS dn))],
     devStatus = [devIndex dn]
     }
     
@@ -276,7 +313,7 @@ udtree2devtree tr@(RTree un uts) =
   RTree (DevNode {
       devStatus = [],
       devWord  = udFORM un,
-      devTrees = [],
+      devAbsTrees = [],
       devLemma = udLEMMA un,
       devPOS   = udUPOS un,
       devFeats = udFEATS un,
