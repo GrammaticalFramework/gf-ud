@@ -1,0 +1,4 @@
+1	every	every	DET	Det	FORM=0	2	det	_	FUN=every_Det
+2	cat	cat	NOUN	N	Number=Sing	3	nsubj	_	FUN=cat_N
+3	sees	see	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=see_V2
+4	us	we	PRON	Pron	Case=Acc|PronType=Prs	3	obj	_	FUN=we_Pron

@@ -1,0 +1,93 @@
+#word is   be AUX  Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word are  be AUX  Mood=Ind|Tense=Pres|VerbForm=Fin
+#word am   be AUX  Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin
+#word was  be AUX  Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin
+#word were be AUX  Mood=Ind|Tense=Past|VerbForm=Fin
+#word been be AUX  Tense=Past|VerbForm=Part
+#word be   be AUX  VerbForm=Inf
+#word has  have AUX  Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word have have AUX  VerbForm=Inf
+#word had  have AUX  Mood=Ind|Tense=Past|VerbForm=Fin
+#word would would AUX  VerbForm=Fin
+#word will  will  AUX  VerbForm=Fin
+#word to to PART _
+#word that that SCONJ _
+#word not not PART Polarity=Neg
+#word n't not PART Polarity=Neg
+#word 's 's PART _
+#word ' ' PART _
+
+#lemma ComplVV to mark xcomp
+#lemma ComplVS that mark ccomp
+#lemma UseComp be cop head
+#lemma UseComp,UseV,SlashV2a,ComplVV have aux head
+#lemma UseComp,UseV,SlashV2a,ComplVV will aux head
+#lemma UseComp,UseV,SlashV2a,ComplVV would aux head
+#lemma PossPron 's case head
+#lemma PossPron ' case head
+
+#morpho N 0 Number=Sing
+#morpho N 2 Number=Plur
+
+#morpho Pron 0 Case=Nom|PronType=Prs -- --- Case=Nom|Number=Sing|Person=1|PronType=Prs
+#morpho Pron 1 Poss=Yes|PronType=Prs -- --- Number=Plur|Person=3|Poss=Yes|PronType=Prs ; as Det, nmod:poss
+#morpho Pron 2 Case=Acc|PronType=Prs -- --- Case=Acc|Number=Sing|Person=1|PronType=Prs
+
+#morpho V,V2,VS,VV,V2V 0 VerbForm=Inf
+#morpho V,V2,VS,VV,V2V 1 Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#morpho V,V2,VS,VV,V2V 2 Tense=Past|VerbForm=Part
+#morpho V,V2,VS,VV,V2V 3 Tense=Pres|VerbForm=Part
+#morpho V,V2,VS,VV,V2V 4 Mood=Ind|Tense=Past|VerbForm=Fin
+
+#discont   V2    0-4,head  5,ADP,case,obj   6,ADP,compound:prt,head
+#discont   V2V   0-4,head  5,ADP,case,obj   6,ADP,mark,xcomp  7,ADP,compound:prt,head  --- 6 PART if to?
+
+-------- below this: obsolete format
+
+UseV,ComplVV,ComplVS,ComplVQ,ComplVA,SlashV2a,SlashV2V,SlashV2A,SlashV2S,Slash2V3,Slash3V3,UseComp,CompAdv,CompNP,CompAP,CompCN,ProgrVP,PassV2 {"not","don't","doesn't","didn't","haven't","hasn't","hadn't","wouldn't","won't","isn't","aren't","wasn't","weren't"} PART neg head 
+UseV,ComplVV,ComplVS,ComplVQ,ComplVA,SlashV2a,SlashV2V,SlashV2A,SlashV2S,Slash2V3,Slash3V3,UseComp,CompAdv,CompNP,CompAP,CompCN,ProgrVP,PassV2 {"has","had","have","will","would","do","does","did"} AUX aux head
+UseV,UseComp {"to"} PART mark head
+UseComp,CompAdv,CompAP,CompNP,CompCN,ProgrVP,QuestIComp {"is","are","am","was","were","been","be"} VERB cop head
+CompCN {"a","an"} DET det head
+PassV2,PassAgentVPSlash,PassVPSlash {"is","are","am","was","were""been","be"} VERB auxpass head
+ComplVV {"to"} PART mark xcomp
+ComplVS,SlashV2S {"that"} PART mark ccomp
+EmbedVP {"to"} PART mark head
+EmbedS {"that"} PART mark head
+SentCN {"that","to"} PART mark acl
+ExtAdvS,SubjS {","} PUNCT punct head
+ExistNPAdv,ExistNP {"not","don't","doesn't","didn't","haven't","hasn't","hadn't","wouldn't","won't","isn't","aren't","wasn't","weren't"} PART neg head 
+ExistNPAdv,ExistNP {"has","had","have","will","would","do","does","did"} AUX aux head 
+ExistNPAdv,ExistNP {"is","are","am","was","were""been","be"} VERB cop head
+ExistNPAdv,ExistNP {"there"} PART expl head
+PossNP,PartNP {"of"} ADP case nmod
+ReflPoss,ReflPossCNN {"my","your","his","her","our","their","its"} PRON nmod head
+ImpersCl {"it"} PRON nsubj head
+* {","} PUNCT punct head
+* {"about","after","at","behind","by","for","from","in","of","on","over","through","to","under","with"} ADP case obj
+* {"aback","adrift","ahead","aloft","along","apart","around","away","back","down","off","out","up"} ADV advmod head
+
+-- morphological feature labels
+@Pron Nom Acc
+@N Sg SgGen Pl PlGen
+@V  Inf Pres PastPart PresPart Past
+@V2 Inf Pres PastPart PresPart Past
+@VS Inf Pres PastPart PresPart Past
+@Quant Sg Pl Sg Pl -- and many more
+@Det Nom Gen Acc
+@A Posit PosGen Comp CompGen Sup SupGen
+@"did" Past
+@"does" PresSg
+@"do" Pres
+@"have" Inf
+@"would" Cond
+@"not" Neg
+@"am" PresSg1
+@"is" PresSg3
+@"are" PresPl
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+#word ( ( PARENTH Dir=Left
+#word ) ) PARENTH Dir=Right
+
+#lemma parenth ( lpar head
+#lemma parenth ) rpar head
+

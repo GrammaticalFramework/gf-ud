@@ -1,0 +1,33 @@
+AdjCN	amod head
+AdvVP 	head advmod
+ComplV2	head obj
+CoordS	cc head conj
+DetCN	det head
+PredVP	nsubj head
+PrepNP	case head
+UseCl	aux advmod head
+UseQCl	aux advmod head
+UttImpSg      aux head
+
+A	      ADJ
+Adv	      ADV
+Conj	      CCONJ
+Det	      DET
+N	      NOUN
+PN	      PROPN
+Pol	      PART
+Prep	      ADP
+Pron	      PRON
+Temp	      AUX
+V	      VERB
+V2	      VERB
+
+-- needed in ud2gf only
+
+#macro UseAP_Cop cop comp : Cop -> AP -> VP = UseAP comp ; cop head
+#macro QuestCl_Do aux cl : Do -> Cl -> QCl = QuestCl cl ; aux head
+#macro UseCl_Pres cl : Cl -> S = UseCl TSim PPos cl ; head
+
+Cop AUX
+Do AUX
+

@@ -1,0 +1,7 @@
+1	the	the	DET	Quant	FORM=0	3	det	_	FUN=DefArt
+2	black	black	ADJ	A	FORM=0	3	amod	_	FUN=black_A
+3	cat	cat	NOUN	N	Number=Sing	4	nsubj	_	FUN=cat_N
+4	sees	see	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=see_V2
+5	us	we	PRON	Pron	Case=Acc|PronType=Prs	4	obj	_	FUN=we_Pron
+6	today	today	ADV	Adv	FORM=0	4	advmod	_	FUN=today_Adv
+

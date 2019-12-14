@@ -1,0 +1,12 @@
+#guidelines none
+
+OpTerm head arg1 arg2
+OpFactor head arg1 arg2
+FactorTerm head
+AtomFactor head
+parenth head
+
+Atom ATOM
+TOper OPER
+FOper OPER
+

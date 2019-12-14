@@ -1,0 +1,21 @@
+#word not not PART Polarity=Neg
+#word is   be AUX  Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word are  be AUX  Mood=Ind|Tense=Pres|VerbForm=Fin
+#word am   be AUX  Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin
+#word was  be AUX  Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin
+#word were be AUX  Mood=Ind|Tense=Past|VerbForm=Fin
+#word been be AUX  Tense=Past|VerbForm=Part
+#word be   be AUX  VerbForm=Inf
+#word has  have AUX  Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word have have AUX  VerbForm=Inf
+#word had  have AUX  Mood=Ind|Tense=Past|VerbForm=Fin
+#word does  do AUX  Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word do do AUX  VerbForm=Inf
+#word did  do AUX  Mood=Ind|Tense=Past|VerbForm=Fin
+#word would would AUX  VerbForm=Fin
+#word will  will  AUX  VerbForm=Fin
+
+#lemma UseCl,UseQCl,ImpVP not advmod head
+#lemma UseAP,UseAdv,UseNP be cop head
+#lemma PredVP have aux head
+#lemma PredVP,ImpVP do aux head

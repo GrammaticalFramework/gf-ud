@@ -1,0 +1,4 @@
+abstract Structures =
+  Grammar,
+  Lexicon
+  ;
