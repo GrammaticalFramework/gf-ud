@@ -45,7 +45,10 @@ showUD2GF env sentence = do
   let devtree = combineTrees env devtree1
   putStrLn $ prLinesRTree (prDevNode 4) devtree
 
-  let ts0 = devtree2abstrees devtree
+  let besttree = head (splitDevTree devtree)
+  putStrLn $ prLinesRTree (prDevNode 1) besttree
+
+  let ts0 = devtree2abstrees besttree
   putStrLn $ unlines $ map prAbsTree ts0
 
   let ts = map (expandMacro env) ts0
@@ -74,13 +77,15 @@ data DevNode = DevNode {
   devPOS    :: String,
   devFeats  :: [UDData],
   devLabel  :: String,
-  devIndex  :: UDId  -- position in the original sentence
+  devIndex  :: UDId,   -- position in the original sentence
+  devNeedBackup :: Bool  -- if this node needs to be covered by Backup
  }
   deriving Show
 
 -- n shows how many trees are to be shown
 prDevNode n d = unwords [
-  prtStatus (devStatus d),
+  (if (devNeedBackup d) then "*" else "") ++
+    prtStatus (devStatus d),
   devWord d,
   prt (devIndex d),
   devPOS d,
@@ -90,33 +95,22 @@ prDevNode n d = unwords [
   show (length (devTrees d))
   ]
 
-maxUsedSubtrees :: DevNode -> [UDId]
-maxUsedSubtrees dn = case devTrees dn of
-  [] -> []
-  t:_ -> snd (snd t) --- because trees are sorted by usage
-
-prAbsTree = showExpr [] . abstree2expr
+-- split trees showing just one GF tree in each DevTree
+splitDevTree :: DevTree -> [DevTree]
+splitDevTree tr@(RTree dn trs) =
+  [RTree (dn{devTrees = [t]}) (map (chase t) trs) | t <- devTrees dn]
+ where
+  chase (ast,(cat,usage)) tr@(RTree d ts) = case elem (devIndex d) usage of
+    True -> case sortOn ((1000-) . sizeRTree . fst) [dt | dt@(t,_) <- devTrees d, isSubRTree t ast] of
+      t:_ -> RTree (d{devTrees = [t]}) (map (chase t) ts)
+      _ -> error $ "wrong indexing in\n" ++ prLinesRTree (prDevNode 1) tr
+    False -> RTree (d{devNeedBackup = True}) ts
 
 prtStatus udids =  "[" ++ concat (intersperse "," (map prt udids)) ++ "]"
-
-abstree2expr :: AbsTree -> PGF.Expr
-abstree2expr tr@(RTree f ts) = mkApp f (map abstree2expr ts)
 
 devtree2abstrees :: DevTree -> [AbsTree]
 devtree2abstrees = map fst . devTrees . root
 
-udtree2devtree :: UDTree -> DevTree
-udtree2devtree tr@(RTree un uts) =
-  RTree (DevNode {
-      devStatus = [],
-      devWord  = udFORM un,
-      devTrees = [],
-      devLemma = udLEMMA un,
-      devPOS   = udUPOS un,
-      devFeats = udFEATS un,
-      devLabel = udDEPREL un,
-      devIndex = udID un
-     }) (map udtree2devtree uts)
 
 -- this is the main function
 transformDevTree :: UDEnv -> DevTree -> DevTree
@@ -276,3 +270,17 @@ analyseWords env = mapRTree lemma2fun
   ---newWordTree w c = RTree (mkCId ("MkNew"++showCId c)) [RTree (mkCId (quote w)) []]
 
   quote s = "\"" ++ s ++ "\""
+
+udtree2devtree :: UDTree -> DevTree
+udtree2devtree tr@(RTree un uts) =
+  RTree (DevNode {
+      devStatus = [],
+      devWord  = udFORM un,
+      devTrees = [],
+      devLemma = udLEMMA un,
+      devPOS   = udUPOS un,
+      devFeats = udFEATS un,
+      devLabel = udDEPREL un,
+      devIndex = udID un,
+      devNeedBackup = False
+     }) (map udtree2devtree uts)

@@ -15,14 +15,7 @@ type Fun = CId
 type AbsType = (Cat,[Cat])
 
 prAbsType (val,args) = unwords $ intersperse "->" $ map showCId $ args ++ [val]
-
-pgf2functions :: PGF -> [(Fun,AbsType)]
-pgf2functions pgf = [(fun,(val,[arg | (_,_,ty) <- hs, let (_,arg,_) = unType ty])) |
-  cat <- categories pgf,
-  fun <- functionsByCat pgf cat,
-  Just typ <- [functionType pgf fun],
-  let (hs,val,_) = unType typ
-  ]
+prAbsTree = showExpr [] . abstree2expr
 
 pAbsTree s = case readExpr s of
   Just e -> expr2abstree e
@@ -34,10 +27,22 @@ pAbsType s = case (filter (/="->") (words s)) of
 
 -- conversion from PGF to rose tree
 
+
+pgf2functions :: PGF -> [(Fun,AbsType)]
+pgf2functions pgf = [(fun,(val,[arg | (_,_,ty) <- hs, let (_,arg,_) = unType ty])) |
+  cat <- categories pgf,
+  fun <- functionsByCat pgf cat,
+  Just typ <- [functionType pgf fun],
+  let (hs,val,_) = unType typ
+  ]
+
 expr2abstree :: PGF.Expr -> AbsTree
 expr2abstree e = case unApp e of
   Just (f,es) -> RTree f (map expr2abstree es)
   _ -> error ("ERROR: no constructor tree from " ++ showExpr [] e)
+
+abstree2expr :: AbsTree -> PGF.Expr
+abstree2expr tr@(RTree f ts) = mkApp f (map abstree2expr ts)
 
 postOrderRTree :: RTree a -> RTree (a,Int)
 postOrderRTree = post 0 where
@@ -76,6 +81,14 @@ prRTree :: (a -> String) -> RTree a -> String
 prRTree pr t = case t of
   RTree a [] -> pr a
   RTree a ts -> "(" ++ pr a ++ " " ++ unwords (map (prRTree pr) ts) ++ ")"
+
+isSubRTree :: Eq a => RTree a -> RTree a -> Bool
+isSubRTree t u = t == u || any (isSubRTree t) (subtrees u)
+
+sizeRTree :: RTree a -> Int
+sizeRTree = length . allNodesRTree
+
+-----------------
 
 mkFun :: [String] -> CId -> CId
 mkFun ws c = mkCId $ concat $ intersperse "_" (ws ++ [showCId c])
