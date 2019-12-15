@@ -60,13 +60,15 @@ concrete ShallowParseEng of ShallowParse =
  ConjunctionEng,
  RelativeEng,
  QuestionEng,
+ NumeralEng,
 
  TenseX - [CAdv,Pol]
 
 ** open SyntaxEng, (P=ParadigmsEng) in {
 
   lincat
-    PP = Adv ;
+    PP = SyntaxEng.Adv ;
+    Punct = {s : Str} ; ---- SyntaxEng.Punct has no concrete words
     
   lin
     AddNPtoVP vp np = mkVP vp (mkAdv (P.mkPrep []) np) ;
@@ -76,7 +78,17 @@ concrete ShallowParseEng of ShallowParse =
     QuantSgCN quant cn = mkNP quant cn ;
     QuantPlCN quant cn = mkNP quant pluralNum cn ;
     CardCN num cn = mkNP num cn ;
-    
+    PossSgNP pron cn = mkNP (mkQuant pron) cn ;
+    PossPlNP pron cn = mkNP (mkQuant pron) pluralNum cn ;
+
+    PunctUttText utt punct = mkText utt punct ; 
+    UttText utt = lin Text utt ;
+
+    fullstop_Punct = {s = "."} ;
+    comma_Punct = {s = ","} ;
+    questionmark_Punct = {s = "?"} ;
+    exclmark_Punct = {s = "!"} ;
+
     a_Det = SyntaxEng.a_Det ;
     aPl_Det = SyntaxEng.aPl_Det ;
     the_Det = SyntaxEng.the_Det ;

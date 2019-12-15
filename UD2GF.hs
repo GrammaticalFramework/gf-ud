@@ -94,7 +94,7 @@ data UD2GFStat = UD2GFStat {
 prUD2GFStat :: UD2GFStat -> String
 prUD2GFStat stat = unlines $ [
   "total word nodes:\t"                    ++ show (totalWords stat),
-  "interpreted word nodes:\t"              ++ show (totalWords stat) ++ proportion interpretedWords totalWords,
+  "interpreted word nodes:\t"              ++ show (interpretedWords stat) ++ proportion interpretedWords totalWords,
   "unknown word nodes (tokens):\t"         ++ show (unknownWords stat) ++ proportion unknownWords totalWords,
   "total sentences:\t"                     ++ show (totalSentences stat),
   "completely interepreted sentences:\t"   ++ show (completeSentences stat) ++ proportion completeSentences totalSentences
@@ -351,7 +351,10 @@ analyseWords env = mapRTree lemma2fun
   -- find all functions that are possible parses of the word in any appropriate category
   --- it is still possible that some other category is meant
   getWordTrees w cs = case concatMap (parseWord w) cs of
-    [] -> (True,[(newWordTree w c, c) | c <- cs])  -- if no results, just build tree w__c), status isKnown=True
+    [] -> case cs of
+      []  -> (True,[(newWordTree w unknownCat, unknownCat)])
+      _ -> (True,[(newWordTree w c, c) | c <- cs])
+
     fs -> (False,fs)
 
   --- this can fail if c is discontinuous, or return false positives if w is a form of another word
@@ -360,6 +363,8 @@ analyseWords env = mapRTree lemma2fun
 
   newWordTree w c = RTree (mkCId (w ++ "_x_" ++ showCId c)) []
   ---newWordTree w c = RTree (mkCId ("MkNew"++showCId c)) [RTree (mkCId (quote w)) []]
+
+  unknownCat = mkCId "Adv" --- treat unknown words as adverbs ---- to be parameterized
 
   quote s = "\"" ++ s ++ "\""
 

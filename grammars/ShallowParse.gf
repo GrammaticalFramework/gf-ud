@@ -3,7 +3,7 @@ abstract ShallowParse =
   JustWordsWordNet,
 
  Phrase [
-    Utt,S,QS,Adv,NP,Pol,Imp,
+    Text,Utt,S,QS,Adv,NP,Pol,Imp,
     UttS      , -- S  -> Utt ;         -- John walks
     UttQS     , -- QS -> Utt ;         -- does John walk
     UttNP     , -- NP -> Utt ;         -- John
@@ -60,27 +60,40 @@ abstract ShallowParse =
  Conjunction,
  Relative,
  Question,
+ Numeral,
 
  Tense
 
 ** {
 
   cat
-    PP ;
+    PP ; Punct ;
 
   fun
+
+
     AddNPtoVP : VP  -> NP -> VP ;          -- love it
     AddPPtoVP : VP  -> PP -> VP ;  -- talk about it
 
     PrepPP : Prep -> NP -> PP ;
 
-    QuantSgCN : Quant -> CN -> NP ;
-    QuantPlCN : Quant -> CN -> NP ;
-    CardCN    : Numeral -> CN -> NP ;
+    QuantSgCN  : Quant -> CN -> NP ;
+    QuantPlCN  : Quant -> CN -> NP ;
+    CardCN     : Numeral -> CN -> NP ;
+    PossSgNP   : Pron -> CN -> NP ;
+    PossPlNP   : Pron -> CN -> NP ;
     
     a_Det     : Det ;                   -- indefinite singular ---s
     aPl_Det   : Det ;                   -- indefinite plural   ---s
     the_Det   : Det ;                   -- definite singular   ---s
     thePl_Det : Det ;                      -- definite plural     ---s
+
+    PunctUttText : Utt -> Punct -> Text ;
+    UttText : Utt -> Text ;
+    
+    fullstop_Punct : Punct ;
+    comma_Punct : Punct ;
+    questionmark_Punct : Punct ;
+    exclmark_Punct : Punct ;
 
 }

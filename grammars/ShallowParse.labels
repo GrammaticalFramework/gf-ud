@@ -83,6 +83,10 @@ QuantSgCN det head
 PrepPP case head
 AddNPtoVP head obj
 AddPPtoVP head nmod
+PossSgNP nmod:poss head
+PossPlNP nmod:poss head
+PunctUttText head punct
+UttText head
 
 A ADJ
 ---A2 ADJ
@@ -199,3 +203,14 @@ VV VERB
 --Voc NOUN ---
 --Weekday NOUN
 --Year NUM
+Punct         PUNCT
+
+-- needed in ud2gf only
+
+#macro UseComp_Cop cop comp : Cop -> Comp -> VP = UseComp comp ; cop head
+#macro QuestCl_Do aux cl : Do -> Cl -> QCl = QuestCl cl ; aux head
+#macro UseCl_Pres cl : Cl -> S = UseCl (TTAnt ASim TPres) PPos cl ; head
+
+Cop AUX
+Do AUX
+
