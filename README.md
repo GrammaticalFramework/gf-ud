@@ -20,9 +20,13 @@ later.
 To get started, you can test the following:
 
   cd grammars
+  
   ln -s gf-summerschool-2018  # a sister Git repository
+  
   make mini
+  
   cd ..
+  
   make compile
   
   cat test.conllu | ./gfud -ud2gf grammars/MiniLang Eng Utt at
@@ -34,10 +38,18 @@ To get started, you can test the following:
 The largest changes are perhaps in the format of dependency configurations.
 One goal was to merge the gf2ud and ud2gf annotations. See
 
-  grammars/MiniLang.labels
-  grammars/MiniLangEng.labels
+- grammars/MiniLang.labels
+- grammars/MiniLangEng.labels
   
 for examples (to be documented properly later).
+
+Other grammars to try are
+
+- grammars/ShallowParse  # wide-coverage, with WordNet words but without sense distinctions
+- grammars/Term  # a grammar of arithmetic expression, completely different tagset
+
+
+
 
 
   
