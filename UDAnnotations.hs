@@ -117,7 +117,7 @@ pAbsLabels = disables . dispatch . map words . uncomment . lines
     "#guidelines":w:_   -> (ds,labs{annotGuideline = Just w}) --- overwrites earlier declaration
     "#fun":f:xs         -> (ds,labs{funLabels = M.insert (mkCId f) (xs,True) (funLabels labs)})
     "#cat":c:p:[]       -> (ds,labs{catLabels = M.insert (mkCId c) p (catLabels labs)})
-    "#aux":c:p:[]       -> (ds,labs{catLabels = M.insert (mkCId c) p (auxCategories labs)})
+    "#aux":c:p:[]       -> (ds,labs{auxCategories = M.insert (mkCId c) p (auxCategories labs)})
     "#macro":f:typdef   -> (ds,labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f:typdef)) (macroFunctions labs)})
     "#disable":fs       -> (fs++ds,labs) 
     "#altfun":f:xs      -> (ds,labs{altFunLabels = M.insertWith (++) (mkCId f) [xs] (altFunLabels labs)})
@@ -201,7 +201,11 @@ isEndoType labtyp@(val,args) = elem val (map fst args)
 isExoType = not . isEndoType
 
 catsForPOS :: UDEnv -> M.Map POS [Cat]
-catsForPOS env = M.fromListWith (++) [(p,[c]) | (c,p) <- M.assocs (catLabels (absLabels env))]
+catsForPOS env = M.fromListWith (++) [
+  (p,[c]) | (c,p) <-
+       M.assocs (catLabels (absLabels env)) ++
+       M.assocs (auxCategories (absLabels env))  --- auxiliary cats in ud2gf
+  ]
 
 
 ----------------------------------------
