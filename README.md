@@ -19,21 +19,14 @@ later.
 
 To get started, you can test the following:
 
-  cd grammars
-  
-  ln -s gf-summerschool-2018  # a sister Git repository
-  
-  make mini
-  
-  cd ..
-  
-  make compile
-  
-  cat test.conllu | ./gfud -ud2gf grammars/MiniLang Eng Utt at
-  
-  cat test.gftrees | ./gfud -gf2ud grammars/MiniLang Eng Utt ud
-  
-  echo "the black cat sees us" | ./gfud -string2gf2ud grammars/MiniLang Eng Utt 
+- cd grammars
+- ln -s gf-summerschool-2018  # a sister Git repository
+- make mini
+- cd ..
+- make compile
+- cat test.conllu | ./gfud -ud2gf grammars/MiniLang Eng Utt at
+- cat test.gftrees | ./gfud -gf2ud grammars/MiniLang Eng Utt ud
+- echo "the black cat sees us" | ./gfud -string2gf2ud grammars/MiniLang Eng Utt 
   
 The largest changes are perhaps in the format of dependency configurations.
 One goal was to merge the gf2ud and ud2gf annotations. See
@@ -45,8 +38,15 @@ for examples (to be documented properly later).
 
 Other grammars to try are
 
-- grammars/ShallowParse  # wide-coverage, with WordNet words but without sense distinctions
+- grammars/ShallowParse  # wide-coverage, with WordNet words but without sense distinctions, uses sister repo gf-wordnet/
 - grammars/Term  # a grammar of arithmetic expression, completely different tagset
+
+With ShallowParse, you can try out the included sample from https://github.com/UniversalDependencies/UD_English-PUD/blob/master/en_pud-ud-test.conllu
+
+- cat upto12eng.conllu | ./gfud -ud2gf grammars/ShallowParse Eng Text at stat
+
+But the results are still meager, and require additions in ShallowParse.labels and maybe in the algorithm.
+
 
 
 
