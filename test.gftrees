@@ -1,0 +1,199 @@
+UttImpSg PPos (ImpVP (UseAP (PositA good_A)))
+
+UttNP (DetCN every_Det (AdjCN (PositA red_A) (AdjCN (PositA young_A) (UseN woman_N))))
+
+UttQS (UseQCl TAnt PNeg (QuestCl (PredVP (UsePN paris_PN) (AdvVP (ComplV2 buy_V2 (UsePN john_PN)) (PrepNP with_Prep (MassNP (UseN boat_N)))))))
+
+UttAdv already_Adv
+
+UttImpSg PNeg (ImpVP (UseNP (UsePN paris_PN)))
+
+UttImpSg PNeg (ImpVP (UseV go_V))
+
+UttQS (UseQCl TSim PNeg (QuestCl (PredVP (UsePN john_PN) (UseV sleep_V))))
+
+UttS (CoordS or_Conj (CoordS or_Conj (UseCl TAnt PPos (PredVP (MassNP (AdjCN (PositA warm_A) (UseN wine_N))) (UseNP (UsePron they_Pron)))) (CoordS and_Conj (UseCl TSim PNeg (PredVP (UsePN paris_PN) (UseV run_V))) (UseCl TAnt PNeg (PredVP (UsePron he_Pron) (UseV come_V))))) (CoordS or_Conj (CoordS and_Conj (CoordS or_Conj (UseCl TAnt PPos (PredVP (UsePron i_Pron) (UseV play_V))) (UseCl TSim PPos (PredVP (UsePN john_PN) (UseV play_V)))) (CoordS or_Conj (UseCl TAnt PPos (PredVP (UsePN paris_PN) (UseAdv now_Adv))) (UseCl TSim PNeg (PredVP (UsePron i_Pron) (UseAdv already_Adv))))) (CoordS or_Conj (CoordS and_Conj (UseCl TAnt PNeg (PredVP (UsePN john_PN) (UseV walk_V))) (UseCl TSim PNeg (PredVP (UsePN john_PN) (UseAdv now_Adv)))) (CoordS and_Conj (UseCl TSim PPos (PredVP (UsePron we_Pron) (UseAdv now_Adv))) (UseCl TSim PNeg (PredVP (UsePN john_PN) (UseAdv now_Adv)))))))
+
+UttNP (MassNP (UseN wine_N))
+
+UttQS (UseQCl TAnt PPos (QuestCl (PredVP (DetCN the_Det (UseN river_N)) (UseAdv already_Adv))))
+
+UttQS (UseQCl TAnt PPos (QuestCl (PredVP (UsePN john_PN) (UseAP (PositA cold_A)))))
+
+UttAdv now_Adv
+
+UttNP (UsePN paris_PN)
+
+UttImpSg PPos (ImpVP (ComplV2 understand_V2 (UsePN paris_PN)))
+
+UttImpSg PPos (ImpVP (UseAdv already_Adv))
+
+UttQS (UseQCl TAnt PNeg (QuestCl (PredVP (MassNP (AdjCN (PositA young_A) (AdjCN (PositA ready_A) (UseN ship_N)))) (ComplV2 see_V2 (UsePron youPl_Pron)))))
+
+UttImpSg PPos (ImpVP (ComplV2 find_V2 (UsePron youSg_Pron)))
+
+UttS (UseCl TSim PNeg (PredVP (DetCN a_Det (AdjCN (PositA white_A) (UseN computer_N))) (UseAP (PositA green_A))))
+
+UttQS (UseQCl TAnt PNeg (QuestCl (PredVP (MassNP (UseN cat_N)) (AdvVP (AdvVP (UseAP (PositA small_A)) now_Adv) now_Adv))))
+
+UttNP (UsePron they_Pron)
+
+UttNP (MassNP (AdjCN (PositA big_A) (AdjCN (PositA hot_A) (UseN ship_N))))
+
+UttS (CoordS and_Conj (UseCl TSim PPos (PredVP (DetCN thePl_Det (AdjCN (PositA blue_A) (UseN blood_N))) (UseAdv already_Adv))) (CoordS or_Conj (UseCl TAnt PPos (PredVP (UsePN paris_PN) (UseNP (MassNP (UseN tree_N))))) (UseCl TSim PPos (PredVP (MassNP (AdjCN (PositA warm_A) (UseN child_N))) (UseAdv (PrepNP in_Prep (UsePN john_PN)))))))
+
+UttImpSg PPos (ImpVP (ComplV2 see_V2 (MassNP (AdjCN (PositA clever_A) (AdjCN (PositA bad_A) (UseN city_N))))))
+
+UttNP (UsePN john_PN)
+
+UttS (CoordS or_Conj (UseCl TSim PPos (PredVP (UsePN john_PN) (UseNP (DetCN a_Det (AdjCN (PositA new_A) (UseN friend_N)))))) (UseCl TAnt PNeg (PredVP (UsePN paris_PN) (UseV jump_V))))
+
+UttS (UseCl TAnt PPos (PredVP (MassNP (AdjCN (PositA big_A) (UseN bird_N))) (UseV swim_V)))
+
+UttImpSg PPos (ImpVP (UseNP (MassNP (AdjCN (PositA clever_A) (AdjCN (PositA good_A) (UseN horse_N))))))
+
+UttNP (UsePN john_PN)
+
+UttImpSg PNeg (ImpVP (UseAdv (PrepNP with_Prep (UsePN paris_PN))))
+
+UttImpSg PNeg (ImpVP (AdvVP (ComplV2 eat_V2 (UsePN john_PN)) already_Adv))
+
+UttNP (UsePN paris_PN)
+
+UttQS (UseQCl TAnt PNeg (QuestCl (PredVP (UsePron they_Pron) (ComplV2 understand_V2 (UsePron we_Pron)))))
+
+UttAdv (PrepNP on_Prep (UsePN john_PN))
+
+UttS (UseCl TAnt PNeg (PredVP (MassNP (AdjCN (PositA clever_A) (UseN star_N))) (UseNP (MassNP (AdjCN (PositA dirty_A) (UseN boat_N))))))
+
+UttS (UseCl TSim PNeg (PredVP (MassNP (AdjCN (PositA small_A) (UseN tree_N))) (UseAdv already_Adv)))
+
+UttNP (MassNP (UseN blood_N))
+
+UttS (UseCl TAnt PPos (PredVP (UsePron he_Pron) (AdvVP (ComplV2 wait_V2 (DetCN aPl_Det (AdjCN (PositA dirty_A) (UseN flower_N)))) already_Adv)))
+
+UttAdv (PrepNP in_Prep (DetCN the_Det (UseN tree_N)))
+
+UttNP (UsePron i_Pron)
+
+UttAdv now_Adv
+
+UttImpSg PPos (ImpVP (UseV jump_V))
+
+UttNP (DetCN a_Det (UseN dog_N))
+
+UttS (CoordS and_Conj (CoordS or_Conj (CoordS or_Conj (UseCl TSim PPos (PredVP (MassNP (UseN computer_N)) (ComplV2 teach_V2 (UsePron they_Pron)))) (UseCl TAnt PPos (PredVP (MassNP (UseN flower_N)) (UseAdv already_Adv)))) (CoordS and_Conj (CoordS and_Conj (UseCl TSim PPos (PredVP (UsePron he_Pron) (UseAdv already_Adv))) (UseCl TAnt PNeg (PredVP (UsePron youSg_Pron) (UseAdv now_Adv)))) (CoordS and_Conj (UseCl TSim PNeg (PredVP (UsePN john_PN) (UseAdv already_Adv))) (UseCl TAnt PNeg (PredVP (UsePron we_Pron) (UseV come_V)))))) (CoordS and_Conj (CoordS or_Conj (UseCl TSim PNeg (PredVP (DetCN the_Det (UseN flower_N)) (ComplV2 kill_V2 (UsePron youSg_Pron)))) (CoordS or_Conj (UseCl TAnt PNeg (PredVP (UsePron i_Pron) (UseV go_V))) (UseCl TAnt PPos (PredVP (UsePron youPl_Pron) (UseAdv already_Adv))))) (UseCl TAnt PNeg (PredVP (UsePN john_PN) (UseAdv now_Adv)))))
+
+UttQS (UseQCl TSim PPos (QuestCl (PredVP (MassNP (AdjCN (PositA ready_A) (AdjCN (PositA new_A) (UseN woman_N)))) (UseAdv already_Adv))))
+
+UttNP (UsePN john_PN)
+
+UttS (UseCl TSim PPos (PredVP (UsePN paris_PN) (UseAP (PositA red_A))))
+
+UttS (CoordS and_Conj (CoordS and_Conj (CoordS or_Conj (UseCl TSim PPos (PredVP (MassNP (UseN book_N)) (UseV travel_V))) (CoordS and_Conj (UseCl TAnt PNeg (PredVP (UsePN john_PN) (UseV play_V))) (UseCl TSim PPos (PredVP (UsePron they_Pron) (UseV come_V))))) (CoordS and_Conj (UseCl TSim PPos (PredVP (DetCN aPl_Det (UseN child_N)) (AdvVP (UseAdv now_Adv) now_Adv))) (UseCl TAnt PNeg (PredVP (UsePron she_Pron) (UseNP (UsePron they_Pron)))))) (CoordS or_Conj (UseCl TAnt PNeg (PredVP (DetCN a_Det (UseN woman_N)) (UseV walk_V))) (CoordS and_Conj (UseCl TSim PNeg (PredVP (DetCN a_Det (UseN baby_N)) (UseAP (PositA dirty_A)))) (UseCl TSim PNeg (PredVP (UsePN paris_PN) (UseV travel_V))))))
+
+UttImpSg PPos (ImpVP (AdvVP (ComplV2 teach_V2 (UsePN paris_PN)) (PrepNP with_Prep (DetCN every_Det (AdjCN (PositA young_A) (UseN ship_N))))))
+
+UttS (UseCl TAnt PPos (PredVP (UsePN paris_PN) (ComplV2 love_V2 (UsePN john_PN))))
+
+UttImpSg PNeg (ImpVP (UseV swim_V))
+
+UttAdv now_Adv
+
+UttNP (UsePron youPl_Pron)
+
+UttQS (UseQCl TSim PNeg (QuestCl (PredVP (UsePron youSg_Pron) (UseNP (UsePron she_Pron)))))
+
+UttS (UseCl TAnt PPos (PredVP (MassNP (AdjCN (PositA small_A) (AdjCN (PositA black_A) (AdjCN (PositA warm_A) (UseN car_N))))) (UseV sleep_V)))
+
+UttImpSg PPos (ImpVP (ComplV2 understand_V2 (MassNP (UseN milk_N))))
+
+UttQS (UseQCl TSim PPos (QuestCl (PredVP (UsePron i_Pron) (ComplV2 love_V2 (UsePN john_PN)))))
+
+UttImpSg PPos (ImpVP (ComplV2 understand_V2 (MassNP (UseN tree_N))))
+
+UttQS (UseQCl TSim PNeg (QuestCl (PredVP (UsePN john_PN) (UseAP (PositA heavy_A)))))
+
+UttQS (UseQCl TSim PNeg (QuestCl (PredVP (UsePN paris_PN) (ComplV2 drink_V2 (UsePron youSg_Pron)))))
+
+UttS (CoordS or_Conj (UseCl TSim PNeg (PredVP (MassNP (AdjCN (PositA green_A) (AdjCN (PositA cold_A) (UseN house_N)))) (UseV jump_V))) (CoordS and_Conj (UseCl TAnt PNeg (PredVP (DetCN thePl_Det (UseN boat_N)) (UseAdv now_Adv))) (CoordS and_Conj (CoordS or_Conj (UseCl TSim PPos (PredVP (UsePron he_Pron) (UseV swim_V))) (UseCl TAnt PNeg (PredVP (UsePN john_PN) (UseV jump_V)))) (CoordS or_Conj (UseCl TAnt PPos (PredVP (UsePron i_Pron) (UseAdv now_Adv))) (UseCl TAnt PPos (PredVP (UsePN paris_PN) (UseV walk_V)))))))
+
+UttAdv (PrepNP with_Prep (DetCN the_Det (UseN milk_N)))
+
+UttImpSg PPos (ImpVP (ComplV2 eat_V2 (UsePron they_Pron)))
+
+UttAdv now_Adv
+
+UttImpSg PPos (ImpVP (ComplV2 see_V2 (DetCN the_Det (AdjCN (PositA green_A) (UseN river_N)))))
+
+UttQS (UseQCl TSim PPos (QuestCl (PredVP (UsePron we_Pron) (UseV run_V))))
+
+UttS (UseCl TAnt PNeg (PredVP (DetCN aPl_Det (AdjCN (PositA small_A) (UseN man_N))) (UseV live_V)))
+
+UttNP (UsePN john_PN)
+
+UttQS (UseQCl TSim PNeg (QuestCl (PredVP (MassNP (AdjCN (PositA blue_A) (UseN woman_N))) (UseV run_V))))
+
+UttQS (UseQCl TAnt PPos (QuestCl (PredVP (MassNP (AdjCN (PositA bad_A) (UseN friend_N))) (UseAdv now_Adv))))
+
+UttAdv now_Adv
+
+UttAdv already_Adv
+
+UttQS (UseQCl TSim PPos (QuestCl (PredVP (DetCN every_Det (UseN star_N)) (UseAP (PositA new_A)))))
+
+UttQS (UseQCl TAnt PNeg (QuestCl (PredVP (MassNP (UseN dog_N)) (UseAP (PositA ready_A)))))
+
+UttAdv now_Adv
+
+UttNP (UsePron i_Pron)
+
+UttQS (UseQCl TSim PNeg (QuestCl (PredVP (DetCN a_Det (AdjCN (PositA ready_A) (UseN cow_N))) (AdvVP (UseAP (PositA ready_A)) already_Adv))))
+
+UttS (CoordS and_Conj (UseCl TAnt PNeg (PredVP (DetCN aPl_Det (AdjCN (PositA white_A) (UseN bird_N))) (UseV jump_V))) (CoordS or_Conj (CoordS or_Conj (CoordS and_Conj (UseCl TSim PNeg (PredVP (UsePN john_PN) (UseAdv already_Adv))) (UseCl TSim PPos (PredVP (UsePN paris_PN) (UseAdv now_Adv)))) (CoordS and_Conj (UseCl TSim PPos (PredVP (UsePron we_Pron) (UseV live_V))) (UseCl TAnt PNeg (PredVP (UsePron he_Pron) (UseV jump_V))))) (CoordS or_Conj (CoordS or_Conj (UseCl TSim PPos (PredVP (UsePron youPl_Pron) (UseV sleep_V))) (UseCl TSim PPos (PredVP (UsePron they_Pron) (UseAdv already_Adv)))) (CoordS and_Conj (UseCl TAnt PPos (PredVP (UsePN john_PN) (UseAdv now_Adv))) (UseCl TAnt PPos (PredVP (UsePron we_Pron) (UseV travel_V)))))))
+
+UttNP (MassNP (UseN flower_N))
+
+UttS (UseCl TSim PPos (PredVP (UsePron i_Pron) (ComplV2 kill_V2 (MassNP (UseN beer_N)))))
+
+UttAdv already_Adv
+
+UttQS (UseQCl TSim PPos (QuestCl (PredVP (DetCN thePl_Det (AdjCN (PositA black_A) (UseN boy_N))) (UseAP (PositA red_A)))))
+
+UttImpSg PNeg (ImpVP (UseAdv already_Adv))
+
+UttQS (UseQCl TSim PNeg (QuestCl (PredVP (MassNP (UseN fire_N)) (UseV go_V))))
+
+UttAdv (PrepNP with_Prep (UsePron we_Pron))
+
+UttQS (UseQCl TSim PNeg (QuestCl (PredVP (DetCN the_Det (UseN cat_N)) (AdvVP (UseNP (MassNP (UseN friend_N))) (PrepNP in_Prep (UsePron youPl_Pron))))))
+
+UttAdv now_Adv
+
+UttNP (MassNP (UseN fire_N))
+
+UttQS (UseQCl TSim PPos (QuestCl (PredVP (DetCN thePl_Det (UseN computer_N)) (UseV play_V))))
+
+UttImpSg PNeg (ImpVP (UseAdv already_Adv))
+
+UttImpSg PNeg (ImpVP (UseNP (MassNP (AdjCN (PositA yellow_A) (AdjCN (PositA red_A) (AdjCN (PositA blue_A) (UseN bread_N)))))))
+
+UttS (UseCl TAnt PPos (PredVP (MassNP (UseN fire_N)) (ComplV2 have_V2 (UsePN paris_PN))))
+
+UttImpSg PNeg (ImpVP (AdvVP (AdvVP (UseV run_V) now_Adv) now_Adv))
+
+UttS (UseCl TAnt PNeg (PredVP (UsePron we_Pron) (ComplV2 find_V2 (MassNP (AdjCN (PositA big_A) (AdjCN (PositA clean_A) (UseN city_N)))))))
+
+UttS (CoordS and_Conj (UseCl TSim PPos (PredVP (UsePron they_Pron) (UseAP (PositA new_A)))) (CoordS and_Conj (UseCl TAnt PNeg (PredVP (UsePN paris_PN) (UseNP (UsePron he_Pron)))) (CoordS and_Conj (CoordS and_Conj (UseCl TAnt PPos (PredVP (UsePron she_Pron) (UseV play_V))) (UseCl TAnt PPos (PredVP (UsePron he_Pron) (UseAdv now_Adv)))) (UseCl TAnt PNeg (PredVP (DetCN the_Det (UseN girl_N)) (AdvVP (UseAdv already_Adv) already_Adv))))))
+
+UttS (UseCl TAnt PNeg (PredVP (UsePN paris_PN) (AdvVP (UseAP (PositA yellow_A)) now_Adv)))
+
+UttS (CoordS or_Conj (CoordS and_Conj (UseCl TAnt PNeg (PredVP (DetCN a_Det (AdjCN (PositA bad_A) (UseN cow_N))) (ComplV2 kill_V2 (DetCN a_Det (UseN child_N))))) (UseCl TSim PPos (PredVP (UsePron youSg_Pron) (UseV travel_V)))) (UseCl TSim PNeg (PredVP (UsePN john_PN) (UseAP (PositA red_A)))))
+
+UttAdv (PrepNP in_Prep (UsePN john_PN))
+
+UttQS (UseQCl TSim PPos (QuestCl (PredVP (MassNP (UseN bird_N)) (UseV go_V))))
+
+UttQS (UseQCl TAnt PNeg (QuestCl (PredVP (DetCN aPl_Det (AdjCN (PositA new_A) (AdjCN (PositA cold_A) (UseN house_N)))) (UseAdv now_Adv))))
+
+UttNP (MassNP (UseN flower_N))
