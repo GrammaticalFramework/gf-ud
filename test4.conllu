@@ -1,5 +1,0 @@
-1	he	he	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=he_Pron
-2	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	3	cop	_	FUN=UseComp
-3	big	big	ADJ	A	FORM=0	0	root	_	FUN=big_A
-4	and	and	CCONJ	Conj	FORM=1	3	cc	_	FUN=and_Conj
-5	old	old	ADJ	A	FORM=0	3	conj	_	FUN=old_A

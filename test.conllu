@@ -1,3 +1,40 @@
+1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
+2	cat	cat	NOUN	N	Number=Sing	0	root	_	FUN=cat_N
+
+1	the	the	DET	Quant	FORM=0	3	det	_	FUN=DefArt
+2	black	black	ADJ	A	FORM=0	3	amod	_	FUN=black_A
+3	cat	cat	NOUN	N	Number=Sing	0	root	_	FUN=cat_N
+
+1	every	every	DET	Det	FORM=0	2	det	_	FUN=every_Det
+2	cat	cat	NOUN	N	Number=Sing	3	nsubj	_	FUN=cat_N
+3	sees	see	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=see_V2
+4	us	we	PRON	Pron	Case=Acc|PronType=Prs	3	obj	_	FUN=we_Pron
+
+1	he	he	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=he_Pron
+2	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	3	cop	_	FUN=UseComp
+3	big	big	ADJ	A	FORM=0	0	root	_	FUN=big_A
+4	and	and	CCONJ	Conj	FORM=1	3	cc	_	FUN=and_Conj
+5	old	old	ADJ	A	FORM=0	3	conj	_	FUN=old_A
+
+1	the	the	DET	Quant	FORM=0	3	det	_	FUN=DefArt
+2	black	black	ADJ	A	FORM=0	3	amod	_	FUN=black_A
+3	cat	cat	NOUN	N	Number=Sing	4	nsubj	_	FUN=cat_N
+4	sees	see	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=see_V2
+5	us	we	PRON	Pron	Case=Acc|PronType=Prs	4	obj	_	FUN=we_Pron
+6	here	here	ADV	Adv	FORM=0	5	advmod	_	FUN=today_Adv
+7	today	today	ADV	Adv	FORM=0	4	advmod	_	FUN=today_Adv
+
+1	today	today	ADV	Adv	FORM=0	3	advmod	_	FUN=today_Adv
+2	I	I	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=i_Pron
+3	sleep	sleep	VERB	V	VerbForm=Inf	0	root	_	FUN=sleep_V
+
+1	my	I	PRON	Pron	Poss=Yes|PronType=Prs	2	nmod:poss	_	FUN=i_Pron
+2	hovercraft	hovercraft	NOUN	N	Number=Sing	4	nsubj	_	FUN=hovercraft_N
+3	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	4	cop	_	FUN=UseComp
+4	full	full	ADJ	A	FORM=0	0	root	_	FUN=full_A
+5	of	of	ADP	Prep	FORM=0	6	case	_	FUN=of_Prep
+6	eels	eel	NOUN	N	Number=Plur	4	nmod	_	FUN=eel_N
+
 1	the	the	DET	Quant	FORM=0	3	det	_	FUN=DefArt
 2	black	black	ADJ	A	FORM=0	3	amod	_	FUN=black_A
 3	cat	cat	NOUN	N	Number=Sing	4	nsubj	_	FUN=cat_N

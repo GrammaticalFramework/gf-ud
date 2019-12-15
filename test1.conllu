@@ -1,4 +1,0 @@
-1	the	the	DET	Quant	FORM=0	3	det	_	FUN=DefArt
-2	black	black	ADJ	A	FORM=0	3	amod	_	FUN=black_A
-3	cat	cat	NOUN	N	Number=Sing	0	root	_	FUN=cat_N
-
