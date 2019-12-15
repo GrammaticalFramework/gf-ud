@@ -105,8 +105,8 @@ devtree2abstrees = map fst . devAbsTrees . root
 
 -- to be applied to a DevTree with just one tree at each node
 addBackups :: DevTree -> DevTree
-addBackups tr@(RTree dn trs) = case map (backup . addBackups) trs of
-  btrs -> RTree (dn{devAbsTrees = [replaceInfo [(t,ai) | (_,(t,Just ai)) <- btrs] (theAbsTreeInfo tr)]}) (map fst btrs)
+addBackups tr@(RTree dn trs) = case map collectBackup (tr:trs) of
+  btrs -> RTree (dn{devAbsTrees = [replaceInfo [(t,ai) | (_,(t,Just ai)) <- btrs] (theAbsTreeInfo tr)]}) (map fst (tail btrs))
   
  where
 
@@ -119,10 +119,10 @@ addBackups tr@(RTree dn trs) = case map (backup . addBackups) trs of
     Just (btr,(c,_)) -> appBackup c btr tr
     _ -> RTree f (map (replace btrs) trs)
 
-  backup :: DevTree -> (DevTree,(AbsTree,Maybe AbsTreeInfo))
-  backup t@(RTree d ts) =
+  collectBackup :: DevTree -> (DevTree,(AbsTree,Maybe AbsTreeInfo))
+  collectBackup t@(RTree d ts) =
     let ai@(ast,_) = theAbsTreeInfo t in
-    (t,(ast, mkBackupList ai [theAbsTreeInfo u | u <- ts, devNeedBackup (root u)]))
+    (t,(ast, mkBackupList ai [theAbsTreeInfo (addBackups u) | u <- ts, devNeedBackup (root u)]))
 
   mkBackupList :: AbsTreeInfo -> [AbsTreeInfo] -> Maybe AbsTreeInfo
   mkBackupList ai@(ast,(cat,usage)) ts =
