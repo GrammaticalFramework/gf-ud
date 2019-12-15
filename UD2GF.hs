@@ -28,9 +28,7 @@ traceNoPrint _ _ x = x
 
 test opts env string = do
   let eng = actLanguage env
-  sentences <- case string of
-    '<':file -> parseUDFile file
-    _ -> return [pQuickUDSentence string]
+  let sentences = map prss $ stanzas $ lines string
   tstats <- mapM (showUD2GF opts env) sentences
   let globalStats = combineUD2GFStats $ map snd tstats
   ifOpt opts "stat" $ prUD2GFStat globalStats

@@ -17,10 +17,19 @@ import Data.Maybe
 
 -- env <- getEnv
 
-test opts env s = do
+testString opts env s = do
   let eng = actLanguage env
   let t = parseEng env s
+  testTree opts env t
 
+testTreeString opts env s = do
+  case readExpr s of
+    Just t -> testTree opts env t
+    _ -> error $ "not a well-formed tree: " ++ s
+
+testTree opts env t = do
+  let eng = actLanguage env
+  
   ifOpt opts "gf" $ showExpr [] t
   
   let e0 = expr2annottree env eng t

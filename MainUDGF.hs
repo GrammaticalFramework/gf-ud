@@ -5,32 +5,33 @@ import qualified GF2UD as G
 import UDAnnotations
 import UDOptions
 
+import System.Environment (getArgs)
+
 import PGF
 
 main = do
-  putStrLn $ helpMsg
+  xx <- getArgs
+  case xx of
+    dir:path:lang:cat:opts | elem dir ["-ud2gf","-gf2ud","-string2gf2ud"] -> do
+      env <- getEnv path lang cat
+      convertGFUD dir (selectOpts opts) env
+    _ -> putStrLn $ helpMsg
 
 helpMsg = unlines $ [
-    "Usage: open in ghci and test with ",
-    "  env <- getEnv (mini|shallow|term) (eng|termInfix) (utt|termcat)",
-    "  ud2gf env <quickUD>|<<File.conllu>",
-    "  gf2ud env <quotedSentence>",
-    "  ud2gfTest (selectOptions [...]) env <quickUD>|<<File.conllu>",
-    "  gf2udTest (selectOptions [...]) env <quotedSentence>",
-    "  roundtrip env <quotedSentence>",
-    "quickUD format:",
-    "  1 John John NOUN 2 nsubj ; 2 walks walk VERB 0 root",
-    "Options (in quotes, separated by commas):"
+    "Usage:",
+    "  gfud (-ud2gf|-gf2ud|-string2gf2ud) <path> <language> <startcat>",
+    "where path = grammardir/abstractprefix, language = concretesuffix",
+    "The input comes from stdIO, and the output goes there as well",
+    "For more functionalities: open in ghci.",
+    "Options:"
     ] ++ [opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 
-mini = "grammars/MiniLang"
-shallow = "grammars/ShallowParse"
-term = "grammars/Term"
---pref = "grammars/Structures"
-eng = "Eng"
-utt = "Utt"
-termInfix = "Infix"
-termcat = "Term"
+convertGFUD :: String -> Opts -> UDEnv -> IO ()
+convertGFUD dir opts env = case dir of
+  "-ud2gf" -> getContents >>= ud2gfOpts (if null opts then defaultOptsUD2GF else opts) env
+  "-gf2ud" -> getContents >>= mapM_ (G.testTreeString (if null opts then defaultOptsGF2UD else opts) env) . filter (not . null) . lines
+  "-string2gf2ud" -> getContents >>= mapM_ (gf2udOpts (if null opts then defaultOptsGF2UD else opts) env) . filter (not . null) . lines
+    
 
 ud2gf :: UDEnv -> String -> IO ()
 ud2gf = ud2gfOpts defaultOptsUD2GF 
@@ -42,12 +43,12 @@ gf2ud :: UDEnv -> String -> IO ()
 gf2ud = gf2udOpts defaultOptsGF2UD 
 
 gf2udOpts :: Opts -> UDEnv -> String -> IO ()
-gf2udOpts opts env s = G.test opts env s >> return ()
+gf2udOpts opts env s = G.testString opts env s >> return ()
 
 roundtripOpts :: Opts -> Opts -> UDEnv -> String -> IO ()
 roundtripOpts gopts uopts env s = do
   putStrLn "FROM GF"
-  u <- G.test gopts env s
+  u <- G.testString gopts env s
   putStrLn "FROM UD BACK TO GF"
   U.showUD2GF uopts env u
   return ()
@@ -55,3 +56,11 @@ roundtripOpts gopts uopts env s = do
 roundtrip :: UDEnv -> String -> IO ()
 roundtrip = roundtripOpts defaultOptsGF2UD minimalOptsUD2GF
 
+-- for quick use in ghci
+mini = "grammars/MiniLang"
+shallow = "grammars/ShallowParse"
+term = "grammars/Term"
+eng = "Eng"
+utt = "Utt"
+termInfix = "Infix"
+termcat = "Term"
