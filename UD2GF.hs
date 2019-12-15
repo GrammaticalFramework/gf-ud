@@ -4,6 +4,7 @@ import UDConcepts
 import UDAnnotations
 import GFConcepts
 import UDOptions
+import UDVisualization
 
 import PGF hiding (CncLabels)
 
@@ -32,6 +33,7 @@ test opts env string = do
   tstats <- mapM (showUD2GF opts env) sentences
   let globalStats = combineUD2GFStats $ map snd tstats
   ifOpt opts "stat" $ prUD2GFStat globalStats
+  if isOpt opts "vat" then (visualizeAbsTrees env (concatMap fst tstats)) else return ()
   return ()
 
 showUD2GF opts env sentence = do
@@ -65,6 +67,7 @@ showUD2GF opts env sentence = do
 
   let ts = map (expandMacro env) ts0
   ifOpt opts "at" $ unlines $ map prAbsTree ts
+-- if isOpt opts "vat" then (visualizeAbsTrees env ts) else return ()
 
   let allnodes = allNodesRTree besttree0
       orig = length allnodes

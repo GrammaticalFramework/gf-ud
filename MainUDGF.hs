@@ -4,6 +4,7 @@ import qualified UD2GF as U
 import qualified GF2UD as G
 import UDAnnotations
 import UDOptions
+import UDVisualization
 
 import System.Environment (getArgs)
 
@@ -29,8 +30,16 @@ helpMsg = unlines $ [
 convertGFUD :: String -> Opts -> UDEnv -> IO ()
 convertGFUD dir opts env = case dir of
   "-ud2gf" -> getContents >>= ud2gfOpts (if null opts then defaultOptsUD2GF else opts) env
-  "-gf2ud" -> getContents >>= mapM_ (G.testTreeString (if null opts then defaultOptsGF2UD else opts) env) . filter (not . null) . lines
-  "-string2gf2ud" -> getContents >>= mapM_ (gf2udOpts (if null opts then defaultOptsGF2UD else opts) env) . filter (not . null) . lines
+  
+  "-gf2ud" -> do
+      s <- getContents
+      uds <- mapM (G.testTreeString (if null opts then defaultOptsGF2UD else opts) env) $ filter (not . null) $ lines s
+      if isOpt opts "vud" then (visualizeUDSentences env uds) else return ()
+      
+  "-string2gf2ud" -> do
+      s <- getContents
+      uds <- mapM (G.testString (if null opts then defaultOptsGF2UD else opts) env) $ filter (not . null) $ lines s
+      if isOpt opts "vud" then (visualizeUDSentences env uds) else return ()
     
 
 ud2gf :: UDEnv -> String -> IO ()
