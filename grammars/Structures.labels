@@ -1,5 +1,5 @@
--- UD lables for Wordnet grammar
--- example usage for Latex outpus: rf -file="trees.txt" -tree -lines | vd -abslabels=Parse.udlabels -output=latex -cnclabels=ParseEng.udlabels -view=open
+-- UD labels for Structured grammar
+-- example usage for Latex output: rf -file="trees.txt" -tree -lines | vd -abslabels=Parse.udlabels -output=latex -cnclabels=ParseEng.udlabels -view=open
 -- for CoNLL output: vd -abslabels=Parse.udlabels -output=conll -cnclabels=ParseEng.udlabels
 -- unsure configs are marked with ---, sometimes with the Parse.labels tags
 

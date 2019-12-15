@@ -12,7 +12,7 @@ main = do
 
 helpMsg = unlines $ [
     "Usage: open in ghci and test with ",
-    "  env <- getEnv pref eng utt",
+    "  env <- getEnv path eng utt",
     "  ud2gf env <quickUD>|<<File.conllu>",
     "  gf2ud env <quotedSentence>",
     "  ud2gfTest (selectOptions [...]) env <quickUD>|<<File.conllu>",
@@ -23,7 +23,8 @@ helpMsg = unlines $ [
     "Options (in quotes, separated by commas):"
     ] ++ [opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 
-pref = "grammars/MiniLang"
+path = "grammars/MiniLang"
+bigpath = "grammars/ShallowParse"
 --pref = "grammars/Structures"
 eng = "Eng"
 utt = "Utt"

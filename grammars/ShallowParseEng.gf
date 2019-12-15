@@ -1,0 +1,85 @@
+concrete ShallowParseEng of ShallowParse =
+
+  JustWordsWordNetEng,
+
+ PhraseEng [
+    Utt,S,QS,Adv,NP,Pol,Imp,
+    UttS      , -- S  -> Utt ;         -- John walks
+    UttQS     , -- QS -> Utt ;         -- does John walk
+    UttNP     , -- NP -> Utt ;         -- John
+    UttAdv,      -- Adv -> Utt ;        -- in the house
+    UttImpSg   -- Pol -> Imp -> Utt ; -- (do not) walk ----s
+    ],
+
+ SentenceEng [
+    S,QS,Cl,QCl,NP,Temp,Pol,VP,Imp,
+    UseCl     , -- Temp -> Pol -> Cl   -> S ;  -- John has not walked
+    UseQCl    , -- Temp -> Pol -> QCl  -> QS ; -- has John walked
+    PredVP    , -- NP -> VP -> Cl ;            -- John walks / John does not walk
+    ImpVP       -- VP -> Imp ;                 -- walk / do not walk
+    ],
+    
+ VerbEng [
+    VP,AdV,Adv,AP,Comp,V,
+    UseV      , -- V   -> VP ;             -- sleep
+    UseComp,
+    CompAP,
+    UseNP     , -- NP  -> VP ;             -- be a man ---s
+    UseAdv    , -- Adv -> VP ;             -- be in the house ---s
+    AdvVP    , -- VP -> Adv -> VP ;       -- sleep here
+    AdVVP
+    ],
+    
+ NounEng [
+    NP,CN,AP,Adv,Ord,RS,Pron,PN,Det,Numeral,N,
+    DetCN     , -- Det -> CN -> NP ;       -- the man
+    UsePN     , -- PN -> NP ;              -- John
+    UsePron   , -- Pron -> NP ;            -- he
+    MassNP    , -- CN -> NP ;              -- milk
+    UseN      , -- N -> CN ;               -- house
+    AdjCN,       -- AP -> CN -> CN ;        -- big house
+    OrdNumeral,
+    RelCN,
+    AdvCN
+    ],
+    
+ AdjectiveEng [
+    AP,AdA,A,Ord,
+    PositA    , -- A  -> AP ;              -- warm
+    UseComparA,
+    AdAP,
+    AdjOrd
+    ],
+    
+ AdverbEng [
+    Prep,NP,Adv,Subj,S,
+    PrepNP    , -- Prep -> NP -> Adv ;     -- in the house
+    SubjS
+    ],
+
+ ConjunctionEng,
+ RelativeEng,
+ QuestionEng,
+
+ TenseX - [CAdv,Pol]
+
+** open SyntaxEng, (P=ParadigmsEng) in {
+
+  lincat
+    PP = Adv ;
+    
+  lin
+    AddNPtoVP vp np = mkVP vp (mkAdv (P.mkPrep []) np) ;
+    AddPPtoVP vp pp = mkVP vp pp ;
+    PrepPP prep np = mkAdv prep np ;
+
+    QuantSgCN quant cn = mkNP quant cn ;
+    QuantPlCN quant cn = mkNP quant pluralNum cn ;
+    CardCN num cn = mkNP num cn ;
+    
+    a_Det = SyntaxEng.a_Det ;
+    aPl_Det = SyntaxEng.aPl_Det ;
+    the_Det = SyntaxEng.the_Det ;
+    thePl_Det = SyntaxEng.thePl_Det ;
+
+}
