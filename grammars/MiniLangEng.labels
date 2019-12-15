@@ -19,3 +19,18 @@
 #lemma UseAP,UseAdv,UseNP be cop head
 #lemma PredVP have aux head
 #lemma PredVP,ImpVP do aux head
+
+#morpho N 0 Number=Sing
+#morpho N 1 Number=Plur
+
+#morpho Pron 0 Case=Nom|PronType=Prs -- --- Case=Nom|Number=Sing|Person=1|PronType=Prs
+#morpho Pron 1 Case=Acc|PronType=Prs -- --- Case=Acc|Number=Sing|Person=1|PronType=Prs
+
+#morpho V,V2 0 VerbForm=Inf
+#morpho V,V2 1 Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#morpho V,V2 2 Mood=Ind|Tense=Past|VerbForm=Fin
+#morpho V,V2 3 Tense=Past|VerbForm=Part
+#morpho V,V2 4 Tense=Pres|VerbForm=Part
+
+#discont V2 0-4,head  5,ADP,case,obj
+
