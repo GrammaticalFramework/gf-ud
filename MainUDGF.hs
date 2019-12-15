@@ -8,13 +8,16 @@ import UDOptions
 import PGF
 
 main = do
-  putStrLn $ unlines [
+  putStrLn $ unlines $ [
     "Usage: open in ghci and test with ",
     "  env <- getEnv pref eng utt",
-    "  ud2gfTest env <File.conllu>",
-    "  gf2udTest env <quotedSentence>",
-    "  roundtrip env <quotedSentence>"
-    ]
+    "  ud2gf env <File.conllu>",
+    "  gf2ud env <quotedSentence>",
+    "  ud2gfTest (selectOptions [...]) env <File.conllu>",
+    "  gf2udTest (selectOptions [...]) env <quotedSentence>",
+    "  roundtrip env <quotedSentence>",
+    "Options (in quotes, separated by commas):"
+    ] ++ [opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 
 pref = "grammars/MiniLang"
 --pref = "grammars/Structures"

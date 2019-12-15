@@ -32,4 +32,4 @@ defaultOpts = selectOpts ["msg","ud","err","bt0","at"]
 
 selectOpts opts = [(o,s) | (o,s) <- fullOpts, elem o opts]
 
-putStrMsg m s = putStrLn m >> putStrLn s
+putStrMsg m s = putStrLn ("# " ++ m) >> putStrLn s
