@@ -3,6 +3,7 @@ module Main where
 import qualified UD2GF as U 
 import qualified GF2UD as G
 import UDAnnotations
+import UDOptions
 
 import PGF
 
@@ -20,16 +21,19 @@ pref = "grammars/MiniLang"
 eng = "Eng"
 utt = "Utt"
 
-ud2gfTest :: UDEnv -> FilePath -> IO ()
-ud2gfTest env = U.test env
+ud2gf :: UDEnv -> FilePath -> IO ()
+ud2gf env = ud2gfTest defaultOpts env
 
-gf2udTest :: UDEnv -> String -> IO ()
-gf2udTest env s = G.test env s >> return ()
+ud2gfTest :: Opts -> UDEnv -> FilePath -> IO ()
+ud2gfTest opts env = U.test opts env
+
+gf2ud :: UDEnv -> String -> IO ()
+gf2ud env s = G.test env s >> return ()
 
 roundtrip :: UDEnv -> String -> IO ()
 roundtrip env s = do
   putStrLn "FROM GF"
   u <- G.test env s
-  putStrLn "BACK TO UD"
-  U.showUD2GF env u
+  putStrLn "FROM UD BACK TO GF"
+  U.showUD2GF (selectOpts ["ut","at"]) env u
   return ()

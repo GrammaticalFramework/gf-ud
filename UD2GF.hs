@@ -3,6 +3,8 @@ module UD2GF where
 import UDConcepts
 import UDAnnotations
 import GFConcepts
+import UDOptions
+
 import PGF hiding (CncLabels)
 
 import qualified Data.Map as M
@@ -23,39 +25,44 @@ traceNoPrint _ _ x = x
 
 -- env <- getEnv
 
-test env file = do
+
+test opts env file = do
   let eng = actLanguage env
   sentences <- parseUDFile file
-  mapM (showUD2GF env) sentences
+  mapM (showUD2GF opts env) sentences
   return ()
 
-showUD2GF env sentence = do
-  putStrLn (prt sentence)
-  putStrLn $ unlines (errors sentence)
+showUD2GF opts env sentence = do
   
+  ifOpt opts "ud" $ prt sentence
+
+  case errors sentence of
+    [] -> return ()
+    errs -> ifOpt opts "err" $ unlines errs
+ 
   let udtree = udSentence2tree sentence
-  putStrLn $ prUDTree udtree
+  ifOpt opts "ut" $ prUDTree udtree
 
   let devtree0 = udtree2devtree udtree
-  putStrLn $ prLinesRTree (prDevNode 2) devtree0
+  ifOpt opts "dt0" $ prLinesRTree (prDevNode 2) devtree0
 
   let devtree1 = analyseWords env devtree0
-  putStrLn $ prLinesRTree (prDevNode 2) devtree1
+  ifOpt opts "dt1" $ prLinesRTree (prDevNode 2) devtree1
   
   let devtree = combineTrees env devtree1
-  putStrLn $ prLinesRTree (prDevNode 4) devtree
+  ifOpt opts "dt" $ prLinesRTree (prDevNode 4) devtree
 
   let besttree0 = head (splitDevTree devtree)
-  putStrLn $ prLinesRTree (prDevNode 1) besttree0
+  ifOpt opts "bt0" $ prLinesRTree (prDevNode 1) besttree0
 
   let besttree = addBackups besttree0
-  putStrLn $ prLinesRTree (prDevNode 1) besttree
+  ifOpt opts "bt" $ prLinesRTree (prDevNode 1) besttree
   
   let ts0 = devtree2abstrees besttree
-  putStrLn $ unlines $ map prAbsTree ts0
+  ifOpt opts "at0" $ unlines $ map prAbsTree ts0
 
   let ts = map (expandMacro env) ts0
-  putStrLn $ unlines $ map prAbsTree ts
+  ifOpt opts "at" $ unlines $ map prAbsTree ts
 
   return ts
 
