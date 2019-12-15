@@ -3,6 +3,8 @@ module GF2UD where
 import UDConcepts
 import GFConcepts
 import UDAnnotations
+import UDOptions
+
 import PGF hiding (CncLabels)
 
 import qualified Data.Map as M
@@ -15,36 +17,30 @@ import Data.Maybe
 
 -- env <- getEnv
 
-test env s = do
+test opts env s = do
   let eng = actLanguage env
   let t = parseEng env s
-  putStrLn "GF TREE:"
-  putStrLn $ showExpr [] t
+
+  ifOpt opts "gf" $ showExpr [] t
   
   let e0 = expr2annottree env eng t
-  putStrLn "expr2annottree:"
-  putStrLn $ prLinesRTree prAnnotNode e0
+  ifOpt opts "an0" $ prLinesRTree prAnnotNode e0
   
   let e = annotTree2labelledTree env eng e0
-  putStrLn "annotTree2labelledTree:"
-  putStrLn $ prLinesRTree prAnnotNode e
+  ifOpt opts "an1" $ prLinesRTree prAnnotNode e
   
   let u0 = labelledTree2wordTree e
-  putStrLn "labelledTree2wordTree:"
-  putStrLn $ prLinesRTree prAnnotNode u0
+  ifOpt opts "an2" $ prLinesRTree prAnnotNode u0
   
   let u1 = applyNonlocalAnnotations env eng u0
-  putStrLn "applyNonlocalAnnotations:"
-  putStrLn $ prLinesRTree prAnnotNode u1
+  ifOpt opts "an3" $ prLinesRTree prAnnotNode u1
   
   let u2 = wordTree2udTree u1
-  putStrLn "wordTree2udTree:"
-  putStrLn $ prUDTree u2
+  ifOpt opts "ut" $ prUDTree u2
   
   let u = udTree2sentence u2
-  putStrLn "udTree2sentence:"
-  putStrLn (prt u)
-  putStrLn $ unlines (errors u)
+  ifOpt opts "ud" $ prt u
+  ifOpt opts "err" $ unlines (errors u)
 
   return u
 

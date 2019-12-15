@@ -33,18 +33,25 @@ termInfix = "Infix"
 termcat = "Term"
 
 ud2gf :: UDEnv -> String -> IO ()
-ud2gf env = ud2gfTest defaultOpts env
+ud2gf = ud2gfOpts defaultOptsUD2GF 
 
-ud2gfTest :: Opts -> UDEnv -> String -> IO ()
-ud2gfTest opts env = U.test opts env
+ud2gfOpts :: Opts -> UDEnv -> String -> IO ()
+ud2gfOpts opts env = U.test opts env
 
 gf2ud :: UDEnv -> String -> IO ()
-gf2ud env s = G.test env s >> return ()
+gf2ud = gf2udOpts defaultOptsGF2UD 
+
+gf2udOpts :: Opts -> UDEnv -> String -> IO ()
+gf2udOpts opts env s = G.test opts env s >> return ()
+
+roundtripOpts :: Opts -> Opts -> UDEnv -> String -> IO ()
+roundtripOpts gopts uopts env s = do
+  putStrLn "FROM GF"
+  u <- G.test gopts env s
+  putStrLn "FROM UD BACK TO GF"
+  U.showUD2GF uopts env u
+  return ()
 
 roundtrip :: UDEnv -> String -> IO ()
-roundtrip env s = do
-  putStrLn "FROM GF"
-  u <- G.test env s
-  putStrLn "FROM UD BACK TO GF"
-  U.showUD2GF (selectOpts ["ut","at"]) env u
-  return ()
+roundtrip = roundtripOpts defaultOptsGF2UD minimalOptsUD2GF
+
