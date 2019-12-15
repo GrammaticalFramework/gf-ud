@@ -31,7 +31,9 @@ test opts env string = do
   sentences <- case string of
     '<':file -> parseUDFile file
     _ -> return [pQuickUDSentence string]
-  mapM (showUD2GF opts env) sentences
+  tstats <- mapM (showUD2GF opts env) sentences
+  let globalStats = combineUD2GFStats $ map snd tstats
+  ifOpt opts "stat" $ prUD2GFStat globalStats
   return ()
 
 showUD2GF opts env sentence = do
@@ -66,8 +68,48 @@ showUD2GF opts env sentence = do
   let ts = map (expandMacro env) ts0
   ifOpt opts "at" $ unlines $ map prAbsTree ts
 
-  return ts
+  let allnodes = allNodesRTree besttree0
+      orig = length allnodes
+      interp = length (devStatus (root besttree0))
+      stat = UD2GFStat {
+       totalWords = orig,
+       interpretedWords = interp,
+       unknownWords = length [dn | dn <- allnodes, devIsUnknown dn],
+       totalSentences = 1,
+       completeSentences = div interp orig -- either 1 or 0
+       }
+  
+  return (ts,stat)
 
+
+data UD2GFStat = UD2GFStat {
+  totalWords :: Int,
+  interpretedWords :: Int,
+  unknownWords :: Int,
+  totalSentences :: Int,
+  completeSentences :: Int
+  }
+ deriving Show
+
+prUD2GFStat :: UD2GFStat -> String
+prUD2GFStat stat = unlines $ [
+  "total word nodes:\t"                    ++ show (totalWords stat),
+  "interpreted word nodes:\t"              ++ show (totalWords stat) ++ proportion interpretedWords totalWords,
+  "unknown word nodes (tokens):\t"         ++ show (unknownWords stat) ++ proportion unknownWords totalWords,
+  "total sentences:\t"                     ++ show (totalSentences stat),
+  "completely interepreted sentences:\t"   ++ show (completeSentences stat) ++ proportion completeSentences totalSentences
+  ]
+ where
+   proportion f g = " (" ++ show (div (100 * f stat) (g stat)) ++ "%)"
+
+combineUD2GFStats :: [UD2GFStat] -> UD2GFStat
+combineUD2GFStats stats = UD2GFStat {
+  totalWords = sum (map totalWords stats),
+  interpretedWords = sum (map interpretedWords stats),
+  unknownWords = sum (map unknownWords stats),
+  totalSentences = sum (map totalSentences stats),
+  completeSentences = sum (map completeSentences stats)
+  }
 
 {-
 -- the pipeline
@@ -90,7 +132,8 @@ data DevNode = DevNode {
   devFeats      :: [UDData],
   devLabel      :: String,
   devIndex      :: UDId,   -- position in the original sentence
-  devNeedBackup :: Bool  -- if this node needs to be covered by Backup
+  devNeedBackup :: Bool,   -- if this node needs to be covered by Backup
+  devIsUnknown  :: Bool    -- if the word at this node is unknown
  }
   deriving Show
 
@@ -296,17 +339,20 @@ analyseWords :: UDEnv -> DevTree -> DevTree
 analyseWords env = mapRTree lemma2fun
  where
   lemma2fun dn = dn {
-    devAbsTrees = [(t,(c,[devIndex dn])) | (t,c) <- getWordTrees (devLemma dn) (cats (devPOS dn))],
-    devStatus = [devIndex dn]
+    devAbsTrees = [(t,(c,[devIndex dn])) | (t,c) <- justWords],
+    devStatus = [devIndex dn],
+    devIsUnknown = isUnknown
     }
+   where
+    (isUnknown,justWords) = getWordTrees (devLemma dn) (cats (devPOS dn))
     
   cats pos = maybe [] id $ M.lookup pos (catsForPOS env)
 
   -- find all functions that are possible parses of the word in any appropriate category
   --- it is still possible that some other category is meant
   getWordTrees w cs = case concatMap (parseWord w) cs of
-    [] -> [(newWordTree w c, c) | c <- cs]  -- if no results, just build tree w__c
-    fs -> fs  
+    [] -> (True,[(newWordTree w c, c) | c <- cs])  -- if no results, just build tree w__c), status isKnown=True
+    fs -> (False,fs)
 
   --- this can fail if c is discontinuous, or return false positives if w is a form of another word
   parseWord w c = case parse (pgfGrammar env) (actLanguage env) (mkType [] c []) w of
@@ -328,5 +374,6 @@ udtree2devtree tr@(RTree un uts) =
       devFeats = udFEATS un,
       devLabel = udDEPREL un,
       devIndex = udID un,
-      devNeedBackup = False
+      devNeedBackup = False,
+      devIsUnknown = True
      }) (map udtree2devtree uts)

@@ -23,12 +23,13 @@ fullOpts = [
   ("bt0","the best (most complete) tree, without backups"),
   ("bt", "the best tree, backups added"),
   ("at0","resulting GF tree, with macros in place"),
-  ("at", "final GF tree, macros expanded")
+  ("at", "final GF tree, macros expanded"),
+  ("stat", "show statistics of original and interpreted words")
   ]
 
 minimalOpts = selectOpts ["at"]
 
-defaultOpts = selectOpts ["msg","ud","err","bt0","at"]
+defaultOpts = selectOpts ["msg","ud","err","bt0","at","stat"]
 
 selectOpts opts = [(o,s) | (o,s) <- fullOpts, elem o opts]
 
