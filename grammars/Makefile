@@ -6,4 +6,7 @@ shallow:
 mini:
 	gf -make gf-summerschool-2018/resource/english/MiniLangEng.gf
 
+term:
+	gf -make TermInfix.gf
+
 

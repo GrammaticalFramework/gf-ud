@@ -97,7 +97,7 @@ prUD2GFStat stat = unlines $ [
   "interpreted word nodes:\t"              ++ show (interpretedWords stat) ++ proportion interpretedWords totalWords,
   "unknown word nodes (tokens):\t"         ++ show (unknownWords stat) ++ proportion unknownWords totalWords,
   "total sentences:\t"                     ++ show (totalSentences stat),
-  "completely interepreted sentences:\t"   ++ show (completeSentences stat) ++ proportion completeSentences totalSentences
+  "completely interpreted sentences:\t"    ++ show (completeSentences stat) ++ proportion completeSentences totalSentences
   ]
  where
    proportion f g = " (" ++ show (div (100 * f stat) (g stat)) ++ "%)"
@@ -330,8 +330,14 @@ combineTrees env =
       (f,((val,args),((xx,df),ls))) <- M.assocs (macroFunctions (absLabels env))]
      ++
     [(f, mkLabelledType typ labels) |
-      (f,labels) <- M.assocs (funLabels (absLabels env)),
+      (f,(labels,True)) <- M.assocs (funLabels (absLabels env)),
       Just typ   <- [functionType (pgfGrammar env) f]
+    ]
+     ++
+    [(f, mkLabelledType typ labels) |
+      (f,labelss) <- M.assocs (altFunLabels (absLabels env)),
+      labels      <- labelss,
+      Just typ    <- [functionType (pgfGrammar env) f]
     ]
 
 

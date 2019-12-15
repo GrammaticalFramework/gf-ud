@@ -10,3 +10,9 @@ Atom ATOM
 TOper OPER
 FOper OPER
 
+#macro parenth_parenth x t y : Par -> Term -> Par -> Atom = parenth t ; lpar head rpar
+
+#aux Par PARENTH
+
+#disable parenth
+

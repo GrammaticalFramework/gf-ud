@@ -140,7 +140,7 @@ annotTree2labelledTree env lang =
   . addLabels root_Label
  where
    pgf = pgfGrammar env
-   lookFun f = maybe defaultLabels id (M.lookup f (funLabels (absLabels env)))
+   lookFun f = maybe defaultLabels fst (M.lookup f (funLabels (absLabels env)))
    defaultLabels = head_Label:repeat dep_Label
 
    propagateLabels tr@(RTree node trs) = 

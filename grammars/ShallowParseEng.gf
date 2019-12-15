@@ -81,7 +81,7 @@ concrete ShallowParseEng of ShallowParse =
     PossSgNP pron cn = mkNP (mkQuant pron) cn ;
     PossPlNP pron cn = mkNP (mkQuant pron) pluralNum cn ;
 
-    PunctUttText utt punct = mkText utt punct ; 
+    PunctUttText utt punct = lin Text {s = utt.s ++ punct.s} ; 
     UttText utt = lin Text utt ;
 
     fullstop_Punct = {s = "."} ;

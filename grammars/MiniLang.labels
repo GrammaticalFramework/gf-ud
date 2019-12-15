@@ -28,6 +28,6 @@ V2	      VERB
 #macro QuestCl_Do aux cl : Do -> Cl -> QCl = QuestCl cl ; aux head
 #macro UseCl_Pres cl : Cl -> S = UseCl TSim PPos cl ; head
 
-Cop AUX
-Do AUX
+#aux Cop AUX
+#aux Do AUX
 

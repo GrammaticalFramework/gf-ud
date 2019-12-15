@@ -211,6 +211,10 @@ Punct         PUNCT
 #macro QuestCl_Do aux cl : Do -> Cl -> QCl = QuestCl cl ; aux head
 #macro UseCl_Pres cl : Cl -> S = UseCl (TTAnt ASim TPres) PPos cl ; head
 
-Cop AUX
-Do AUX
+#aux Cop AUX
+#aux Do AUX
 
+#disable UseComp
+
+#altfun AddNPtoVP head iobj
+#altfun AddPPtoVP head obl
