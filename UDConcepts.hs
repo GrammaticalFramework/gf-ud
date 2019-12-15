@@ -126,6 +126,17 @@ instance UDObject d => UDObject [d] where
     _ -> map prs (getSeps '|' s)
   errors ds = concatMap errors ds
 
+
+-- example input: "1 John John NOUN 2 nsubj ; 2 walks walk VERB 0 root"
+pQuickUDSentence :: String -> UDSentence
+pQuickUDSentence = prss . map completeUDWord . getSeps ";" . words
+ where
+  completeUDWord ws = case ws of
+    index:word:lemma:pos:goal:label:_ -> (concat (intersperse "\t" [index,word,lemma,pos,dum,dum,goal,label,dum,dum]))
+    _ -> error $ "no UD word from: " ++ unwords ws
+  dum = "_"
+    
+
 ----------------------------------------------
 -- converting to a hierarchical tree and back
 ----------------------------------------------

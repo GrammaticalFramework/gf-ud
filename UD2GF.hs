@@ -26,9 +26,11 @@ traceNoPrint _ _ x = x
 -- env <- getEnv
 
 
-test opts env file = do
+test opts env string = do
   let eng = actLanguage env
-  sentences <- parseUDFile file
+  sentences <- case string of
+    '<':file -> parseUDFile file
+    _ -> return [pQuickUDSentence string]
   mapM (showUD2GF opts env) sentences
   return ()
 

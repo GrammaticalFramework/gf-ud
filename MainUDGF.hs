@@ -8,14 +8,18 @@ import UDOptions
 import PGF
 
 main = do
-  putStrLn $ unlines $ [
+  putStrLn $ helpMsg
+
+helpMsg = unlines $ [
     "Usage: open in ghci and test with ",
     "  env <- getEnv pref eng utt",
-    "  ud2gf env <File.conllu>",
+    "  ud2gf env <quickUD>|<<File.conllu>",
     "  gf2ud env <quotedSentence>",
-    "  ud2gfTest (selectOptions [...]) env <File.conllu>",
+    "  ud2gfTest (selectOptions [...]) env <quickUD>|<<File.conllu>",
     "  gf2udTest (selectOptions [...]) env <quotedSentence>",
     "  roundtrip env <quotedSentence>",
+    "quickUD format:",
+    "  1 John John NOUN 2 nsubj ; 2 walks walk VERB 0 root",
     "Options (in quotes, separated by commas):"
     ] ++ [opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 
@@ -24,10 +28,10 @@ pref = "grammars/MiniLang"
 eng = "Eng"
 utt = "Utt"
 
-ud2gf :: UDEnv -> FilePath -> IO ()
+ud2gf :: UDEnv -> String -> IO ()
 ud2gf env = ud2gfTest defaultOpts env
 
-ud2gfTest :: Opts -> UDEnv -> FilePath -> IO ()
+ud2gfTest :: Opts -> UDEnv -> String -> IO ()
 ud2gfTest opts env = U.test opts env
 
 gf2ud :: UDEnv -> String -> IO ()
