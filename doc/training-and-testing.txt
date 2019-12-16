@@ -1,0 +1,90 @@
+Training and testing with gfud
+
+AR 2019-12-16
+
+Prepare the scene:
+
+  $ make compile  # to create the gfud executable
+  $ cd grammars
+  $ ln -s <YOUR-PATH-TO>/gf-summerschool-2018
+  $ ln -s <YOUR-PATH-TO>/maltparser-<YOUR-VERSION>.jar maltparser.jar
+  $ make mini
+  $ cd ..
+  $ mkdir out # create a directory for generated files
+
+After doing this, the following steps can be done by just running
+
+  $ make minitest
+
+Generate 400 random trees:
+
+  $ echo "gr -cat=Utt -number=400 -depth=8 | wf -file=out/minilang.gft" | gf -run grammars/MiniLang.pgf
+
+Divide into training and test sets (there are spaces between trees):
+
+  $ head -700 minilang.gft | sort -u >out/minilang-train.gft
+  $ tail -99  minilang.gft | sort -u >out/minilang-test.gft
+
+See how many trees there are:
+
+  $ wc out/minilang-t*.gft
+      46     938    7339 minilang-test.gft
+     265    4563   35612 minilang-train.gft
+
+Generate treebanks (you need to remove initial blank lines to make Malt parser work):
+
+  $ cat out/minilang-train.gft | ./gfud -gf2ud grammars/MiniLang Eng  Utt ud  | sed '/./,$!d'  >out/minilang-train.conllu
+  $ cat out/minilang-test.gft  | ./gfud -gf2ud grammars/MiniLang Eng Utt ud   | sed '/./,$!d' >out/minilang-test.conllu
+
+Test with back-translation (currently commented out in minitest.sh since it can take long):
+
+  $ cat out/minilang-test.conllu | ./gfud -ud2gf grammars/MiniLang Eng Utt at >out/minilang-test-ud2gf.gft
+  $ cat out/minilang-test.conllu | ./gfud -ud2gf grammars/MiniLang Eng Utt stat
+
+    total word nodes:	385
+    interpreted word nodes:	189 (49%)
+    unknown word nodes (tokens):	126 (32%)
+    total sentences:	45
+    completely interpreted sentences:	12 (26%)
+
+  $ diff -y out/minilang-test.gft out/minilang-test-ud2gf.gft 
+
+    UttAdv (PrepNP on_Prep (MassNP (AdjCN (PositA big_A) (UseN ma |	PrepNP on_Prep (MassNP (AdjCN (PositA big_A) (UseN man_N)))
+    ...
+    
+Test with Malt parser:
+
+  $ java -jar maltparser.jar -c test -i out/minilang-train.conllu -m learn
+  $ java -jar maltparser.jar -c test -i out/minilang-test.conllu -o out/minilang-test-out.conllu -m parse
+
+--------------------
+
+Doing the same with grammars/Term.pgf gives better results:
+
+  $ cat out/test-terms.conllu | ./gfud -ud2gf grammars/Term Infix Term stat
+
+    total word nodes:	298
+    interpreted word nodes:	298 (100%)
+    unknown word nodes (tokens):	60 (20%)
+    total sentences:	32
+    completely interpreted sentences:	32 (100%)
+
+The trees differ:
+
+  $ diff -y out/terms-test.gft out/terms-test-ud2gf.gft 
+
+    FactorTerm (AtomFactor (OpFactor TimesOp (AtomFactor (OpFacto | OpFactor TimesOp (AtomFactor (OpFactor TimesOp (AtomFactor x)
+
+However, this is because of superfluous wrappings:
+
+  $ gf ../grammars/Term.pgf
+  
+  Term> rf -file="terms-test.gft" -lines -tree | l | wf -file="terms-test-lin.txt"
+  Term> rf -file="terms-test-ud2gf.gft" -lines -tree | l | wf -file="terms-test-ud2gf-lin.txt"
+
+  $ diff terms-test-lin.txt terms-test-ud2gf-lin.txt 
+  $
+
+I.e. no differences!
+
+

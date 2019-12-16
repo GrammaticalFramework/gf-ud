@@ -1,4 +1,5 @@
 # gf-ud
+
 Conversions between GF and dependency trees, in particular UD (Universal Dependencies) 
 but designed to be completely generic as for annotation scheme. 
 This repository replaces the old gf-contrib/ud2gf code.
@@ -26,7 +27,10 @@ To get started, you can test the following:
 - make compile
 - cat test.conllu | ./gfud -ud2gf grammars/MiniLang Eng Utt at
 - cat test.gftrees | ./gfud -gf2ud grammars/MiniLang Eng Utt ud
-- echo "the black cat sees us" | ./gfud -string2gf2ud grammars/MiniLang Eng Utt 
+- echo "the black cat sees us" | ./gfud -string2gf2ud grammars/MiniLang Eng Utt
+
+You can also follow the instructions in doc/training-and-testing.txt
+to test a combination with Malt parser.
   
 The largest changes are perhaps in the format of dependency configurations.
 One goal was to merge the gf2ud and ud2gf annotations. See

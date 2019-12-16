@@ -126,6 +126,19 @@ instance UDObject d => UDObject [d] where
     _ -> map prs (getSeps '|' s)
   errors ds = concatMap errors ds
 
+-- printing for Malt parser requires the metadata
+-- # sent_id = gfud1000001
+-- # text = in the computer
+prUDSentence :: Int -> UDSentence -> String
+prUDSentence i = prt . addMeta i
+ where
+   addMeta i u = u {
+     udCommentLines = [
+       "# sent_id = gfud" ++ show (1000000 + i),
+       "# text = " ++ unwords (map udFORM (udWordLines u))
+       ]
+     }
+
 
 -- example input: "1 John John NOUN 2 nsubj ; 2 walks walk VERB 0 root"
 pQuickUDSentence :: String -> UDSentence

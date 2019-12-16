@@ -30,17 +30,15 @@ helpMsg = unlines $ [
 convertGFUD :: String -> Opts -> UDEnv -> IO ()
 convertGFUD dir opts env = case dir of
   "-ud2gf" -> getContents >>= ud2gfOpts (if null opts then defaultOptsUD2GF else opts) env
-  
-  "-gf2ud" -> do
+  _ -> do
       s <- getContents
-      uds <- mapM (G.testTreeString (if null opts then defaultOptsGF2UD else opts) env) $ filter (not . null) $ lines s
+      let conv = case dir of
+            "-gf2ud" -> G.testTreeString
+            "-string2gf2ud" -> G.testString
+      let os = if null opts then defaultOptsGF2UD else opts
+      uds <- mapM (\ (i,s) -> conv i os env s) $ zip [1..] . filter (not . null) $ lines s
       if isOpt opts "vud" then (visualizeUDSentences env uds) else return ()
-      
-  "-string2gf2ud" -> do
-      s <- getContents
-      uds <- mapM (G.testString (if null opts then defaultOptsGF2UD else opts) env) $ filter (not . null) $ lines s
-      if isOpt opts "vud" then (visualizeUDSentences env uds) else return ()
-    
+   
 
 ud2gf :: UDEnv -> String -> IO ()
 ud2gf = ud2gfOpts defaultOptsUD2GF 
@@ -52,12 +50,12 @@ gf2ud :: UDEnv -> String -> IO ()
 gf2ud = gf2udOpts defaultOptsGF2UD 
 
 gf2udOpts :: Opts -> UDEnv -> String -> IO ()
-gf2udOpts opts env s = G.testString opts env s >> return ()
+gf2udOpts opts env s = G.testString 1 opts env s >> return ()
 
 roundtripOpts :: Opts -> Opts -> UDEnv -> String -> IO ()
 roundtripOpts gopts uopts env s = do
   putStrLn "FROM GF"
-  u <- G.testString gopts env s
+  u <- G.testString 1 gopts env s
   putStrLn "FROM UD BACK TO GF"
   U.showUD2GF uopts env u
   return ()

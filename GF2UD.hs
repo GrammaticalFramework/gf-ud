@@ -18,17 +18,17 @@ import Data.Maybe
 
 -- env <- getEnv
 
-testString opts env s = do
+testString i opts env s = do
   let eng = actLanguage env
   let t = parseEng env s
-  testTree opts env t
+  testTree i opts env t
 
-testTreeString opts env s = do
+testTreeString i opts env s = do
   case readExpr s of
-    Just t -> testTree opts env t
+    Just t -> testTree i opts env t
     _ -> error $ "not a well-formed tree: " ++ s
 
-testTree opts env t = do
+testTree i opts env t = do
   let eng = actLanguage env
   
   ifOpt opts "gf" $ showExpr [] t
@@ -49,7 +49,7 @@ testTree opts env t = do
   ifOpt opts "ut" $ prUDTree u2
   
   let u = udTree2sentence u2
-  ifOpt opts "ud" $ prt u
+  ifOpt opts "ud" $ prUDSentence i u
   ifOpt opts "err" $ unlines (errors u)
   
 --  if isOpt opts "vud" then (visualizeUDSentences env [u]) else return ()
