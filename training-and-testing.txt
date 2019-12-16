@@ -1,0 +1,76 @@
+Training and testing with gfud
+
+AR 2019-12-16
+
+Generate 400 random trees:
+
+  $ echo "gr -cat=Utt -number=400 -depth=8 | wf -file=minilang.gft" | gf -run grammars/MiniLang.pgf
+
+Divide into training and test sets (there are spaces between trees):
+
+  $ head -700 minilang.gft | sort -u >minilang-train.gft
+  $ tail -99  minilang.gft | sort -u >minilang-test.gft
+
+See how many trees there are:
+
+  $ wc minilang-t*.gft
+      46     938    7339 minilang-test.gft
+     265    4563   35612 minilang-train.gft
+
+Generate treebanks:
+
+  $ cat minilang-train.gft | ./gfud -gf2ud grammars/MiniLang Eng Utt ud >minilang-train.conllu
+  $ cat minilang-test.gft  | ./gfud -gf2ud grammars/MiniLang Eng Utt ud >minilang-test.conllu
+
+Test with back-translation:
+
+  $ cat minilang-test.conllu | ./gfud -ud2gf grammars/MiniLang Eng Utt at >minilang-test-ud2gf.gft
+  $ cat minilang-test.conllu | ./gfud -ud2gf grammars/MiniLang Eng Utt stat
+
+    total word nodes:	385
+    interpreted word nodes:	189 (49%)
+    unknown word nodes (tokens):	126 (32%)
+    total sentences:	45
+    completely interpreted sentences:	12 (26%)
+
+  $ diff -y minilang-test.gft minilang-test-ud2gf.gft 
+
+    UttAdv (PrepNP on_Prep (MassNP (AdjCN (PositA big_A) (UseN ma |	PrepNP on_Prep (MassNP (AdjCN (PositA big_A) (UseN man_N)))
+    ...
+    
+Test with Malt parser (this gives no output yet...):
+
+  $ java -jar maltparser-1.9.2.jar -c test -i minilang-train.conllu -m learn
+  $ java -jar maltparser-1.9.2.jar -c test -i minilang-test.conllu -o minilang-out.conllu -m parse
+
+--------------------
+
+Doing the same with grammars/Term.pgf gives better results:
+
+  $ cat out/test-terms.conllu | ./gfud -ud2gf grammars/Term Infix Term stat
+
+    total word nodes:	298
+    interpreted word nodes:	298 (100%)
+    unknown word nodes (tokens):	60 (20%)
+    total sentences:	32
+    completely interpreted sentences:	32 (100%)
+
+The trees differ:
+
+  $ diff -y out/terms-test.gft out/terms-test-ud2gf.gft 
+
+    FactorTerm (AtomFactor (OpFactor TimesOp (AtomFactor (OpFacto | OpFactor TimesOp (AtomFactor (OpFactor TimesOp (AtomFactor x)
+
+However, this is because of superfluous wrappings:
+
+  $ gf ../grammars/Term.pgf
+  
+  Term> rf -file="terms-test.gft" -lines -tree | l | wf -file="terms-test-lin.txt"
+  Term> rf -file="terms-test-ud2gf.gft" -lines -tree | l | wf -file="terms-test-ud2gf-lin.txt"
+
+  $ diff terms-test-lin.txt terms-test-ud2gf-lin.txt 
+  $
+
+I.e. no differences!
+
+
