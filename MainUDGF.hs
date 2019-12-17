@@ -15,15 +15,15 @@ main = do
   xx <- getArgs
   case xx of
   
-    "eval":micmac:luas:goldf:testf:_ | False -> do ---- does not work yet
+    "eval":micmac:luas:goldf:testf:_ -> do
     
       putStrLn (unwords ("evaluating": tail xx))
       
       let mcro = case micmac of "macro" -> False ; "micro" -> True ; _ -> error ("expected micro|macro, got " ++ micmac)
       let crit = case luas of "LAS" -> agreeLAS ; "UAS" -> agreeUAS ; _ -> error ("expected LAS|UAS, got " ++ luas)
       
-      gold <- readFile goldf >>= parseUDFile
-      test <- readFile testf >>= parseUDFile
+      gold <- parseUDFile goldf
+      test <- parseUDFile testf
 
       let score = udCorpusScore mcro crit gold test
       print score
