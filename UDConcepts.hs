@@ -251,3 +251,53 @@ stanzas ls = case dropWhile (all isSpace) ls of
     (s,ss) -> s : stanzas ss
 
 
+------------------
+-- evaluations
+-----------------
+
+-- labelled attachment score
+
+data UDScore = UDScore {
+  udScore          :: Double, --- redundant
+  udMatching       :: Int, -- if the words are the same. 1 or 0 for a single sentence, sum for a corpus
+  udTotalLength    :: Int, -- number of words
+  udSamesLength    :: Int, -- number of words with matching (head,label)
+  udPerfectMatch   :: Int  -- all words have match (head,label). 1 or 0 for single sentence, sum for corpus
+  }
+ deriving Show
+
+type ScoringCriterion = UDWord -> UDWord -> Bool
+
+agreeLAS g t = udHEAD g == udHEAD t && udDEPREL g == udDEPREL t
+agreeUAS g t = udHEAD g == udHEAD t 
+ 
+udSentenceScore :: ScoringCriterion -> UDSentence -> UDSentence -> UDScore
+udSentenceScore agree gold tested = UDScore {
+  udScore = fromIntegral (length sames) / fromIntegral (length alls),
+  udMatching = areMatching,
+  udTotalLength = length alls,
+  udSamesLength = length sames,
+  udPerfectMatch = if (length sames == length alls) then 1 else 0
+  } 
+  where 
+    alls = udWordLines tested
+    sames = [() | (g,t) <- zip (udWordLines gold) (udWordLines tested), agree g t]
+    areMatching = if (map udFORM (udWordLines gold) == map udFORM (udWordLines tested)) then 1 else 0
+
+
+udCorpusScore :: Bool -> ScoringCriterion -> [UDSentence] -> [UDSentence] -> UDScore
+udCorpusScore isMicro agree golds tests = UDScore {
+  udScore = if isMicro
+            then fromIntegral numbersames / fromIntegral numberalls                -- micro score (per word)
+            else sum (map udScore sentenceScores) / fromIntegral (length sentenceScores), -- macro score (per sentence)
+  udMatching = sum (map udMatching sentenceScores),
+  udTotalLength = numberalls,
+  udSamesLength = numbersames,
+  udPerfectMatch = sum (map udPerfectMatch sentenceScores)
+  }
+  where
+    sentenceScores =
+      filter ((>0) . udMatching) $
+        map (uncurry (udSentenceScore agree)) (zip golds tests)
+    numberalls  =  sum (map udTotalLength sentenceScores)
+    numbersames =  sum (map udSamesLength sentenceScores)

@@ -4,6 +4,7 @@ import qualified UD2GF as U
 import qualified GF2UD as G
 import UDAnnotations
 import UDOptions
+import UDConcepts
 import UDVisualization
 
 import System.Environment (getArgs)
@@ -13,6 +14,20 @@ import PGF
 main = do
   xx <- getArgs
   case xx of
+  
+    "eval":micmac:luas:goldf:testf:_ | False -> do ---- does not work yet
+    
+      putStrLn (unwords ("evaluating": tail xx))
+      
+      let mcro = case micmac of "macro" -> False ; "micro" -> True ; _ -> error ("expected micro|macro, got " ++ micmac)
+      let crit = case luas of "LAS" -> agreeLAS ; "UAS" -> agreeUAS ; _ -> error ("expected LAS|UAS, got " ++ luas)
+      
+      gold <- readFile goldf >>= parseUDFile
+      test <- readFile testf >>= parseUDFile
+
+      let score = udCorpusScore mcro crit gold test
+      print score
+      
     dir:path:lang:cat:opts | elem dir ["-ud2gf","-gf2ud","-string2gf2ud"] -> do
       env <- getEnv path lang cat
       convertGFUD dir (selectOpts opts) env
@@ -20,7 +35,8 @@ main = do
 
 helpMsg = unlines $ [
     "Usage:",
-    "  gfud (-ud2gf|-gf2ud|-string2gf2ud) <path> <language> <startcat>",
+    "   gfud (-ud2gf|-gf2ud|-string2gf2ud) <path> <language> <startcat>",
+    " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile>",
     "where path = grammardir/abstractprefix, language = concretesuffix",
     "The input comes from stdIO, and the output goes there as well",
     "For more functionalities: open in ghci.",

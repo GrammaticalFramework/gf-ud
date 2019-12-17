@@ -2,7 +2,7 @@
 
 echo "generating GF trees from $1 $2 $3"
 echo "==================="
-echo "gr -cat=Utt -number=400 -depth=8 | wf -file=out/$1.gft" | gf -run grammars/$1.pgf
+echo "gr -cat=$3 -number=400 -depth=8 | wf -file=out/$1.gft" | gf -run grammars/$1.pgf
 head -700 out/$1.gft | sort -u >out/$1-train.gft
 tail -99  out/$1.gft | sort -u >out/$1-test.gft
 echo "==================="
@@ -26,5 +26,5 @@ then
   echo "training and testing Malt parser"
   echo "==================="
   java -jar maltparser.jar -c test -i out/$1-train.conllu -m learn
-  java -jar maltparser.jar -c test -i out/$1-test.conllu -o $1-out.conllu -m parse
+  java -jar maltparser.jar -c test -i out/$1-test.conllu -o out/$1-out.conllu -m parse
 fi
