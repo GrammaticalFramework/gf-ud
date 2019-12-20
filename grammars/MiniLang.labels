@@ -26,12 +26,15 @@
 
 #macro UseAP_Cop cop comp : Cop -> AP -> VP = UseAP comp ; cop head
 #macro QuestCl_Do aux cl : Do -> Cl -> QCl = QuestCl cl ; aux head
-#macro UseCl_Pres cl : Cl -> S = UseCl TSim PPos cl ; head
+#macro UseCl_Sim cl : Cl -> S = UseCl TSim PPos cl ; head
+#macro UseCl_Ant have cl : Have -> Cl -> S = UseCl TAnt PPos cl ; head
+#macro UseCl_NegSim neg cl : Neg -> Cl -> S = UseCl TSim PNeg cl ; advmod head
+#macro UseCl_NegAnt have neg cl : Have -> Neg -> Cl -> S = UseCl TSim PNeg cl ; advmod head
 
 #aux Cop AUX
 #aux Do AUX
 #aux Have AUX
-#aux Neg AUX
+#aux Neg PART
 
 #disable UseAP
 
