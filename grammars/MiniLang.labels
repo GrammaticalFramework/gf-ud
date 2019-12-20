@@ -30,6 +30,8 @@
 
 #aux Cop AUX
 #aux Do AUX
+#aux Have AUX
+#aux Neg AUX
 
 #disable UseAP
 

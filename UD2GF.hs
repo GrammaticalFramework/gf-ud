@@ -360,18 +360,23 @@ analyseWords env = mapRTree lemma2fun
   getWordTrees w cs = case concatMap (parseWord w) cs of
     [] -> case cs of
       []  -> (True,[(newWordTree w unknownCat, unknownCat)])
-      _ -> (True,[(newWordTree w c, c) | c <- cs])
+      _ -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c])
 
     fs -> (False,fs)
 
   --- this can fail if c is discontinuous, or return false positives if w is a form of another word
-  parseWord w c = case parse (pgfGrammar env) (actLanguage env) (mkType [] c []) w of
-    ts -> [(expr2abstree t,c) | t <- ts]
+  parseWord w ec = case ec of
+    Left c -> case parse (pgfGrammar env) (actLanguage env) (mkType [] c []) w of
+      ts -> [(expr2abstree t,c) | t <- ts]
+    Right c -> case elem (w,c) auxWords of
+      True -> [(newWordTree w c, c)]
+      _ -> []
 
-  newWordTree w c = RTree (mkCId (w ++ "_x_" ++ showCId c)) []
-  ---newWordTree w c = RTree (mkCId ("MkNew"++showCId c)) [RTree (mkCId (quote w)) []]
+  auxWords = [(lemma,cat) | ((fun_,lemma),(cat,labels_)) <- M.assocs (lemmaLabels (cncLabels env (actLanguage env)))]
 
-  unknownCat = mkCId "Adv" --- treat unknown words as adverbs ---- to be parameterized
+  newWordTree w c = RTree (mkCId (w ++ "_x_" ++ showCId c)) [] ---
+
+  unknownCat = mkCId "Adv" --- treat unknown words as adverbs ---- TODO: from config
 
   quote s = "\"" ++ s ++ "\""
 
@@ -386,6 +391,6 @@ udtree2devtree tr@(RTree un uts) =
       devFeats = udFEATS un,
       devLabel = udDEPREL un,
       devIndex = udID un,
-      devNeedBackup = False,
+      devNeedBackup = False, ---- TODO start with True, mark when used
       devIsUnknown = True
      }) (map udtree2devtree uts)

@@ -242,7 +242,7 @@ expr2annottree env lang tree =
                        } []
          _ -> case lookWord (w,x_POS,[]) w of           -- syncat words
            (lemma,postag,morph) -> case lookupLemma f lemma of 
-              Just (label,target) -> RTree node{
+              Just (_,(label,target)) -> RTree node{
                  anLabel = label,
                  anTarget = if target /= head_Label then Just target else Nothing,
                  anToken = Just (posit, TokenInfo w lemma postag morph)

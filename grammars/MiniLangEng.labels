@@ -15,10 +15,10 @@
 #word would would AUX  VerbForm=Fin
 #word will  will  AUX  VerbForm=Fin
 
-#lemma UseCl,UseQCl,ImpVP not advmod head
-#lemma UseAP,UseAdv,UseNP be cop head
-#lemma PredVP have aux head
-#lemma PredVP,ImpVP do aux head
+#lemma UseCl,UseQCl,ImpVP not Neg advmod head
+#lemma UseAP,UseAdv,UseNP be Cop cop head
+#lemma PredVP have Have aux head
+#lemma PredVP,ImpVP do Do aux head
 
 #morpho N 0 Number=Sing
 #morpho N 1 Number=Plur

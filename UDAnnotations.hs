@@ -60,7 +60,7 @@ initAbsLabels = AbsLabels (Just "UD2") M.empty M.empty M.empty M.empty M.empty
 -- is be VERB cop head
 data CncLabels = CncLabels {
   wordLabels    :: M.Map String (String,String,[UDData]),  -- word -> (lemma,pos,morpho)          e.g. #word been be AUX  Tense=Past|VerbForm=Part
-  lemmaLabels   :: M.Map (CId,String) (String,String),     -- (fun,lemma) -> (label,targetLabel), e.g. #lemma UseComp be cop head
+  lemmaLabels   :: M.Map (Fun,String) (Cat,(Label,Label)),     -- (fun,lemma) -> (auxcat,(label,targetLabel)), e.g. #lemma UseComp be Cop cop head
   morphoLabels  :: M.Map (CId,Int) [UDData],               -- (cat,int) -> morphotag,             e.g. #morpho V,V2,VS 0 VerbForm=Inf
   discontLabels :: M.Map (CId,Int) (String,String,String)  -- (cat,field) -> (pos,label,target)   e.g. #discont  V2  5,ADP,case,obj   6,ADV,advmod,head
   }
@@ -159,7 +159,7 @@ pCncLabels = dispatch . map words . uncomment . lines
   add ws labs = case ws of
     "#morpho"  :cs:i:p:_  | all isDigit i -> labs{morphoLabels = inserts [((mkCId c,read i),(prs p)::[UDData]) | c <- getSeps ',' cs] (morphoLabels labs)}
     "#word"    :w:l:p:m:_ -> labs{wordLabels   = M.insert w (l,p,prs m) (wordLabels labs)}
-    "#lemma"   :w:l:p:t:_ -> labs{lemmaLabels  = inserts [((mkCId f,l),(p,t)) | f <- getSeps ',' w] (lemmaLabels labs)}
+    "#lemma"   :w:l:c:p:t:_ -> labs{lemmaLabels  = inserts [((mkCId f,l),(mkCId c,(p,t))) | f <- getSeps ',' w] (lemmaLabels labs)}
     "#discont" :c:h:ps    -> labs{discontLabels = inserts
                                ([((mkCId c,i),(x_POS,head_Label,root_Label)) | is:"head":_ <- [getSeps ',' h], i <- readRange is] ++ -- bogus pos and target, to be thrown away
                                 [((mkCId c,read i),(pos,lab,hd))                | p <- ps, i:pos:lab:hd:_ <- [getSeps ',' p]])
@@ -200,12 +200,10 @@ isEndoType, isExoType :: LabelledType -> Bool
 isEndoType labtyp@(val,args) = elem val (map fst args)
 isExoType = not . isEndoType
 
-catsForPOS :: UDEnv -> M.Map POS [Cat]
-catsForPOS env = M.fromListWith (++) [
-  (p,[c]) | (c,p) <-
-       M.assocs (catLabels (absLabels env)) ++
-       M.assocs (auxCategories (absLabels env))  --- auxiliary cats in ud2gf
-  ]
+catsForPOS :: UDEnv -> M.Map POS [Either Cat Cat]
+catsForPOS env = M.fromListWith (++) $ 
+  [(p,[Left  c]) | (c, p) <- M.assocs (catLabels (absLabels env))] ++
+  [(p,[Right c]) | (c, p) <- M.assocs (auxCategories (absLabels env))]
 
 
 ----------------------------------------
