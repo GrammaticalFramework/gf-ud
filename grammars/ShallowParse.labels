@@ -82,7 +82,7 @@ QuantPlCN det head
 QuantSgCN det head
 PrepPP case head
 AddNPtoVP head obj
-AddPPtoVP head nmod
+AddPPtoVP head obl
 PossSgNP nmod:poss head
 PossPlNP nmod:poss head
 PunctUttText head punct
@@ -207,14 +207,22 @@ Punct         PUNCT
 
 -- needed in ud2gf only
 
-#macro UseComp_Cop cop comp : Cop -> Comp -> VP = UseComp comp ; cop head
-#macro QuestCl_Do aux cl : Do -> Cl -> QCl = QuestCl cl ; aux head
-#macro UseCl_Pres cl : Cl -> S = UseCl (TTAnt ASim TPres) PPos cl ; head
+#auxfun UseComp_Cop cop comp : Cop -> Comp -> VP = UseComp comp ; cop head
+#auxfun QuestCl_Do aux cl : Do -> Cl -> QCl = QuestCl cl ; aux head
+#auxfun UseCl_Pres cl : Cl -> S = UseCl (TTAnt ASim TPres) PPos cl ; head
 
-#aux Cop AUX
-#aux Do AUX
+#auxcat Cop AUX
+#auxcat Do AUX
+#auxcat Have AUX
+#auxcat Will AUX
+#auxcat Would AUX
+#auxcat Neg PART
+#auxcat Gen PART
+#auxcat To PART
+#auxcat That PART
+
 
 #disable UseComp
 
 #altfun AddNPtoVP head iobj
-#altfun AddPPtoVP head obl
+
