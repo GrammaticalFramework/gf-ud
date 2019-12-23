@@ -192,6 +192,7 @@ expr2annottree env lang tree =
    lookupLemma f w = (M.lookup (f,w) (lemmaLabels (cncLabels env lang)))              -- (fun,lemma) -> (label,targetLabel)
    lookMorpho d c i = maybe d id (M.lookup (c,i) (morphoLabels (cncLabels env lang))) -- i'th form of cat c
    lookupDiscont c i = (M.lookup (c,i) (discontLabels (cncLabels env lang)))          -- (cat,field) -> (pos,label,targetLabel)
+   lookAuxPos c = maybe x_POS id (M.lookup c (auxCategories (absLabels env)))            -- auxcat -> pos --- auxcat should really be language-dependent
 
    -- convert postorder GF to AnnotTree by adding words from bracketed linearization, categories and their UD pos tags, morpho indices
    addWordsAndCats (RTree (f,i) ts) = RTree node (map addWordsAndCats ts ++ toktrees)
@@ -240,15 +241,15 @@ expr2annottree env lang tree =
                         (lookMorpho (formData lind) (anCat node) lind)
                         )
                        } []
-         _ -> case lookWord (w,x_POS,[]) w of           -- syncat words
-           (lemma,postag,morph) -> case lookupLemma f lemma of 
-              Just (_,(label,target)) -> RTree node{
+         _ -> case lookWord (w,[]) w of           -- syncat words
+           (lemma,morph) -> case lookupLemma f lemma of 
+              Just (auxcat,(label,target)) -> RTree node{
                  anLabel = label,
                  anTarget = if target /= head_Label then Just target else Nothing,
-                 anToken = Just (posit, TokenInfo w lemma postag morph)
+                 anToken = Just (posit, TokenInfo w lemma (lookAuxPos auxcat) morph)
                  } []
               _ -> RTree node{
-                     anToken = Just (posit, TokenInfo w lemma postag morph)
+                     anToken = Just (posit, TokenInfo w lemma x_POS morph)
                      } []
 
      mkLemma f = unwords $ take 1 $ words $ linearize pgf lang (mkApp f []) --- if multiword, 1st word is lemma; e.g. "listen to"

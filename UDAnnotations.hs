@@ -59,8 +59,8 @@ initAbsLabels = AbsLabels (Just "UD2") M.empty M.empty M.empty M.empty M.empty
 
 -- is be VERB cop head
 data CncLabels = CncLabels {
-  wordLabels    :: M.Map String (String,String,[UDData]),  -- word -> (lemma,pos,morpho)          e.g. #word been be AUX  Tense=Past|VerbForm=Part
-  lemmaLabels   :: M.Map (Fun,String) (Cat,(Label,Label)),     -- (fun,lemma) -> (auxcat,(label,targetLabel)), e.g. #lemma UseComp be Cop cop head
+  wordLabels    :: M.Map String (String,[UDData]),         -- word -> (lemma,morpho)          e.g. #word been be AUX  Tense=Past|VerbForm=Part
+  lemmaLabels   :: M.Map (Fun,String) (Cat,(Label,Label)), -- (fun,lemma) -> (auxcat,(label,targetLabel)), e.g. #lemma UseComp be Cop cop head
   morphoLabels  :: M.Map (CId,Int) [UDData],               -- (cat,int) -> morphotag,             e.g. #morpho V,V2,VS 0 VerbForm=Inf
   discontLabels :: M.Map (CId,Int) (String,String,String)  -- (cat,field) -> (pos,label,target)   e.g. #discont  V2  5,ADP,case,obj   6,ADV,advmod,head
   }
@@ -117,8 +117,8 @@ pAbsLabels = disables . dispatch . map words . uncomment . lines
     "#guidelines":w:_   -> (ds,labs{annotGuideline = Just w}) --- overwrites earlier declaration
     "#fun":f:xs         -> (ds,labs{funLabels = M.insert (mkCId f) (xs,True) (funLabels labs)})
     "#cat":c:p:[]       -> (ds,labs{catLabels = M.insert (mkCId c) p (catLabels labs)})
-    "#aux":c:p:[]       -> (ds,labs{auxCategories = M.insert (mkCId c) p (auxCategories labs)})
-    "#macro":f:typdef   -> (ds,labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f:typdef)) (macroFunctions labs)})
+    "#auxcat":c:p:[]    -> (ds,labs{auxCategories = M.insert (mkCId c) p (auxCategories labs)})
+    "#auxfun":f:typdef   -> (ds,labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f:typdef)) (macroFunctions labs)})
     "#disable":fs       -> (fs++ds,labs) 
     "#altfun":f:xs      -> (ds,labs{altFunLabels = M.insertWith (++) (mkCId f) [xs] (altFunLabels labs)})
     
@@ -158,7 +158,7 @@ pCncLabels = dispatch . map words . uncomment . lines
   dispatch = foldr add initCncLabels
   add ws labs = case ws of
     "#morpho"  :cs:i:p:_  | all isDigit i -> labs{morphoLabels = inserts [((mkCId c,read i),(prs p)::[UDData]) | c <- getSeps ',' cs] (morphoLabels labs)}
-    "#word"    :w:l:p:m:_ -> labs{wordLabels   = M.insert w (l,p,prs m) (wordLabels labs)}
+    "#word"    :w:l:m:_ -> labs{wordLabels   = M.insert w (l,prs m) (wordLabels labs)}
     "#lemma"   :w:l:c:p:t:_ -> labs{lemmaLabels  = inserts [((mkCId f,l),(mkCId c,(p,t))) | f <- getSeps ',' w] (lemmaLabels labs)}
     "#discont" :c:h:ps    -> labs{discontLabels = inserts
                                ([((mkCId c,i),(x_POS,head_Label,root_Label)) | is:"head":_ <- [getSeps ',' h], i <- readRange is] ++ -- bogus pos and target, to be thrown away
