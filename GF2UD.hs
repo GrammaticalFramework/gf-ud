@@ -193,6 +193,7 @@ expr2annottree env lang tree =
    lookMorpho d c i = maybe d id (M.lookup (c,i) (morphoLabels (cncLabels env lang))) -- i'th form of cat c
    lookupDiscont c i = (M.lookup (c,i) (discontLabels (cncLabels env lang)))          -- (cat,field) -> (pos,label,targetLabel)
    lookAuxPos c = maybe x_POS id (M.lookup c (auxCategories (absLabels env)))            -- auxcat -> pos --- auxcat should really be language-dependent
+   lookupMulti c = M.lookup c (multiLabels (cncLabels env lang))
 
    -- convert postorder GF to AnnotTree by adding words from bracketed linearization, categories and their UD pos tags, morpho indices
    addWordsAndCats (RTree (f,i) ts) = RTree node (map addWordsAndCats ts ++ toktrees)
@@ -207,7 +208,13 @@ expr2annottree env lang tree =
        }
 
      toktrees = case (M.lookup i positions) of
-       Just pws -> headsFirst $ map addLemma pws
+       Just pws -> case lookupMulti cat of
+         Just (headfirst,lab) -> case pws of
+           _:_:_ -> case headfirst of
+             True  -> addLemma (head pws) : [forceLabel lab pw | pw <- tail pws] 
+             False -> [forceLabel lab pw | pw <- init pws] ++ [addLemma (last pws)] 
+           _ -> map addLemma pws  -- 0 or 1 words 
+         _ -> headsFirst $ map addLemma pws
        _ -> [] ---
 
      headsFirst ts = case partition (\t -> anLabel (root t) == dep_Label) ts of --- heads of discont
@@ -215,6 +222,11 @@ expr2annottree env lang tree =
 
      (cat,isLeaf) = valCat (anFun node)
 
+     forceLabel lab (posit,(w,lind)) = RTree node{
+               anToken = Just (posit, TokenInfo w w (lookCat cat) []),  --- no morphology, works for particles and prepositions
+               anLabel = lab
+               } []
+     
      addLemma (posit,(w,lind)) = case isLeaf of
          True -> case lookupDiscont cat lind of
            Just (pos,label,target) | label == head_Label ->   -- head of discontinuous constituent
@@ -233,7 +245,7 @@ expr2annottree env lang tree =
                anLabel = label,
                anTarget = if target /= head_Label then Just target else Nothing
                } []
-           _ -> RTree node{                           -- continuous categorematic words
+           _ -> RTree node{                           -- categorematic single words
                   anToken = Just (posit,              
                      TokenInfo w
                         (mkLemma (anFun node))
@@ -241,7 +253,7 @@ expr2annottree env lang tree =
                         (lookMorpho (formData lind) (anCat node) lind)
                         )
                        } []
-         _ -> case lookWord (w,[]) w of           -- syncat words
+         _ -> case lookWord (w,[]) w of           -- not leaf: syncat words
            (lemma,morph) -> case lookupLemma f lemma of 
               Just (auxcat,(label,target)) -> RTree node{
                  anLabel = label,
@@ -266,7 +278,7 @@ expr2annottree env lang tree =
 
 -- for each in-order abs-node, find the words that the node dominates, with their position and morpho
 bracketPositions :: BracketedString -> M.Map FId [(Int,(String,LIndex))]
-bracketPositions = collect . numerate . pos 0 0
+bracketPositions = M.map reverse . collect . numerate . pos 0 0
 
  where
  

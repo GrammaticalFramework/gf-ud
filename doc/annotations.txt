@@ -130,13 +130,13 @@ In this example, the particle (5) is linked to the head of the construction (i.e
 //NB: the target label functionality is currently not implemented, but all fields are linked to the head.//
 
 
-**Multiwords**: ``#multiword <category> <labels>:
+**Multiwords**: ``#multiword <category> <head-position> <label>:
 ```
-  #multiword Prep head fixed
+  #multiword Prep head-first fixed
 ```
 This annotation tells that, in a multiword preposition, the first word is the head, and the subsequent words are its dependents with the label ``fixed``.
 This follows the guidelines in https://universaldependencies.org/u/overview/specific-syntax.html; however, existing treebanks don't seem to follow this strictly.
 The guideline example is //in spite of//, where //in// is the ``head`` and the other words are ``fixed``.
 
-//NB: #multiword is not implemented yet.//
+//NB: #multiword works so far only in the gf2ude direction, and head-last is not supported at all yet//
 

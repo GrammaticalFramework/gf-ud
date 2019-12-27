@@ -47,5 +47,4 @@
 #discont   V2    0-4,head  5,ADP,case,obj   6,ADP,compound:prt,head
 #discont   V2V   0-4,head  5,ADP,case,obj   6,ADP,mark,xcomp  7,ADP,compound:prt,head  --- 6 PART if to?
 
-
-
+#multiword Prep head-first fixed

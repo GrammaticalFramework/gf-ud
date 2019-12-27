@@ -319,7 +319,7 @@ combineTrees env =
                    dts = devAbsTrees dn
                  in
                  if elem acu dts  -- the same tree with the same usage of subtrees is not added again
-                    || length dts > 10 ---- debug
+                    || length dts > 10 ---- TODO parameterize "beam" size
                    then dts
                    else acu:dts,
       devStatus = maximumBy (\x y -> compare (length x) (length y)) [devStatus dn, funUsage finfo]

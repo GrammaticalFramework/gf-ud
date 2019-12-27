@@ -61,11 +61,12 @@ initAbsLabels = AbsLabels (Just "UD2") M.empty M.empty M.empty M.empty M.empty
 data CncLabels = CncLabels {
   wordLabels    :: M.Map String (String,[UDData]),         -- word -> (lemma,morpho)          e.g. #word been be AUX  Tense=Past|VerbForm=Part
   lemmaLabels   :: M.Map (Fun,String) (Cat,(Label,Label)), -- (fun,lemma) -> (auxcat,(label,targetLabel)), e.g. #lemma UseComp be Cop cop head
-  morphoLabels  :: M.Map (CId,Int) [UDData],               -- (cat,int) -> morphotag,             e.g. #morpho V,V2,VS 0 VerbForm=Inf
-  discontLabels :: M.Map (CId,Int) (String,String,String)  -- (cat,field) -> (pos,label,target)   e.g. #discont  V2  5,ADP,case,obj   6,ADV,advmod,head
+  morphoLabels  :: M.Map (Cat,Int) [UDData],               -- (cat,int) -> morphotag,              e.g. #morpho V,V2,VS 0 VerbForm=Inf
+  discontLabels :: M.Map (Cat,Int) (POS,Label,Label),      -- (cat,field) -> (pos,label,target)    e.g. #discont  V2  5,ADP,case,obj   6,ADV,advmod,head
+  multiLabels   :: M.Map Cat (Bool, Label)                 -- cat -> (if-head-first, other-labels) e.g. #multiword Prep head first fixed
   }
 
-initCncLabels = CncLabels M.empty M.empty M.empty M.empty
+initCncLabels = CncLabels M.empty M.empty M.empty M.empty M.empty
 
 -- check the soundness of labels
 
@@ -164,7 +165,7 @@ pCncLabels = dispatch . map words . uncomment . lines
                                ([((mkCId c,i),(x_POS,head_Label,root_Label)) | is:"head":_ <- [getSeps ',' h], i <- readRange is] ++ -- bogus pos and target, to be thrown away
                                 [((mkCId c,read i),(pos,lab,hd))                | p <- ps, i:pos:lab:hd:_ <- [getSeps ',' p]])
                                    (discontLabels labs)}
-
+    "#multiword":c:hp:lab:_  -> labs{multiLabels = M.insert (mkCId c) (hp/="head-last",lab) (multiLabels labs)}
     _ -> labs --- ignores silently
 
   inserts kvs mp = foldr (\ (k,v) m -> M.insert k v m) mp kvs
