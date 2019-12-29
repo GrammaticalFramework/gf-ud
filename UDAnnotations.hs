@@ -50,7 +50,7 @@ data AbsLabels = AbsLabels {
   funLabels :: M.Map CId ([Label],Bool), -- Bool says whether to be used in ud2gf; set false by "#disable"
   catLabels :: M.Map CId String,
   auxCategories :: M.Map CId String,  -- ud2gf only
-  macroFunctions :: M.Map CId (AbsType,(([CId],AbsTree),[Label])), -- ud2gf only
+  macroFunctions :: M.Map CId (AbsType,(([CId],AbsTree),[(Label,[UDData])])), -- ud2gf only
   altFunLabels :: M.Map CId [[Label]] -- all labellings, ud2gf only, added by #altfun
   }
 
@@ -119,7 +119,7 @@ pAbsLabels = disables . dispatch . map words . uncomment . lines
     "#fun":f:xs         -> (ds,labs{funLabels = M.insert (mkCId f) (xs,True) (funLabels labs)})
     "#cat":c:p:[]       -> (ds,labs{catLabels = M.insert (mkCId c) p (catLabels labs)})
     "#auxcat":c:p:[]    -> (ds,labs{auxCategories = M.insert (mkCId c) p (auxCategories labs)})
-    "#auxfun":f:typdef   -> (ds,labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f:typdef)) (macroFunctions labs)})
+    "#auxfun":f:typdef  -> (ds,labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f:typdef)) (macroFunctions labs)})
     "#disable":fs       -> (fs++ds,labs) 
     "#altfun":f:xs      -> (ds,labs{altFunLabels = M.insertWith (++) (mkCId f) [xs] (altFunLabels labs)})
     
@@ -147,7 +147,7 @@ addMissing env = env {
 pMacroFunction (f:ws) = case break (==":") ws of
   (xs,_:ww) -> case break (=="=") ww of
     (ty,_:tl) -> case break (==";") tl of
-      (df,_:ls) -> (pAbsType (unwords ty), ((map mkCId xs, pAbsTree (unwords df)),ls))
+      (df,_:ls) -> (pAbsType (unwords ty), ((map mkCId xs, pAbsTree (unwords df)),map labelAndMorpho ls))
       _ -> error $ "missing labels in #macro " ++ unwords (f:ws)
     _ -> error $ "missing definition in #macro " ++ unwords (f:ws)
   _ -> error $ "missing type in #macro " ++ unwords (f:ws)
@@ -188,14 +188,19 @@ uncomment = filter (not . all isSpace)  . map uncom
 --------------------------
 
 -- valcat, [argcat * label]
-type LabelledType = (Cat,[(Cat,Label)])
+type LabelledType = (Cat,[(Cat,(Label,[UDData]))])  -- UDData says that certain morpho parameters must be present
 
 mkLabelledType :: Type -> [String] -> LabelledType
 mkLabelledType typ labs = case unType typ of
-  (hypos,cat,_) -> (cat, zip [valCat ty | (_,_,ty) <- hypos] labs)
+  (hypos,cat,_) -> (cat, zip [valCat ty | (_,_,ty) <- hypos] (map labelAndMorpho labs))
  where
   valCat ty = case unType ty of
     (_,cat,_) -> cat
+
+labelAndMorpho :: String -> (Label,[UDData])
+labelAndMorpho s = case break (=='[') s of  -- obj[Num=Sing]
+    (l,_:m) -> (l, prs (init m))
+    _ -> (s,[])
 
 isEndoType, isExoType :: LabelledType -> Bool
 isEndoType labtyp@(val,args) = elem val (map fst args)

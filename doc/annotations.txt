@@ -59,14 +59,17 @@ The category ``Cop`` is introduced in the concrete syntax annotation for the syn
 In the ``ud2gf`` direction, it is recognized when such a verb, marked by the POS tag ``AUX``, is encountered in the dependency tree.
 This is done by means of auxiliary functions, whose format is somewhat complex, as they also have to define these extra functions in terms of standard ones.
 
-**Auxiliary function**: ``#auxfun`` <new abstract syntax function> <argument variables> : <type> = <definition> ; <labels>
+**Auxiliary function**: ``#auxfun`` <new abstract syntax function> <argument variables> : <type> = <definition> ; <labels-and-features>
 ```
-  #auxfun UseAP_Cop cop comp : Cop -> AP -> VP = UseAP comp ; cop head
+ #auxfun MkVPS_Perf have vp : Have -> VP -> VPS = MkVPS (TTAnt AAnter TPres) PPos vp ; aux[Tense=Pres] head
 ```
 The number of argument variables and labels must match the type.
 The type can be built from both ordinary and auxiliary categories.
-As the definition shows here, the auxiliary category ``Cop`` argument is just ignored.
-But the important thing is that its presence in the UD tree is recognized, ensuring that all words are taken into account.
+As the definition shows here, the auxiliary category ``Have`` argument is ignored.
+But the important thing is that
+- its presence in the UD tree is recognized, ensuring that all words are taken into account.
+- it sets the tense and anteriority of the VPS formed
+
 
 Auxiliary functions do not necessarily contain auxiliary categories: they can be just macros collecting the applications of many functions.
 
@@ -105,7 +108,7 @@ This annotations tells how the PGF coordinates (numbers) are converted to morpho
 The conversion depends on the category, since different categories have different PGF layouts.
 To find out what the coordinates mean, one can use the text dump of the PGF invoked by the ``print_grammar`` command of GF:
 ```
-  > import MiniLang.pgf
+  > import ShallowParse.pgf
   > print_grammar
     V := range  [C32 .. C32]
          labels ["s Inf"

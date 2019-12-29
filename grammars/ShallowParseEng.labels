@@ -20,8 +20,8 @@
 #word 's 's _
 #word ' ' _
 
-#lemma ComplVV to To mark xcomp
-#lemma ComplVS that That mark ccomp
+#lemma MkVPI to To mark head
+#lemma AddStoVP that That mark head
 #lemma UseComp be Cop cop head
 #lemma UseComp,UseV,SlashV2a,ComplVV have Have aux head
 #lemma UseV,SlashV2a,ComplVV do Do aux head

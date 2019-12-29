@@ -244,6 +244,7 @@ data ArgInfo = ArgInfo {
   argNumber :: Int,
   argUsage  :: [UDId],
   argCatLab :: (Cat,Label),
+  argFeats  :: [UDData],
   argTree   :: AbsTree
   }
 
@@ -276,7 +277,7 @@ combineTrees env =
         -- for head and each immediate subtree, build the list of its already built abstrees, each with type and label
         -- argalts :: [[Arg]] -- one list for root and for each subtree
         let argalts = [
-                       [ArgInfo i us (c, devLabel r) e | (e,(c,us)) <- devAbsTrees r]
+                       [ArgInfo i us (c, devLabel r) (devFeats r) e | (e,(c,us)) <- devAbsTrees r]
                            |
                              (i,r) <- (0,dn{devLabel = head_Label}) :  -- number the arguments: root node 0, args 1,..
                                                  [(i,r) | (i,r) <- zip [1..] (map root ts)]
@@ -301,12 +302,15 @@ combineTrees env =
         let usage = sort (nub (concatMap argUsage (take 1 args) ++ concatMap snd xis)) -- head usage + dependents' argument numbers
     ]
 
-  argTypeMatches :: [(Cat,Label)] -> [ArgInfo] -> [[(AbsTree,[UDId])]]
+  argTypeMatches :: [(Cat,(Label,[UDData]))] -> [ArgInfo] -> [[(AbsTree,[UDId])]]
   argTypeMatches catlabs args = case catlabs of
-    catlab1:catlabs2 -> [
+    catlab1@(cat,(lab,feats)):catlabs2 -> [
       [(t,i) | (t,i) <- (argTree x, argUsage x):xs]
         |
-          x  <- [arg | arg <- args, argCatLab arg == catlab1],
+          x  <- [arg | arg <- args,
+                       argCatLab arg == (cat,lab),
+                       all (\f -> elem f (argFeats arg)) feats -- required features are found ---- TODO if feats or (argFeats arg) contain disjunctions
+                ],
           xs <- argTypeMatches catlabs2 [arg | arg <- args, argNumber arg /= argNumber x]
       ]
     _ -> [[]]
@@ -319,13 +323,14 @@ combineTrees env =
                    dts = devAbsTrees dn
                  in
                  if elem acu dts  -- the same tree with the same usage of subtrees is not added again
-                    || length dts > 10 ---- TODO parameterize "beam" size
+                    || length dts > 123 ---- TODO parameterize "beam" size
                    then dts
                    else acu:dts,
       devStatus = maximumBy (\x y -> compare (length x) (length y)) [devStatus dn, funUsage finfo]
       } ts
 
   -- macros + real abstract functions
+  allFunsEnv :: [(Fun,LabelledType)]
   allFunsEnv =
     [(f,(val,zip args ls))  |
       (f,((val,args),((xx,df),ls))) <- M.assocs (macroFunctions (absLabels env))]
