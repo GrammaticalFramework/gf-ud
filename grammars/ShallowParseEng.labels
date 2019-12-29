@@ -34,6 +34,10 @@
 #morpho N 0 Number=Sing
 #morpho N 2 Number=Plur
 
+#morpho A 0 Degree=Pos
+#morpho A 2 Degree=Cmp
+#morpho A 4 Degree=Sup
+
 #morpho Pron 0 Case=Nom|PronType=Prs -- --- Case=Nom|Number=Sing|Person=1|PronType=Prs
 #morpho Pron 1 Poss=Yes|PronType=Prs -- --- Number=Plur|Person=3|Poss=Yes|PronType=Prs ; as Det, nmod:poss
 #morpho Pron 2 Case=Acc|PronType=Prs -- --- Case=Acc|Number=Sing|Person=1|PronType=Prs
@@ -48,3 +52,4 @@
 #discont   V2V   0-4,head  5,ADP,case,obj   6,ADP,mark,xcomp  7,ADP,compound:prt,head  --- 6 PART if to?
 
 #multiword Prep head-first fixed
+#multiword PN head-first flat

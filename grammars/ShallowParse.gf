@@ -7,16 +7,31 @@ abstract ShallowParse =
     UttS      , -- S  -> Utt ;         -- John walks
     UttQS     , -- QS -> Utt ;         -- does John walk
     UttNP     , -- NP -> Utt ;         -- John
-    UttAdv,      -- Adv -> Utt ;        -- in the house
-    UttImpSg   -- Pol -> Imp -> Utt ; -- (do not) walk ----s
+    UttAdv      -- Adv -> Utt ;        -- in the house
+ ----   UttImpSg   -- Pol -> Imp -> Utt ; -- (do not) walk ----s
     ],
 
+Extend [
+    VPS,VPI,
+    MkVPS,    --    : Temp -> Pol -> VP -> VPS ;  -- hasn't slept
+----    ConjVPS,  --    : Conj -> [VPS] -> VPS ;      -- has walked and won't sleep
+    PredVPS,  --    : NP   -> VPS -> S ;          -- she [has walked and won't sleep]
+
+    MkVPI     --  : VP -> VPI ;                   -- to sleep (TODO: Ant and Pol)
+----    ConjVPI   -- : Conj -> [VPI] -> VPI ;         -- to sleep and to walk
+    
+----    BaseVPS, ConsVPS,
+----    BaseVPI, ConsVPI
+---- TODO: Extend cannot form QS yet
+
+    ],
+    
  Sentence [
-    S,QS,Cl,QCl,NP,Temp,Pol,VP,Imp,
-    UseCl     , -- Temp -> Pol -> Cl   -> S ;  -- John has not walked
-    UseQCl    , -- Temp -> Pol -> QCl  -> QS ; -- has John walked
-    PredVP    , -- NP -> VP -> Cl ;            -- John walks / John does not walk
-    ImpVP       -- VP -> Imp ;                 -- walk / do not walk
+    S,QS,Cl,QCl,NP,Temp,Pol,VP,Imp
+---    UseCl     , -- Temp -> Pol -> Cl   -> S ;  -- John has not walked
+---    UseQCl    , -- Temp -> Pol -> QCl  -> QS ; -- has John walked
+---    PredVP     -- NP -> VP -> Cl ;            -- John walks / John does not walk
+----    ImpVP       -- VP -> Imp ;                 -- walk / do not walk
     ],
     
  Verb [
@@ -37,7 +52,7 @@ abstract ShallowParse =
     UsePron   , -- Pron -> NP ;            -- he
     MassNP    , -- CN -> NP ;              -- milk
     UseN      , -- N -> CN ;               -- house
-    AdjCN,       -- AP -> CN -> CN ;        -- big house
+    AdjCN,      -- AP -> CN -> CN ;        -- big house
     OrdNumeral,
     RelCN,
     AdvCN
@@ -72,8 +87,12 @@ abstract ShallowParse =
   fun
 
 
-    AddNPtoVP : VP  -> NP -> VP ;          -- love it
-    AddPPtoVP : VP  -> PP -> VP ;  -- talk about it
+    AddNPtoVP  : VP  -> NP  -> VP ;  -- love it
+    AddPPtoVP  : VP  -> PP  -> VP ;  -- talk about it
+    AddStoVP   : VP  -> S   -> VP ;  -- say that it is good
+    AddVPItoVP : VP  -> VPI -> VP ;  -- want to sleep
+    AddVPItoAuxVP : VP  -> VPI -> VP ;  -- must sleep --- English-specific
+
 
     PrepPP : Prep -> NP -> PP ;
 

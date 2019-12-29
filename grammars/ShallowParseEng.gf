@@ -1,3 +1,5 @@
+--# -path=.:gf-wordnet
+
 concrete ShallowParseEng of ShallowParse =
 
   JustWordsWordNetEng,
@@ -7,16 +9,31 @@ concrete ShallowParseEng of ShallowParse =
     UttS      , -- S  -> Utt ;         -- John walks
     UttQS     , -- QS -> Utt ;         -- does John walk
     UttNP     , -- NP -> Utt ;         -- John
-    UttAdv,      -- Adv -> Utt ;        -- in the house
-    UttImpSg   -- Pol -> Imp -> Utt ; -- (do not) walk ----s
+    UttAdv      -- Adv -> Utt ;        -- in the house
+----    UttImpSg   -- Pol -> Imp -> Utt ; -- (do not) walk ----s
     ],
 
+ExtendEng [
+    VPS,VPI,
+    MkVPS,    --    : Temp -> Pol -> VP -> VPS ;  -- hasn't slept
+----    ConjVPS,  --    : Conj -> [VPS] -> VPS ;      -- has walked and won't sleep
+    PredVPS,  --    : NP   -> VPS -> S ;          -- she [has walked and won't sleep]
+
+    MkVPI     --  : VP -> VPI ;                   -- to sleep (TODO: Ant and Pol)
+----    ConjVPI   -- : Conj -> [VPI] -> VPI ;         -- to sleep and to walk
+    
+----    BaseVPS, ConsVPS,
+----    BaseVPI, ConsVPI
+---- TODO: Extend cannot form QS yet
+
+    ],
+    
  SentenceEng [
-    S,QS,Cl,QCl,NP,Temp,Pol,VP,Imp,
-    UseCl     , -- Temp -> Pol -> Cl   -> S ;  -- John has not walked
-    UseQCl    , -- Temp -> Pol -> QCl  -> QS ; -- has John walked
-    PredVP    , -- NP -> VP -> Cl ;            -- John walks / John does not walk
-    ImpVP       -- VP -> Imp ;                 -- walk / do not walk
+    S,QS,Cl,QCl,NP,Temp,Pol,VP,Imp
+---    UseCl     , -- Temp -> Pol -> Cl   -> S ;  -- John has not walked
+---    UseQCl    , -- Temp -> Pol -> QCl  -> QS ; -- has John walked
+---    PredVP    , -- NP -> VP -> Cl ;            -- John walks / John does not walk
+----    ImpVP       -- VP -> Imp ;                 -- walk / do not walk
     ],
     
  VerbEng [
@@ -64,7 +81,7 @@ concrete ShallowParseEng of ShallowParse =
 
  TenseX - [CAdv,Pol]
 
-** open SyntaxEng, (P=ParadigmsEng) in {
+** open SyntaxEng, (P=ParadigmsEng), (R=ResEng) in {
 
   lincat
     PP = SyntaxEng.Adv ;
@@ -73,6 +90,10 @@ concrete ShallowParseEng of ShallowParse =
   lin
     AddNPtoVP vp np = mkVP vp (mkAdv (P.mkPrep []) np) ;
     AddPPtoVP vp pp = mkVP vp pp ;
+    AddStoVP vp s = R.insertExtra (R.conjThat ++ s.s) vp ; 
+    AddVPItoVP vp vpi = R.insertObj (\\a => vpi.s ! R.VVInf ! a) vp ; 
+    AddVPItoAuxVP vp vpi = R.insertObj (\\a => vpi.s ! R.VVAux ! a) vp ; 
+    
     PrepPP prep np = mkAdv prep np ;
 
     QuantSgCN quant cn = mkNP quant cn ;
