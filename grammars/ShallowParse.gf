@@ -117,4 +117,7 @@ Extend [
     questionmark_Punct : Punct ;
     exclmark_Punct : Punct ;
 
+----
+  PunctBackup : Punct -> Backup ;
+
 }

@@ -11,6 +11,7 @@ fun
   AddBackupAP : Backup -> AP -> AP ;
   AddBackupAdv : Backup -> Adv -> Adv ;
   AddBackupUtt : Backup -> Utt -> Utt ;
+  AddBackupText : Backup -> Text -> Text ;
 
   AdvBackup : Adv -> Backup ;
   APBackup  : AP -> Backup ;

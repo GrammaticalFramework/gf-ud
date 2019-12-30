@@ -15,6 +15,7 @@ lin
   AddBackupAP b s = MarkupAP b s ;
   AddBackupAdv b s = MarkupAdv b s ;
   AddBackupUtt b s = MarkupUtt b s ;
+  AddBackupText b s = MarkupText b s ;
 
   AdvBackup adv = uttMark (mkUtt adv) ;
   APBackup adv = uttMark (mkUtt adv) ;
@@ -25,5 +26,5 @@ lin
   ConsBackup b bs = lin Mark {begin = bs.begin ; end = b.end ++ bs.end} ;
 
 oper
-  uttMark : Utt -> Mark = \u -> lin Mark {begin = "" ; end = u.s} ;
+  uttMark : {s : Str} -> Mark = \u -> lin Mark {begin = "" ; end = u.s} ;
 }

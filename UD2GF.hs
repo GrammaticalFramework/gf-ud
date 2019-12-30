@@ -213,14 +213,14 @@ addBackups tr@(RTree dn trs) = case map collectBackup (tr:trs) of
       ([],_) -> Nothing
       (bs,uss) -> Just (foldr cons nil bs, (cat,sort (nub (concat uss))))
 
-  mkBackup ast cat = RTree (mkCId (showCId cat ++ "Backup")) [ast]
-
   cons t u = RTree (mkCId "ConsBackup") [t,u]
   nil = RTree (mkCId "BaseBackup") []
 
   appBackup :: Cat -> AbsTree -> AbsTree -> AbsTree
   appBackup cat b t = RTree (mkCId ("AddBackup" ++ showCId cat)) [b,t]
 
+mkBackup ast cat = RTree (mkCId (showCId cat ++ "Backup")) [ast]
+isBackupFunction f = isSuffixOf "Backup" (showCId f)
 
 -- call this to make sure that the abs tree info is unique
 theAbsTreeInfo :: DevTree -> AbsTreeInfo
@@ -366,7 +366,9 @@ combineTrees env =
       (f,((val,args),((xx,df),ls))) <- M.assocs (macroFunctions (absLabels env))]
      ++
     [(f, mkLabelledType typ labels) |
-      (f,labels) <- M.assocs (funLabels (absLabels env)), M.notMember f (disabledFunctions (absLabels env)),
+      (f,labels) <- M.assocs (funLabels (absLabels env)),
+                    M.notMember f (disabledFunctions (absLabels env)),
+                    not (isBackupFunction f), ---- apply backups only later
       Just typ   <- [functionType (pgfGrammar env) f]
     ]
      ++

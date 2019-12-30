@@ -116,4 +116,6 @@ ExtendEng [
     the_Det = SyntaxEng.the_Det ;
     thePl_Det = SyntaxEng.thePl_Det ;
 
+----
+    PunctBackup p = uttMark p ;
 }
