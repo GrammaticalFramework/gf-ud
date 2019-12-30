@@ -12,6 +12,7 @@ import qualified Data.Map as M
 import Data.List
 import Data.Char
 import Data.Maybe
+import Text.PrettyPrint (render)
 
 import Debug.Trace (trace)
 
@@ -33,7 +34,7 @@ test opts env string = do
   tstats <- mapM (showUD2GF opts env) sentences
   let globalStats = combineUD2GFStats $ map snd tstats
   ifOpt opts "stat" $ prUD2GFStat globalStats
-  if isOpt opts "vat" then (visualizeAbsTrees env (concatMap fst tstats)) else return ()
+  if isOpt opts "vat" then (visualizeAbsTrees env (map expr2abstree (concatMap fst tstats))) else return ()
   return ()
 
 showUD2GF opts env sentence = do
@@ -65,9 +66,13 @@ showUD2GF opts env sentence = do
   let ts0 = devtree2abstrees besttree
   ifOpt opts "at0" $ unlines $ map prAbsTree ts0
 
-  let ts = map (expandMacro env) ts0
-  ifOpt opts "at" $ unlines $ map prAbsTree ts
+  let ts1 = map (expandMacro env) ts0
+  ifOpt opts "at" $ unlines $ map prAbsTree ts1
 -- if isOpt opts "vat" then (visualizeAbsTrees env ts) else return ()
+
+  let crs = map (checkAbsTreeResult env) ts1
+  ifOpt opts "tc" $ unlines $ map prCheckResult crs
+  let ts = [t | Just t <- map resultTree crs]
 
   let allnodes = allNodesRTree besttree0
       orig = length allnodes
@@ -121,6 +126,33 @@ ud2gf env =
   . transformDevTree env
   . udtree2devtree
 -}
+
+data CheckResult = CheckResult {
+  resultTree     :: Maybe Expr,
+  resultUnknowns :: [Fun],
+  resultMessage  :: String
+  }
+ deriving Show
+
+prCheckResult cr = unlines $ 
+  case resultUnknowns cr of
+    [] -> []
+    uks -> [unwords $ "unknown words:" : map showCId uks]
+  ++
+  [resultMessage cr]
+
+-- check the resulting tree
+checkAbsTreeResult :: UDEnv -> AbsTree -> CheckResult
+checkAbsTreeResult env t = CheckResult {
+  resultTree = mt,
+  resultUnknowns = [f | f <- allNodesRTree t, isNewWordFun f],
+  resultMessage = msg
+  }
+ where
+  (mt,msg) = case inferExpr (pgfGrammar env) (abstree2expr t) of
+    Left tce -> (Nothing, render (ppTcError tce))
+    Right (exp,typ) -> (Just exp, "type checking OK")
+
 
 -- developing tree on the way from UD to GF
 type DevTree = RTree DevNode
@@ -374,19 +406,20 @@ analyseWords env = mapRTree lemma2fun
     Left c -> case parse (pgfGrammar env) (actLanguage env) (mkType [] c []) w of
       ts -> [(at,c) | t <- ts,
                       let at = expr2abstree t,
-                      all (\f -> M.notMember f (disabledFunctions (absLabels env))) (functionsInAbsTree at)]
+                      all (\f -> M.notMember f (disabledFunctions (absLabels env))) (allNodesRTree at)]
     Right c -> case elem (w,c) auxWords of
       True -> [(newWordTree w c, c)]
       _ -> []
 
   auxWords = [(lemma,cat) | ((fun_,lemma),(cat,labels_)) <- M.assocs (lemmaLabels (cncLabels env (actLanguage env)))]
 
-  newWordTree w c = RTree (mkCId (w ++ "_x_" ++ showCId c)) [] ---
+-- auxiliaries 
+newWordTree w c = RTree (mkCId (w ++ "__x__" ++ showCId c)) [] ---
+isNewWordFun f = isInfixOf "__x__" (showCId f)
+unknownCat = mkCId "Adv" --- treat unknown words as adverbs ---- TODO: from config
+quote s = "\"" ++ s ++ "\""
 
-  unknownCat = mkCId "Adv" --- treat unknown words as adverbs ---- TODO: from config
-
-  quote s = "\"" ++ s ++ "\""
-
+-- initialize the process
 udtree2devtree :: UDTree -> DevTree
 udtree2devtree tr@(RTree un uts) =
   RTree (DevNode {

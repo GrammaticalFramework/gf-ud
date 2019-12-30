@@ -34,9 +34,6 @@ pgf2functions pgf = [(fun,(val,[arg | (_,_,ty) <- hs, let (_,arg,_) = unType ty]
   let (hs,val,_) = unType typ
   ]
 
-functionsInAbsTree :: AbsTree -> [Fun]
-functionsInAbsTree t = root t : concatMap functionsInAbsTree (subtrees t)
-
 -- conversion from PGF to rose tree
 
 expr2abstree :: PGF.Expr -> AbsTree
