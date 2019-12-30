@@ -195,3 +195,8 @@
 #auxfun MassNP_sg cn : CN -> NP = MassNP cn ; head[Number=Sing]
 #auxfun DetCN_aPl cn : CN -> NP = DetCN aPl_Det cn ; head[Number=Plur]
 #disable MassNP
+
+#auxfun PossSgNP_ pron cn : Pron -> CN -> NP = PossSgNP pron cn ; nmod:poss head[Number=Sing]
+#auxfun PossPlNP_ pron cn : Pron -> CN -> NP = PossPlNP pron cn ; nmod:poss head[Number=Plur]
+#disable PossSgNP PossPlNP
+
