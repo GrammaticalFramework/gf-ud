@@ -336,7 +336,7 @@ combineTrees env =
       (f,((val,args),((xx,df),ls))) <- M.assocs (macroFunctions (absLabels env))]
      ++
     [(f, mkLabelledType typ labels) |
-      (f,(labels,True)) <- M.assocs (funLabels (absLabels env)),
+      (f,labels) <- M.assocs (funLabels (absLabels env)), M.notMember f (disabledFunctions (absLabels env)),
       Just typ   <- [functionType (pgfGrammar env) f]
     ]
      ++
@@ -364,15 +364,17 @@ analyseWords env = mapRTree lemma2fun
   --- it is still possible that some other category is meant
   getWordTrees w cs = case concatMap (parseWord w) cs of
     [] -> case cs of
-      []  -> (True,[(newWordTree w unknownCat, unknownCat)])
-      _ -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c])
+      [] -> (True,[(newWordTree w unknownCat, unknownCat)])
+      _  -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c])
 
     fs -> (False,fs)
 
   --- this can fail if c is discontinuous, or return false positives if w is a form of another word
   parseWord w ec = case ec of
     Left c -> case parse (pgfGrammar env) (actLanguage env) (mkType [] c []) w of
-      ts -> [(expr2abstree t,c) | t <- ts]
+      ts -> [(at,c) | t <- ts,
+                      let at = expr2abstree t,
+                      all (\f -> M.notMember f (disabledFunctions (absLabels env))) (functionsInAbsTree at)]
     Right c -> case elem (w,c) auxWords of
       True -> [(newWordTree w c, c)]
       _ -> []

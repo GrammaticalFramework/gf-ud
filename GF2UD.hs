@@ -149,7 +149,7 @@ annotTree2labelledTree env lang =
   . addLabels root_Label
  where
    pgf = pgfGrammar env
-   lookFun f = maybe defaultLabels fst (M.lookup f (funLabels (absLabels env)))
+   lookFun f = maybe defaultLabels id (M.lookup f (funLabels (absLabels env)))
    defaultLabels = head_Label:repeat dep_Label
 
    propagateLabels tr@(RTree node trs) = 
@@ -186,7 +186,6 @@ expr2annottree env lang tree =
   
  where
    pgf = pgfGrammar env
------   lookFun f = maybe []    id (M.lookup f (funLabels (absLabels env)))
    lookCat c = maybe x_POS id (M.lookup c (catLabels (absLabels env)))
    lookWord d w = maybe d id (M.lookup w (wordLabels (cncLabels env lang)))
    lookupLemma f w = (M.lookup (f,w) (lemmaLabels (cncLabels env lang)))              -- (fun,lemma) -> (label,targetLabel)

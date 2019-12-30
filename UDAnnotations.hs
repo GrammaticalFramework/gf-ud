@@ -46,16 +46,17 @@ isEnvUD2 env = annotGuideline (absLabels env) == Just "UD2"
 parseEng env s = head $ parse (pgfGrammar env) (actLanguage env) (startCategory env) s
 
 data AbsLabels = AbsLabels {
-  annotGuideline :: Maybe String,
-  funLabels :: M.Map CId ([Label],Bool), -- Bool says whether to be used in ud2gf; set false by "#disable"
-  catLabels :: M.Map CId String,
-  auxCategories :: M.Map CId String,  -- ud2gf only
-  macroFunctions :: M.Map CId (AbsType,(([CId],AbsTree),[(Label,[UDData])])), -- ud2gf only
-  altFunLabels :: M.Map CId [[Label]] -- all labellings, ud2gf only, added by #altfun
+  annotGuideline    :: Maybe String,
+  funLabels         :: M.Map CId [Label],
+  catLabels         :: M.Map CId String,
+  auxCategories     :: M.Map CId String,  -- ud2gf only
+  macroFunctions    :: M.Map CId (AbsType,(([CId],AbsTree),[(Label,[UDData])])), -- ud2gf only
+  altFunLabels      :: M.Map CId [[Label]], -- all labellings, ud2gf only, added by #altfun
+  disabledFunctions :: M.Map Fun ()  -- list of functions not to be used in ud2gf, added by #disable
   }
 
 initAbsLabels :: AbsLabels
-initAbsLabels = AbsLabels (Just "UD2") M.empty M.empty M.empty M.empty M.empty
+initAbsLabels = AbsLabels (Just "UD2") M.empty M.empty M.empty M.empty M.empty M.empty
 
 -- is be VERB cop head
 data CncLabels = CncLabels {
@@ -91,7 +92,7 @@ checkAbsLabels env als =
   cats = M.toList (catLabels als)
   allfuns = pgf2functions pgf
 
-  chFun (f,(ls,_)) =
+  chFun (f,ls) =
     ["unknown function " ++ showCId f | notElem f (map fst allfuns)] ++
     ["no head in "       ++ showCId f | notElem "head" ls] ++
     ["wrong number of labels in " ++ showCId f ++ " : " ++ showType [] typ |
@@ -110,32 +111,31 @@ checkAbsLabels env als =
 -- get the labels from file
 
 pAbsLabels :: String -> AbsLabels
-pAbsLabels = disables . dispatch . map words . uncomment . lines
+pAbsLabels = dispatch . map words . uncomment . lines
  where
-  disables (ds,labs) = labs{funLabels = M.mapWithKey (\f (ls,b) -> (ls, b && notElem (showCId f) ds)) (funLabels labs)}
-  dispatch = foldr add ([],initAbsLabels)
-  add ws (ds,labs) = case ws of
-    "#guidelines":w:_   -> (ds,labs{annotGuideline = Just w}) --- overwrites earlier declaration
-    "#fun":f:xs         -> (ds,labs{funLabels = M.insert (mkCId f) (xs,True) (funLabels labs)})
-    "#cat":c:p:[]       -> (ds,labs{catLabels = M.insert (mkCId c) p (catLabels labs)})
-    "#auxcat":c:p:[]    -> (ds,labs{auxCategories = M.insert (mkCId c) p (auxCategories labs)})
-    "#auxfun":f:typdef  -> (ds,labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f:typdef)) (macroFunctions labs)})
-    "#disable":fs       -> (fs++ds,labs) 
-    "#altfun":f:xs      -> (ds,labs{altFunLabels = M.insertWith (++) (mkCId f) [xs] (altFunLabels labs)})
+  dispatch = foldr add initAbsLabels
+  add ws labs = case ws of
+    "#guidelines":w:_   -> labs{annotGuideline = Just w} --- overwrites earlier declaration
+    "#fun":f:xs         -> labs{funLabels = M.insert (mkCId f) xs (funLabels labs)}
+    "#cat":c:p:[]       -> labs{catLabels = M.insert (mkCId c) p (catLabels labs)}
+    "#auxcat":c:p:[]    -> labs{auxCategories = M.insert (mkCId c) p (auxCategories labs)}
+    "#auxfun":f:typdef  -> labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f:typdef)) (macroFunctions labs)}
+    "#disable":fs       -> labs{disabledFunctions = inserts [(mkCId f,()) | f <- fs] (disabledFunctions labs)}
+    "#altfun":f:xs      -> labs{altFunLabels = M.insertWith (++) (mkCId f) [xs] (altFunLabels labs)}
     
   --- fun or cat without keywords, for backward compatibility
-    f:xs@(_:_:_)        -> (ds,labs{funLabels = M.insert (mkCId f) (xs,True) (funLabels labs)})
-    f:"head":[]         -> (ds,labs{funLabels = M.insert (mkCId f) ([head_Label],True) (funLabels labs)})
-    c:p:[]              -> (ds,labs{catLabels = M.insert (mkCId c) p (catLabels labs)})
+    f:xs@(_:_:_)        -> labs{funLabels = M.insert (mkCId f) xs (funLabels labs)}
+    f:"head":[]         -> labs{funLabels = M.insert (mkCId f) [head_Label] (funLabels labs)}
+    c:p:[]              -> labs{catLabels = M.insert (mkCId c) p (catLabels labs)}
 
  --- ignores ill-formed lines silently
-    _ -> (ds,labs) 
+    _ -> labs 
 
 addMissing env = env {
   absLabels = (absLabels env){
     funLabels =
       foldr (\ (k,v) m -> M.insert k v m) (funLabels (absLabels env))
-        [(f,([head_Label],True)) | 
+        [(f,[head_Label]) | 
           (f,(_,[_])) <- pgf2functions (pgfGrammar env),
           Nothing <- [M.lookup f (funLabels (absLabels env))]
           ]
@@ -152,6 +152,7 @@ pMacroFunction (f:ws) = case break (==":") ws of
     _ -> error $ "missing definition in #macro " ++ unwords (f:ws)
   _ -> error $ "missing type in #macro " ++ unwords (f:ws)
 
+inserts kvs mp = foldr (\ (k,v) m -> M.insert k v m) mp kvs
 
 pCncLabels :: String -> CncLabels
 pCncLabels = dispatch . map words . uncomment . lines
@@ -167,8 +168,6 @@ pCncLabels = dispatch . map words . uncomment . lines
                                    (discontLabels labs)}
     "#multiword":c:hp:lab:_  -> labs{multiLabels = M.insert (mkCId c) (hp/="head-last",lab) (multiLabels labs)}
     _ -> labs --- ignores silently
-
-  inserts kvs mp = foldr (\ (k,v) m -> M.insert k v m) mp kvs
 
   readRange s = case break (=='-') s of
     (a@(_:_),_:b@(_:_)) | all isDigit a && all isDigit b -> [read a .. read b]

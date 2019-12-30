@@ -53,3 +53,6 @@
 
 #multiword Prep head-first fixed
 #multiword PN head-first flat
+
+-- to deal with the_Det / thePl_Det, together with #auxfun annotations in ShallowParse.labels
+#lemma the_Det,thePl_Det the The head head

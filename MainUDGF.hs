@@ -77,7 +77,7 @@ roundtripOpts gopts uopts env s = do
   return ()
 
 roundtrip :: UDEnv -> String -> IO ()
-roundtrip = roundtripOpts defaultOptsGF2UD minimalOptsUD2GF
+roundtrip = roundtripOpts defaultOptsGF2UD (selectOpts ["dt1","bt","at0","at"])
 
 -- for quick use in ghci
 mini = "grammars/MiniLang"

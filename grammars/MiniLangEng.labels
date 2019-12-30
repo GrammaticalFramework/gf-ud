@@ -14,6 +14,7 @@
 #word did  do  Mood=Ind|Tense=Past|VerbForm=Fin
 #word would would  VerbForm=Fin
 #word will  will VerbForm=Fin
+#word not not Polarity=Neg
 
 #lemma UseCl,UseQCl,ImpVP not Neg advmod head
 #lemma UseAP,UseAdv,UseNP be Cop cop head
@@ -35,3 +36,6 @@
 #discont V2 0-4,head  5,ADP,case,obj
 
 #multiword Prep head-first fixed
+
+-- to deal with the_Det / thePl_Det, together with #auxfun annotations in MiniLang.labels
+#lemma the_Det,thePl_Det the The head head

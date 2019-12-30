@@ -25,8 +25,6 @@ pAbsType s = case (filter (/="->") (words s)) of
   cs@(_:_) -> (mkCId (last cs), map mkCId (init cs))
   _ -> error $ "cannot parse abstype " ++ s
 
--- conversion from PGF to rose tree
-
 
 pgf2functions :: PGF -> [(Fun,AbsType)]
 pgf2functions pgf = [(fun,(val,[arg | (_,_,ty) <- hs, let (_,arg,_) = unType ty])) |
@@ -35,6 +33,11 @@ pgf2functions pgf = [(fun,(val,[arg | (_,_,ty) <- hs, let (_,arg,_) = unType ty]
   Just typ <- [functionType pgf fun],
   let (hs,val,_) = unType typ
   ]
+
+functionsInAbsTree :: AbsTree -> [Fun]
+functionsInAbsTree t = root t : concatMap functionsInAbsTree (subtrees t)
+
+-- conversion from PGF to rose tree
 
 expr2abstree :: PGF.Expr -> AbsTree
 expr2abstree e = case unApp e of

@@ -185,3 +185,13 @@
 
 #altfun AddNPtoVP head iobj
 
+-- to deal with the_Det / thePl_Det, together with a #lemma for The in ShallowParseEng.labels
+#auxcat The DET
+#auxfun DetCN_theSg det cn : The -> CN -> NP = DetCN the_Det cn ; det head[Number=Sing]
+#auxfun DetCN_thePl det cn : The -> CN -> NP = DetCN thePl_Det cn ; det head[Number=Plur]
+#disable the_Det thePl_Det
+
+-- disable plurals as mass terms
+#auxfun MassNP_sg cn : CN -> NP = MassNP cn ; head[Number=Sing]
+#auxfun DetCN_aPl cn : CN -> NP = DetCN aPl_Det cn ; head[Number=Plur]
+#disable MassNP
