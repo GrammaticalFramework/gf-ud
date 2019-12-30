@@ -141,28 +141,28 @@
 
 -- needed in ud2gf only
 
-#auxfun UseComp_Cop_Pres cop comp : Cop -> Comp -> VPS = MkVPS (TTAnt ASim TPres) PNeg  (UseComp comp) ; cop head
-#auxfun UseComp_Cop_PresNeg cop neg comp : Cop -> Neg -> Comp -> VPS = MkVPS (TTAnt ASim TPres) PNeg (UseComp comp) ; cop advmod head
+#auxfun UseComp_Cop_Pres cop comp : Cop -> Comp -> VPS = MkVPS (TTAnt TPres ASimul) PPos  (UseComp comp) ; cop head
+#auxfun UseComp_Cop_PresNeg cop neg comp : Cop -> Neg -> Comp -> VPS = MkVPS (TTAnt TPres ASimul) PNeg (UseComp comp) ; cop advmod head
 ----#auxfun UseComp_Cop cop comp : Cop -> Comp -> VP = UseComp comp ; cop head
 ----#auxfun QuestCl_Do aux cl : Do -> Cl -> QCl = QuestCl cl ; aux head
 
-#auxfun MkVPS_Pres vp : VP -> VPS = MkVPS (TTAnt ASim TPres) PPos vp ; head[Tense=Pres]
-#auxfun MkVPS_PresNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt ASim TPres) PNeg vp ; aux[Tense=Pres] advmod head
-#auxfun MkVPS_Past vp : VP -> VPS = MkVPS (TTAnt ASim TPast) PPos vp ; head[Tense=Past]
-#auxfun MkVPS_PastNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt ASim TPast) PNeg vp ; aux[Tense=Past] advmod head
-#auxfun MkVPS_Perf have vp : Have -> VP -> VPS = MkVPS (TTAnt AAnter TPres) PPos vp ; aux[Tense=Pres] head
-#auxfun MkVPS_PerfNeg have neg vp : Have -> Neg -> VP -> VPS = MkVPS (TTAnt AAnter TPres) PNeg vp ; aux[Tense=Pres] advmod head
-#auxfun MkVPS_Pluperf have vp : Have -> VP -> VPS = MkVPS (TTAnt AAnter TPast) PPos vp ; aux[Tense=Past] head
-#auxfun MkVPS_PluperfNeg have neg vp : Have -> Neg -> VP -> VPS = MkVPS (TTAnt AAnter TPast) PNeg vp ; aux[Tense=Past] advmod head
-#auxfun MkVPS_Fut will vp : Will -> VP -> VPS = MkVPS (TTAnt ASim TFut) PPos vp ; aux head
-#auxfun MkVPS_FutNeg will neg vp : Will -> Neg -> VP -> VPS = MkVPS (TTAnt ASim TFut) PNeg vp ; aux advmod head
+#auxfun MkVPS_Pres vp : VP -> VPS = MkVPS (TTAnt TPres ASimul) PPos vp ; head[Tense=Pres]
+#auxfun MkVPS_PresNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt TPres ASimul) PNeg vp ; aux[Tense=Pres] advmod head
+#auxfun MkVPS_Past vp : VP -> VPS = MkVPS (TTAnt TPast ASimul) PPos vp ; head[Tense=Past]
+#auxfun MkVPS_PastNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt TPast ASimul) PNeg vp ; aux[Tense=Past] advmod head
+#auxfun MkVPS_Perf have vp : Have -> VP -> VPS = MkVPS (TTAnt TPres AAnter) PPos vp ; aux[Tense=Pres] head
+#auxfun MkVPS_PerfNeg have neg vp : Have -> Neg -> VP -> VPS = MkVPS (TTAnt TPres AAnter) PNeg vp ; aux[Tense=Pres] advmod head
+#auxfun MkVPS_Pluperf have vp : Have -> VP -> VPS = MkVPS (TTAnt TPast AAnter) PPos vp ; aux[Tense=Past] head
+#auxfun MkVPS_PluperfNeg have neg vp : Have -> Neg -> VP -> VPS = MkVPS (TTAnt TPast AAnter) PNeg vp ; aux[Tense=Past] advmod head
+#auxfun MkVPS_Fut will vp : Will -> VP -> VPS = MkVPS (TTAnt TFut ASimul) PPos vp ; aux head
+#auxfun MkVPS_FutNeg will neg vp : Will -> Neg -> VP -> VPS = MkVPS (TTAnt TFut ASimul) PNeg vp ; aux advmod head
 
 
 --- needed in English
-#auxfun MkVPS_PlPres vp : VP -> VPS = MkVPS (TTAnt ASim TPres) PPos vp ; head[VerbForm=Inf]
-#auxfun MkVPS_PlPresNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt ASim TPres) PNeg vp ; aux[VerbForm=Inf] advmod head
-#auxfun MkVPS_PlPerf have vp : Have -> VP -> VPS = MkVPS (TTAnt AAnter TPres) PPos vp ; aux[VerbForm=Inf] head
-#auxfun MkVPS_PlPerfNeg have neg vp : Have -> Neg -> VP -> VPS = MkVPS (TTAnt AAnter TPres) PNeg vp ; aux[VerbForm=Inf] advmod head
+#auxfun MkVPS_PlPres vp : VP -> VPS = MkVPS (TTAnt TPres ASimul) PPos vp ; head[VerbForm=Inf]
+#auxfun MkVPS_PlPresNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt TPres ASimul) PNeg vp ; aux[VerbForm=Inf] advmod head
+#auxfun MkVPS_PlPerf have vp : Have -> VP -> VPS = MkVPS (TTAnt TPres AAnter) PPos vp ; aux[VerbForm=Inf] head
+#auxfun MkVPS_PlPerfNeg have neg vp : Have -> Neg -> VP -> VPS = MkVPS (TTAnt TPres AAnter) PNeg vp ; aux[VerbForm=Inf] advmod head
 
 
 #auxfun MkVPI_to to vpi : VPI -> To -> VPI = vpi ; mark head

@@ -5,6 +5,7 @@ import UDAnnotations
 import GFConcepts
 import UDOptions
 import UDVisualization
+import Backend
 
 import PGF hiding (CncLabels)
 
@@ -74,6 +75,8 @@ showUD2GF opts env sentence = do
   ifOpt opts "tc" $ unlines $ map prCheckResult crs
   let ts = [t | Just t <- map resultTree crs]
 
+  ifOpt opts "lin" $ unlines $ map (linearizeTree env (actLanguage env)) ts
+  
   let allnodes = allNodesRTree besttree0
       orig = length allnodes
       interp = length (devStatus (root besttree0))
