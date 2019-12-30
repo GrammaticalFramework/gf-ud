@@ -1,5 +1,7 @@
 abstract ShallowParse =
 
+  Backups,
+  
   JustWordsWordNet,
 
  Phrase [

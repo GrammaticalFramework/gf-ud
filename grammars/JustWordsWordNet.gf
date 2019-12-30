@@ -35338,7 +35338,7 @@ fun overgrown_A : A ;
 fun overgrowth_N : N ;
 fun overhand_A : A ;
 fun overhang_N : N ;
-fun overhang_V : V ;
+---fun overhang_V : V ;
 fun overhasty_A : A ;
 fun overhaul_N : N ;
 fun overhaul_V : V ;

@@ -85,7 +85,8 @@ showUD2GF opts env sentence = do
        interpretedWords = interp,
        unknownWords = length [dn | dn <- allnodes, devIsUnknown dn],
        totalSentences = 1,
-       completeSentences = div interp orig -- either 1 or 0
+       completeSentences = div interp orig, -- either 1 or 0
+       typecorrectSentences = min 1 (length ts)  -- 1 if type-correct, 0 if not
        }
   
   return (ts,stat)
@@ -96,7 +97,8 @@ data UD2GFStat = UD2GFStat {
   interpretedWords :: Int,
   unknownWords :: Int,
   totalSentences :: Int,
-  completeSentences :: Int
+  completeSentences :: Int,
+  typecorrectSentences :: Int
   }
  deriving Show
 
@@ -106,7 +108,8 @@ prUD2GFStat stat = unlines $ [
   "interpreted word nodes:\t"              ++ show (interpretedWords stat) ++ proportion interpretedWords totalWords,
   "unknown word nodes (tokens):\t"         ++ show (unknownWords stat) ++ proportion unknownWords totalWords,
   "total sentences:\t"                     ++ show (totalSentences stat),
-  "completely interpreted sentences:\t"    ++ show (completeSentences stat) ++ proportion completeSentences totalSentences
+  "completely interpreted sentences:\t"    ++ show (completeSentences stat) ++ proportion completeSentences totalSentences,
+  "type-correct sentences:\t"              ++ show (typecorrectSentences stat) ++ proportion typecorrectSentences totalSentences
   ]
  where
    proportion f g = " (" ++ show (div (100 * f stat) (g stat)) ++ "%)"
@@ -117,18 +120,9 @@ combineUD2GFStats stats = UD2GFStat {
   interpretedWords = sum (map interpretedWords stats),
   unknownWords = sum (map unknownWords stats),
   totalSentences = sum (map totalSentences stats),
-  completeSentences = sum (map completeSentences stats)
+  completeSentences = sum (map completeSentences stats),
+  typecorrectSentences = sum (map typecorrectSentences stats)
   }
-
-{-
--- the pipeline
-ud2gf :: UDEnv -> UDTree -> [PGF.Expr]
-ud2gf env =
-    map abstree2expr
-  . devtree2abstrees
-  . transformDevTree env
-  . udtree2devtree
--}
 
 data CheckResult = CheckResult {
   resultTree     :: Maybe Expr,
@@ -148,11 +142,12 @@ prCheckResult cr = unlines $
 checkAbsTreeResult :: UDEnv -> AbsTree -> CheckResult
 checkAbsTreeResult env t = CheckResult {
   resultTree = mt,
-  resultUnknowns = [f | f <- allNodesRTree t, isNewWordFun f],
+  resultUnknowns = [f | f <- allNodesRTree t, Nothing <- [functionType pgf f]],
   resultMessage = msg
   }
  where
-  (mt,msg) = case inferExpr (pgfGrammar env) (abstree2expr t) of
+  pgf = pgfGrammar env
+  (mt,msg) = case inferExpr pgf (abstree2expr t) of
     Left tce -> (Nothing, render (ppTcError tce))
     Right (exp,typ) -> (Just exp, "type checking OK")
 

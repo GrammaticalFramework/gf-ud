@@ -2,6 +2,7 @@
 
 concrete ShallowParseEng of ShallowParse =
 
+  BackupsEng,
   JustWordsWordNetEng,
 
  PhraseEng [

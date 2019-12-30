@@ -4,7 +4,7 @@ module UDOptions where
 
 -- ud2gf
 minimalOptsUD2GF = selectOpts ["at"]
-defaultOptsUD2GF = selectOpts ["msg","ud","err","bt0","at","tc","stat"]
+defaultOptsUD2GF = selectOpts ["msg","ud","err","bt0","at","tc","lin","stat"]
 
 -- gf2ud
 minimalOptsGF2UD = selectOpts ["ud"]

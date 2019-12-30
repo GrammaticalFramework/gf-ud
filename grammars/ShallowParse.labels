@@ -141,10 +141,10 @@
 
 -- needed in ud2gf only
 
-#auxfun UseComp_Cop_Pres cop comp : Cop -> Comp -> VPS = MkVPS (TTAnt TPres ASimul) PPos  (UseComp comp) ; cop head
-#auxfun UseComp_Cop_PresNeg cop neg comp : Cop -> Neg -> Comp -> VPS = MkVPS (TTAnt TPres ASimul) PNeg (UseComp comp) ; cop advmod head
-----#auxfun UseComp_Cop cop comp : Cop -> Comp -> VP = UseComp comp ; cop head
-----#auxfun QuestCl_Do aux cl : Do -> Cl -> QCl = QuestCl cl ; aux head
+#auxfun UseComp_Cop_Pres cop comp : Cop -> Comp -> VPS = MkVPS (TTAnt TPres ASimul) PPos  (UseComp comp) ; cop[Tense=Pres] head
+#auxfun UseComp_Cop_PresNeg cop neg comp : Cop -> Neg -> Comp -> VPS = MkVPS (TTAnt TPres ASimul) PNeg (UseComp comp) ; cop[Tense=Pres] advmod head
+#auxfun UseComp_Cop_Past cop comp : Cop -> Comp -> VPS = MkVPS (TTAnt TPast ASimul) PPos  (UseComp comp) ; cop[Tense=Past] head
+#auxfun UseComp_Cop_PastNeg cop neg comp : Cop -> Neg -> Comp -> VPS = MkVPS (TTAnt TPast ASimul) PNeg (UseComp comp) ; cop[Tense=Past] advmod head
 
 #auxfun MkVPS_Pres vp : VP -> VPS = MkVPS (TTAnt TPres ASimul) PPos vp ; head[Tense=Pres]
 #auxfun MkVPS_PresNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt TPres ASimul) PNeg vp ; aux[Tense=Pres] advmod head
