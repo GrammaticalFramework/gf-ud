@@ -20,12 +20,13 @@ ExtendEng [
 ----    ConjVPS,  --    : Conj -> [VPS] -> VPS ;      -- has walked and won't sleep
     PredVPS,  --    : NP   -> VPS -> S ;          -- she [has walked and won't sleep]
 
-    MkVPI     --  : VP -> VPI ;                   -- to sleep (TODO: Ant and Pol)
+    MkVPI,     --  : VP -> VPI ;                   -- to sleep (TODO: Ant and Pol)
 ----    ConjVPI   -- : Conj -> [VPI] -> VPI ;         -- to sleep and to walk
     
 ----    BaseVPS, ConsVPS,
 ----    BaseVPI, ConsVPI
 ---- TODO: Extend cannot form QS yet
+    CompoundN 
 
     ],
     
@@ -116,6 +117,8 @@ ExtendEng [
     the_Det = SyntaxEng.the_Det ;
     thePl_Det = SyntaxEng.thePl_Det ;
 
+    FlatPN mads dam = dam ** {s = \\c => mads.s ! R.Nom ++ dam.s ! c} ;
+
 ----
-    PunctBackup p = uttMark p ;
+    PunctBackup p = uttBackup p ;
 }

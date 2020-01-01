@@ -27,6 +27,7 @@
 #fun CompIAdv head -- IAdv -> IComp
 #fun CompIP head -- IP -> IComp
 #fun ComplSlashIP head obj -- VPSlash -> IP -> QVP
+#fun CompoundN compound head -- N -> N -> N
 #fun ConjAP cc head -- Conj -> ListAP -> AP
 #fun ConjAdV cc head -- Conj -> ListAdV -> AdV
 #fun ConjAdv cc head -- Conj -> ListAdv -> Adv
@@ -46,6 +47,7 @@
 #fun ConsRS head conj -- RS -> ListRS -> ListRS
 #fun ConsS head conj -- S -> ListS -> ListS
 #fun DetCN det head -- Det -> CN -> NP
+#fun FlatPN head flat -- PN -> PN -> PN
 #fun FunRP case nmod head -- Prep -> NP -> RP -> RP
 #fun IDig head -- Dig -> Digits
 #fun IIDig nummod head -- Dig -> Digits -> Digits

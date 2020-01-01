@@ -75,7 +75,8 @@ showUD2GF opts env sentence = do
   ifOpt opts "tc" $ unlines $ map prCheckResult crs
   let ts = [t | Just t <- map resultTree crs]
 
-  ifOpt opts "lin" $ unlines $ map (linearizeTree env (actLanguage env)) ts
+  if null ts then return () else
+    ifOpt opts "lin" (unlines $ map (linearizeTree env (actLanguage env)) ts)
   
   let allnodes = allNodesRTree besttree0
       orig = length allnodes
