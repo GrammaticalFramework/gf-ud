@@ -224,3 +224,27 @@ expandMacro env tr@(RTree f ts) = case M.lookup f (macroFunctions (absLabels env
    subst xts t@(RTree h us) = case us of
      [] -> maybe t id (lookup h xts)
      _  -> RTree h (map (subst xts) us)
+
+----------------------------------------------------------------------------
+-- used in ud2gf: macros + real abstract functions, except the disabled ones
+
+allFunsEnv :: UDEnv -> [(Fun,LabelledType)]
+allFunsEnv env =
+    [(f,(val,zip args ls))  |
+      (f,((val,args),((xx,df),ls))) <- M.assocs (macroFunctions (absLabels env))]
+     ++
+    [(f, mkLabelledType typ labels) |
+      (f,labels) <- M.assocs (funLabels (absLabels env)),
+                    M.notMember f (disabledFunctions (absLabels env)),
+                    not (isBackupFunction f), ---- apply backups only later
+      Just typ   <- [functionType (pgfGrammar env) f]
+    ]
+     ++
+    [(f, mkLabelledType typ labels) |
+      (f,labelss) <- M.assocs (altFunLabels (absLabels env)),
+      labels      <- labelss,
+      Just typ    <- [functionType (pgfGrammar env) f]
+    ]
+
+mkBackup ast cat = RTree (mkCId (showCId cat ++ "Backup")) [ast]
+isBackupFunction f = isSuffixOf "Backup" (showCId f)

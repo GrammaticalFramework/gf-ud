@@ -225,9 +225,6 @@ addBackups0 tr@(RTree dn trs) = case map collectBackup (tr:trs) of
   appBackup :: Cat -> AbsTree -> AbsTree -> AbsTree
   appBackup cat b t = RTree (mkCId ("AddBackup" ++ showCId cat)) [b,t]
 
-mkBackup ast cat = RTree (mkCId (showCId cat ++ "Backup")) [ast]
-isBackupFunction f = isSuffixOf "Backup" (showCId f)
-
 -- call this to make sure that the abs tree info is unique
 theAbsTreeInfo :: DevTree -> AbsTreeInfo
 theAbsTreeInfo dt = case devAbsTrees (root dt) of
@@ -308,7 +305,7 @@ combineTrees env =
   allFunsLocal :: DevTree -> [FunInfo]
   allFunsLocal tr@(RTree dn ts) =
     [FunInfo f labtyp abstree usage |
-        (f,labtyp) <- allFunsEnv,
+        (f,labtyp) <- allFunsEnv env,
 
         -- for head and each immediate subtree, build the list of its already built abstrees, each with type and label
         -- argalts :: [[Arg]] -- one list for root and for each subtree
@@ -364,26 +361,6 @@ combineTrees env =
                    else acu:dts,
       devStatus = maximumBy (\x y -> compare (length x) (length y)) [devStatus dn, funUsage finfo]
       } ts
-
-  -- macros + real abstract functions
-  allFunsEnv :: [(Fun,LabelledType)]
-  allFunsEnv =
-    [(f,(val,zip args ls))  |
-      (f,((val,args),((xx,df),ls))) <- M.assocs (macroFunctions (absLabels env))]
-     ++
-    [(f, mkLabelledType typ labels) |
-      (f,labels) <- M.assocs (funLabels (absLabels env)),
-                    M.notMember f (disabledFunctions (absLabels env)),
-                    not (isBackupFunction f), ---- apply backups only later
-      Just typ   <- [functionType (pgfGrammar env) f]
-    ]
-     ++
-    [(f, mkLabelledType typ labels) |
-      (f,labelss) <- M.assocs (altFunLabels (absLabels env)),
-      labels      <- labelss,
-      Just typ    <- [functionType (pgfGrammar env) f]
-    ]
-
 
 analyseWords :: UDEnv -> DevTree -> DevTree
 analyseWords env = mapRTree lemma2fun
