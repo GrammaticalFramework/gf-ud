@@ -46,7 +46,7 @@ data UDData = UDData {
   udArg  :: String,
   udVals ::[String]
   } -- Arg=Val,Val,Val
-   deriving (Eq,Show)
+   deriving (Eq,Show,Ord)
 
 initUDWord :: Int -> UDWord
 initUDWord i = UDWord (UDIdInt i) "" "" "" "" [] UDIdNone "" "" []
