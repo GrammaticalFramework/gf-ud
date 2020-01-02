@@ -10,8 +10,8 @@ concrete ShallowParseEng of ShallowParse =
     UttS      , -- S  -> Utt ;         -- John walks
     UttQS     , -- QS -> Utt ;         -- does John walk
     UttNP     , -- NP -> Utt ;         -- John
-    UttAdv      -- Adv -> Utt ;        -- in the house
-----    UttImpSg   -- Pol -> Imp -> Utt ; -- (do not) walk ----s
+    UttAdv ,    -- Adv -> Utt ;        -- in the house
+    UttImpSg   -- Pol -> Imp -> Utt ; -- (do not) walk ----s
     ],
 
 ExtendEng [
@@ -31,11 +31,10 @@ ExtendEng [
     ],
     
  SentenceEng [
-    S,QS,Cl,QCl,NP,Temp,Pol,VP,Imp
----    UseCl     , -- Temp -> Pol -> Cl   -> S ;  -- John has not walked
----    UseQCl    , -- Temp -> Pol -> QCl  -> QS ; -- has John walked
----    PredVP    , -- NP -> VP -> Cl ;            -- John walks / John does not walk
-----    ImpVP       -- VP -> Imp ;                 -- walk / do not walk
+    S,QS,Cl,QCl,NP,Temp,Pol,VP,Imp,
+    ImpVP ,      -- VP -> Imp ;                 -- walk / do not walk
+    AdvS ,
+    ExtAdvS
     ],
     
  VerbEng [
@@ -43,8 +42,8 @@ ExtendEng [
     UseV      , -- V   -> VP ;             -- sleep
     UseComp,
     CompAP,
-    UseNP     , -- NP  -> VP ;             -- be a man ---s
-    UseAdv    , -- Adv -> VP ;             -- be in the house ---s
+    CompAdv,
+    CompNP,
     AdvVP    , -- VP -> Adv -> VP ;       -- sleep here
     AdVVP
     ],
@@ -74,6 +73,12 @@ ExtendEng [
     Prep,NP,Adv,Subj,S,
     PrepNP    , -- Prep -> NP -> Adv ;     -- in the house
     SubjS
+    ],
+
+IdiomEng [
+    VP,
+    ProgrVP
+----    ExistNP
     ],
 
  ConjunctionEng,

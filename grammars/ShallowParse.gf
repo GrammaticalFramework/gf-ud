@@ -9,8 +9,8 @@ abstract ShallowParse =
     UttS      , -- S  -> Utt ;         -- John walks
     UttQS     , -- QS -> Utt ;         -- does John walk
     UttNP     , -- NP -> Utt ;         -- John
-    UttAdv      -- Adv -> Utt ;        -- in the house
- ----   UttImpSg   -- Pol -> Imp -> Utt ; -- (do not) walk ----s
+    UttAdv  ,    -- Adv -> Utt ;        -- in the house
+    UttImpSg   -- Pol -> Imp -> Utt ; -- (do not) walk ----s
     ],
 
 Extend [
@@ -30,11 +30,10 @@ Extend [
     ],
     
  Sentence [
-    S,QS,Cl,QCl,NP,Temp,Pol,VP,Imp
----    UseCl     , -- Temp -> Pol -> Cl   -> S ;  -- John has not walked
----    UseQCl    , -- Temp -> Pol -> QCl  -> QS ; -- has John walked
----    PredVP     -- NP -> VP -> Cl ;            -- John walks / John does not walk
-----    ImpVP       -- VP -> Imp ;                 -- walk / do not walk
+    S,QS,Cl,QCl,NP,Temp,Pol,VP,Imp,
+    ImpVP ,      -- VP -> Imp ;                 -- walk / do not walk
+    AdvS ,
+    ExtAdvS
     ],
     
  Verb [
@@ -42,7 +41,8 @@ Extend [
     UseV      , -- V   -> VP ;             -- sleep
     UseComp,
     CompAP,
-    UseNP     , -- NP  -> VP ;             -- be a man ---s
+    CompAdv,
+    CompNP,
     UseAdv    , -- Adv -> VP ;             -- be in the house ---s
     AdvVP    , -- VP -> Adv -> VP ;       -- sleep here
     AdVVP
@@ -73,6 +73,12 @@ Extend [
     Prep,NP,Adv,Subj,S,
     PrepNP    , -- Prep -> NP -> Adv ;     -- in the house
     SubjS
+    ],
+
+Idiom [
+    VP,
+    ProgrVP
+----    ExistNP
     ],
 
  Conjunction,

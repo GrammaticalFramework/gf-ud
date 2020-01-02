@@ -12,6 +12,7 @@
 #fun AdvIAdv advmod head -- IAdv -> Adv -> IAdv
 #fun AdvIP head advmod -- IP -> Adv -> IP
 #fun AdvQVP head obj -- VP -> IAdv -> QVP
+#fun AdvS advmod head
 #fun AdvVP head advmod -- VP -> Adv -> VP
 #fun BaseAP head conj -- AP -> AP -> ListAP
 #fun BaseAdV head conj -- AdV -> AdV -> ListAdV
@@ -24,6 +25,8 @@
 #fun BaseS head conj -- S -> S -> ListS
 #fun CardCN nummod head -- Numeral -> CN -> NP
 #fun CompAP head -- AP -> Comp
+#fun CompAdv head -- Adv -> Comp
+#fun CompNP head -- NP -> Comp
 #fun CompIAdv head -- IAdv -> IComp
 #fun CompIP head -- IP -> IComp
 #fun ComplSlashIP head obj -- VPSlash -> IP -> QVP
@@ -47,6 +50,8 @@
 #fun ConsRS head conj -- RS -> ListRS -> ListRS
 #fun ConsS head conj -- S -> ListS -> ListS
 #fun DetCN det head -- Det -> CN -> NP
+#fun ExistNP head -- NP -> Cl
+#fun ExtAdvS advmod head
 #fun FlatPN head flat -- PN -> PN -> PN
 #fun FunRP case nmod head -- Prep -> NP -> RP -> RP
 #fun IDig head -- Dig -> Digits
@@ -54,7 +59,7 @@
 #fun IdetCN det head -- IDet -> CN -> IP
 #fun IdetIP head -- IDet -> IP
 #fun IdetQuant head nummod -- IQuant -> Num -> IDet
----- #fun ImpVP head -- VP -> Imp
+#fun ImpVP head -- VP -> Imp
 #fun MassNP head -- CN -> NP
 #fun MkVPI head -- VP -> VPI
 #fun MkVPS aux advmod head -- Temp -> Pol -> VP -> VPS
@@ -66,6 +71,7 @@
 #fun PrepIP case head -- Prep -> IP -> IAdv
 #fun PrepNP case head -- Prep -> NP -> Adv
 #fun PrepPP case head -- Prep -> NP -> PP
+#fun ProgrVP head -- VP -> VP
 #fun PunctUttText head punct -- Utt -> Punct -> Text
 #fun QuantPlCN det head -- Quant -> CN -> NP
 #fun QuantSgCN det head -- Quant -> CN -> NP
@@ -88,7 +94,7 @@
 #fun UsePron head -- Pron -> NP
 #fun UseV head -- V -> VP
 #fun UttAdv head -- Adv -> Utt
----- #fun UttImpSg advmod head -- Pol -> Imp -> Utt
+#fun UttImpSg advmod head -- Pol -> Imp -> Utt
 #fun UttNP head -- NP -> Utt
 #fun UttQS head -- QS -> Utt
 #fun UttS head -- S -> Utt
@@ -148,6 +154,11 @@
 #auxfun UseComp_Cop_Past cop comp : Cop -> Comp -> VPS = MkVPS (TTAnt TPast ASimul) PPos  (UseComp comp) ; cop[Tense=Past] head
 #auxfun UseComp_Cop_PastNeg cop neg comp : Cop -> Neg -> Comp -> VPS = MkVPS (TTAnt TPast ASimul) PNeg (UseComp comp) ; cop[Tense=Past] advmod head
 
+#auxfun ProgrVP_Cop_Pres cop vp : Cop -> VP -> VPS = MkVPS (TTAnt TPres ASimul) PPos  (ProgrVP vp) ; cop[Tense=Pres] head[Tense=Pres|VerbForm=Part]
+#auxfun ProgrVP_Cop_PresNeg neg cop vp : Neg -> Cop -> VP -> VPS = MkVPS (TTAnt TPres ASimul) PNeg  (ProgrVP vp) ; advmod cop[Tense=Pres] head[Tense=Pres|VerbForm=Part]
+#auxfun ProgrVP_Cop_Past cop vp : Cop -> VP -> VPS = MkVPS (TTAnt TPast ASimul) PPos  (ProgrVP vp) ; cop[Tense=Pres] head[Tense=Pres|VerbForm=Part]
+#auxfun ProgrVP_Cop_PastNeg neg cop vp : Neg -> Cop -> VP -> VPS = MkVPS (TTAnt TPast ASimul) PNeg  (ProgrVP vp) ; advmod cop[Tense=Past] head[Tense=Pres|VerbForm=Part]
+
 #auxfun MkVPS_Pres vp : VP -> VPS = MkVPS (TTAnt TPres ASimul) PPos vp ; head[Tense=Pres]
 #auxfun MkVPS_PresNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt TPres ASimul) PNeg vp ; aux[Tense=Pres] advmod head
 #auxfun MkVPS_Past vp : VP -> VPS = MkVPS (TTAnt TPast ASimul) PPos vp ; head[Tense=Past]
@@ -166,11 +177,15 @@
 #auxfun MkVPS_PlPerf have vp : Have -> VP -> VPS = MkVPS (TTAnt TPres AAnter) PPos vp ; aux[VerbForm=Inf] head
 #auxfun MkVPS_PlPerfNeg have neg vp : Have -> Neg -> VP -> VPS = MkVPS (TTAnt TPres AAnter) PNeg vp ; aux[VerbForm=Inf] advmod head
 
-
 #auxfun MkVPI_to to vpi : VPI -> To -> VPI = vpi ; mark head
+
+#auxfun UttImpSg_Pos vp : VP -> Utt = UttImpSg PPos (ImpVP vp) ; head[VerbForm=Inf]
+#auxfun UttImpSg_Neg do neg vp : Do -> Neg -> VP -> Utt = UttImpSg PNeg (ImpVP vp) ; aux[VerbForm=Inf] advmod head[VerbForm=Inf]
 
 #auxfun PositA_ a : A -> AP = PositA a ; head[Degree=Pos]
 #auxfun UseComparA_ a : A -> AP = UseComparA a ; head[Degree=Cmp]
+
+#auxfun ExtAdvS_ adv punct s : Adv -> Punct -> S -> S = ExtAdvS adv s ; advmod punct head
 
 #auxcat Cop AUX
 #auxcat Do AUX
@@ -183,7 +198,7 @@
 #auxcat That PART
 
 
-#disable UseComp MkVPS PositA UseComparA
+#disable UseComp MkVPS PositA UseComparA ProgrVP ExtAdvS UttImpSg ImpVP
 
 #altfun AddNPtoVP head iobj
 
