@@ -185,7 +185,7 @@
 #auxfun PositA_ a : A -> AP = PositA a ; head[Degree=Pos]
 #auxfun UseComparA_ a : A -> AP = UseComparA a ; head[Degree=Cmp]
 
-#auxfun ExtAdvS_ adv punct s : Adv -> Punct -> S -> S = ExtAdvS adv s ; advmod punct head
+#auxfun ExtAdvS_ adv comma s : Adv -> Comma -> S -> S = ExtAdvS adv s ; advmod punct head
 
 #auxcat Cop AUX
 #auxcat Do AUX
@@ -196,7 +196,7 @@
 #auxcat Gen PART
 #auxcat To PART
 #auxcat That PART
-
+#auxcat Comma PUNCT
 
 #disable UseComp MkVPS PositA UseComparA ProgrVP ExtAdvS UttImpSg ImpVP
 

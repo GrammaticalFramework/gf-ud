@@ -31,7 +31,7 @@
 #lemma UseComp,ProgrVP,UseV,ImpVP not Neg advmod head
 #lemma PossPron 's Gen case head
 #lemma PossPron ' Gen case head
-#lemma ExtAdvS , Punct punct head
+#lemma ExtAdvS , Comma punct head
 
 #morpho N 0 Number=Sing
 #morpho N 2 Number=Plur

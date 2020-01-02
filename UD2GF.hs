@@ -79,6 +79,7 @@ showUD2GF opts env sentence = do
 
   if isOpt opts "sum"
     then do
+        putStrLn "#sum, an extractive summary (tree built from interpreted nodes)"
         let sts0 = devtree2abstrees besttree0
         let sts1 = map (expandMacro env) sts0
         ifOpt opts "at" $ unlines $ map prAbsTree sts1 
@@ -86,7 +87,7 @@ showUD2GF opts env sentence = do
         ifOpt opts "tc" $ unlines $ map prCheckResult scrs
         let sts = [t | Just t <- map resultTree scrs]
         if null sts then return () else
-          ifOpt opts "lin" (unlines $ map (("SUMMARY: " ++) . linearizeTree env (actLanguage env)) sts)
+          ifOpt opts "lin" (unlines $ map (("SUMMARY LIN: " ++) . linearizeTree env (actLanguage env)) sts)
     else return ()
   
   let allnodes = allNodesRTree besttree0
@@ -205,18 +206,26 @@ addBackups :: DevTree -> DevTree
 addBackups = addBackups0 ---- TODO: this must be improved
 
 addBackups0 :: DevTree -> DevTree
-addBackups0 tr@(RTree dn trs) = case map collectBackup (tr:trs) of
-  btrs -> RTree (dn{devAbsTrees = [replaceInfo [(t,ai) | (_,(t,Just ai)) <- btrs] (theAbsTreeInfo tr)]}) (map fst (tail btrs))
+addBackups0 tr@(RTree dn trs) = case map collectBackup (tr:trs) of  -- backups from the tree itself and every subtree
+  btrs -> RTree
+    (dn {devAbsTrees = [
+           replaceInfo [(t,ai) | (_,(t,Just ai)) <- btrs]   -- 
+           (theAbsTreeInfo tr)]                             -- the only abstree that there is 
+        }
+    )
+    (map fst (tail btrs))
   
  where
 
+  -- add backups to tree, update usage with the nodes used in the backups (if no backups, do nothing)
   replaceInfo :: [(AbsTree,AbsTreeInfo)] -> AbsTreeInfo -> AbsTreeInfo
   replaceInfo btrs ai@(ast,(cat,usage)) =
     (replace btrs ast,(cat,sort (nub (concat (usage:map (snd . snd . snd) btrs)))))
 
+  -- check if thre are backups; if not, apply backups to subtrees
   replace :: [(AbsTree,AbsTreeInfo)] -> AbsTree -> AbsTree
   replace btrs tr@(RTree f trs) = case lookup tr btrs of
-    Just (btr,(c,_)) -> appBackup c btr tr
+    Just (btr,(c,_)) -> appBackup c btr (RTree f (map (replace btrs) trs))
     _ -> RTree f (map (replace btrs) trs)
 
   collectBackup :: DevTree -> (DevTree,(AbsTree,Maybe AbsTreeInfo))
@@ -442,7 +451,7 @@ udtree2devtree = markClosest . initialize
   mark ui tr@(RTree dn dts) =
     let dui = devIndex dn
     in RTree (dn {
-         devClosest = if elem dui [previousUDId ui,nextUDId ui]
+         devClosest = if False ---- elem dui [previousUDId ui,nextUDId ui] -- problem: circularity i<->i+1
                         then ui
                         else hardClosest dui
          }) (map (mark dui) dts)
