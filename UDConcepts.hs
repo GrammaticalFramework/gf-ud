@@ -212,6 +212,12 @@ int2udid n = case n of
    0 -> UDIdRoot
    _ -> UDIdInt n
 
+nextUDId :: UDId -> UDId
+nextUDId ui = int2udid (udPosition ui + 1)
+
+previousUDId :: UDId -> UDId
+previousUDId ui = int2udid (udPosition ui - 1)
+
 --- special labels and tags
 formData i = [UDData "FORM" [show i]]
 
@@ -228,7 +234,6 @@ udPosition udid = case udid of
     UDIdInt i -> i
     UDIdRoot  -> 0
     _ -> error ("ERROR: no position computed from " ++ prt udid) --- never happens in gf2ud...
-
 
 
 checkInList :: String -> [String] -> String -> [String]

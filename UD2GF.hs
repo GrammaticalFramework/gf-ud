@@ -164,6 +164,7 @@ data DevNode = DevNode {
   devFeats      :: [UDData],
   devLabel      :: String,
   devIndex      :: UDId,   -- position in the original sentence
+  devClosest    :: UDId,   -- closest word, either next or previous depending on dominance
   devNeedBackup :: Bool,   -- if this node needs to be covered by Backup
   devIsUnknown  :: Bool    -- if the word at this node is unknown
  }
@@ -177,6 +178,7 @@ prDevNode n d = unwords [
     prtStatus (devStatus d),
   devWord d,
   prt (devIndex d),
+  "("++prt (devClosest d)++")",
   devPOS d,
   devLabel d,
   "(" ++ unwords (intersperse ";"
@@ -189,7 +191,10 @@ devtree2abstrees = map fst . devAbsTrees . root
 
 -- to be applied to a DevTree with just one tree at each node
 addBackups :: DevTree -> DevTree
-addBackups tr@(RTree dn trs) = case map collectBackup (tr:trs) of
+addBackups = addBackups0 ---- TODO: this must be improved
+
+addBackups0 :: DevTree -> DevTree
+addBackups0 tr@(RTree dn trs) = case map collectBackup (tr:trs) of
   btrs -> RTree (dn{devAbsTrees = [replaceInfo [(t,ai) | (_,(t,Just ai)) <- btrs] (theAbsTreeInfo tr)]}) (map fst (tail btrs))
   
  where
@@ -206,7 +211,7 @@ addBackups tr@(RTree dn trs) = case map collectBackup (tr:trs) of
   collectBackup :: DevTree -> (DevTree,(AbsTree,Maybe AbsTreeInfo))
   collectBackup t@(RTree d ts) =
     let ai@(ast,_) = theAbsTreeInfo t in
-    (t,(ast, mkBackupList ai [theAbsTreeInfo (addBackups u) | u <- ts, devNeedBackup (root u)]))
+    (t,(ast, mkBackupList ai [theAbsTreeInfo (addBackups0 u) | u <- ts, devNeedBackup (root u)]))
 
   mkBackupList :: AbsTreeInfo -> [AbsTreeInfo] -> Maybe AbsTreeInfo
   mkBackupList ai@(ast,(cat,usage)) ts =
@@ -422,8 +427,12 @@ quote s = "\"" ++ s ++ "\""
 
 -- initialize the process
 udtree2devtree :: UDTree -> DevTree
-udtree2devtree tr@(RTree un uts) =
-  RTree (DevNode {
+udtree2devtree = markClosest . initialize
+
+ where
+ 
+  initialize tr@(RTree un uts) =
+    RTree (DevNode {
       devStatus = [],
       devWord  = udFORM un,
       devAbsTrees = [],
@@ -432,6 +441,26 @@ udtree2devtree tr@(RTree un uts) =
       devFeats = udFEATS un,
       devLabel = udDEPREL un,
       devIndex = udID un,
+      devClosest = UDIdRoot, --- junk value
       devNeedBackup = False, ---- TODO start with True, mark when used
       devIsUnknown = True
-     }) (map udtree2devtree uts)
+     }) (map initialize uts)
+
+  markClosest tr@(RTree dn dts) = 
+    RTree (dn {
+       devClosest = hardClosest (devIndex dn)  -- top node not dominated
+      }) (map (mark (devIndex dn)) dts)
+
+  mark ui tr@(RTree dn dts) =
+    let dui = devIndex dn
+    in RTree (dn {
+         devClosest = if elem dui [previousUDId ui,nextUDId ui]
+                        then ui
+                        else hardClosest dui
+         }) (map (mark dui) dts)
+
+  hardClosest ui =
+    if udPosition ui == 1
+      then nextUDId ui -- first word linked to next one --- does not work for one-word sentence
+      else previousUDId ui  -- other words to previous ones, also works for the last word
+      
