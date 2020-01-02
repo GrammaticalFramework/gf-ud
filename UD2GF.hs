@@ -69,14 +69,25 @@ showUD2GF opts env sentence = do
 
   let ts1 = map (expandMacro env) ts0
   ifOpt opts "at" $ unlines $ map prAbsTree ts1
--- if isOpt opts "vat" then (visualizeAbsTrees env ts) else return ()
 
   let crs = map (checkAbsTreeResult env) ts1
   ifOpt opts "tc" $ unlines $ map prCheckResult crs
   let ts = [t | Just t <- map resultTree crs]
 
   if null ts then return () else
-    ifOpt opts "lin" (unlines $ map (linearizeTree env (actLanguage env)) ts)
+    ifOpt opts "lin" (unlines $ map (("LIN: " ++) . linearizeTree env (actLanguage env)) ts)
+
+  if isOpt opts "sum"
+    then do
+        let sts0 = devtree2abstrees besttree0
+        let sts1 = map (expandMacro env) sts0
+        ifOpt opts "at" $ unlines $ map prAbsTree sts1 
+        let scrs = map (checkAbsTreeResult env) sts1
+        ifOpt opts "tc" $ unlines $ map prCheckResult scrs
+        let sts = [t | Just t <- map resultTree scrs]
+        if null sts then return () else
+          ifOpt opts "lin" (unlines $ map (("SUMMARY: " ++) . linearizeTree env (actLanguage env)) sts)
+    else return ()
   
   let allnodes = allNodesRTree besttree0
       orig = length allnodes
