@@ -14,6 +14,8 @@ fun
   AddBackupText : [Backup] -> Text -> Text ;
 
   AdvBackup : Adv -> Backup ;
+  AdVBackup : AdV -> Backup ;
+  AdABackup : AdA -> Backup ;
   APBackup  : AP -> Backup ;
   NPBackup  : NP -> Backup ;
   CNBackup  : CN -> Backup ;

@@ -18,6 +18,8 @@ lin
   AddBackupText b s = MarkupText (backupMark b) s ;
 
   AdvBackup adv = adv ;
+  AdVBackup adv = lin Adv adv ;
+  AdABackup adv = lin Adv adv ;
   APBackup adv = uttBackup (mkUtt adv) ;
   NPBackup adv = uttBackup (mkUtt adv) ;
   CNBackup adv = uttBackup (mkUtt adv) ;
