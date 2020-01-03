@@ -102,6 +102,7 @@ Idiom [
     AddVPItoVP : VP  -> VPI -> VP ;  -- want to sleep
     AddVPItoAuxVP : VP  -> VPI -> VP ;  -- must sleep --- English-specific
 
+    PassVP : V -> VP ; -- is loved
 
     PrepPP : Prep -> NP -> PP ;
 

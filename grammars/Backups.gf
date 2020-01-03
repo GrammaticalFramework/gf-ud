@@ -19,9 +19,18 @@ fun
   APBackup  : AP -> Backup ;
   NPBackup  : NP -> Backup ;
   CNBackup  : CN -> Backup ;
+  CompBackup : Comp -> Backup ;
 
+---- some common cases
+cat Dummy ;
+fun
+  CopBackup : Dummy -> Backup ;
+  be__x__Cop : Dummy ;
+  
+  CommaBackup : Dummy -> Backup ;
+  ',__x__Comma' : Dummy ;
+  
+  TheBackup : Dummy -> Backup ;
+  the__x__The : Dummy ;
 
----- a common case
-  CopBackup : Adv -> Backup ;
-  be__x__Cop : Adv ;
 }

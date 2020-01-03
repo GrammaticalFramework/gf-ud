@@ -64,6 +64,7 @@
 #fun MkVPI head -- VP -> VPI
 #fun MkVPS aux advmod head -- Temp -> Pol -> VP -> VPS
 #fun OrdNumeral head -- Numeral -> Ord
+#fun PassVP head -- V -> VP
 #fun PositA head -- A -> AP
 #fun PossPlNP nmod:poss head -- Pron -> CN -> NP
 #fun PossSgNP nmod:poss head -- Pron -> CN -> NP
@@ -170,6 +171,10 @@
 #auxfun MkVPS_Fut will vp : Will -> VP -> VPS = MkVPS (TTAnt TFut ASimul) PPos vp ; aux head
 #auxfun MkVPS_FutNeg will neg vp : Will -> Neg -> VP -> VPS = MkVPS (TTAnt TFut ASimul) PNeg vp ; aux advmod head
 
+#auxfun PassVP_Cop_Pres cop v : Cop -> V -> VPS = MkVPS (TTAnt TPres ASimul) PPos  (PassVP v) ; aux:pass[Tense=Pres] head[Tense=Past|VerbForm=Part]
+#auxfun PassVP_Cop_PresNeg cop neg v : Cop -> Neg -> V -> VPS = MkVPS (TTAnt TPres ASimul) PNeg  (PassVP v) ; aux:pass[Tense=Pres] advmod head[Tense=Past|VerbForm=Part]
+#auxfun PassVP_Cop_Past cop v : Cop -> V -> VPS = MkVPS (TTAnt TPast ASimul) PPos  (PassVP v) ; aux:pass[Tense=Past] head[Tense=Past|VerbForm=Part]
+#auxfun PassVP_Cop_PastNeg cop neg v : Cop -> Neg -> V -> VPS = MkVPS (TTAnt TPast ASimul) PNeg  (PassVP v) ; aux:pass[Tense=Past] advmod head[Tense=Past|VerbForm=Part]
 
 --- needed in English
 #auxfun MkVPS_PlPres vp : VP -> VPS = MkVPS (TTAnt TPres ASimul) PPos vp ; head[VerbForm=Inf]
@@ -198,9 +203,10 @@
 #auxcat That PART
 #auxcat Comma PUNCT
 
-#disable UseComp MkVPS PositA UseComparA ProgrVP ExtAdvS UttImpSg ImpVP
+#disable UseComp MkVPS PositA UseComparA ProgrVP ExtAdvS UttImpSg ImpVP PassVP
 
 #altfun AddNPtoVP head iobj
+#altfun PredVPS nsubj:pass head
 
 -- to deal with the_Det / thePl_Det, together with a #lemma for The in ShallowParseEng.labels
 #auxcat The DET

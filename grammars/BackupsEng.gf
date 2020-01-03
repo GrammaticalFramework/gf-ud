@@ -23,13 +23,23 @@ lin
   APBackup adv = uttBackup (mkUtt adv) ;
   NPBackup adv = uttBackup (mkUtt adv) ;
   CNBackup adv = uttBackup (mkUtt adv) ;
+  CompBackup adv = uttBackup (mkUtt (mkVP adv)) ;
 
   BaseBackup = lin Mark {begin = "[" ; end = "]"} ;  
   ConsBackup b bs = lin Mark {begin = bs.begin ; end = b.s ++ bs.end} ;
 
 ----
+lincat
+  Dummy = Adv ;
+lin  
   CopBackup adv = adv ;
-  be__x__Cop = lin Adv {s = "BE"} ;
+  be__x__Cop = lin Adv {s = "is"} ;
+  
+  CommaBackup adv = adv ;
+  ',__x__Comma' = lin Adv {s = ","} ;
+  
+  TheBackup adv = adv ;
+  the__x__The = lin Adv {s = "the"} ;
 
 
 oper

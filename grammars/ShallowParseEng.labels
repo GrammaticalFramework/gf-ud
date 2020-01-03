@@ -28,10 +28,11 @@
 #lemma UseV,ImpVP do Do aux head
 #lemma UseComp,UseV will Will aux head
 #lemma UseComp,UseV would Would aux head
-#lemma UseComp,ProgrVP,UseV,ImpVP not Neg advmod head
+#lemma UseComp,ProgrVP,UseV,ImpVP,PassVP not Neg advmod head
 #lemma PossPron 's Gen case head
 #lemma PossPron ' Gen case head
 #lemma ExtAdvS , Comma punct head
+#lemma PassVP be Cop aux:pass head
 
 #morpho N 0 Number=Sing
 #morpho N 2 Number=Plur

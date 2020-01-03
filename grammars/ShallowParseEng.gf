@@ -99,7 +99,9 @@ IdiomEng [
     AddPPtoVP vp pp = mkVP vp pp ;
     AddStoVP vp s = R.insertExtra (R.conjThat ++ s.s) vp ; 
     AddVPItoVP vp vpi = R.insertObj (\\a => vpi.s ! R.VVInf ! a) vp ; 
-    AddVPItoAuxVP vp vpi = R.insertObj (\\a => vpi.s ! R.VVAux ! a) vp ; 
+    AddVPItoAuxVP vp vpi = R.insertObj (\\a => vpi.s ! R.VVAux ! a) vp ;
+
+    PassVP v = passiveVP (P.mkV2 v) ;
     
     PrepPP prep np = mkAdv prep np ;
 
