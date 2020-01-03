@@ -285,20 +285,21 @@ pruneDevTree  tr@(RTree dn dts) = RTree dn{devAbsTrees = pruneCatGroups (groupCa
     t:ts -> t : prune (usage t : usages) ts
     _ -> grp  
   pruneCatGroups = concatMap (prune [])
-  
+
+-- function application to a given set of arguments when building up DevTree
 data FunInfo = FunInfo {
-  funFun   :: Fun,
-  funTyp   :: LabelledType,
-  funTree  :: AbsTree,
-  funUsage :: [UDId]
+  funFun   :: Fun,            -- GF function
+  funTyp   :: LabelledType,   -- its type with matching labels
+  funTree  :: AbsTree,        -- tree that would be built with the available arguments
+  funUsage :: [UDId]          -- subtrees that are consumed as arguments
   }
 
 data ArgInfo = ArgInfo {
-  argNumber :: Int,
-  argUsage  :: [UDId],
-  argCatLab :: (Cat,Label),
-  argFeats  :: [UDData],
-  argTree   :: AbsTree
+  argNumber :: Int,           -- how manieth subtree
+  argUsage  :: [UDId],        -- what subtrees it consumes
+  argCatLab :: (Cat,Label),   -- its type and the label of its head word
+  argFeats  :: [UDData],      -- features of its head word
+  argTree   :: AbsTree        -- the GF tree built at that node
   }
 
 combineTrees :: UDEnv -> DevTree -> DevTree
@@ -332,14 +333,15 @@ combineTrees env =
         let argalts = [
                        [ArgInfo i us (c, devLabel r) (devFeats r) e | (e,(c,us)) <- devAbsTrees r]
                            |
-                             (i,r) <- (0,dn{devLabel = head_Label}) :  -- number the arguments: root node 0, args 1,..
+                             (i,r) <- (0,dn{devLabel = head_Label}) :  -- number the arguments: root node 0, subtrees 1,2,..
                                                  [(i,r) | (i,r) <- zip [1..] (map root ts)]
-                     ],
+                      ],
 
         -- argument sequences: an argument whose index is already in [Int] may not be used
         -- argseqsAfter :: [Int] -> [[Arg]] -> [[Arg]]
         let argseqsAfter us argss =
-              [filter (\x -> all (flip notElem us) (argUsage x)) xs  | xs <- sequence argss],
+--- too slow!              [filter (\x -> all (flip notElem us) (argUsage x)) xs  | xs <- sequence argss],
+              sequence (filter (not . null) [filter (\x -> all (flip notElem us) (argUsage x)) xs  | xs <- argss]),
 
         let argseqs (arg:args) = [x:xs | x <- arg, xs <- argseqsAfter (argUsage x) args],
         
