@@ -50,8 +50,7 @@
 #fun ConsRS head conj -- RS -> ListRS -> ListRS
 #fun ConsS head conj -- S -> ListS -> ListS
 #fun DetCN det head -- Det -> CN -> NP
-#fun ExistNP head -- NP -> Cl
-#fun ExtAdvS advmod head
+#fun ExistS aux advmod head -- Temp -> Pol -> NP -> S
 #fun FlatPN head flat -- PN -> PN -> PN
 #fun FunRP case nmod head -- Prep -> NP -> RP -> RP
 #fun IDig head -- Dig -> Digits
@@ -176,6 +175,14 @@
 #auxfun PassVP_Cop_Past cop v : Cop -> V -> VPS = MkVPS (TTAnt TPast ASimul) PPos  (PassVP v) ; aux:pass[Tense=Past] head[Tense=Past|VerbForm=Part]
 #auxfun PassVP_Cop_PastNeg cop neg v : Cop -> Neg -> V -> VPS = MkVPS (TTAnt TPast ASimul) PNeg  (PassVP v) ; aux:pass[Tense=Past] advmod head[Tense=Past|VerbForm=Part]
 
+#auxfun ExistS_Pres there cop np : There -> Cop -> NP -> S = ExistS (TTAnt TPres ASimul) PPos np ; expl head[Tense=Pres] nsubj
+#auxfun ExistS_Past there cop np : There -> Cop -> NP -> S = ExistS (TTAnt TPast ASimul) PPos np ; expl head[Tense=Past] nsubj
+
+#auxfun ExistS_Pres_native there cop np : There -> Cop -> NP -> S = ExistS (TTAnt TPres ASimul) PPos np ; expl cop[Tense=Pres] head
+#auxfun ExistS_Past_native there cop np : There -> Cop -> NP -> S = ExistS (TTAnt TPast ASimul) PPos np ; expl cop[Tense=Past] head
+
+#disable ExistS
+
 --- needed in English
 #auxfun MkVPS_PlPres vp : VP -> VPS = MkVPS (TTAnt TPres ASimul) PPos vp ; head[VerbForm=Inf]
 #auxfun MkVPS_PlPresNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt TPres ASimul) PNeg vp ; aux[VerbForm=Inf] advmod head
@@ -202,6 +209,7 @@
 #auxcat To PART
 #auxcat That PART
 #auxcat Comma PUNCT
+#auxcat There PRON
 
 #disable UseComp MkVPS PositA UseComparA ProgrVP ExtAdvS UttImpSg ImpVP PassVP
 

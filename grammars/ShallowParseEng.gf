@@ -11,12 +11,13 @@ concrete ShallowParseEng of ShallowParse =
     UttQS     , -- QS -> Utt ;         -- does John walk
     UttNP     , -- NP -> Utt ;         -- John
     UttAdv ,    -- Adv -> Utt ;        -- in the house
-    UttImpSg   -- Pol -> Imp -> Utt ; -- (do not) walk ----s
+    UttImpSg   -- Pol -> Imp -> Utt ;  -- (do not) walk ----s
     ],
 
 ExtendEng [
     VPS,VPI,
     MkVPS,    --    : Temp -> Pol -> VP -> VPS ;  -- hasn't slept
+    ExistS,
 ----    ConjVPS,  --    : Conj -> [VPS] -> VPS ;      -- has walked and won't sleep
     PredVPS,  --    : NP   -> VPS -> S ;          -- she [has walked and won't sleep]
 

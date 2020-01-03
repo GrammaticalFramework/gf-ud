@@ -16,6 +16,7 @@ abstract ShallowParse =
 Extend [
     VPS,VPI,
     MkVPS,    --    : Temp -> Pol -> VP -> VPS ;  -- hasn't slept
+    ExistS,
 ----    ConjVPS,  --    : Conj -> [VPS] -> VPS ;      -- has walked and won't sleep
     PredVPS,  --    : NP   -> VPS -> S ;          -- she [has walked and won't sleep]
 

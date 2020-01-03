@@ -15,6 +15,7 @@
 #word will  will   VerbForm=Fin
 #word to to _
 #word that that _
+#word there there _
 #word not not Polarity=Neg
 #word n't not Polarity=Neg
 #word 's 's _
@@ -33,6 +34,9 @@
 #lemma PossPron ' Gen case head
 #lemma ExtAdvS , Comma punct head
 #lemma PassVP be Cop aux:pass head
+
+#lemma ExistS there There expl head
+#lemma ExistS be V cop head  --- in UD, the copula is the head!
 
 #morpho N 0 Number=Sing
 #morpho N 2 Number=Plur
