@@ -13,6 +13,10 @@ import System.Environment (getArgs)
 import Control.Concurrent
 import Control.Monad
 
+-- to get parallel processing:
+-- Build with -threaded -rtsopts
+-- Run with +RTS -N$cores -RTS
+
 main = do
   xx <- getArgs
   case xx of
@@ -30,17 +34,19 @@ main = do
       let score = udCorpusScore mcro crit gold test
       print score
       
-    dir:path:lang:cat:opts | elem dir ["-ud2gf","-gf2ud","-string2gf2ud"] -> do
+    dir:path:lang:cat:opts | elem dir ["-ud2gf","-gf2ud","-ud2gfpar","-string2gf2ud"] -> do
       env <- getEnv path lang cat
       convertGFUD dir (selectOpts opts) env
     _ -> putStrLn $ helpMsg
 
 helpMsg = unlines $ [
     "Usage:",
-    "   gfud (-ud2gf|-gf2ud|-string2gf2ud) <path> <language> <startcat>",
+    "   gfud (-ud2gf|-gf2ud|-string2gf2ud|-gf2udpar) <path> <language> <startcat>",
     " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile>",
     "where path = grammardir/abstractprefix, language = concretesuffix",
     "The input comes from stdIO, and the output goes there as well",
+    "The option -gf2udpar should be used with the Haskell runtime flag +RTS -Nx -RTS",
+    "where x is the number of cores you want to use in parallel processing.",
     "For more functionalities: open in ghci.",
     "Options:"
     ] ++ [opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
@@ -94,18 +100,21 @@ termcat = "Term"
 
 -------------------
 
-ud2gfOptsPar :: Opts -> UDEnv -> String -> IO ()
+ud2gfOptsPar :: Opts -> UDEnv -> String -> IO () --- [AbsTree]
 ud2gfOptsPar opts env string = do
   let eng = actLanguage env
   let sentences = map prss $ stanzas $ lines string
-  let chunks = map (:[]) sentences ---- splits (length sentences `div` 8) sentences
-  rs <- manyLater (mapM (U.showUD2GF opts env)) chunks
-  return ()
+  tstats <- manyLater (U.showUD2GF minimalOptsUD2GF env) sentences
+  let globalStats = U.combineUD2GFStats $ map snd tstats
+  ifOpt opts "stat" $ U.prUD2GFStat globalStats
+---  if isOpt opts "vat" then (visualizeAbsTrees env (map expr2abstree (concatMap fst tstats))) else return ()
+  return () --- return (map fst tstats)
 
 splits n xs = case splitAt n xs of
   (x1,[])  -> [x1]
   (x1,xs2) -> x1 : splits n xs2
 
+-- from Anton Ekblad 2020-01-09
 manyLater :: (a -> IO b) -> [a] -> IO [b]
 manyLater f chunks = do
   vs <- forM chunks $ \chunk -> do
@@ -115,9 +124,3 @@ manyLater f chunks = do
       x `seq` putMVar v x
     return v
   mapM takeMVar vs
-
--- Build with -threaded -rtsopts
--- Run with +RTS -N$cores -RTS
-
---main = do
---  manyLater (print . fib) (replicate 4 35)
