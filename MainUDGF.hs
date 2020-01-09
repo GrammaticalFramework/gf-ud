@@ -7,9 +7,11 @@ import UDOptions
 import UDConcepts
 import UDVisualization
 
-import System.Environment (getArgs)
-
 import PGF
+
+import System.Environment (getArgs)
+import Control.Concurrent
+import Control.Monad
 
 main = do
   xx <- getArgs
@@ -46,6 +48,7 @@ helpMsg = unlines $ [
 convertGFUD :: String -> Opts -> UDEnv -> IO ()
 convertGFUD dir opts env = case dir of
   "-ud2gf" -> getContents >>= ud2gfOpts (if null opts then defaultOptsUD2GF else opts) env
+  "-ud2gfpar" -> getContents >>= ud2gfOptsPar (if null opts then defaultOptsUD2GF else opts) env
   _ -> do
       s <- getContents
       let conv = case dir of
@@ -87,3 +90,34 @@ eng = "Eng"
 utt = "Utt"
 termInfix = "Infix"
 termcat = "Term"
+
+
+-------------------
+
+ud2gfOptsPar :: Opts -> UDEnv -> String -> IO ()
+ud2gfOptsPar opts env string = do
+  let eng = actLanguage env
+  let sentences = map prss $ stanzas $ lines string
+  let chunks = map (:[]) sentences ---- splits (length sentences `div` 8) sentences
+  rs <- manyLater (mapM (U.showUD2GF opts env)) chunks
+  return ()
+
+splits n xs = case splitAt n xs of
+  (x1,[])  -> [x1]
+  (x1,xs2) -> x1 : splits n xs2
+
+manyLater :: (a -> IO b) -> [a] -> IO [b]
+manyLater f chunks = do
+  vs <- forM chunks $ \chunk -> do
+    v <- newEmptyMVar
+    forkIO $ do
+      x <- f chunk
+      x `seq` putMVar v x
+    return v
+  mapM takeMVar vs
+
+-- Build with -threaded -rtsopts
+-- Run with +RTS -N$cores -RTS
+
+--main = do
+--  manyLater (print . fib) (replicate 4 35)

@@ -1,5 +1,5 @@
 compile:
-	ghc -O3 --make -o gfud MainUDGF.hs
+	ghc -O3 -threaded -rtsopts --make -o gfud MainUDGF.hs
 
 
 
