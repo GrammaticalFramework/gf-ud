@@ -91,6 +91,8 @@ Idiom [
 
 ** {
 
+flags startcat = Utt ;
+
   cat
     PP ; Punct ;
 
