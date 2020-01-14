@@ -1,10 +1,11 @@
 module Main where
 
-import PGF
+import PGF2
 
 import System.Environment (getArgs)
 import Control.Concurrent
 import Control.Monad
+import qualified Data.Map as M
 
 -- to get parallel processing:
 -- Build with -threaded -rtsopts
@@ -22,9 +23,15 @@ main = do
 
 parparse pgf lang = manyLater (putStrLn . prse)
  where
-  prse s = case parse pgf (mkCId lang) (startCat pgf) s of
+  Just concr = M.lookup lang (languages pgf)
+  prse s = case parse concr (startCat pgf) s of   -- with C runtime
+    ParseOk ((t,_):_) -> showExpr [] t ++ "\t" ++ s
+    _ -> "NO PARSE:\t" ++ s
+{-
+  prse1 s = case parse pgf (mkCId lang) (startCat pgf) s of -- with Haskell runtime
     t:_ -> showExpr [] t ++ "\t" ++ s
     _ -> "NO PARSE:\t" ++ s
+-}
 
 -- from Anton Ekblad 2020-01-09
 manyLater :: (a -> IO b) -> [a] -> IO [b]
