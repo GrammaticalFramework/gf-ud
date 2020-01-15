@@ -235,6 +235,11 @@ udPosition udid = case udid of
     UDIdRoot  -> 0
     _ -> error ("ERROR: no position computed from " ++ prt udid) --- never happens in gf2ud...
 
+-- distance between head and dependent
+dependencyDistance :: UDWord -> Int
+dependencyDistance w = abs (udPosition (udID w) - udPosition (udHEAD w))
+
+
 
 checkInList :: String -> [String] -> String -> [String]
 checkInList desc xs x = 
