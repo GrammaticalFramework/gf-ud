@@ -14,12 +14,12 @@ import qualified Data.Map as M
 main = do
   xx <- getArgs
   case xx of
-    pgfile:lang:infile:_ -> do
+    pgfile:lang:_ -> do
       pgf <- readPGF pgfile
-      ls <- readFile infile >>= return . lines
+      ls <- getContents >>= return . lines
       rs <- parparse pgf lang ls
       return ()
-    _ -> putStrLn "usage: parparse pgf lan infile +RTS -N6 -RTS"
+    _ -> putStrLn "usage (from stdin to stdout): parparse pgf lan +RTS -N6 -RTS"
 
 parparse pgf lang = manyLater (putStrLn . prse)
  where
