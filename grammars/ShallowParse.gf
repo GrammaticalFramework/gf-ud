@@ -9,23 +9,24 @@ abstract ShallowParse =
     UttS      , -- S  -> Utt ;         -- John walks
     UttQS     , -- QS -> Utt ;         -- does John walk
     UttNP     , -- NP -> Utt ;         -- John
-    UttAdv  ,    -- Adv -> Utt ;        -- in the house
-    UttImpSg   -- Pol -> Imp -> Utt ; -- (do not) walk ----s
+    UttAdv  ,   -- Adv -> Utt ;        -- in the house
+    UttImpSg    -- Pol -> Imp -> Utt ; -- (do not) walk
     ],
 
 Extend [
-    VPS,VPI,
+    VPS,VPI,ListVPS,ListVPI,
     MkVPS,    --    : Temp -> Pol -> VP -> VPS ;  -- hasn't slept
     ExistS,
-----    ConjVPS,  --    : Conj -> [VPS] -> VPS ;      -- has walked and won't sleep
+    ConjVPS,  --    : Conj -> [VPS] -> VPS ;      -- has walked and won't sleep
     PredVPS,  --    : NP   -> VPS -> S ;          -- she [has walked and won't sleep]
 
     MkVPI,     --  : VP -> VPI ;                   -- to sleep (TODO: Ant and Pol)
-----    ConjVPI   -- : Conj -> [VPI] -> VPI ;         -- to sleep and to walk
+    ConjVPI,   -- : Conj -> [VPI] -> VPI ;         -- to sleep and to walk
     
-----    BaseVPS, ConsVPS,
-----    BaseVPI, ConsVPI
----- TODO: Extend cannot form QS yet
+    BaseVPS, ConsVPS,
+    BaseVPI, ConsVPI,
+---- TODO: Extend cannot form QS yet; now using special functions on Cl and QCl
+
     CompoundN -- : N -> N -> N    -- control system
 
     ],
@@ -73,7 +74,9 @@ Extend [
  Adverb [
     Prep,NP,Adv,Subj,S,
     PrepNP    , -- Prep -> NP -> Adv ;     -- in the house
-    SubjS
+    SubjS,
+    PositAdvAdj -- A -> Adv  --- not sure if this should be used
+
     ],
 
 Idiom [
@@ -130,6 +133,12 @@ flags startcat = Text ;
 
 
     FlatPN : PN -> PN -> PN ;
+
+---- needed in lack of QuestVPS
+
+  QuestNPVP : NP -> VP -> QCl ;
+  QuestIAdvNPVP : IAdv -> NP -> VP -> QCl ;
+  QuestQCl : Temp -> Pol -> QCl -> QS ;
 
 ----
   PunctBackup : Punct -> Backup ;

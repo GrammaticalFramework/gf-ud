@@ -15,17 +15,17 @@ concrete ShallowParseEng of ShallowParse =
     ],
 
 ExtendEng [
-    VPS,VPI,
+    VPS,VPI,ListVPS,ListVPI,
     MkVPS,    --    : Temp -> Pol -> VP -> VPS ;  -- hasn't slept
     ExistS,
-----    ConjVPS,  --    : Conj -> [VPS] -> VPS ;      -- has walked and won't sleep
+    ConjVPS,  --    : Conj -> [VPS] -> VPS ;      -- has walked and won't sleep
     PredVPS,  --    : NP   -> VPS -> S ;          -- she [has walked and won't sleep]
 
     MkVPI,     --  : VP -> VPI ;                   -- to sleep (TODO: Ant and Pol)
-----    ConjVPI   -- : Conj -> [VPI] -> VPI ;         -- to sleep and to walk
+    ConjVPI,   -- : Conj -> [VPI] -> VPI ;         -- to sleep and to walk
     
-----    BaseVPS, ConsVPS,
-----    BaseVPI, ConsVPI
+    BaseVPS, ConsVPS,
+    BaseVPI, ConsVPI,
 ---- TODO: Extend cannot form QS yet
     CompoundN 
 
@@ -73,7 +73,9 @@ ExtendEng [
  AdverbEng [
     Prep,NP,Adv,Subj,S,
     PrepNP    , -- Prep -> NP -> Adv ;     -- in the house
-    SubjS
+    SubjS,
+    PositAdvAdj -- A -> Adv  --- not sure if this should be used
+
     ],
 
 IdiomEng [
@@ -126,6 +128,12 @@ IdiomEng [
     thePl_Det = SyntaxEng.thePl_Det ;
 
     FlatPN mads dam = dam ** {s = \\c => mads.s ! R.Nom ++ dam.s ! c} ;
+
+---- needed in lack of QuestVPS
+
+  QuestNPVP np vp = mkQCl (mkCl np vp) ;
+  QuestIAdvNPVP iadv np vp = mkQCl iadv (mkCl np vp) ;
+  QuestQCl t p qcl = mkQS t p qcl ;
 
 ----
     PunctBackup p = uttBackup p ;

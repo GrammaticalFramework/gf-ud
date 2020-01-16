@@ -23,6 +23,8 @@
 #fun BaseNP head conj -- NP -> NP -> ListNP
 #fun BaseRS head conj -- RS -> RS -> ListRS
 #fun BaseS head conj -- S -> S -> ListS
+#fun BaseVPI head conj -- VPI -> VPI -> ListVPI
+#fun BaseVPS head conj -- VPS -> VPS -> ListVPS
 #fun CardCN nummod head -- Numeral -> CN -> NP
 #fun CompAP head -- AP -> Comp
 #fun CompAdv head -- Adv -> Comp
@@ -40,6 +42,8 @@
 #fun ConjNP cc head -- Conj -> ListNP -> NP
 #fun ConjRS cc head -- Conj -> ListRS -> RS
 #fun ConjS cc head -- Conj -> ListS -> S
+#fun ConjVPI cc head -- Conj -> ListVPI -> VPI
+#fun ConjVPS cc head -- Conj -> ListVPS -> VPS
 #fun ConsAP head conj -- AP -> ListAP -> ListAP
 #fun ConsAdV head conj -- AdV -> ListAdV -> ListAdV
 #fun ConsAdv head conj -- Adv -> ListAdv -> ListAdv
@@ -49,6 +53,8 @@
 #fun ConsNP head conj -- NP -> ListNP -> ListNP
 #fun ConsRS head conj -- RS -> ListRS -> ListRS
 #fun ConsS head conj -- S -> ListS -> ListS
+#fun ConsVPI head conj -- VPI -> ListVPI -> ListVPI
+#fun ConsVPS head conj -- VPS -> ListVPS -> ListVPS
 #fun DetCN det head -- Det -> CN -> NP
 #fun ExistS aux advmod head -- Temp -> Pol -> NP -> S
 #fun FlatPN head flat -- PN -> PN -> PN
@@ -65,6 +71,7 @@
 #fun OrdNumeral head -- Numeral -> Ord
 #fun PassVP head -- V -> VP
 #fun PositA head -- A -> AP
+#fun PositAdvAdj head -- A -> Adv
 #fun PossPlNP nmod:poss head -- Pron -> CN -> NP
 #fun PossSgNP nmod:poss head -- Pron -> CN -> NP
 #fun PredVPS nsubj head -- NP -> VPS -> S
@@ -75,9 +82,12 @@
 #fun PunctUttText head punct -- Utt -> Punct -> Text
 #fun QuantPlCN det head -- Quant -> CN -> NP
 #fun QuantSgCN det head -- Quant -> CN -> NP
-#fun QuestCl head -- Cl -> QCl
-#fun QuestIAdv advmod head -- IAdv -> Cl -> QCl
+#fun QuestCl head -- Cl -> QCl ---- not active
+#fun QuestIAdv advmod head -- IAdv -> Cl -> QCl ---- not active
 #fun QuestIComp head nsubj -- IComp -> NP -> QCl
+#fun QuestIAdvNPVP advmod nsubj head -- IAdv -> NP -> VP -> QCl ---- temporary
+#fun QuestNP VP nsubj head -- NP -> VP -> QS ---- temporary
+#fun QuestQCl aux advmod head -- Temp -> Pol -> QCl -> QS ---- temporary
 #fun QuestQVP nsubj head -- IP -> QVP -> QCl
 #fun QuestSlash obj head -- IP -> ClSlash -> QCl
 #fun QuestVP nsubj head -- IP -> VP -> QCl
