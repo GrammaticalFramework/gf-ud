@@ -1,0 +1,738 @@
+#fun AdAP advmod head -- AdA -> AP -> AP
+#fun AdVVP advmod head -- AdV -> VP -> VP
+#fun AdjCN amod head -- AP -> CN -> CN
+#fun AdjOrd head -- Ord -> AP
+#fun AdvCN head nmod -- CN -> Adv -> CN
+#fun AdvIAdv advmod head -- IAdv -> Adv -> IAdv
+#fun AdvIP head advmod -- IP -> Adv -> IP
+#fun AdvQVP head obj -- VP -> IAdv -> QVP
+#fun AdvS advmod head
+#fun AdvVP head advmod -- VP -> Adv -> VP
+#fun BaseAP head conj -- AP -> AP -> ListAP
+#fun BaseAdV head conj -- AdV -> AdV -> ListAdV
+#fun BaseAdv head conj -- Adv -> Adv -> ListAdv
+#fun BaseCN head conj -- CN -> CN -> ListCN
+#fun BaseDAP head conj -- DAP -> DAP -> ListDAP
+#fun BaseIAdv head conj -- IAdv -> IAdv -> ListIAdv
+#fun BaseNP head conj -- NP -> NP -> ListNP
+#fun BaseRS head conj -- RS -> RS -> ListRS
+#fun BaseS head conj -- S -> S -> ListS
+#fun BaseVPI head conj -- VPI -> VPI -> ListVPI
+#fun BaseVPS head conj -- VPS -> VPS -> ListVPS
+#fun CompAP head -- AP -> Comp
+#fun CompAdv head -- Adv -> Comp
+#fun CompNP head -- NP -> Comp
+#fun CompIAdv head -- IAdv -> IComp
+#fun CompIP head -- IP -> IComp
+#fun ComplSlashIP head obj -- VPSlash -> IP -> QVP
+#fun CompoundN compound head -- N -> N -> N
+#fun ConjAP cc head -- Conj -> ListAP -> AP
+#fun ConjAdV cc head -- Conj -> ListAdV -> AdV
+#fun ConjAdv cc head -- Conj -> ListAdv -> Adv
+#fun ConjCN cc head -- Conj -> ListCN -> CN
+#fun ConjDet cc head -- Conj -> ListDAP -> Det
+#fun ConjIAdv cc head -- Conj -> ListIAdv -> IAdv
+#fun ConjNP cc head -- Conj -> ListNP -> NP
+#fun ConjRS cc head -- Conj -> ListRS -> RS
+#fun ConjS cc head -- Conj -> ListS -> S
+#fun ConjVPI cc head -- Conj -> ListVPI -> VPI
+#fun ConjVPS cc head -- Conj -> ListVPS -> VPS
+#fun ConsAP head conj -- AP -> ListAP -> ListAP
+#fun ConsAdV head conj -- AdV -> ListAdV -> ListAdV
+#fun ConsAdv head conj -- Adv -> ListAdv -> ListAdv
+#fun ConsCN head conj -- CN -> ListCN -> ListCN
+#fun ConsDAP head conj -- DAP -> ListDAP -> ListDAP
+#fun ConsIAdv head conj -- IAdv -> ListIAdv -> ListIAdv
+#fun ConsNP head conj -- NP -> ListNP -> ListNP
+#fun ConsRS head conj -- RS -> ListRS -> ListRS
+#fun ConsS head conj -- S -> ListS -> ListS
+#fun ConsVPI head conj -- VPI -> ListVPI -> ListVPI
+#fun ConsVPS head conj -- VPS -> ListVPS -> ListVPS
+#fun DetCN det head -- Det -> CN -> NP
+#fun ExistS aux advmod head -- Temp -> Pol -> NP -> S
+#fun FlatPN head flat -- PN -> PN -> PN
+#fun FunRP case nmod head -- Prep -> NP -> RP -> RP
+#fun IDig head -- Dig -> Digits
+#fun IIDig nummod head -- Dig -> Digits -> Digits
+#fun IdetCN det head -- IDet -> CN -> IP
+#fun IdetIP head -- IDet -> IP
+#fun IdetQuant head nummod -- IQuant -> Num -> IDet
+#fun ImpVP head -- VP -> Imp
+#fun MassNP head -- CN -> NP
+#fun MkVPI head -- VP -> VPI
+#fun MkVPS aux advmod head -- Temp -> Pol -> VP -> VPS
+#fun OrdNumeral head -- Numeral -> Ord
+#fun PassVP head -- V -> VP
+#fun PositA head -- A -> AP
+#fun PositAdvAdj head -- A -> Adv
+#fun PossPlNP nmod:poss head -- Pron -> CN -> NP
+#fun PossSgNP nmod:poss head -- Pron -> CN -> NP
+#fun PredVPS nsubj head -- NP -> VPS -> S
+#fun PrepIP case head -- Prep -> IP -> IAdv
+#fun PrepNP case head -- Prep -> NP -> Adv
+#fun PrepPP case head -- Prep -> NP -> PP
+#fun ProgrVP head -- VP -> VP
+#fun PunctUttText head punct -- Utt -> Punct -> Text
+#fun QuantPlCN det head -- Quant -> CN -> NP
+#fun QuantSgCN det head -- Quant -> CN -> NP
+#fun QuestCl head -- Cl -> QCl ---- not active
+#fun QuestIAdv advmod head -- IAdv -> Cl -> QCl ---- not active
+#fun QuestIComp head nsubj -- IComp -> NP -> QCl
+#fun QuestIAdvNPVP advmod nsubj head -- IAdv -> NP -> VP -> QCl ---- temporary
+#fun QuestNP VP nsubj head -- NP -> VP -> QS ---- temporary
+#fun QuestQCl aux advmod head -- Temp -> Pol -> QCl -> QS ---- temporary
+#fun QuestQVP nsubj head -- IP -> QVP -> QCl
+#fun QuestSlash obj head -- IP -> ClSlash -> QCl
+#fun QuestVP nsubj head -- IP -> VP -> QCl
+#fun RelCN head acl -- CN -> RS -> CN
+#fun RelCl head -- Cl -> RCl
+#fun RelSlash mark head -- RP -> ClSlash -> RCl
+#fun RelVP mark head -- RP -> VP -> RCl
+#fun SubjS mark head -- Subj -> S -> Adv
+#fun TTAnt aux head --- head head -- Tense -> Ant -> Temp
+#fun UseComp head -- Comp -> VP
+#fun UseComparA head -- A -> AP
+#fun UseN head -- N -> CN
+#fun UsePN head -- PN -> NP
+#fun UsePron head -- Pron -> NP
+#fun UseV head -- V -> VP
+#fun UttAdv head -- Adv -> Utt
+#fun UttImpSg advmod head -- Pol -> Imp -> Utt
+#fun UttNP head -- NP -> Utt
+#fun UttQS head -- QS -> Utt
+#fun UttS head -- S -> Utt
+#fun UttText head -- Utt -> Text
+#fun num head -- Sub1000000 -> Numeral
+#fun pot0 head -- Digit -> Sub10
+#fun pot0as1 head -- Sub10 -> Sub100
+#fun pot1 head -- Digit -> Sub100
+#fun pot1as2 head -- Sub100 -> Sub1000
+#fun pot1plus nummod head -- Digit -> Sub10 -> Sub100
+#fun pot1to19 head -- Digit -> Sub100
+#fun pot2 head -- Sub10 -> Sub1000
+#fun pot2as3 head -- Sub1000 -> Sub1000000
+#fun pot2plus nummod head -- Sub10 -> Sub100 -> Sub1000
+#fun pot3 head -- Sub1000 -> Sub1000000
+#fun pot3plus nummod head -- Sub1000 -> Sub1000 -> Sub1000000
+
+#cat Ant X
+#cat Dig NUM
+#cat RP PRON
+#cat Pol X
+#cat Tense X
+#cat Det DET
+#cat A ADJ
+#cat AdA ADV
+#cat Adv ADV
+#cat Card NUM
+#cat N NOUN
+#cat PN PROPN
+#cat Prep ADP
+#cat V VERB
+#cat AdN ADV
+#cat AdV ADV
+#cat Interj INTJ
+#cat Subj SCONJ
+#cat Predet DET
+#cat Conj CCONJ
+#cat Quant DET
+#cat CAdv ADV
+#cat PConj CCONJ
+#cat Punct PUNCT
+#cat CN NOUN
+#cat NP PRON ----
+#cat ACard ADV
+#cat Pron PRON
+#cat IAdv ADV
+#cat Digit NUM
+#cat Sub10 NUM
+#cat Sub100 NUM
+#cat IP PRON
+#cat IQuant DET
+
+
+AdAP advmod head
+AdAdV amod head
+AdAdv amod head
+AdNum advmod head
+AdVVP advmod head
+AdVVPSlash advmod head
+AddAdvQVP head advmod
+AdjAsCN head
+AdjAsNP head
+AdjCN amod head
+AdjDAP head amod
+AdjOrd head
+AdnCAdv advmod head
+AdvAP head advmod
+AdvAdv head advmod
+AdvCN head nmod
+AdvIAdv advmod head
+AdvIP head advmod
+AdvImp advmod head
+AdvIsNP head nsubj
+AdvNP head nmod
+AdvQVP head obj
+AdvRAP head case nmod
+AdvRNP head case nmod
+AdvRVP head case nmod
+AdvS advmod head
+AdvSlash head advmod
+AdvVP head advmod
+AdvVPSlash head advmod
+ApposCN head appos
+ApposNP head appos
+BareN2 head
+BaseAP head conj
+BaseAdV head conj
+BaseAdv head conj
+BaseCN head conj
+BaseCNN nummod head nummod conj --- _ head _ head
+BaseComp head conj
+BaseDAP head conj
+BaseIAdv head conj
+BaseImp head conj
+BaseNP head conj
+BaseRS head conj
+BaseS head conj
+BaseVPI head conj
+BaseVPI2 head conj
+BaseVPS head conj
+BaseVPS2 head conj
+Base_nr_RNP head conj
+Base_rn_RNP head conj
+Base_rr_RNP head conj
+ByVP head
+CAdvAP advmod case amod head --- * 4 mod head mod
+CleftAdv head advcl --- mod mod
+CleftNP head acl --- mod mod
+CompAP head
+CompAdv head
+CompBareCN head
+CompCN head
+CompIAdv head
+CompIP head
+CompIQuant head
+CompNP head
+CompQS head
+CompS head
+CompVP aux advmod nsubj head --- mod mod _ head
+ComparA amod head
+ComparAdv empty case head nmod --- _ head mod mod
+ComplA2 head nmod
+ComplBareVS head ccomp
+ComplDirectVQ head ccomp
+ComplDirectVS head ccomp
+ComplN2 head nmod
+ComplN3 head nmod --- head arg
+ComplSlash head obj
+ComplSlashIP head obj
+ComplSlashPartLast head obj
+ComplVA head xcomp
+ComplVPI2 head comp
+ComplVPIVV head xcomp
+ComplVPS2 head obj
+ComplVQ head ccomp
+ComplVS head ccomp
+ComplVV head aux advmod xcomp
+CompoundAP nmod head --- comp head
+CompoundN compound head
+ConjAP cc head
+ConjAdV cc head
+ConjAdv cc head
+ConjCN cc head
+ConjComp cc head
+ConjDet cc head
+ConjIAdv cc head
+ConjImp cc head
+ConjNP cc head
+ConjRNP cc head
+ConjRS cc head
+ConjS cc head
+ConjVPI cc head
+ConjVPI2 cc head
+ConjVPS cc head
+ConjVPS2 cc head
+ConsAP head conj
+ConsAdV head conj
+ConsAdv head conj
+ConsCN head conj
+ConsComp head conj
+ConsDAP head conj
+ConsIAdv head conj
+ConsImp head conj
+ConsNP head conj
+ConsRS head conj
+ConsS head conj
+ConsVPI head conj
+ConsVPI2 head conj
+ConsVPS head conj
+ConsVPS2 head conj
+Cons_nr_RNP head conj
+Cons_rr_RNP head conj
+CountNP det head
+DetCN det head
+DetCNN det cc head --- mod _ head
+DetDAP head
+DetQuant head nummod
+DetQuantOrd head nummod amod
+EmbedPresPart head
+EmbedQS head
+EmbedS head
+EmbedSSlash head
+EmbedVP aux advmod obj head --- _ _ _ head
+EmptyRelSlash head
+EnoughAP head empty empty xcomp --- head _ _ mod
+EnoughAdv head
+ExistIP head
+ExistIPAdv head advmod
+ExistMassCN head
+ExistNP head
+ExistNPAdv head nmod
+ExistPluralCN head
+ExistsNP head
+ExtAdvAP head advmod
+ExtAdvNP head nmod
+ExtAdvS advmod head
+ExtAdvVP head advmod
+ExtRelNP head acl
+FocusAdV advmod head
+FocusAdv advmod head
+FocusComp nmod head --- mod mod
+FocusObj obj head
+FrontComplDirectVQ nsubj head ccomp
+FrontComplDirectVS nsubj head ccomp
+FunRP case nmod head
+GenIP head
+GenModIP nummod nmod head --- mod mod mod
+GenModNP nummod nmod head --- _ poss head
+GenRP nummod head
+GenericCl head
+GerundAdv head
+GerundCN head
+GerundNP head
+IAdvAdv head
+ICompAP head
+IDig head
+IIDig head goeswith
+IdetCN det head
+IdetIP head
+IdetQuant head nummod
+ImpP3 obj head --- mod mod
+ImpPl1 head
+ImpVP head
+ImpersCl head
+InLanguage head
+InOrderToVP aux advmod nmod head
+InflectionA head
+InflectionA2 head
+InflectionAdv head
+InflectionN head
+InflectionN2 head
+InflectionN3 head
+InflectionPrep head
+InflectionV head
+InflectionV2 head
+InflectionV2A head
+InflectionV2Q head
+InflectionV2S head
+InflectionV2V head
+InflectionV3 head
+InflectionVA head
+InflectionVQ head
+InflectionVS head
+InflectionVV head
+MassNP head
+MkDefinition nsubj head --- _ _
+MkDefinitionEx nsubj head advmod --- _ _ _
+MkDocument head advmod nmod --- _ _ _
+MkTag head
+MkVPI head
+MkVPI2 head
+MkVPS aux advmod head
+MkVPS2 aux advmod head
+NoDefinition head
+NumCard head
+NumDigits head
+NumLess head
+NumMore head
+NumNumeral head
+OrdDigits head
+OrdNumeral head
+OrdNumeralSuperl nummod head
+OrdSuperl head
+PConjConj head
+PartNP head nmod
+PassAgentVPSlash head nmod
+PassVPSlash head
+PastPartAP head
+PastPartAgentAP head obj
+PhrUtt cc head discourse
+PhrUttMark cc head discourse mark --- _ head _ _
+PositA head
+PositAdAAdj head
+PositAdVAdj head
+PositAdvAdj head
+PossCNN_RNP det cc head nmod --- _ _ head poss
+PossNP head nmod
+PossPron head
+PossPronRNP nmod nummod head nmod --- poss _ head mod
+PredAPVP amod head --- mod mod
+PredIAdvVP advmod head
+PredSCVP csubj head
+PredVP nsubj head
+PredVPS nsubj head
+PredetNP det head
+PredetRNP det head
+PrepCN case head
+PrepIP case head
+PrepNP case head
+PresPartAP head
+ProgrVP head
+ProgrVPSlash head
+QuestCl head
+QuestIAdv advmod head
+QuestIComp head nsubj
+QuestQVP nsubj head
+QuestSlash obj head
+QuestVP nsubj head
+RecipVPSlash head
+RecipVPSlashCN head obj
+ReflA2 head nmod
+ReflPoss nummod head
+ReflPossCNN cc head
+ReflVPSlash head obj
+RelCN head acl
+RelCl head
+RelNP head acl
+RelS head advcl
+RelSlash mark head
+RelVP mark head
+SSubjS head mark advcl
+SelfAdVVP head
+SelfAdvVP head
+SelfNP head
+SentAP head acl --- head mod
+SentCN head acl --- head mod
+Slash2V3 head iobj --- head obj
+Slash3V3 head obj
+SlashBareV2S head ccomp
+SlashPrep head case
+SlashV2A head xcomp
+SlashV2Q head ccomp
+SlashV2S head ccomp
+SlashV2V head empty empty xcomp
+SlashV2VNP head obj empty empty xcomp
+SlashV2a head
+SlashVP nsubj head
+SlashVS nsubj head ccomp
+SlashVV head aux advmod acl
+StrandQuestSlash obj head
+StrandRelSlash obj head
+SubjRelNP head acl ---
+SubjS mark head
+TTAnt empty head --- head head
+TimeNP head
+Use2N3 head
+Use3N3 head
+UseA2 head
+UseACard head
+UseAdAACard advmod head
+UseCl empty empty head
+UseComp head
+UseComp_estar head
+UseComparA head
+UseDAP head
+UseDAPFem head
+UseDAPMasc head
+UseN head
+UsePN head
+UsePron head
+UseQCl aux advmod head
+UseRCl aux advmod head
+UseSlash aux advmod head
+UseV head
+UttAP head
+UttAPFem head
+UttAPMasc head
+UttAccIP head
+UttAccNP head
+UttAdV head
+UttAdv head
+UttCN head
+UttCard head
+UttDatIP head
+UttDatNP head
+UttIAdv head
+UttIP head
+UttImpPl empty head
+UttImpPol empty head
+UttImpSg empty head
+UttInterj head
+UttNP head
+UttQS head
+UttS head
+UttVP empty empty obj head --- _ _ _ head
+UttVPS obj head --- _ head
+UttVPShort head
+VPSlashPrep head case --- head mod
+VocNP head
+WithoutVP head
+bottle_of_CN head
+come_to_VP head
+come_to_adj_VP amod head --- mod head
+cup_of_CN head
+dayMonthAdv head nmod --- mod mod
+dayMonthYearAdv head nmod advmod --- mod mod mod
+few_X_short_of_Y head nmod nmod --- mod mod mod
+glass_of_CN head
+has_age_VP head
+have_name_Cl nmod head --- mod mod
+how_far_QCl head
+how_old_QCl head
+intMonthday head
+intYear head
+languageCN head
+languageNP head
+married_Cl nsubj head --- mod mod
+monthAdv head
+monthN head
+monthPN head
+monthYearAdv head nmod --- mod mod
+n_unit_CN nummod nmod head ---
+n_units_AP nummod nmod head --- mod mod head
+n_units_of_NP nummod head nmod --- mod mod mod
+none_of_NP_affair_VP head
+num head
+---pot0 head
+---pot0as1 head
+---pot1 head
+---pot1as2 head
+---pot1plus *
+---pot1to19 head
+---pot2 head
+---pot2as3 head
+---pot2plus *
+---pot3 head
+---pot3as4 head
+---pot3plus *
+---pot4 head
+---pot4plus *
+tend_VP head
+timeHour head
+---timeHourMinute *
+timeunitAdv nummod head
+timeunitRange nummod nummod head ---
+weather_adjCl head
+weekdayHabitualAdv head
+weekdayLastAdv head
+weekdayN head
+weekdayNextAdv head
+weekdayPN head
+weekdayPunctualAdv head
+what_name_QCl head
+yearAdv head
+
+A ADJ
+A2 ADJ
+ACard ADV
+AP ADJ
+AdA ADV
+AdN ADV
+AdV ADV
+Adv ADV
+Ant X
+Bracket X
+CAdv ADV
+CN NOUN
+CNN NOUN
+Card NUM
+Cl X
+ClSlash X
+Comp X
+Conj CONJ
+DAP DET
+Definition X
+Det DET
+Dig NUM
+Digit NUM
+Digits NUM
+Document X
+Float NUM
+Hour NUM
+IAdv ADV
+IComp X
+IDet DET
+IP PRON
+IQuant DET
+Imp VERB
+Inflection X
+Int NUM
+Interj INTJ
+Language NOUN
+ListAP X
+ListAdV X
+ListAdv X
+ListCN X
+ListComp X
+ListDAP X
+ListIAdv X
+ListImp X
+ListNP X
+ListRS X
+ListS X
+ListVPI X
+ListVPI2 X
+ListVPS X
+ListVPS2 X
+Mark PUNCT
+Month NOUN
+Monthday NUM
+N NOUN
+N2 NOUN
+N3 NOUN
+NP PRON ---
+Num NUM
+Numeral NUM
+Ord NUM
+PConj CONJ
+PN PROPN
+Phr X
+Pol X
+Predet DET
+Prep ADP
+Pron PRON
+QCl X
+QS X
+QVP X
+Quant DET
+Quote PUNCT
+RCl X
+RNP PRON
+RNPList X
+RP PRON
+RS X
+S X
+SC X
+SSlash X
+String PROPN ---
+Sub10 NUM
+Sub100 NUM
+Sub1000 NUM
+Sub1000000 NUM
+Sub1000000000 NUM
+Subj SCONJ
+Tag X
+Temp X
+Tense X
+Text X
+Timeunit NOUN
+Utt X
+V VERB
+V2 VERB
+V2A VERB
+V2Q VERB
+V2S VERB
+V2V VERB
+V3 VERB
+VA VERB
+VP X
+VPI X
+VPI2 X
+VPS X
+VPS2 X
+VPSlash X
+VQ VERB
+VS VERB
+VV VERB
+Voc NOUN ---
+Weekday NOUN
+Year NUM
+
+
+
+
+-- needed in ud2gf only
+
+#auxfun UseComp_Cop_Pres cop comp : Cop -> Comp -> VPS = MkVPS (TTAnt TPres ASimul) PPos  (UseComp comp) ; cop[Tense=Pres] head
+#auxfun UseComp_Cop_PresNeg cop neg comp : Cop -> Neg -> Comp -> VPS = MkVPS (TTAnt TPres ASimul) PNeg (UseComp comp) ; cop[Tense=Pres] advmod head
+#auxfun UseComp_Cop_Past cop comp : Cop -> Comp -> VPS = MkVPS (TTAnt TPast ASimul) PPos  (UseComp comp) ; cop[Tense=Past] head
+#auxfun UseComp_Cop_PastNeg cop neg comp : Cop -> Neg -> Comp -> VPS = MkVPS (TTAnt TPast ASimul) PNeg (UseComp comp) ; cop[Tense=Past] advmod head
+
+#auxfun ProgrVP_Cop_Pres cop vp : Cop -> VP -> VPS = MkVPS (TTAnt TPres ASimul) PPos  (ProgrVP vp) ; cop[Tense=Pres] head[Tense=Pres|VerbForm=Part]
+#auxfun ProgrVP_Cop_PresNeg neg cop vp : Neg -> Cop -> VP -> VPS = MkVPS (TTAnt TPres ASimul) PNeg  (ProgrVP vp) ; advmod cop[Tense=Pres] head[Tense=Pres|VerbForm=Part]
+#auxfun ProgrVP_Cop_Past cop vp : Cop -> VP -> VPS = MkVPS (TTAnt TPast ASimul) PPos  (ProgrVP vp) ; cop[Tense=Pres] head[Tense=Pres|VerbForm=Part]
+#auxfun ProgrVP_Cop_PastNeg neg cop vp : Neg -> Cop -> VP -> VPS = MkVPS (TTAnt TPast ASimul) PNeg  (ProgrVP vp) ; advmod cop[Tense=Past] head[Tense=Pres|VerbForm=Part]
+
+#auxfun MkVPS_Pres vp : VP -> VPS = MkVPS (TTAnt TPres ASimul) PPos vp ; head[Tense=Pres]
+#auxfun MkVPS_PresNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt TPres ASimul) PNeg vp ; aux[Tense=Pres] advmod head
+#auxfun MkVPS_Past vp : VP -> VPS = MkVPS (TTAnt TPast ASimul) PPos vp ; head[Tense=Past]
+#auxfun MkVPS_PastNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt TPast ASimul) PNeg vp ; aux[Tense=Past] advmod head
+#auxfun MkVPS_Perf have vp : Have -> VP -> VPS = MkVPS (TTAnt TPres AAnter) PPos vp ; aux[Tense=Pres] head
+#auxfun MkVPS_PerfNeg have neg vp : Have -> Neg -> VP -> VPS = MkVPS (TTAnt TPres AAnter) PNeg vp ; aux[Tense=Pres] advmod head
+#auxfun MkVPS_Pluperf have vp : Have -> VP -> VPS = MkVPS (TTAnt TPast AAnter) PPos vp ; aux[Tense=Past] head
+#auxfun MkVPS_PluperfNeg have neg vp : Have -> Neg -> VP -> VPS = MkVPS (TTAnt TPast AAnter) PNeg vp ; aux[Tense=Past] advmod head
+#auxfun MkVPS_Fut will vp : Will -> VP -> VPS = MkVPS (TTAnt TFut ASimul) PPos vp ; aux head
+#auxfun MkVPS_FutNeg will neg vp : Will -> Neg -> VP -> VPS = MkVPS (TTAnt TFut ASimul) PNeg vp ; aux advmod head
+
+#auxfun PassVP_Cop_Pres cop v : Cop -> V -> VPS = MkVPS (TTAnt TPres ASimul) PPos  (PassVP v) ; aux:pass[Tense=Pres] head[Tense=Past|VerbForm=Part]
+#auxfun PassVP_Cop_PresNeg cop neg v : Cop -> Neg -> V -> VPS = MkVPS (TTAnt TPres ASimul) PNeg  (PassVP v) ; aux:pass[Tense=Pres] advmod head[Tense=Past|VerbForm=Part]
+#auxfun PassVP_Cop_Past cop v : Cop -> V -> VPS = MkVPS (TTAnt TPast ASimul) PPos  (PassVP v) ; aux:pass[Tense=Past] head[Tense=Past|VerbForm=Part]
+#auxfun PassVP_Cop_PastNeg cop neg v : Cop -> Neg -> V -> VPS = MkVPS (TTAnt TPast ASimul) PNeg  (PassVP v) ; aux:pass[Tense=Past] advmod head[Tense=Past|VerbForm=Part]
+
+#auxfun ExistS_Pres there cop np : There -> Cop -> NP -> S = ExistS (TTAnt TPres ASimul) PPos np ; expl head[Tense=Pres] nsubj
+#auxfun ExistS_Past there cop np : There -> Cop -> NP -> S = ExistS (TTAnt TPast ASimul) PPos np ; expl head[Tense=Past] nsubj
+
+#auxfun ExistS_Pres_native there cop np : There -> Cop -> NP -> S = ExistS (TTAnt TPres ASimul) PPos np ; expl cop[Tense=Pres] head
+#auxfun ExistS_Past_native there cop np : There -> Cop -> NP -> S = ExistS (TTAnt TPast ASimul) PPos np ; expl cop[Tense=Past] head
+
+#disable ExistS
+
+--- needed in English
+#auxfun MkVPS_PlPres vp : VP -> VPS = MkVPS (TTAnt TPres ASimul) PPos vp ; head[VerbForm=Inf]
+#auxfun MkVPS_PlPresNeg do neg vp : Do -> Neg -> VP -> VPS = MkVPS (TTAnt TPres ASimul) PNeg vp ; aux[VerbForm=Inf] advmod head
+#auxfun MkVPS_PlPerf have vp : Have -> VP -> VPS = MkVPS (TTAnt TPres AAnter) PPos vp ; aux[VerbForm=Inf] head
+#auxfun MkVPS_PlPerfNeg have neg vp : Have -> Neg -> VP -> VPS = MkVPS (TTAnt TPres AAnter) PNeg vp ; aux[VerbForm=Inf] advmod head
+
+#auxfun MkVPI_to to vpi : VPI -> To -> VPI = vpi ; mark head
+
+#auxfun UttImpSg_Pos vp : VP -> Utt = UttImpSg PPos (ImpVP vp) ; head[VerbForm=Inf]
+#auxfun UttImpSg_Neg do neg vp : Do -> Neg -> VP -> Utt = UttImpSg PNeg (ImpVP vp) ; aux[VerbForm=Inf] advmod head[VerbForm=Inf]
+
+#auxfun PositA_ a : A -> AP = PositA a ; head[Degree=Pos]
+#auxfun UseComparA_ a : A -> AP = UseComparA a ; head[Degree=Cmp]
+
+#auxfun ExtAdvS_ adv comma s : Adv -> Comma -> S -> S = ExtAdvS adv s ; advmod punct head
+
+#auxcat Cop AUX
+#auxcat Do AUX
+#auxcat Have AUX
+#auxcat Will AUX
+#auxcat Would AUX
+#auxcat Neg PART
+#auxcat Gen PART
+#auxcat To PART
+#auxcat That PART
+#auxcat Comma PUNCT
+#auxcat There PRON
+
+#disable UseComp MkVPS PositA UseComparA ProgrVP ExtAdvS UttImpSg ImpVP PassVP
+
+#altfun AddNPtoVP head iobj
+#altfun PredVPS nsubj:pass head
+
+-- to deal with the_Det / thePl_Det, together with a #lemma for The in ShallowParseEng.labels
+#auxcat The DET
+#auxfun DetCN_theSg det cn : The -> CN -> NP = DetCN the_Det cn ; det head[Number=Sing]
+#auxfun DetCN_thePl det cn : The -> CN -> NP = DetCN thePl_Det cn ; det head[Number=Plur]
+#disable the_Det thePl_Det
+
+-- disable plurals as mass terms
+#auxfun MassNP_sg cn : CN -> NP = MassNP cn ; head[Number=Sing]
+#auxfun DetCN_aPl cn : CN -> NP = DetCN aPl_Det cn ; head[Number=Plur]
+#disable MassNP
+
+#auxfun PossSgNP_ pron cn : Pron -> CN -> NP = PossSgNP pron cn ; nmod:poss head[Number=Sing]
+#auxfun PossPlNP_ pron cn : Pron -> CN -> NP = PossPlNP pron cn ; nmod:poss head[Number=Plur]
+#disable PossSgNP PossPlNP
+
