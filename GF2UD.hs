@@ -104,7 +104,9 @@ gf2ud env lang =
 wordTree2udTree :: AnnotTree -> UDTree
 wordTree2udTree = annot UDIdRoot where
   annot udid tr@(RTree node trs) =
-    let Just (position,tok) = anToken node
+    let (position,tok) = case anToken node of
+           Just pt -> pt
+           _ -> error $ "no position or token from node " ++ prAnnotNode node
     in RTree
          (UDWord {
            udID     = UDIdInt position,
@@ -130,7 +132,8 @@ applyNonlocalAnnotations env lang =
        t:tt -> case anTarget (root t) of
          Just label -> case break (\t -> anLabel (root t) == label) bts of
            (bts1,h:bts2) -> changes (dropOut t (bts1 ++ [h{subtrees = t : subtrees h}] ++ bts2)) tt
-           _ -> error $ "target not found among\n" ++ unlines (map (prAnnotNode . root) bts) --- t : changes bts tt
+           ---- _ -> error $ "target " ++ label ++ " not found among\n" ++ unlines (map (prAnnotNode . root) bts) --- t : changes bts tt
+           _ -> changes bts tt ---- ?
          _ -> changes bts tt
        [] -> bts
    dropOut t ts = filter (\u -> root t /= root u) ts
