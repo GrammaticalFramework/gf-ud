@@ -5,6 +5,7 @@
 #fun DetCN	det head
 #fun PredVP	nsubj head
 #fun PrepNP	case head
+#fun QuestIAdv  advmod head
 #fun UseCl	aux advmod head
 #fun UseQCl	aux advmod head
 #fun UttImpSg      aux head
@@ -12,7 +13,8 @@
 #cat A	      ADJ
 #cat Adv      ADV
 #cat Conj     CCONJ
-#cat Det	      DET
+#cat Det      DET
+#cat IAdv     ADV
 #cat N	      NOUN
 #cat PN	      PROPN
 #cat Pol	      PART

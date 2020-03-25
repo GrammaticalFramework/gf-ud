@@ -46,7 +46,8 @@ fullOpts = [
   ("an2","(gf2ud) annotated tree with labels and words"),
   ("an3","(gf2ud) final annotated tree with nonlocal operations"),
   ("vat", "visualize abstract syntax tree using Graphviz"),
-  ("vud", "visualize dependency tree using LaTeX"),
+  ("vud", "visualize dependency tree using LaTeX converted to pdf"),
+  ("lud", "visualize dependency tree in LaTeX and output the LaTeX code"),
   ("lin", "linearize tree using the active language of the environment"),
   ("stat", "show statistics of original and interpreted words")
   ]

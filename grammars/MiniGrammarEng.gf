@@ -10,6 +10,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     S  = {s : Str} ;
     QS = {s : Str} ;
     Cl, QCl = {   -- word order is fixed in S and QS
+      preadv : Str ;                           -- prepended adverb, e.g. "why"
       subj : Str ;                             -- subject
       verb : Bool => Bool => {fin,inf : Str} ; -- dep. on Pol,Temp, e.g. "does","sleep"
       compl : Str                              -- after verb: complement, adverbs
@@ -29,18 +30,21 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
     N = Noun ;
     PN = {s : Str} ;
     Adv = {s : Str} ;
+    IAdv = {s : Str} ;
 
   lin
     UttS s = s ;
     UttQS s = s ;
     UttNP np = {s = np.s ! Acc} ; -- Acc: produce "me" rather than "I"
     UttAdv adv = adv ;
+    UttIAdv adv = adv ;
     UttImpSg pol imp = {s = pol.s ++ imp.s ! pol.isTrue} ;
 
     UseCl temp pol cl =
       let clt = cl.verb ! pol.isTrue ! temp.isPres  -- isTrue regulates if "do" is used
       in {
         s = pol.s ++ temp.s ++    --- needed for parsing: a hack
+	    cl.preadv ++             -- today
 	    cl.subj ++               -- she
 	    clt.fin ++               -- does
 	    negation pol.isTrue ++   -- not
@@ -52,6 +56,7 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
       let clt = cl.verb ! False ! temp.isPres      -- False means that "do" is always used
       in {
         s = pol.s ++ temp.s ++
+	    cl.preadv ++             -- why
 	    clt.fin ++               -- does
 	    cl.subj ++               -- she
 	    negation pol.isTrue ++   -- not
@@ -60,8 +65,10 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
       } ;
 
     QuestCl cl = cl ; -- since the parts are the same, we don't need to change anything
+    QuestIAdv iadv cl = cl ** {preadv = iadv.s ++ cl.preadv} ;
 
     PredVP np vp = {
+      preadv = [] ;
       subj = np.s ! Nom ;
       compl = vp.compl ;
       verb = \\plain,isPres => case <vp.verb.isAux, plain, isPres, np.a> of {
@@ -197,5 +204,8 @@ concrete MiniGrammarEng of MiniGrammar = open MiniResEng, Prelude in {
       } ;
 
     have_V2 = mkVerb "have" "has" "had" "had" "having" ** {c = []} ;
+
+    where_IAdv = {s = "where"} ;
+    why_IAdv = {s = "why"} ;
 
 }

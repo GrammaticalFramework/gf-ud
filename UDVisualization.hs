@@ -31,11 +31,15 @@ visualizeAbsTrees env ts = do
 
 visualizeUDSentences :: UDEnv -> [UDSentence] -> IO ()
 visualizeUDSentences env uds = do
-  let ss = map (unlines  . map prt . udWordLines) uds
-  let doc = conlls2latexDoc ss
+  let doc = ud2latex env uds
   writeFile "_ud_tmp.tex" doc
   system $ "pdflatex _ud_tmp.tex"
   system $ "open _ud_tmp.pdf" ---- TODO: parameterize open command
   return () 
+
+ud2latex :: UDEnv -> [UDSentence] -> String
+ud2latex env = 
+  conlls2latexDoc .
+  map (unlines  . map prt . udWordLines)
 
 

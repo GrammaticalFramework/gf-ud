@@ -62,7 +62,10 @@ convertGFUD dir opts env = case dir of
             "-string2gf2ud" -> G.testString
       let os = if null opts then defaultOptsGF2UD else opts
       uds <- mapM (\ (i,s) -> conv i os env s) $ zip [1..] . filter (not . null) $ lines s
-      if isOpt opts "vud" then (visualizeUDSentences env uds) else return ()
+      case opts of
+        _ | isOpt opts "lud" -> putStrLn $ ud2latex env uds
+        _ | isOpt opts "vud" -> visualizeUDSentences env uds
+        _ -> return ()
    
 
 ud2gf :: UDEnv -> String -> IO ()

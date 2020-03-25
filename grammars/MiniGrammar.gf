@@ -31,6 +31,7 @@ abstract MiniGrammar = {
     N ;      -- common noun                         e.g. "house"
     PN ;     -- proper name                         e.g. "Paris"
     Adv ;    -- adverbial phrase                    e.g. "in the house"
+    IAdv ;   -- interrogative adverbial             e.g. "why"
     
   fun
 -- Phrase
@@ -38,12 +39,14 @@ abstract MiniGrammar = {
     UttQS     : QS -> Utt ;         -- does John walk
     UttNP     : NP -> Utt ;         -- John
     UttAdv    : Adv -> Utt ;        -- in the house
+    UttIAdv   : IAdv -> Utt ;       -- why
     UttImpSg  : Pol -> Imp -> Utt ; -- (do not) walk ----s
 
 -- Sentence
     UseCl     : Temp -> Pol -> Cl   -> S ;  -- John has not walked
     UseQCl    : Temp -> Pol -> QCl  -> QS ; -- has John walked
     QuestCl   : Cl -> QCl ;                 -- does John (not) walk
+    QuestIAdv : IAdv -> Cl -> QCl ;         -- where does John walk
     PredVP    : NP -> VP -> Cl ;            -- John walks / John does not walk
     ImpVP     : VP -> Imp ;                 -- walk / do not walk
 
@@ -101,4 +104,9 @@ abstract MiniGrammar = {
     they_Pron  : Pron ;
 
     have_V2 : V2 ;
+
+    where_IAdv : IAdv ;
+    
+    why_IAdv : IAdv ;
+
 }
