@@ -4,7 +4,7 @@ shallow:
 	gf -path=.:gf-wordnet -make ShallowParseEng.gf
 
 mini:
-	gf -make gf-summerschool-2018/resource/english/MiniLangEng.gf
+	gf -make MiniLangEng.gf
 
 term:
 	gf -make TermInfix.gf
