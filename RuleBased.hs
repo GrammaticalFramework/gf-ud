@@ -1,7 +1,8 @@
 module RuleBased where
 
 import qualified Data.Set as S
-import qualified Data.Map as M
+import qualified Data.Map.Strict as M
+import Data.Char
 
 -- chart parsing from Peter Ljunglöf, "Pure Functional Parsing", 2002
 
@@ -13,16 +14,21 @@ data Rule = Rule {
   lhs :: Symb,
   rhs :: [Symb],
   labels :: [Symb],
-  constr :: Symb
+  constr :: Symb,
+  probab :: Double 
   }
  deriving Show
 
 data Grammar = Grammar {
-  rules     :: [Rule],
-  startcat  :: Symb,
-  terminal  :: Token -> [Symb]
+  rules        :: [Rule],
+  terminalmap  :: M.Map Token [Symb],
+  catmap       :: M.Map Symb Symb  -- cat to pos
   }
+  deriving Show
 
+terminal g t = maybe [t] id $ M.lookup t (terminalmap g)
+
+emptyGrammar = Grammar [] M.empty M.empty
 
 -- p. 64
 type Edge  = (Int,Symb,[Symb])
@@ -118,38 +124,62 @@ buildTrees grammar input passives = edgeTrees
           tree <- trees
         ]
 
-parse :: Grammar -> [Token] -> [ParseTree]
-parse grammar input = maybe [] id $
-  lookup (0, length input, startcat grammar) $
+parse :: Grammar -> Symb -> [Token] -> [ParseTree]
+parse grammar cat input = maybe [] id $
+  lookup (0, length input, cat) $
     buildTrees grammar input (passiveEdges (buildChart grammar input))
 
+treeProbability :: Grammar -> ParseTree -> Double
+treeProbability grammar = tprob
+  where
+    tprob t = case t of
+      PT f ts -> product (look f : map tprob ts)
+      _ -> 1
+    look f = maybe 1 id (M.lookup f probmap)
+    probmap = M.fromList [(constr r, probab r) | r <- rules grammar]
 
---- to test
+-------------------
+-- textual format
+-------------------
+
+pGrammar :: String -> Grammar
+pGrammar = combine . addRules . map words . filter relevant . lines
+  where
+    relevant l = case l of
+      '-':'-':_ -> False
+      _ | all isSpace l -> False
+      _ -> True
+
+    combine (rs,ts,cs) = Grammar rs (M.fromListWith (++) ts) (M.fromList cs)
+
+    addRules = foldr addRule ([],[],[])
+    
+    addRule ws g@(rs,ts,cs) = case ws of
+      "#token":c:ww -> (rs, [(w,[c]) | w <- ww] ++ ts, cs)
+
+      "#cat":c:ww   -> (rs, ts,[(w,c) | w <- ww] ++ cs)
+      f:c:"::=":ww | last f == '.' -> (
+        getRule (unwords ws) (init f) c (splitSemic ww) : rs, ts,cs)
+      _ -> error ("rule not parsed: " ++ unwords ws)
+
+    getRule s f c wws = case wws of
+      [cs,labs,[p]] -> prule f c cs labs (read p)
+      [cs,labs] -> drule f c cs labs
+      [cs] -> erule f c cs
+      _ -> error ("ill-formed rule: " ++ s)
+
+    splitSemic ws = case break (==";") ws of
+      (cs,_:rest) -> cs : splitSemic rest
+      ([],_) -> [] 
+      (cs,_) -> [cs]
+ 
 
 erule :: Symb -> Symb -> [Symb] -> Rule
-erule f c cs = Rule c cs ["head"] f
+erule f c cs = Rule c cs ["head"] f 1
 
 drule :: Symb -> Symb -> [Symb] -> [Symb] -> Rule
-drule f c cs ds = Rule c cs ds f
+drule f c cs ds = Rule c cs ds f 1
 
-kg :: Grammar
-kg = Grammar {
-  rules = [
-    drule "Pred"  "S"   ["NP","VP"] ["nsubj","head"],
-    drule "AdvVP" "VP"  ["VP","Adv"] ["head","advmod"],
-    erule "UseV"  "VP"  ["V"],
-    drule "Compl" "VP"  ["V","NP"] ["head","obj"],
-    drule "UseAdv" "VP" ["Cop","Adv"] ["cop","head"],
-    erule "UsePN" "NP"  ["PN"],
-    drule "AdvNP" "NP"  ["NP","Adv"] ["head","advmod"]
-    ],
-  startcat = "S",
-  terminal = \t -> case t of
-    "hello" -> ["S"]
-    "John"  -> ["PN"]
-    "walks" -> ["V"]
-    "well"  -> ["Adv"]
-    "is"    -> ["Cop"]
-    _ -> []
-  }
+prule :: Symb -> Symb -> [Symb] -> [Symb] -> Double -> Rule
+prule f c cs ds p = Rule c cs ds f p
 
