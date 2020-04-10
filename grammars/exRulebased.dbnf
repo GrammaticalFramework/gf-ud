@@ -1,10 +1,10 @@
-Pred.   S  ::= NP VP  ; nsubj head
-UseV.   VP ::= V
-Compl.  VP ::= V2 NP  ; head obj
-CompA.  VP ::= Cop A  ; cop head
-UsePN.  NP ::= PN
-MassNP. NP ::= CN
-UseN.   CN ::= N
+S  ::= NP VP  ; nsubj head
+VP ::= V
+VP ::= V2 NP  ; head obj
+VP ::= Cop A  ; cop head
+NP ::= PN
+NP ::= CN
+CN ::= N
 
 #token PN John Mary
 #token V sleeps sleep
@@ -13,9 +13,10 @@ UseN.   CN ::= N
 #token Cop is are
 #token N love sleep
 
-#cat AUX Cop
-#cat VERB V V2
-#cat NOUN N
-#cat ADJ A
+#pos AUX Cop
+#pos VERB V V2
+#pos NOUN N
+#pos ADJ A
+#pos PROPN PN
 
 
