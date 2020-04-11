@@ -4,6 +4,36 @@ import qualified Data.Set as S
 import qualified Data.Map.Strict as M
 import Data.Char
 import Data.List
+import System.Environment (getArgs)
+
+-- main: read DBNF grammar (dependency BNF), parse stdio line by line, print
+-- bracketed parse trees and CoNLL dependency trees
+-- example: echo "the cat is old" | runghc RuleBased.hs grammars/exRulebased.dbnf Text
+
+main = do
+  xx <- getArgs
+  case xx of
+    grfile:startcat:[] -> do
+      gr <- readFile grfile >>= return . pGrammar
+      interact (unlines . map (processOne gr startcat) . lines)
+    _ -> putStrLn usage
+
+usage = "usage: RuleBased <grammar> <startcat>"
+
+processOne gr cat s = unlines $ [
+  "# sentence: " ++ s,
+  "# ambiguity: " ++ show (length parses),
+  "# parse tree: " ++ ptree,
+  dtree
+  ]
+ where
+   parses = parse gr cat (words s)
+   ptree = case parses of
+     t:_ -> prParseTree t
+     _ -> "NONE"
+   dtree = case parses of
+     t:_ -> prDepTree $ markDependencies gr t
+     _ -> ""
 
 -- chart parsing from Peter Ljunglöf, "Pure Functional Parsing", 2002
 
@@ -142,6 +172,7 @@ treeProbability grammar = tprob
     probmap = M.fromList [(constr r, probab r) | r <- rules grammar]
 
 -- mark dependency labels and heads in leaf nodes
+-- simplified version of Kolachina and Ranta, LiLT 2016
 
 markDependencies :: Grammar -> ParseTree -> ParseTree
 markDependencies grammar =
@@ -193,11 +224,24 @@ prDepTree = unlines . map prOne . getTokens
     prOne (i,t,p,h,d) = concat (intersperse "\t" [i,t,unc,p,unc,unc,h,d,unc,unc])
     unc = "_"
  
-
-
 ------------------------------
 -- textual format of DBNF grammars
 -------------------------------
+-- Simple format, one rule per line, comment lines start --.
+-- Phrase structure rule format: LHS ::= RHS (# labels (# weight))?
+--
+--   Cl ::= NP do not VP  # nsubj aux advmod head # 0.7
+--
+-- All symbols in LHS and RHS are nonterminals.
+-- Terminals are introduces by rules of form: #token NONTERM words
+--
+--   #token do do does did done
+--   #token N man men cat cats
+--
+-- Universal pos tags are defined by rules of form: #pos POS nonterms
+--
+--   #pos ADV Adv IAdv not
+--
 
 pGrammar :: String -> Grammar
 pGrammar = combine . addRules . map words . filter relevant . lines

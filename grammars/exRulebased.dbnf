@@ -1,3 +1,8 @@
+-- texts and phrases
+Text ::= Phr Punct # head punct
+Text ::= Phr
+Phr  ::= Utt
+
 -- utterances and sentences
 Utt ::= S
 Utt ::= QS
@@ -9,6 +14,7 @@ QS ::= QCl
 -- clauses
 Cl ::= NP VP  # nsubj head
 Cl ::= NP do not VP  # nsubj aux advmod head
+Cl ::= there beV NP # expl head nsubj
 
 QCl ::= IP VP # nsubj head
 QCl ::= do NP VP # aux nsubj head
@@ -19,11 +25,17 @@ VP ::= V
 VP ::= V2 NP  # head obj
 VP ::= V2 ONP # head obl
 VP ::= VS that S # head mark ccomp
+VP ::= VV VPto # head xcomp
+VP ::= VVAux VP # head xcomp
 VP ::= be Comp  # cop head
+VP ::= VP Adv # head advmod
 
 Comp ::= AP
 Comp ::= NP
 Comp ::= Adv
+
+-- VP with to
+VPto ::= to VP # mark head
 
 -- oblique noun phrase
 ONP ::= Prep NP # case head
@@ -31,6 +43,7 @@ ONP ::= Prep NP # case head
 -- noun phrases
 NP ::= PN
 NP ::= CN
+NP ::= Pron
 NP ::= Det CN # det head
 
 CN ::= N
@@ -39,33 +52,59 @@ CN ::= AP CN # amod head
 -- adjectival phrases
 AP ::= A
 
+-- adverbials
+Adv ::= Prep NP # case head
+Adv ::= Subj S # mark head
 
-#token PN John Mary
-#token V sleeps sleep
-#token V2 sees see love loves look looks
-#token VS say says believe believes
-#token A old good curious
-#token N love sleep loves sleeps man men woman women cat cats
-#token Prep at from in on to with
-#token IP who whom what
-#token IAdv when where why
-#token Det a the every some many
+-- coordination
+AP      ::= AP APConj         # head conj
+AP      ::= AP APComma APConj # head conj conj
+APConj  ::= Conj AP # cc head
+APComma ::= comma AP # punct head 
 
-#token be is are
-#token do do does did
-#token not not
-
-#pos AUX be
-#pos VERB V V2 VS
+-- POS tag configurations
+#pos AUX be do VVAux
+#pos VERB V V2 VS VV beV
 #pos NOUN N
 #pos ADJ A
 #pos PROPN PN
 #pos ADV Adv IAdv not
-#pos SSUBJ that
+#pos SCONJ Subj that if
+#pos CConj Conj
 #pos DET Det
+#pos PRON Pron IP
+#pos PART to
+#pos PUNCT Punct comma
 
-#pos AUX do
-#pos PRON IP
+-- structural word lexicon: normal categories
+#token Prep at from in on to with
+#token IP who whom what
+#token IAdv when where why
+#token Det a the every some many no
+#token Pron I me you he him she her it we us they them
+#token Subj if when although because
+#token VVAux can must
+#token Punct . ! ?
+#token Conj and or
 
+-- structural word lexicon: syncategorematic words
+#token be am is are was were be
+#token beV is are was were be
+#token do do does did
+#token not not
+#token that that
+#token to to
+#token there there
+#token comma ,
+
+-- content word lexicon
+#token PN John Mary
+#token V sleeps sleep
+#token V2 sees see love loves look looks
+#token VS say says believe believes
+#token VV want wants try tries
+#token A old good curious black
+#token N love sleep loves sleeps man men woman women cat cats
+#token Adv now today
 
 
