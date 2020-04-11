@@ -13,11 +13,13 @@ import System.Environment (getArgs)
 main = do
   xx <- getArgs
   case xx of
-    grfile:startcat:[] -> do
-      gr <- readFile grfile >>= return . pGrammar
-      interact (unlines . map (processOne gr startcat) . lines)
+    grfile:startcat:[] -> processRuleBased grfile startcat
     _ -> putStrLn usage
 
+processRuleBased grfile startcat = do
+  gr <- readFile grfile >>= return . pGrammar
+  interact (unlines . map (processOne gr startcat) . lines)
+      
 usage = "usage: RuleBased <grammar> <startcat>"
 
 processOne gr cat s = unlines $ [

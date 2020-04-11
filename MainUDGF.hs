@@ -2,6 +2,7 @@ module Main where
 
 import qualified UD2GF as U 
 import qualified GF2UD as G
+import qualified RuleBased as R
 import UDAnnotations
 import UDOptions
 import UDConcepts
@@ -20,6 +21,10 @@ import Control.Monad
 main = do
   xx <- getArgs
   case xx of
+
+    "dbnf":grammarfile:startcat:_ -> R.processRuleBased grammarfile startcat
+
+    "conll2pdf":_ -> getContents >>= visualizeUDSentences . parseUDText
   
     "eval":micmac:luas:goldf:testf:_ -> do
     
@@ -42,7 +47,9 @@ main = do
 helpMsg = unlines $ [
     "Usage:",
     "   gfud (-ud2gf|-gf2ud|-string2gf2ud|-gf2udpar) <path> <language> <startcat>",
+    " | gfud dbnf <dbnf-grammarfile> <startcat>",
     " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile>",
+    " | gfud conll2pdf",
     "where path = grammardir/abstractprefix, language = concretesuffix",
     "The input comes from stdIO, and the output goes there as well",
     "The option -gf2udpar should be used with the Haskell runtime flag +RTS -Nx -RTS",
@@ -63,8 +70,8 @@ convertGFUD dir opts env = case dir of
       let os = if null opts then defaultOptsGF2UD else opts
       uds <- mapM (\ (i,s) -> conv i os env s) $ zip [1..] . filter (not . null) $ lines s
       case opts of
-        _ | isOpt opts "lud" -> putStrLn $ ud2latex env uds
-        _ | isOpt opts "vud" -> visualizeUDSentences env uds
+        _ | isOpt opts "lud" -> putStrLn $ ud2latex uds
+        _ | isOpt opts "vud" -> visualizeUDSentences uds
         _ -> return ()
    
 

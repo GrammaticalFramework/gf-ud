@@ -56,7 +56,10 @@ initUDWord i = UDWord (UDIdInt i) "" "" "" "" [] UDIdNone "" "" []
 -----------------------
 
 parseUDFile :: FilePath -> IO [UDSentence]
-parseUDFile f = readFile f >>= return . map prss . stanzas . lines
+parseUDFile f = readFile f >>= return . parseUDText
+
+parseUDText :: String -> [UDSentence]
+parseUDText = map prss . stanzas . lines
 
 errorsInUDSentences :: [UDSentence] -> [String]
 errorsInUDSentences = concatMap errors
