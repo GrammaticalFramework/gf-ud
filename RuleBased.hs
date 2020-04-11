@@ -54,14 +54,24 @@ data Rule = Rule {
 
 data Grammar = Grammar {
   rules        :: [Rule],
-  terminalmap  :: M.Map Token [Symb],
-  catmap       :: M.Map Symb Symb  -- cat to pos
+  terminalmap  :: M.Map Token [Symb], -- token to cats
+  catmap       :: M.Map Symb Symb,    -- cat to UD pos
+  posmap       :: M.Map Symb [Symb]   -- pos to cats
   }
   deriving Show
 
-terminal g t = maybe [t] id $ M.lookup t (terminalmap g)
+terminal :: Grammar -> Token -> [Symb]
+terminal g t =
+  [c | Just cs <- [M.lookup t (terminalmap g)], c <- cs] ++
+  [c | (s, Just p) <- [unPOS t], Just cs <- [M.lookup p (posmap g)], c <- cs]
 
-emptyGrammar = Grammar [] M.empty M.empty
+-- instead of having a word in the lexicon, mark it in input as word:<POS> where POS matches a category
+unPOS :: Token -> (Token,Maybe Symb)
+unPOS t = case break (==':') t of
+  (s,_:'<':p@(_:_)) | last p == '>' -> (s, Just (init p))
+  _ -> (t,Nothing)
+
+emptyGrammar = Grammar [] M.empty M.empty M.empty
 
 -- p. 64
 type Edge  = (Int,Symb,[Symb])
@@ -139,7 +149,7 @@ buildTrees grammar input passives = edgeTrees
         lhs rule == cat,  ---- TODO: rule <- rules grammar cat
         trees <- children (rhs rule) i j
       ] ++ [
-      PL (cat,tok) (j,"dep",0) | -- default label and head
+      PL (cat,fst (unPOS tok)) (j,"dep",0) | -- default label and head
         i == j-1,
         let tok = input !! i,
         elem cat (terminal grammar tok)
@@ -253,7 +263,7 @@ pGrammar = combine . addRules . map words . filter relevant . lines
       _ | all isSpace l -> False
       _ -> True
 
-    combine (rs,ts,cs) = Grammar (numRules rs) (M.fromListWith (++) ts) (M.fromList cs)
+    combine (rs,ts,cs) = Grammar (numRules rs) (M.fromListWith (++) ts) (M.fromList cs) (posm cs)
 
     addRules = foldr addRule ([],[],[])
     
@@ -273,6 +283,8 @@ pGrammar = combine . addRules . map words . filter relevant . lines
 
     numRules rs = [Rule ("R" ++ show i) c cs labs p |
                     (i,Rule _ c cs labs p) <- zip [1..] rs]
+
+    posm cs = M.fromListWith (++) [(p,[c]) | (c,p) <- cs]
 
     splitSemic ws = case break (flip elem [";","#"]) ws of
       (cs,_:rest) -> cs : splitSemic rest
