@@ -8,7 +8,7 @@ import System.Environment (getArgs)
 
 -- main: read DBNF grammar (dependency BNF), parse stdio line by line, print
 -- bracketed parse trees and CoNLL dependency trees
--- example: echo "the cat is old" | runghc RuleBased.hs grammars/exRulebased.dbnf Text
+-- example: echo "the cat is old" | runghc RuleBased.hs grammars/English.dbnf Text
 
 main = do
   xx <- getArgs
@@ -66,10 +66,12 @@ terminal g t =
   [c | (s, Just p) <- [unPOS t], Just cs <- [M.lookup p (posmap g)], c <- cs]
 
 -- instead of having a word in the lexicon, mark it in input as word:<POS> where POS matches a category
+--- a bit complicated because of 11:30:<NUM>
 unPOS :: Token -> (Token,Maybe Symb)
-unPOS t = case break (==':') t of
-  (s,_:'<':p@(_:_)) | last p == '>' -> (s, Just (init p))
+unPOS t = case break (==':') (reverse t) of
+  (p@(_:_),_:s) | head p == '>' && last p == '<' -> (reverse s, Just (reverse (tail (init p))))
   _ -> (t,Nothing)
+
 
 emptyGrammar = Grammar [] M.empty M.empty M.empty
 

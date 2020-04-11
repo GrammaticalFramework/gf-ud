@@ -1,0 +1,239 @@
+-- texts and phrases
+Text ::= Phr Punct # head punct
+Text ::= Phr
+Phr  ::= Utt
+
+-- utterances and sentences
+Utt ::= S
+Utt ::= QS
+Utt ::= NP
+Utt ::= AP
+Utt ::= IP
+Utt ::= IAdv
+Utt ::= Num
+
+S  ::= Cl
+QS ::= QCl
+RS ::= RCl
+
+S  ::= S_subcomma S # advcl head
+S  ::= S S_sub # head advcl
+
+-- embedded sentences
+SC ::= S_that
+SC ::= QS
+SC ::= VP_to
+
+-- clauses
+Cl ::= NP VP  # nsubj head
+Cl ::= NP do not VP  # nsubj aux advmod head
+Cl ::= NP have VP  # nsubj aux head
+Cl ::= NP have not VP  # nsubj aux advmod head
+Cl ::= NP will VP  # nsubj aux head
+Cl ::= NP will not VP  # nsubj aux advmod head
+Cl ::= NP VP_pass # nsubj:pass head
+Cl ::= there be_V NP # expl head nsubj
+Cl ::= it be AP # expl cop head
+Cl ::= NP be_V S_that # nsubj head ccomp
+Cl ::= NP be_V VP_to # nsubj head xcomp
+Cl ::= SC VP # csubj head
+Cl ::= SC do not VP # csubj aux advmod head
+Cl ::= SC VP_pass # csubj:pass head
+Cl ::= S_front NP VS # parataxis nsubj head
+
+QCl ::= IP VP # nsubj head
+QCl ::= do NP VP # aux nsubj head
+QCl ::= V_aux NP VP # aux nsubj head
+QCl ::= V_aux NP have VP # aux nsubj aux head
+QCl ::= will NP VP # aux nsubj head
+QCl ::= will NP have VP # aux nsubj aux head
+QCl ::= IAdv do NP VP # advmod aux nsubj head
+QCl ::= IAdv do NP not VP # advmod aux nsubj advmod head
+QCl ::= IAdv V_aux NP VP # advmod aux nsubj head
+QCl ::= IAdv V_aux NP not VP # advmod aux nsubj advmod head
+
+RCl ::= RP VP # nsubj head
+RCl ::= RP NP V2 # obj nsubj head
+RCl ::= NP V2 # nsubj head
+
+
+VP ::= V
+VP ::= V2 NP  # head obj
+VP ::= V2 NP_obl # head obl
+VP ::= V3 NP NP # head iobj obj
+VP ::= V2C NP NP # head obj xcomp
+VP ::= V2C NP AP # head obj xcomp
+VP ::= VS S_that # head ccomp
+VP ::= VV VP_to # head xcomp
+VP ::= VV_aux VP # aux head
+VP ::= V2V NP VP # head obj xcomp
+VP ::= V2V NP VP_to # head obj xcomp
+VP ::= be Comp  # cop head
+VP ::= VP Adv # head advmod
+VP ::= VS S_direct # head parataxis
+
+VP_pass ::= be V2 # aux:pass head
+VP_pass ::= be not V2 # aux:pass advmod head
+VP_pass ::= have be V2 # aux aux:pass head
+VP_pass ::= have not be V2 # aux advmod aux:pass head
+VP_pass ::= VP_pass Adv # head advmod
+VP_pass ::= VP_pass NP_obl # head nmod
+
+S_that ::= S
+S_that ::= that S # mark head
+
+S_direct ::= colon S # punct head
+S_direct ::= colon quote S quote # punct punct head punct
+S_front  ::= S comma # head punct
+S_front  ::= quote S quote comma # punct head punct punct
+
+Comp ::= AP
+Comp ::= NP
+Comp ::= Adv
+Comp ::= NP_obl
+
+-- VP with to
+VP_to ::= to VP # mark head
+
+-- oblique noun phrase
+NP_obl ::= Prep NP # case head
+
+-- noun phrases
+NP ::= PN
+NP ::= CN
+NP ::= Pron
+NP ::= Det CN # det head
+NP ::= NP NP_obl # head nmod
+NP ::= Predet NP # det:predet head
+NP ::= NP_poss CN # nmod:poss head
+NP ::= Num NP # nummod head
+NP ::= N PN # head flat
+NP ::= NP SC # head acl
+NP ::= NP S_sub # head acl
+NP ::= NP RS # head acl:relcl
+
+NP_poss ::= NP 's # head case
+NP_poss ::= Pron_poss
+
+-- some very special rules ---
+NP ::= Det CN_quoted # det head
+CN_quoted ::= quote CN quote # punct head punct
+NP ::= NP NP_appos # head appos
+NP_appos ::= Punct_appos NP # punct head
+
+Num ::= Card
+Num ::= Digits
+
+CN ::= N
+CN ::= AP CN # amod head
+CN ::= CN AP_post # head amod
+
+PN ::= PN_one PN # head flat
+
+N ::= N_one N # compound head
+
+Card ::= Card_one Card # compound head
+
+IP ::= IDet CN # det head
+
+-- adjectival phrases
+AP ::= A
+AP ::= AdA A   # advmod head
+AP ::= AP NP_obl  # head nmod
+
+-- adverbials
+-- Adv ::= Prep NP # case head
+
+S_sub      ::= Subj S # mark head
+S_subcomma ::= S_sub comma # head punct
+
+-- coordination
+AP       ::= AP AP_conj         # head conj
+AP       ::= AP AP_comma APConj # head conj conj
+AP       ::= Conj_pre AP AP_conj         # cc:preconj head conj
+AP       ::= Conj_pre AP AP_comma APConj # cc:preconj head conj conj
+AP_conj  ::= Conj AP # cc head
+AP_comma ::= comma AP # punct head 
+
+NP       ::= NP NP_conj         # head conj
+NP       ::= NP NP_comma NPConj # head conj conj
+NP       ::= Conj_pre NP NP_conj         # cc:preconj head conj
+NP       ::= Conj_pre NP NP_comma NPConj # cc:preconj head conj conj
+NP_conj  ::= Conj NP # cc head
+NP_comma ::= comma NP # punct head 
+
+S       ::= S S_conj         # head conj
+S       ::= S S_comma SConj # head conj conj
+S       ::= Conj_pre S S_conj         # cc:preconj head conj
+S       ::= Conj_pre S S_comma SConj # cc:preconj head conj conj
+S_conj  ::= Conj S # cc head
+S_comma ::= comma S # punct head 
+
+-- POS tag configurations
+#pos AUX be do have will VV_aux
+#pos VERB V V2 V3 VS VV V2V V2C be_V
+#pos NOUN N N_one
+#pos ADJ A
+#pos PROPN PN PN_one
+#pos ADV Adv IAdv AdA Predet not
+#pos SCONJ Subj that if
+#pos CConj Conj Conj_pre
+#pos DET Det IDet
+#pos PRON Pron IP RP Pron_poss there it
+#pos PART to 's
+#pos PUNCT Punct Punct_appos comma quote colon
+#pos NUM Card Digits Card_one
+
+-- structural word lexicon: normal categories
+#token Prep at from in of on to with than
+#token IP who whom what
+#token IAdv when where why
+#token AdA very too genetically
+#token Det a an the every some many no
+#token Pron I me you he him she her it we us they them
+#token Subj if when although because as
+#token VV_aux can must
+#token Punct . ! ?
+#token Punct_appos , :
+#token Conj and or nor
+#token Conj_pre both either neither
+#token IDet which
+#token Pron_poss my your his her its our their
+#token RP that who
+#token Card five
+
+-- structural word lexicon: syncategorematic words
+#token be am is are was were be been
+#token be_V is are was were be been
+#token do do does did
+#token have have has had
+#token will will would
+#token not not
+#token that that
+#token to to
+#token it it
+#token there there
+#token comma ,
+#token colon :
+#token quote "
+#token 's 's
+
+-- content word lexicon
+#token PN John Mary
+#token V sleeps sleep slept walk walks walked sing sings sang sung move moves moved happen happens happened leave leaves left run runs ran
+#token V2 sees see saw seen love loves loved look looks give gives gave concern concerns concerned make makes made decide decided
+#token V2 know knows knew known
+#token V3 give gives gave
+#token V2C call calls called consider considers considered
+#token V2V see sees saw consider considers considered
+#token VS say says said believe believes
+#token VV want wants try tries
+#token A old good curious black best cold modified tired bad large larger
+#token N love sleep loves sleeps man men woman women cat cats doctor beer world elephant room hint hints reason reasons loser losers movie life
+#token N house president moon Earth girl girls
+#token Adv now today here before
+#token Predet probably only
+
+
+
+
