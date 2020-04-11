@@ -1,22 +1,71 @@
-S  ::= NP VP  ; nsubj head
+-- utterances and sentences
+Utt ::= S
+Utt ::= QS
+Utt ::= NP
+
+S  ::= Cl
+QS ::= QCl
+
+-- clauses
+Cl ::= NP VP  # nsubj head
+Cl ::= NP do not VP  # nsubj aux advmod head
+
+QCl ::= IP VP # nsubj head
+QCl ::= do NP VP # aux nsubj head
+QCl ::= IAdv do NP VP # advmod aux nsubj head
+
+
 VP ::= V
-VP ::= V2 NP  ; head obj
-VP ::= Cop A  ; cop head
+VP ::= V2 NP  # head obj
+VP ::= V2 ONP # head obl
+VP ::= VS that S # head mark ccomp
+VP ::= be Comp  # cop head
+
+Comp ::= AP
+Comp ::= NP
+Comp ::= Adv
+
+-- oblique noun phrase
+ONP ::= Prep NP # case head
+
+-- noun phrases
 NP ::= PN
 NP ::= CN
+NP ::= Det CN # det head
+
 CN ::= N
+CN ::= AP CN # amod head
+
+-- adjectival phrases
+AP ::= A
+
 
 #token PN John Mary
 #token V sleeps sleep
-#token V2 loves love
-#token A old good
-#token Cop is are
-#token N love sleep
+#token V2 sees see love loves look looks
+#token VS say says believe believes
+#token A old good curious
+#token N love sleep loves sleeps man men woman women cat cats
+#token Prep at from in on to with
+#token IP who whom what
+#token IAdv when where why
+#token Det a the every some many
 
-#pos AUX Cop
-#pos VERB V V2
+#token be is are
+#token do do does did
+#token not not
+
+#pos AUX be
+#pos VERB V V2 VS
 #pos NOUN N
 #pos ADJ A
 #pos PROPN PN
+#pos ADV Adv IAdv not
+#pos SSUBJ that
+#pos DET Det
+
+#pos AUX do
+#pos PRON IP
+
 
 

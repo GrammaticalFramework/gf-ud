@@ -190,7 +190,7 @@ prDepTree = unlines . map prOne . getTokens
     getTokens pt = case pt of
       PT _ pts -> concatMap getTokens pts
       PL (pos,tok) (i,lab,hd) -> [(show i,tok,pos,show hd,lab)]
-    prOne (i,t,p,h,d) = concat (intersperse "\t" [i,t,unc,p,unc,h,d,unc,unc])
+    prOne (i,t,p,h,d) = concat (intersperse "\t" [i,t,unc,p,unc,unc,h,d,unc,unc])
     unc = "_"
  
 
@@ -222,13 +222,13 @@ pGrammar = combine . addRules . map words . filter relevant . lines
     getRule s c wws = case wws of
       [cs,labs,[p]] -> Rule "" c cs labs (read p)
       [cs,labs] -> Rule "" c cs labs 1
-      [cs] -> Rule "" c cs [] 1
+      [cs] -> Rule "" c cs ("head":replicate (length cs - 1) "dep") 1
       _ -> error ("ill-formed rule: " ++ s)
 
     numRules rs = [Rule ("R" ++ show i) c cs labs p |
                     (i,Rule _ c cs labs p) <- zip [1..] rs]
 
-    splitSemic ws = case break (==";") ws of
+    splitSemic ws = case break (flip elem [";","#"]) ws of
       (cs,_:rest) -> cs : splitSemic rest
       ([],_) -> [] 
       (cs,_) -> [cs]
