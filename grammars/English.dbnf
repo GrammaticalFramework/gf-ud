@@ -1,9 +1,6 @@
--- texts and phrases
-Text ::= Phr Punct # head punct
-Text ::= Phr
-Phr  ::= Utt
-
 -- utterances and sentences
+Utt ::= Utt Punct # head punct
+
 Utt ::= S
 Utt ::= QS
 Utt ::= NP
@@ -29,8 +26,8 @@ Cl ::= NP VP  # nsubj head
 Cl ::= NP do not VP  # nsubj aux advmod head
 Cl ::= NP have VP  # nsubj aux head
 Cl ::= NP have not VP  # nsubj aux advmod head
-Cl ::= NP will VP  # nsubj aux head
-Cl ::= NP will not VP  # nsubj aux advmod head
+Cl ::= NP V_aux VP  # nsubj aux head
+Cl ::= NP V_aux not VP  # nsubj aux advmod head
 Cl ::= NP VP_pass # nsubj:pass head
 Cl ::= there be_V NP # expl head nsubj
 Cl ::= it be AP # expl cop head
@@ -45,8 +42,6 @@ QCl ::= IP VP # nsubj head
 QCl ::= do NP VP # aux nsubj head
 QCl ::= V_aux NP VP # aux nsubj head
 QCl ::= V_aux NP have VP # aux nsubj aux head
-QCl ::= will NP VP # aux nsubj head
-QCl ::= will NP have VP # aux nsubj aux head
 QCl ::= IAdv do NP VP # advmod aux nsubj head
 QCl ::= IAdv do NP not VP # advmod aux nsubj advmod head
 QCl ::= IAdv V_aux NP VP # advmod aux nsubj head
@@ -58,6 +53,7 @@ RCl ::= NP V2 # nsubj head
 
 
 VP ::= V
+VP ::= V_aux # # 0.001
 VP ::= V2 NP  # head obj
 VP ::= V2 NP_obl # head obl
 VP ::= V3 NP NP # head iobj obj
@@ -65,11 +61,11 @@ VP ::= V2C NP NP # head obj xcomp
 VP ::= V2C NP AP # head obj xcomp
 VP ::= VS S_that # head ccomp
 VP ::= VV VP_to # head xcomp
-VP ::= VV_aux VP # aux head
 VP ::= V2V NP VP # head obj xcomp
 VP ::= V2V NP VP_to # head obj xcomp
 VP ::= be Comp  # cop head
 VP ::= VP Adv # head advmod
+VP ::= VP NP_obl # head obl # 0.001
 VP ::= VS S_direct # head parataxis
 
 VP_pass ::= be V2 # aux:pass head
@@ -126,7 +122,7 @@ Num ::= Digits
 
 CN ::= N
 CN ::= AP CN # amod head
-CN ::= CN AP_post # head amod
+CN ::= CN AP # head amod # 0.01
 
 PN ::= PN_one PN # head flat
 
@@ -170,7 +166,7 @@ S_conj  ::= Conj S # cc head
 S_comma ::= comma S # punct head 
 
 -- POS tag configurations
-#pos AUX be do have will VV_aux
+#pos AUX be do have V_aux
 #pos VERB V V2 V3 VS VV V2V V2C be_V
 #pos NOUN N N_one
 #pos ADJ A
@@ -192,7 +188,7 @@ S_comma ::= comma S # punct head
 #token Det a an the every some many no
 #token Pron I me you he him she her it we us they them
 #token Subj if when although because as
-#token VV_aux can must
+#token V_aux can could must will would shall should
 #token Punct . ! ?
 #token Punct_appos , :
 #token Conj and or nor
@@ -207,7 +203,6 @@ S_comma ::= comma S # punct head
 #token be_V is are was were be been
 #token do do does did
 #token have have has had
-#token will will would
 #token not not
 #token that that
 #token to to

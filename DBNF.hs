@@ -30,7 +30,7 @@ processOne gr cat s = unlines $ [
   dtree
   ]
  where
-   parses = parse gr cat (words s)
+   parses = rankTrees gr (parse gr cat (words s))
    ptree = case parses of
      t:_ -> prParseTree t
      _ -> "NONE"
@@ -186,6 +186,10 @@ treeProbability grammar = tprob
     look f = maybe 1 id (M.lookup f probmap)
     probmap = M.fromList [(constr r, probab r) | r <- rules grammar]
 
+-- sort by descending probability
+rankTrees :: Grammar -> [ParseTree] -> [ParseTree]
+rankTrees gr = sortOn ((1-) . treeProbability gr)
+
 -- mark dependency labels and heads in leaf nodes
 -- simplified version of Kolachina and Ranta, LiLT 2016
 
@@ -279,11 +283,13 @@ pGrammar = combine . addRules . map words . filter relevant . lines
       _ -> error ("rule not parsed: " ++ unwords ws)
 
     getRule s c wws = case wws of
-      [cs,labs,[p]] -> Rule "" c cs labs (read p)
-      [cs,labs] -> Rule "" c cs labs 1
-      [cs] -> Rule "" c cs (if length cs == 1 then ["head"] else []) 1
+      [cs,labs,[p]] -> Rule "" c cs (fixLabs cs labs) (read p)
+      [cs,labs] -> Rule "" c cs (fixLabs cs labs) 1
+      [cs] -> Rule "" c cs (fixLabs cs []) 1
       _ -> error ("ill-formed rule: " ++ s)
 
+    fixLabs cs labs = if length cs == 1 then ["head"] else labs
+    
     numRules rs = [Rule ("R" ++ show i) c cs labs p |
                     (i,Rule _ c cs labs p) <- zip [1..] rs]
 
