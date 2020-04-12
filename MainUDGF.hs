@@ -2,7 +2,7 @@ module Main where
 
 import qualified UD2GF as U 
 import qualified GF2UD as G
-import qualified RuleBased as R
+import qualified DBNF as D
 import UDAnnotations
 import UDOptions
 import UDConcepts
@@ -22,7 +22,7 @@ main = do
   xx <- getArgs
   case xx of
 
-    "dbnf":grammarfile:startcat:_ -> R.processRuleBased grammarfile startcat
+    "dbnf":grammarfile:startcat:_ -> D.processRuleBased grammarfile startcat
 
     "conll2pdf":_ -> getContents >>= visualizeUDSentences . parseUDText
   

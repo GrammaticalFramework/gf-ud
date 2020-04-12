@@ -1,4 +1,4 @@
-module RuleBased where
+module DBNF where
 
 import qualified Data.Set as S
 import qualified Data.Map.Strict as M
@@ -18,6 +18,7 @@ main = do
 
 processRuleBased grfile startcat = do
   gr <- readFile grfile >>= return . pGrammar
+  putStrLn $ checkGrammar gr
   interact (unlines . map (processOne gr startcat) . lines)
       
 usage = "usage: RuleBased <grammar> <startcat>"
@@ -280,7 +281,7 @@ pGrammar = combine . addRules . map words . filter relevant . lines
     getRule s c wws = case wws of
       [cs,labs,[p]] -> Rule "" c cs labs (read p)
       [cs,labs] -> Rule "" c cs labs 1
-      [cs] -> Rule "" c cs ("head":replicate (length cs - 1) "dep") 1
+      [cs] -> Rule "" c cs (if length cs == 1 then ["head"] else []) 1
       _ -> error ("ill-formed rule: " ++ s)
 
     numRules rs = [Rule ("R" ++ show i) c cs labs p |
@@ -292,4 +293,12 @@ pGrammar = combine . addRules . map words . filter relevant . lines
       (cs,_:rest) -> cs : splitSemic rest
       ([],_) -> [] 
       (cs,_) -> [cs]
- 
+
+checkGrammar :: Grammar -> String
+checkGrammar g = case checks g of
+  [] -> []
+  cs -> error $ unlines $ "Errors in grammar:" : cs
+ where
+   checks g =
+     ["invalid labels in " ++ show r | r <- rules g, length (rhs r) /= length (labels r) || noUniqueHead r]
+   noUniqueHead r = length (lhs r) > 0 && length (filter (=="head") (labels r)) /= 1
