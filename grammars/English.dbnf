@@ -9,51 +9,46 @@ Utt ::= IP
 Utt ::= IAdv
 Utt ::= Num
 
-S  ::= Cl
-QS ::= QCl
-RS ::= RCl
-
-S  ::= S_subcomma S # advcl head
-S  ::= S S_sub # head advcl
-
 -- embedded sentences
 SC ::= S_that
 SC ::= QS
 SC ::= VP_to
 
--- clauses
-Cl ::= NP VP  # nsubj head
-Cl ::= NP do not VP  # nsubj aux advmod head
-Cl ::= NP have VP  # nsubj aux head
-Cl ::= NP have not VP  # nsubj aux advmod head
-Cl ::= NP V_aux VP  # nsubj aux head
-Cl ::= NP V_aux not VP  # nsubj aux advmod head
-Cl ::= NP VP_pass # nsubj:pass head
-Cl ::= there be_V NP # expl head nsubj
-Cl ::= it be AP # expl cop head
-Cl ::= NP be_V S_that # nsubj head ccomp
-Cl ::= NP be_V VP_to # nsubj head xcomp
-Cl ::= SC VP # csubj head
-Cl ::= SC do not VP # csubj aux advmod head
-Cl ::= SC VP_pass # csubj:pass head
-Cl ::= S_front NP VS # parataxis nsubj head
+-- sentences
+S ::= NP VP  # nsubj head
+S ::= NP do neg VP  # nsubj aux advmod head
+S ::= NP have VP  # nsubj aux head
+S ::= NP have neg VP  # nsubj aux advmod head
+S ::= NP aux VP  # nsubj aux head
+S ::= NP aux neg VP  # nsubj aux advmod head
+S ::= NP VP_pass # nsubj:pass head
+S ::= there be_V NP # expl head nsubj
+S ::= it be AP # expl cop head
+S ::= NP be_V S_that # nsubj head ccomp
+S ::= NP be_V VP_to # nsubj head xcomp
+S ::= SC VP # csubj head
+S ::= SC do neg VP # csubj aux advmod head
+S ::= SC VP_pass # csubj:pass head
+S ::= S_front NP VS # parataxis nsubj head
 
-QCl ::= IP VP # nsubj head
-QCl ::= do NP VP # aux nsubj head
-QCl ::= V_aux NP VP # aux nsubj head
-QCl ::= V_aux NP have VP # aux nsubj aux head
-QCl ::= IAdv do NP VP # advmod aux nsubj head
-QCl ::= IAdv do NP not VP # advmod aux nsubj advmod head
-QCl ::= IAdv V_aux NP VP # advmod aux nsubj head
-QCl ::= IAdv V_aux NP not VP # advmod aux nsubj advmod head
+QS ::= IP VP # nsubj head
+QS ::= do NP VP # aux nsubj head
+QS ::= aux NP VP # aux nsubj head
+QS ::= aux NP have VP # aux nsubj aux head
+QS ::= IAdv do NP VP # advmod aux nsubj head
+QS ::= IAdv do NP neg VP # advmod aux nsubj advmod head
+QS ::= IAdv aux NP VP # advmod aux nsubj head
+QS ::= IAdv aux NP neg VP # advmod aux nsubj advmod head
 
-RCl ::= RP VP # nsubj head
-RCl ::= RP NP V2 # obj nsubj head
-RCl ::= NP V2 # nsubj head
+RS ::= RP VP # nsubj head
+RS ::= RP NP V2 # obj nsubj head
+RS ::= NP V2 # nsubj head
 
+S  ::= S_subcomma S # advcl head
+S  ::= S S_sub # head advcl
 
 VP ::= V
-VP ::= V_aux # # 0.001
+VP ::= aux # # 0.001
 VP ::= V2 NP  # head obj
 VP ::= V2 NP_obl # head obl
 VP ::= V3 NP NP # head iobj obj
@@ -69,9 +64,9 @@ VP ::= VP NP_obl # head obl # 0.001
 VP ::= VS S_direct # head parataxis
 
 VP_pass ::= be V2 # aux:pass head
-VP_pass ::= be not V2 # aux:pass advmod head
+VP_pass ::= be neg V2 # aux:pass advmod head
 VP_pass ::= have be V2 # aux aux:pass head
-VP_pass ::= have not be V2 # aux advmod aux:pass head
+VP_pass ::= have neg be V2 # aux advmod aux:pass head
 VP_pass ::= VP_pass Adv # head advmod
 VP_pass ::= VP_pass NP_obl # head nmod
 
@@ -166,12 +161,12 @@ S_conj  ::= Conj S # cc head
 S_comma ::= comma S # punct head 
 
 -- POS tag configurations
-#pos AUX be do have V_aux
+#pos AUX be do have aux
 #pos VERB V V2 V3 VS VV V2V V2C be_V
 #pos NOUN N N_one
 #pos ADJ A
 #pos PROPN PN PN_one
-#pos ADV Adv IAdv AdA Predet not
+#pos ADV Adv IAdv AdA Predet neg
 #pos SCONJ Subj that if
 #pos CConj Conj Conj_pre
 #pos DET Det IDet
@@ -188,7 +183,7 @@ S_comma ::= comma S # punct head
 #token Det a an the every some many no
 #token Pron I me you he him she her it we us they them
 #token Subj if when although because as
-#token V_aux can could must will would shall should
+#token aux can could must will would shall should
 #token Punct . ! ?
 #token Punct_appos , :
 #token Conj and or nor
@@ -203,7 +198,7 @@ S_comma ::= comma S # punct head
 #token be_V is are was were be been
 #token do do does did
 #token have have has had
-#token not not
+#token neg not
 #token that that
 #token to to
 #token it it
