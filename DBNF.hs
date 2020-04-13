@@ -73,6 +73,9 @@ unPOS t = case break (==':') (reverse t) of
   (p@(_:_),_:s) | head p == '>' && last p == '<' -> (reverse s, Just (reverse (tail (init p))))
   _ -> (t,Nothing)
 
+-- lower weight to ad-hoc words
+tokenWeight :: Token -> Double
+tokenWeight t = maybe 0.5 (const 0.2) $ snd $ unPOS t
 
 emptyGrammar = Grammar [] M.empty M.empty M.empty
 
@@ -134,8 +137,8 @@ passiveEdges chart = [
     ]
 
 data ParseTree =
-    PT (Symb,Symb,[Symb]) [ParseTree]   -- (cat,constr,labels) subtrees
-  | PL (Symb,Token) (Int,Symb,Int) -- (cat,terminal) (position, label, head)
+    PT (Symb,Symb,[Symb],Double) [ParseTree]   -- (cat,constr,labels,weight) subtrees
+  | PL (Symb,Token) (Int,Symb,Int,Double) -- (cat,terminal) (position, label, head, weight)
  deriving Show
 
 buildTrees :: Grammar -> [Token] -> [Passive] -> [(Passive,[ParseTree])]
@@ -147,12 +150,12 @@ buildTrees grammar input passives = edgeTrees
     edgeTrees = [(pe, treesFor pe) | pe <- passives]
 
     treesFor (i,j,cat) = [
-      PT (cat, constr rule,[]) trees |
+      PT (cat, constr rule,[],weight rule) trees |
         rule <- rules grammar,
         lhs rule == cat,  ---- TODO: rule <- rules grammar cat
         trees <- children (rhs rule) i j
       ] ++ [
-      PL (cat,fst (unPOS tok)) (j,"dep",0) | -- default label and head
+      PL (cat,fst (unPOS tok)) (j,"dep",0, tokenWeight tok) | -- default label and head
         i == j-1,
         let tok = input !! i,
         elem cat (terminal grammar tok)
@@ -181,10 +184,8 @@ treeWeight :: Grammar -> ParseTree -> Double
 treeWeight grammar = tprob
   where
     tprob t = case t of
-      PT (_,f,_) ts -> product (look f : map tprob ts)
-      _ -> 1
-    look f = maybe 0.5 id (M.lookup f probmap)
-    probmap = M.fromList [(constr r, weight r) | r <- rules grammar]
+      PT (_,f,_,w) ts -> product (w : map tprob ts)
+      PL _ (_,_,_,w) -> w
 
 -- sort by descending weight
 rankTrees :: Grammar -> [ParseTree] -> [ParseTree]
@@ -199,13 +200,13 @@ markDependencies grammar =
     annotate
   where
     annotate pt = case pt of
-      PT (cat,fun,_) pts -> PT (cat,fun,lookf fun) (map annotate pts)
+      PT (cat,fun,_,w) pts -> PT (cat,fun,lookf fun,w) (map annotate pts)
       PL (cat,tok) info -> PL (lookc cat,tok) info
       
     mark (lab,hd) pt = case pt of
-      PL tok (i,_,_) -> PL tok (i,lab,hd)
-      PT (cat,fun,labs) pts ->
-        PT (cat,fun,labs) [
+      PL tok (i,_,_,w) -> PL tok (i,lab,hd,w)
+      PT (cat,fun,labs,w) pts ->
+        PT (cat,fun,labs,w) [
           markIf (lab,hd) (l,h) l t
             | let tls = zip pts labs,
               let h = headTok tls,
@@ -215,8 +216,8 @@ markDependencies grammar =
       "head" -> mark labhd t
       _ -> mark lh t
     headTok tls = case filter ((=="head") . snd) tls of
-      (PL _ (i,_,_),_):_ -> i
-      (PT (_,_,ls) ts,_):_ -> headTok (zip ts ls)
+      (PL _ (i,_,_,_),_):_ -> i
+      (PT (_,_,ls,_) ts,_):_ -> headTok (zip ts ls)
 
     lookf fun = maybe ("head" : repeat "dep") id (M.lookup fun labelMap)
     labelMap = M.fromList [(constr r, labels r) | r <- rules grammar]
@@ -229,7 +230,7 @@ markDependencies grammar =
 
 prParseTree :: ParseTree -> String
 prParseTree pt = case pt of
-  PT (cat,fun,_) pts -> parenth (unwords (cat : map prParseTree pts))
+  PT (cat,fun,_,_) pts -> parenth (unwords (cat : map prParseTree pts))
   PL (cat,tok) _ -> parenth (unwords [cat,tok])
  where
    parenth s = "(" ++ s ++ ")"
@@ -239,7 +240,7 @@ prDepTree = unlines . map prOne . getTokens
   where
     getTokens pt = case pt of
       PT _ pts -> concatMap getTokens pts
-      PL (pos,tok) (i,lab,hd) -> [(show i,tok,pos,show hd,lab)]
+      PL (pos,tok) (i,lab,hd,_) -> [(show i,tok,pos,show hd,lab)]
     prOne (i,t,p,h,d) = concat (intersperse "\t" [i,t,unc,p,unc,unc,h,d,unc,unc])
     unc = "_"
  
