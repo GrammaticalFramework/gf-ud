@@ -49,7 +49,7 @@ data Rule = Rule {
   lhs :: Symb,
   rhs :: [Symb],
   labels :: [Symb],
-  probab :: Double 
+  weight :: Double 
   }
  deriving Show
 
@@ -175,20 +175,20 @@ parse grammar cat input = maybe [] id $
   lookup (0, length input, cat) $
     buildTrees grammar input (passiveEdges (buildChart grammar input))
 
--- context-free probability of a tree
+-- context-free weight ("probability") of a tree
 
-treeProbability :: Grammar -> ParseTree -> Double
-treeProbability grammar = tprob
+treeWeight :: Grammar -> ParseTree -> Double
+treeWeight grammar = tprob
   where
     tprob t = case t of
       PT (_,f,_) ts -> product (look f : map tprob ts)
       _ -> 1
-    look f = maybe 1 id (M.lookup f probmap)
-    probmap = M.fromList [(constr r, probab r) | r <- rules grammar]
+    look f = maybe 0.5 id (M.lookup f probmap)
+    probmap = M.fromList [(constr r, weight r) | r <- rules grammar]
 
--- sort by descending probability
+-- sort by descending weight
 rankTrees :: Grammar -> [ParseTree] -> [ParseTree]
-rankTrees gr = sortOn ((1-) . treeProbability gr)
+rankTrees gr = sortOn ((1-) . treeWeight gr)
 
 -- mark dependency labels and heads in leaf nodes
 -- simplified version of Kolachina and Ranta, LiLT 2016
@@ -284,8 +284,8 @@ pGrammar = combine . addRules . map words . filter relevant . lines
 
     getRule s c wws = case wws of
       [cs,labs,[p]] -> Rule "" c cs (fixLabs cs labs) (read p)
-      [cs,labs] -> Rule "" c cs (fixLabs cs labs) 1
-      [cs] -> Rule "" c cs (fixLabs cs []) 1
+      [cs,labs] -> Rule "" c cs (fixLabs cs labs) 0.5
+      [cs] -> Rule "" c cs (fixLabs cs []) 0.5
       _ -> error ("ill-formed rule: " ++ s)
 
     fixLabs cs labs = if length cs == 1 then ["head"] else labs
