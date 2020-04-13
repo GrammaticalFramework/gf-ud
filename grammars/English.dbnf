@@ -17,86 +17,65 @@ SC ::= QS
 SC ::= VP_to
 
 -- sentences
-S ::= NP VP  # nsubj head
+S ::= NP VP # nsubj head
 S ::= NP do neg VP  # nsubj aux advmod head
-S ::= NP have VP  # nsubj aux head
-S ::= NP have neg VP  # nsubj aux advmod head
-S ::= NP aux VP  # nsubj aux head
-S ::= NP aux neg VP  # nsubj aux advmod head
+S ::= NP have neg? VP  # nsubj aux advmod head
+S ::= NP aux neg? VP  # nsubj aux advmod head
 
-S ::= NP be Comp # nsubj cop head
-S ::= NP be neg Comp # nsubj cop advmod head
-S ::= NP be Comp # nsubj cop head
-S ::= NP have be Comp # nsubj aux cop head
-S ::= NP have neg be Comp # nsubj aux advmod cop head
-S ::= NP aux be Comp # nsubj aux cop head
-S ::= NP aux not be Comp # nsubj aux advmod cop head
+S ::= NP be neg? Comp # nsubj cop advmod head
+S ::= NP have neg? be Comp # nsubj aux advmod cop head
+S ::= NP aux neg? be Comp # nsubj aux advmod cop head
 
-S ::= NP be VP_pass # nsubj:pass aux:pass head
-S ::= NP be neg VP_pass # nsubj:pass aux:pass advmod head
-S ::= NP have be VP_pass # nsubj:pass aux aux:pass head
-S ::= NP have neg be VP_pass # nsubj:pass aux advmod aux:pass head
-S ::= NP aux be VP_pass # nsubj:pass aux aux:pass head
-S ::= NP aux neg be VP_pass # nsubj:pass aux advmod aux:pass head
+S ::= NP be neg? VP_pass # nsubj:pass aux:pass advmod head
+S ::= NP have neg? be VP_pass # nsubj:pass aux advmod aux:pass head
+S ::= NP aux neg? be VP_pass # nsubj:pass aux advmod aux:pass head
 
-S ::= there be_V NP # expl head nsubj
-S ::= it be AP # expl cop head
-S ::= NP be_V S_that # nsubj head ccomp
-S ::= NP be_V VP_to # nsubj head ccomp
+S ::= there be_V neg? NP # expl head advmod nsubj
+S ::= it be neg? AP # expl cop advmod head
+
+S ::= NP be_V neg? S_that # nsubj head advmod ccomp
+S ::= NP be_V neg? VP_to # nsubj head advmod ccomp
+
 S ::= SC VP # csubj head
 S ::= SC do neg VP # csubj aux advmod head
-S ::= SC be VP_pass # csubj:pass aux:pass head
-S ::= SC be neg VP_pass # csubj:pass aux:pass advmod head
-S ::= SC have be VP_pass # csubj:pass aux aux:pass head
-S ::= SC have neg be VP_pass # csubj:pass aux advmod aux:pass head
+S ::= SC be neg? VP_pass # csubj:pass aux:pass advmod head
+S ::= SC have neg? be VP_pass # csubj:pass aux advmod aux:pass head
 S ::= S_front NP VS # parataxis nsubj head
 
 QS ::= do NP VP # aux nsubj head
-QS ::= aux NP VP # aux nsubj head
-QS ::= aux NP have VP # aux nsubj aux head
-QS ::= be NP Comp # cop nsubj head
-QS ::= be NP neg Comp # cop nsubj advmod head
+QS ::= aux NP neg? have? VP # aux nsubj advmod aux head
+QS ::= be NP neg? Comp # cop nsubj advmod head
 QS ::= be neg NP Comp # cop nsubj advmod head
 
-QS ::= be NP VP_pass # aux:pass nsubj:pass head
-QS ::= be NP neg VP_pass # aux:pass nsubj:pass advmod head
-QS ::= have NP be VP_pass # aux nsubj:pass aux:pass head
-QS ::= have NP neg be VP_pass # aux nsubj:pass advmod aux:pass head
-QS ::= aux NP be VP_pass # aux nsubj:pass aux:pass head
-QS ::= aux NP neg be VP_pass # aux nsubj:pass advmod aux:pass head
+QS ::= be NP neg? VP_pass # aux:pass nsubj:pass advmod head
+QS ::= have NP neg? be VP_pass # aux nsubj:pass advmod aux:pass head
+QS ::= aux NP neg? be VP_pass # aux nsubj:pass advmod aux:pass head
 
 QS ::= IP VP # nsubj head
-QS ::= IP neg VP # nsubj advmod head
-QS ::= IP be Comp # nsubj cop head
-QS ::= IP be neg Comp # nsubj cop advmod head
-QS ::= IP do NP VPSlash # obj aux nsubj head
-QS ::= IP do NP neg VPSlash # obj aux nsubj advmod head
+QS ::= IP do neg VP # nsubj aux advmod head
+QS ::= IP aux neg? VP # nsubj aux advmod head
+QS ::= IP be neg? Comp # nsubj cop advmod head
+QS ::= IP do NP neg? VPSlash # obj aux nsubj advmod head
 
-QS ::= IP be VP_pass # nsubj:pass aux:pass head
-QS ::= IP be neg VP_pass # nsubj:pass aux:pass advmod head
-QS ::= IP have be VP_pass # nsubj:pass aux aux:pass head
-QS ::= IP have neg be VP_pass # nsubj:pass aux advmod aux:pass head
-QS ::= IP aux be VP_pass # nsubj:pass aux aux:pass head
-QS ::= IP aux neg be VP_pass # nsubj:pass aux advmod aux:pass head
+QS ::= IP be neg? VP_pass # nsubj:pass aux:pass advmod head
+QS ::= IP have neg? be VP_pass # nsubj:pass aux advmod aux:pass head
+QS ::= IP aux neg? be VP_pass # nsubj:pass aux advmod aux:pass head
 
-QS ::= IAdv do NP VP # advmod aux nsubj head
-QS ::= IAdv do NP neg VP # advmod aux nsubj advmod head
-QS ::= IAdv aux NP VP # advmod aux nsubj head
-QS ::= IAdv aux NP neg VP # advmod aux nsubj advmod head
-QS ::= IAdv be NP Comp # advmod cop nsubj head
-QS ::= IAdv be NP neg Comp # advmod cop nsubj advmod head
+QS ::= IAdv do NP neg? VP # advmod aux nsubj advmod head
+QS ::= IAdv aux NP neg? VP # advmod aux nsubj advmod head
+QS ::= IAdv be NP neg? Comp # advmod cop nsubj advmod head
 QS ::= IAdv be neg NP Comp # advmod cop nsubj advmod head
 
 RS ::= RP VP # nsubj head
 RS ::= RP do neg VP # nsubj aux advmod head
-RS ::= RP be Comp # nsubj cop head
-RS ::= RP have be Comp # nsubj aux cop head
-RS ::= RP have VP # nsubj aux head
-RS ::= RP have neg VP # nsubj aux advmod head
+RS ::= RP have neg? VP # nsubj aux advmod head
+RS ::= RP be neg? Comp # nsubj cop advmod head
+RS ::= RP have neg? be Comp # nsubj aux advmod cop head
+
 RS ::= RP NP VPSlash # obj nsubj head
-RS ::= RP NP neg VPSlash # obj nsubj advmod head
+RS ::= RP NP do neg VPSlash # obj nsubj aux advmod head
 RS ::= NP VPSlash # nsubj head
-RS ::= NP neg VPSlash # nsubj advmod head
+RS ::= NP do neg VPSlash # nsubj aux advmod head
 
 S  ::= S_subcomma S # advcl head
 S  ::= S S_sub # head advcl
@@ -124,8 +103,7 @@ VPSlash ::= V2
 VPSlash ::= VPSlash NP_obl  # head obl # 0.001
 VPSlash ::= VP Prep # head case # 0.001
 
-S_that ::= S
-S_that ::= that S # mark head
+S_that ::= that? S # mark head
 
 S_direct ::= colon S # punct head
 S_direct ::= colon quote S quote # punct punct head punct
@@ -138,19 +116,16 @@ Comp ::= Adv
 Comp ::= NP_obl
 
 -- VP with to
-VP_to ::= to VP # mark head
-VP_to ::= to be Comp # mark cop head
-VP_to ::= neg to VP # advmod mark head
-VP_to ::= beg to be Comp # advmod mark cop head
+VP_to ::= neg? to VP # advmod mark head
+VP_to ::= beg? to be Comp # advmod mark cop head
 
 -- oblique noun phrase
 NP_obl ::= Prep NP # case head
 
 -- noun phrases
 NP ::= PN
-NP ::= CN
 NP ::= Pron
-NP ::= Det CN # det head
+NP ::= Det? CN # det head
 NP ::= NP NP_obl # head nmod
 NP ::= Predet NP # det:predet head
 NP ::= NP_poss CN # nmod:poss head
@@ -164,10 +139,10 @@ NP_poss ::= NP 's # head case
 NP_poss ::= Pron_poss
 
 -- some very special rules ---
-NP ::= Det CN_quoted # det head
+NP        ::= Det CN_quoted # det head
 CN_quoted ::= quote CN quote # punct head punct
-NP ::= NP NP_appos # head appos
-NP_appos ::= Punct_appos NP # punct head
+NP        ::= NP NP_appos # head appos
+NP_appos  ::= Punct_appos NP # punct head
 
 Num ::= Card
 Num ::= Digits

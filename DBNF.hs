@@ -18,6 +18,7 @@ main = do
 
 processRuleBased grfile startcat = do
   gr <- readFile grfile >>= return . pGrammar
+  -- putStrLn $ unlines $ map show (rules gr) ---- debug
   putStrLn $ checkGrammar gr
   interact (unlines . map (processOne gr startcat) . lines)
       
@@ -280,8 +281,28 @@ pGrammar = combine . addRules . map words . filter relevant . lines
 
       "#pos":c:ww   -> (rs, ts,[(w,c) | w <- ww] ++ cs)
       c:"::=":ww -> (
-        getRule (unwords ws) c (splitSemic ww) : rs, ts,cs)
+        expandRule (getRule (unwords ws) c (splitSemic ww)) ++ rs, ts,cs)
       _ -> error ("rule not parsed: " ++ unwords ws)
+
+    expandRule r = [
+      Rule (constr r) (lhs r) cs labs (weight r) |
+        (cs,labs) <- combinations (zip (map optionalize (rhs r)) (labels r))
+      ]
+
+   -- optional category with ?, e.g. neg? -> Left neg
+    optionalize c = case c of
+      _ | last c == '?' -> Left (init c)
+      _ -> Right c
+
+    combinations :: [(Either Symb Symb,Symb)] -> [([Symb],[Symb])]
+    combinations cls = [
+        unzip (concat cl) |
+          let combs (c,l) = case c of
+                Left  c -> [[(c,l)], []] 
+                Right c -> [[(c,l)]],
+          let mcls = map combs cls,
+          cl  <- sequence mcls
+        ]
 
     getRule s c wws = case wws of
       [cs,labs,[p]] -> Rule "" c cs (fixLabs cs labs) (read p)
