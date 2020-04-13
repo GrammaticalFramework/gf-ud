@@ -21,6 +21,13 @@ S ::= NP have VP  # nsubj aux head
 S ::= NP have neg VP  # nsubj aux advmod head
 S ::= NP aux VP  # nsubj aux head
 S ::= NP aux neg VP  # nsubj aux advmod head
+S ::= NP be Comp # nsubj cop head
+S ::= NP be neg Comp # nsubj cop advmod head
+S ::= NP be Comp # nsubj cop head
+S ::= NP have be Comp # nsubj aux cop head
+S ::= NP have neg be Comp # nsubj aux advmod cop head
+S ::= NP aux be Comp # nsubj aux cop head
+S ::= NP aux not be Comp # nsubj aux advmod cop head
 S ::= NP VP_pass # nsubj:pass head
 S ::= there be_V NP # expl head nsubj
 S ::= it be AP # expl cop head
@@ -31,18 +38,35 @@ S ::= SC do neg VP # csubj aux advmod head
 S ::= SC VP_pass # csubj:pass head
 S ::= S_front NP VS # parataxis nsubj head
 
-QS ::= IP VP # nsubj head
 QS ::= do NP VP # aux nsubj head
 QS ::= aux NP VP # aux nsubj head
 QS ::= aux NP have VP # aux nsubj aux head
+QS ::= be NP Comp # cop nsubj head
+QS ::= be NP neg Comp # cop nsubj advmod head
+QS ::= be neg NP Comp # cop nsubj advmod head
+QS ::= IP VP # nsubj head
+QS ::= IP neg VP # nsubj advmod head
+QS ::= IP be Comp # nsubj cop head
+QS ::= IP do NP VPSlash # obj aux nsubj head
+QS ::= IP do NP neg VPSlash # obj aux nsubj advmod head
 QS ::= IAdv do NP VP # advmod aux nsubj head
 QS ::= IAdv do NP neg VP # advmod aux nsubj advmod head
 QS ::= IAdv aux NP VP # advmod aux nsubj head
 QS ::= IAdv aux NP neg VP # advmod aux nsubj advmod head
+QS ::= IAdv be NP Comp # advmod cop nsubj head
+QS ::= IAdv be NP neg Comp # advmod cop nsubj advmod head
+QS ::= IAdv be neg NP Comp # advmod cop nsubj advmod head
 
 RS ::= RP VP # nsubj head
-RS ::= RP NP V2 # obj nsubj head
-RS ::= NP V2 # nsubj head
+RS ::= RP do neg VP # nsubj aux advmod head
+RS ::= RP be Comp # nsubj cop head
+RS ::= RP have be Comp # nsubj aux cop head
+RS ::= RP have VP # nsubj aux head
+RS ::= RP have neg VP # nsubj aux advmod head
+RS ::= RP NP VPSlash # obj nsubj head
+RS ::= RP NP neg VPSlash # obj nsubj advmod head
+RS ::= NP VPSlash # nsubj head
+RS ::= NP neg VPSlash # nsubj advmod head
 
 S  ::= S_subcomma S # advcl head
 S  ::= S S_sub # head advcl
@@ -58,17 +82,20 @@ VP ::= VS S_that # head ccomp
 VP ::= VV VP_to # head xcomp
 VP ::= V2V NP VP # head obj xcomp
 VP ::= V2V NP VP_to # head obj xcomp
-VP ::= be Comp  # cop head
 VP ::= VP Adv # head advmod
 VP ::= VP NP_obl # head obl # 0.001
 VP ::= VS S_direct # head parataxis
 
-VP_pass ::= be V2 # aux:pass head
-VP_pass ::= be neg V2 # aux:pass advmod head
-VP_pass ::= have be V2 # aux aux:pass head
-VP_pass ::= have neg be V2 # aux advmod aux:pass head
+VP_pass ::= be VPSlash # aux:pass head
+VP_pass ::= be neg VPSlash # aux:pass advmod head
+VP_pass ::= have be VPSlash # aux aux:pass head
+VP_pass ::= have neg be VPSlash # aux advmod aux:pass head
 VP_pass ::= VP_pass Adv # head advmod
 VP_pass ::= VP_pass NP_obl # head nmod
+
+VPSlash ::= V2
+VPSlash ::= VPSlash NP_obl  # head obl # 0.001
+VPSlash ::= VP Prep # head case # 0.001
 
 S_that ::= S
 S_that ::= that S # mark head
@@ -85,6 +112,9 @@ Comp ::= NP_obl
 
 -- VP with to
 VP_to ::= to VP # mark head
+VP_to ::= to be Comp # mark cop head
+VP_to ::= neg to VP # advmod mark head
+VP_to ::= beg to be Comp # advmod mark cop head
 
 -- oblique noun phrase
 NP_obl ::= Prep NP # case head
