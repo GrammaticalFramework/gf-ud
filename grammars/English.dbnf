@@ -1,5 +1,7 @@
 -- utterances and sentences
-Utt ::= Utt Punct # head punct
+Utt ::= Utt Punct        # head punct
+Utt ::= Conj Utt         # cc head
+Utt ::= NP_obl comma Utt # cc punct head
 
 Utt ::= S
 Utt ::= QS
@@ -21,6 +23,7 @@ S ::= NP have VP  # nsubj aux head
 S ::= NP have neg VP  # nsubj aux advmod head
 S ::= NP aux VP  # nsubj aux head
 S ::= NP aux neg VP  # nsubj aux advmod head
+
 S ::= NP be Comp # nsubj cop head
 S ::= NP be neg Comp # nsubj cop advmod head
 S ::= NP be Comp # nsubj cop head
@@ -28,14 +31,24 @@ S ::= NP have be Comp # nsubj aux cop head
 S ::= NP have neg be Comp # nsubj aux advmod cop head
 S ::= NP aux be Comp # nsubj aux cop head
 S ::= NP aux not be Comp # nsubj aux advmod cop head
-S ::= NP VP_pass # nsubj:pass head
+
+S ::= NP be VP_pass # nsubj:pass aux:pass head
+S ::= NP be neg VP_pass # nsubj:pass aux:pass advmod head
+S ::= NP have be VP_pass # nsubj:pass aux aux:pass head
+S ::= NP have neg be VP_pass # nsubj:pass aux advmod aux:pass head
+S ::= NP aux be VP_pass # nsubj:pass aux aux:pass head
+S ::= NP aux neg be VP_pass # nsubj:pass aux advmod aux:pass head
+
 S ::= there be_V NP # expl head nsubj
 S ::= it be AP # expl cop head
 S ::= NP be_V S_that # nsubj head ccomp
 S ::= NP be_V VP_to # nsubj head ccomp
 S ::= SC VP # csubj head
 S ::= SC do neg VP # csubj aux advmod head
-S ::= SC VP_pass # csubj:pass head
+S ::= SC be VP_pass # csubj:pass aux:pass head
+S ::= SC be neg VP_pass # csubj:pass aux:pass advmod head
+S ::= SC have be VP_pass # csubj:pass aux aux:pass head
+S ::= SC have neg be VP_pass # csubj:pass aux advmod aux:pass head
 S ::= S_front NP VS # parataxis nsubj head
 
 QS ::= do NP VP # aux nsubj head
@@ -44,11 +57,28 @@ QS ::= aux NP have VP # aux nsubj aux head
 QS ::= be NP Comp # cop nsubj head
 QS ::= be NP neg Comp # cop nsubj advmod head
 QS ::= be neg NP Comp # cop nsubj advmod head
+
+QS ::= be NP VP_pass # aux:pass nsubj:pass head
+QS ::= be NP neg VP_pass # aux:pass nsubj:pass advmod head
+QS ::= have NP be VP_pass # aux nsubj:pass aux:pass head
+QS ::= have NP neg be VP_pass # aux nsubj:pass advmod aux:pass head
+QS ::= aux NP be VP_pass # aux nsubj:pass aux:pass head
+QS ::= aux NP neg be VP_pass # aux nsubj:pass advmod aux:pass head
+
 QS ::= IP VP # nsubj head
 QS ::= IP neg VP # nsubj advmod head
 QS ::= IP be Comp # nsubj cop head
+QS ::= IP be neg Comp # nsubj cop advmod head
 QS ::= IP do NP VPSlash # obj aux nsubj head
 QS ::= IP do NP neg VPSlash # obj aux nsubj advmod head
+
+QS ::= IP be VP_pass # nsubj:pass aux:pass head
+QS ::= IP be neg VP_pass # nsubj:pass aux:pass advmod head
+QS ::= IP have be VP_pass # nsubj:pass aux aux:pass head
+QS ::= IP have neg be VP_pass # nsubj:pass aux advmod aux:pass head
+QS ::= IP aux be VP_pass # nsubj:pass aux aux:pass head
+QS ::= IP aux neg be VP_pass # nsubj:pass aux advmod aux:pass head
+
 QS ::= IAdv do NP VP # advmod aux nsubj head
 QS ::= IAdv do NP neg VP # advmod aux nsubj advmod head
 QS ::= IAdv aux NP VP # advmod aux nsubj head
@@ -86,10 +116,7 @@ VP ::= VP Adv # head advmod
 VP ::= VP NP_obl # head obl # 0.001
 VP ::= VS S_direct # head parataxis
 
-VP_pass ::= be VPSlash # aux:pass head
-VP_pass ::= be neg VPSlash # aux:pass advmod head
-VP_pass ::= have be VPSlash # aux aux:pass head
-VP_pass ::= have neg be VPSlash # aux advmod aux:pass head
+VP_pass ::= VPSlash
 VP_pass ::= VP_pass Adv # head advmod
 VP_pass ::= VP_pass NP_obl # head nmod
 
