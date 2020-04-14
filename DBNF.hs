@@ -38,7 +38,7 @@ processOne gr cat opts s = case opts of
     number = maximum $ 1 : [read ds | '-':ds@(_:_) <- opts, all isDigit ds]
     parses = take number raws
     raws   = rankTrees gr (parse gr cat (words s))
-    ptrees = map prParseTree parses ++ ["NONE"]
+    ptrees = map prParseTree parses
     dtrees = map (prDepTree . markDependencies gr) parses
 
 -- chart parsing from Peter Ljunglöf, "Pure Functional Parsing", 2002
@@ -233,10 +233,14 @@ markDependencies grammar =
 
 prParseTree :: ParseTree -> String
 prParseTree pt = case pt of
-  PT (cat,fun,_,_) pts -> parenth (unwords (cat : map prParseTree pts))
-  PL (cat,tok) _ -> parenth (unwords [cat,tok])
+  PT (cat,fun,_,_) pts -> parenth (unwords (trim cat : map prParseTree pts))
+  PL (cat,tok) _ -> parenth (unwords [trim cat,trim tok])
  where
    parenth s = "(" ++ s ++ ")"
+   trim c = case c of --- for printing the tree via GF, make identifiers valid
+     '\'':_ -> c ++ "'"
+     x:xs | not (isLetter x && all (\y -> isAlphaNum y || elem y "_'") xs) -> "'" ++ c ++ "'"
+     _ -> c
 
 prDepTree :: ParseTree -> String
 prDepTree = unlines . map prOne . getTokens
