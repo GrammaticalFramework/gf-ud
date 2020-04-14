@@ -50,9 +50,10 @@ main = do
 helpMsg = unlines $ [
     "Usage:",
     "   gfud (-ud2gf|-gf2ud|-string2gf2ud|-gf2udpar) <path> <language> <startcat>",
-    " | gfud dbnf <dbnf-grammarfile> <startcat>",
+    " | gfud dbnf <dbnf-grammarfile> <startcat> <-number>? <-parsetrees>?",
     " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile>",
     " | gfud conll2pdf",
+    " | gfud parse2pdf",
     "where path = grammardir/abstractprefix, language = concretesuffix",
     "The input comes from stdIO, and the output goes there as well",
     "The option -gf2udpar should be used with the Haskell runtime flag +RTS -Nx -RTS",
