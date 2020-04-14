@@ -6,6 +6,7 @@ import qualified DBNF as D
 import UDAnnotations
 import UDOptions
 import UDConcepts
+import GFConcepts (pAbsTree)
 import UDVisualization
 
 import PGF
@@ -22,9 +23,11 @@ main = do
   xx <- getArgs
   case xx of
 
-    "dbnf":grammarfile:startcat:_ -> D.processRuleBased grammarfile startcat
+    "dbnf":grammarfile:startcat:opts -> D.processRuleBased grammarfile startcat opts
 
     "conll2pdf":_ -> getContents >>= visualizeUDSentences . parseUDText
+  
+    "parse2pdf":_ -> getContents >>= visualizeAbsTrees initUDEnv . map pAbsTree . filter (not . null) . lines
   
     "eval":micmac:luas:goldf:testf:_ -> do
     

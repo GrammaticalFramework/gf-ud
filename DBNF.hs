@@ -13,31 +13,33 @@ import System.Environment (getArgs)
 main = do
   xx <- getArgs
   case xx of
-    grfile:startcat:[] -> processRuleBased grfile startcat
+    grfile:startcat:opts -> processRuleBased grfile startcat opts
     _ -> putStrLn usage
 
-processRuleBased grfile startcat = do
+processRuleBased grfile startcat opts = do
   gr <- readFile grfile >>= return . pGrammar
   -- putStrLn $ unlines $ map show (rules gr) ---- debug
   putStrLn $ checkGrammar gr
-  interact (unlines . map (processOne gr startcat) . lines)
+  interact (unlines . map (processOne gr startcat opts) . lines)
       
-usage = "usage: RuleBased <grammar> <startcat>"
+usage = "usage: RuleBased <grammar> <startcat> (-parsetrees | -deptrees) (-<number>)"
 
-processOne gr cat s = unlines $ [
-  "# sentence: " ++ s,
-  "# ambiguity: " ++ show (length parses),
-  "# parse tree: " ++ ptree,
-  dtree
-  ]
- where
-   parses = rankTrees gr (parse gr cat (words s))
-   ptree = case parses of
-     t:_ -> prParseTree t
-     _ -> "NONE"
-   dtree = case parses of
-     t:_ -> prDepTree $ markDependencies gr t
-     _ -> ""
+processOne :: Grammar -> Symb -> [String] -> String -> String
+processOne gr cat opts s = case opts of
+  _ | elem "-parsetrees" opts -> unlines ptrees
+  _ -> unlines $ [
+    "# sentence: " ++ s,
+    "# ambiguity: " ++ show (length raws)
+    ] ++ dtreess
+  where
+    dtreess = map unlines [ 
+      ["# parse tree: " ++ pt, dt] | (pt,dt) <- zip ptrees dtrees
+      ]
+    number = maximum $ 1 : [read ds | '-':ds@(_:_) <- opts, all isDigit ds]
+    parses = take number raws
+    raws   = rankTrees gr (parse gr cat (words s))
+    ptrees = map prParseTree parses ++ ["NONE"]
+    dtrees = map (prDepTree . markDependencies gr) parses
 
 -- chart parsing from Peter Ljunglöf, "Pure Functional Parsing", 2002
 

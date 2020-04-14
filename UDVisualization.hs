@@ -4,6 +4,8 @@ import UDConcepts
 import GFConcepts
 import UDAnnotations
 
+import DBNF as D
+
 import PGF
 
 import System.Process (system)
@@ -42,4 +44,17 @@ ud2latex =
   conlls2latexDoc .
   map (unlines  . map prt . udWordLines)
 
+--- pretends that parse trees are abstract trees, for easy visualization
+visualizeParseTrees :: [D.ParseTree] -> IO ()
+visualizeParseTrees = visualizeAbsTrees initUDEnv . map p2a
+  where
+   p2a pt = case pt of
+     PT (cat,_,_,_) pts -> RTree (mkCId cat) (map p2a pts)
+     PL (cat,tok) _     -> RTree (mkCId cat) [RTree (mkCId tok) []]
+
+-- real parse tree
+-- graphvizBracketedString :: GraphvizOptions -> Maybe Labels -> Tree -> [BracketedString] -> String
+--   graphvizDefaults :: GraphvizOptions
+--   type Labels = Map CId [String]
+--   Tree
 
