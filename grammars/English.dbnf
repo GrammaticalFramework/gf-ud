@@ -5,16 +5,12 @@ Utt ::= NP_obl comma Utt # cc punct head
 
 Utt ::= S
 Utt ::= QS
+Utt ::= Imp
 Utt ::= NP
 Utt ::= AP
 Utt ::= IP
 Utt ::= IAdv
 Utt ::= Num
-
--- embedded sentences
-SC ::= S_that
-SC ::= QS
-SC ::= VP_to
 
 -- sentences
 S ::= NP VP # nsubj head
@@ -67,9 +63,19 @@ QS ::= IP have neg? cop VP_pass # nsubj:pass aux advmod aux:pass head
 QS ::= IP aux neg? have? cop VP_pass # nsubj:pass aux advmod aux:pass aux head
 
 QS ::= IAdv do NP neg? VP # advmod aux nsubj advmod head
-QS ::= IAdv aux NP neg? VP # advmod aux nsubj advmod head
+QS ::= IAdv aux NP neg? have? VP # advmod aux nsubj advmod aux head
 QS ::= IAdv cop NP neg? Comp # advmod cop nsubj advmod head
 QS ::= IAdv cop neg NP Comp # advmod cop nsubj advmod head
+
+QS ::= IAdv cop NP neg? VP_pass # advmod aux:pass nsubj:pass advmod head
+
+-- indirect questions
+QS ::= if S # mark head
+QS ::= IP NP does? neg? VPSlash # obj nsubj nsubj advmod head
+QS ::= IP NP aux neg? have? VPSlash # obj nsubj aux advmod aux head
+QS ::= IAdv NP do? neg? VP # advmod nsubj aux advmod head
+QS ::= IAdv NP aux neg? have? VP # advmod nsubj aux advmod aux head
+QS ::= IAdv NP cop neg? Comp # advmod nsubj cop advmod head
 
 RS ::= RP VP # nsubj head
 RS ::= RP do neg VP # nsubj aux advmod head
@@ -82,8 +88,21 @@ RS ::= RP NP do neg VPSlash # obj nsubj aux advmod head
 RS ::= NP VPSlash # nsubj head
 RS ::= NP do neg VPSlash # nsubj aux advmod head
 
+-- imperatives
+Imp ::= do? neg? VP # aux advmod head
+Imp ::= do? neg? cop Comp # aux advmod cop head
+
+-- sentences with adverbials
 S  ::= S_subcomma S # advcl head
 S  ::= S S_sub # head advcl
+S  ::= Adv_comma S # advmod head
+S  ::= NP_oblcomma S # nmod head
+
+-- embedded sentences
+SC ::= S_that
+SC ::= QS
+SC ::= VP_to
+
 
 VP ::= V
 VP ::= aux # # 0.001
@@ -101,12 +120,13 @@ VP ::= AdV VP # advmod head
 VP ::= VP NP_obl # head obl # 0.001
 VP ::= VS S_direct # head parataxis
 
-VP_pass ::= VPSlash
+VP_pass ::= V2
 VP_pass ::= VP_pass Adv # head advmod
 VP_pass ::= VP_pass NP_obl # head nmod
 
 VPSlash ::= V2
 VPSlash ::= VPSlash NP_obl  # head obl # 0.001
+VPSlash ::= VPSlash Adv # head advmod
 VPSlash ::= VP Prep # head case # 0.001
 
 S_that ::= that? S # mark head
@@ -120,6 +140,8 @@ Comp ::= AP
 Comp ::= NP
 Comp ::= Adv
 Comp ::= NP_obl
+Comp ::= Comp comma? NP_obl # head punct nmod
+Comp ::= Comp comma? Adv # head punct advmod
 
 -- VP with to
 VP_to ::= neg? to VP # advmod mark head
@@ -141,6 +163,7 @@ NP ::= NP SC # head acl
 NP ::= NP comma? S_sub # head punct acl
 NP ::= NP comma? RS # head punct acl:relcl
 NP ::= Symb Num # head nummod
+NP ::= NP comma? VP_pass # head punct acl # 0.01
 
 NP_poss ::= NP 's # head case
 NP_poss ::= Pron_poss
@@ -157,7 +180,6 @@ Num ::= Digits
 CN ::= N
 CN ::= AP CN # amod head
 CN ::= CN comma? AP # head punct amod # 0.01
-CN ::= CN comma? VP_pass # head punct acl # 0.01
 
 PN ::= PN_one PN # head flat
 
@@ -169,14 +191,16 @@ IP ::= IDet CN # det head
 
 -- adjectival phrases
 AP ::= A
-AP ::= AdA A   # advmod head
+AP ::= AdA AP     # advmod head
 AP ::= AP NP_obl  # head nmod
 
 -- adverbials
 -- Adv ::= Prep NP # case head
 
-S_sub      ::= comma? Subj S # punct mark head
-S_subcomma ::= S_sub comma? # head punct
+S_sub       ::= comma? Subj S # punct mark head
+S_subcomma  ::= Subj S comma? # mark head punct
+Adv_comma   ::= Adv comma? # head punct
+NP_oblcomma ::= NP_obl comma? # head punct
 
 -- coordination
 AP       ::= AP AP_conj         # head conj
@@ -241,10 +265,11 @@ S_comma ::= comma S # punct head
 #token be_V is are was were be been being
 #token do do does did
 #token have have has had
-#token neg not
+#token neg not n't
 #token that that
 #token to to
 #token it it
+#token if if whether
 #token there there
 #token comma ,
 #token colon :
