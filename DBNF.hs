@@ -29,7 +29,7 @@ processOne gr cat opts s = case opts of
   _ | elem "-onlyparsetrees" opts -> unlines ["# parsetree = " ++ pt | pt <- ptrees]
   _ -> unlines $ [
     "# text = " ++ s,
-    "# ambiguity = " ++ show (length raws)
+    "# analyses = " ++ show (length rts)
     ] ++ dtreess
   where
     dtreess = map unlines [ 
@@ -42,7 +42,9 @@ processOne gr cat opts s = case opts of
       cut:_ -> take (read (drop 5 cut))
       _ -> id
     parses = doshow raws
-    raws   = rankTrees gr $ docut (parse gr cat (words s))
+    (totals,chunks) = parse gr cat (words s)
+    raws   = if null rts then chunks else rts
+    rts    = rankTrees $ docut totals 
     ptrees = map prParseTree parses
     dtrees = map (prDepTree . markDependencies gr) parses
 
@@ -181,23 +183,44 @@ buildTrees grammar input passives = edgeTrees
           tree <- trees
         ]
 
-parse :: Grammar -> Symb -> [Token] -> [ParseTree]
-parse grammar cat input = maybe [] id $
-  lookup (0, length input, cat) $
-    buildTrees grammar input (passiveEdges (buildChart grammar input))
+parse :: Grammar -> Symb -> [Token] -> ([ParseTree],[ParseTree])
+parse grammar cat input = (completes,chunks)
+  where
+    completes = maybe [] id $ lookup (0, length input, cat) $ subtrees
+    chunks    = [chunkParse subtrees]
+    subtrees  = buildTrees grammar input (passiveEdges (buildChart grammar input))
+
+chunkParse :: [(Passive,[ParseTree])] -> ParseTree
+chunkParse subtrees = 
+    PT chunknode subs 
+  where
+    subs = next 0 subtreelist
+    chunknode = ("Chunks", "chunks", "head": replicate (length subs - 1) "dep" {- ++ ["head"] -}, 0.0000001)
+
+    next :: Int -> [((Int,Int),ParseTree)] -> [ParseTree]
+    next i sl = case sl of
+      [] -> []
+      ((k,j),t):ss | k == i -> t : next j ss
+      _:ss -> next i ss
+
+    subtreelist :: [((Int,Int),ParseTree)]
+    subtreelist = sortOn (\ ((i,j),_) -> (i,0-j))
+      [((i,j),t) |
+        ((i,j,_),ts) <- subtrees, t:_ <- [ts] --- [rankTrees ts]
+        ]
 
 -- context-free weight ("probability") of a tree
 
-treeWeight :: Grammar -> ParseTree -> Double
-treeWeight grammar = tprob
+treeWeight :: ParseTree -> Double
+treeWeight = tprob
   where
     tprob t = case t of
       PT (_,f,_,w) ts -> product (w : map tprob ts)
       PL _ (_,_,_,w) -> w
 
 -- sort by descending weight
-rankTrees :: Grammar -> [ParseTree] -> [ParseTree]
-rankTrees gr = sortOn ((1-) . treeWeight gr)
+rankTrees :: [ParseTree] -> [ParseTree]
+rankTrees = sortOn ((1-) . treeWeight)
 
 -- mark dependency labels and heads in leaf nodes
 -- simplified version of Kolachina and Ranta, LiLT 2016
