@@ -54,7 +54,9 @@ visualizeUDSentences uds = do
 ud2latex :: [UDSentence] -> String
 ud2latex = 
   conlls2latexDoc .
-  map (unlines  . map prt . udWordLines)
+  map (unlines  . map (trim . prt) . udWordLines)
+ where
+   trim = concatMap (\c -> if elem c "%$&" then "\\"++[c] else [c])
 
 --- pretends that parse trees are abstract trees, for easy visualization
 visualizeParseTrees :: [D.ParseTree] -> IO ()

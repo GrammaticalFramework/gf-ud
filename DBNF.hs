@@ -195,7 +195,7 @@ chunkParse subtrees =
     PT chunknode subs 
   where
     subs = next 0 subtreelist
-    chunknode = ("Chunks", "chunks", "head": replicate (length subs - 1) "dep" {- ++ ["head"] -}, 0.0000001)
+    chunknode = ("chunks", "Chunks", replicate (length subs - 1) "dep" ++ ["head"], 0.0000001)
 
     next :: Int -> [((Int,Int),ParseTree)] -> [ParseTree]
     next i sl = case sl of
@@ -231,7 +231,7 @@ markDependencies grammar =
     annotate
   where
     annotate pt = case pt of
-      PT (cat,fun,_,w) pts -> PT (cat,fun,lookf fun,w) (map annotate pts)
+      PT (cat,fun,ds,w) pts -> PT (cat,fun,lookf ds fun,w) (map annotate pts)
       PL (cat,tok) info -> PL (lookc cat,tok) info
       
     mark (lab,hd) pt = case pt of
@@ -250,7 +250,7 @@ markDependencies grammar =
       (PL _ (i,_,_,_),_):_ -> i
       (PT (_,_,ls,_) ts,_):_ -> headTok (zip ts ls)
 
-    lookf fun = maybe ("head" : repeat "dep") id (M.lookup fun labelMap)
+    lookf ds fun = if null ds then (maybe ("head" : repeat "dep") id (M.lookup fun labelMap)) else ds
     labelMap = M.fromList [(constr r, labels r) | r <- rules grammar]
 
     lookc cat = maybe cat id (M.lookup cat (catmap grammar))
