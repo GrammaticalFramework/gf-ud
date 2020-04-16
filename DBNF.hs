@@ -26,18 +26,23 @@ usage = "usage: RuleBased <grammar> <startcat> (-parsetrees | -deptrees) (-<numb
 
 processOne :: Grammar -> Symb -> [String] -> String -> String
 processOne gr cat opts s = case opts of
-  _ | elem "-parsetrees" opts -> unlines ptrees
+  _ | elem "-onlyparsetrees" opts -> unlines ["# parsetree = " ++ pt | pt <- ptrees]
   _ -> unlines $ [
-    "# sentence: " ++ s,
-    "# ambiguity: " ++ show (length raws)
+    "# text = " ++ s,
+    "# ambiguity = " ++ show (length raws)
     ] ++ dtreess
   where
     dtreess = map unlines [ 
-      ["# parse tree: " ++ pt, dt] | (pt,dt) <- zip ptrees dtrees
+      ["# parsetree = " ++ pt, dt] | (pt,dt) <- zip ptrees dtrees
       ]
-    number = maximum $ 1 : [read ds | '-':ds@(_:_) <- opts, all isDigit ds]
-    parses = take number raws
-    raws   = rankTrees gr (parse gr cat (words s))
+    doshow = case filter (isPrefixOf "-show") opts of
+      cut:_ -> take (read (drop 6 cut))
+      _ -> take 1
+    docut  = case filter (isPrefixOf "-cut") opts of
+      cut:_ -> take (read (drop 5 cut))
+      _ -> id
+    parses = doshow raws
+    raws   = rankTrees gr $ docut (parse gr cat (words s))
     ptrees = map prParseTree parses
     dtrees = map (prDepTree . markDependencies gr) parses
 
@@ -234,7 +239,7 @@ markDependencies grammar =
 prParseTree :: ParseTree -> String
 prParseTree pt = case pt of
   PT (cat,fun,_,_) pts -> parenth (unwords (trim cat : map prParseTree pts))
-  PL (cat,tok) _ -> parenth (unwords [trim cat,trim tok])
+  PL (cat,tok) _ -> parenth (unwords [trim cat, trim tok])
  where
    parenth s = "(" ++ s ++ ")"
    trim c = case c of --- for printing the tree via GF, make identifiers valid

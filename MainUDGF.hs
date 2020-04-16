@@ -25,9 +25,13 @@ main = do
 
     "dbnf":grammarfile:startcat:opts -> D.processRuleBased grammarfile startcat opts
 
+    "conll2latex":_ -> getContents >>= putStrLn . ud2latex . parseUDText
+  
     "conll2pdf":_ -> getContents >>= visualizeUDSentences . parseUDText
   
-    "parse2pdf":_ -> getContents >>= visualizeAbsTrees initUDEnv . map pAbsTree . filter (not . null) . lines
+    "parse2latex":file:_ -> getContents >>= absTrees2latex initUDEnv file . map pAbsTree . selectParseTrees . lines
+    
+    "parse2pdf":_ -> getContents >>= visualizeAbsTrees initUDEnv . map pAbsTree . selectParseTrees . lines
   
     "eval":micmac:luas:goldf:testf:_ -> do
     
@@ -50,10 +54,12 @@ main = do
 helpMsg = unlines $ [
     "Usage:",
     "   gfud (-ud2gf|-gf2ud|-string2gf2ud|-gf2udpar) <path> <language> <startcat>",
-    " | gfud dbnf <dbnf-grammarfile> <startcat> <-number>? <-parsetrees>?",
+    " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",
     " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile>",
     " | gfud conll2pdf",
     " | gfud parse2pdf",
+    " | gfud conll2latex",
+    " | gfud parse2latex <file>",
     "where path = grammardir/abstractprefix, language = concretesuffix",
     "The input comes from stdIO, and the output goes there as well",
     "The option -gf2udpar should be used with the Haskell runtime flag +RTS -Nx -RTS",

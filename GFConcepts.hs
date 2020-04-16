@@ -88,6 +88,11 @@ isSubRTree t u = t == u || any (isSubRTree t) (subtrees u)
 sizeRTree :: RTree a -> Int
 sizeRTree = length . allNodesRTree
 
+leavesRTree :: RTree a -> [a]
+leavesRTree t = case t of
+  RTree a [] -> [a]
+  RTree a ts -> concatMap leavesRTree ts
+
 -----------------
 
 mkFun :: [String] -> CId -> CId

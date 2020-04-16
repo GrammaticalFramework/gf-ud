@@ -13,23 +13,35 @@ import System.Process (system)
 
 visualizeAbsTrees :: UDEnv -> [AbsTree] -> IO ()
 visualizeAbsTrees env ts = do
+  let astfile = "_gfud_ast_tmp"
+  absTrees2latex env astfile ts
+  system $ "pdflatex " ++ (astfile ++ ".tex")
+  system $ "open " ++ (astfile ++ ".pdf") ---- TODO: parameterize open command
+  return () 
+
+absTrees2latex :: UDEnv -> FilePath -> [AbsTree] -> IO ()
+absTrees2latex env file ts = do
   let exps = map abstree2expr ts
   let codes = map (graphvizAbstractTree (pgfGrammar env) (True,False)) exps
-  let astFile i suff = "_" ++ show i ++ "_ud_ast_tmp." ++ suff
-  mapM_ (\ (i,code) -> writeFile (astFile i "dot")  code) (zip [1..] codes)
-  mapM_ (\i -> system ("dot -Teps " ++ astFile i "dot" ++ " >" ++ astFile i "eps")) [1.. length ts]
-  writeFile (astFile 0 "tex") $ unlines [
+  let astDotFile i suff = "_" ++ show i ++ file ++ "." ++ suff
+  mapM_ (\ (i,code) -> writeFile (astDotFile i "dot")  code) (zip [1..] codes)
+  mapM_ (\i -> system ("dot -Teps " ++ astDotFile i "dot" ++ " >" ++ astDotFile i "eps")) [1.. length ts]
+  writeFile (file ++ ".tex") $ unlines [
     "\\documentclass{article}",
     "\\usepackage[utf8]{inputenc}",
     "\\usepackage{graphicx}",
     "\\begin{document}",
     ""
     ]
-  mapM_ (\i -> appendFile (astFile 0 "tex") ("\n\n\\includegraphics[width=0.8\\textwidth]{" ++ astFile i "eps" ++ "}")) [1.. length ts]
-  appendFile (astFile 0 "tex") "\\end{document}"
-  system $ "pdflatex " ++ (astFile 0 "tex")
-  system $ "open " ++ (astFile 0 "pdf") ---- TODO: parameterize open command
-  return () 
+  let treeSize t = case length (leavesRTree t) of
+        n | n < 3 -> 0.2
+        n | n < 5 -> 0.4
+        n | n < 8 -> 0.6
+        n | n < 12 -> 0.8
+        _ -> 1.0
+  let width i = show (treeSize (ts !! i))
+  mapM_ (\i -> appendFile (file ++ ".tex") ("\n\n\\includegraphics[width=" ++ width (i-1) ++ "\\textwidth]{" ++ astDotFile i "eps" ++ "}")) [1.. length ts]
+  appendFile (file ++ ".tex") "\\end{document}"
 
 visualizeUDSentences :: [UDSentence] -> IO ()
 visualizeUDSentences uds = do
@@ -57,4 +69,7 @@ visualizeParseTrees = visualizeAbsTrees initUDEnv . map p2a
 --   graphvizDefaults :: GraphvizOptions
 --   type Labels = Map CId [String]
 --   Tree
+
+selectParseTrees :: [String] -> [String]
+selectParseTrees ls = [unwords ws | l <- ls, "#":"parsetree": "=" : ws <- [words l]]
 

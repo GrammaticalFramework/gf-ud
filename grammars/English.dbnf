@@ -203,26 +203,43 @@ Adv_comma   ::= Adv comma? # head punct
 NP_oblcomma ::= NP_obl comma? # head punct
 
 -- coordination
-AP       ::= AP AP_conj         # head conj
-AP       ::= AP AP_comma APConj # head conj conj
-AP       ::= Conj_pre AP AP_conj         # cc:preconj head conj
-AP       ::= Conj_pre AP AP_comma APConj # cc:preconj head conj conj
-AP_conj  ::= Conj AP # cc head
-AP_comma ::= comma AP # punct head 
+S       ::= Conj_pre? ListS S_conj # cc:preconj head conj
+ListS   ::= S
+ListS   ::= ListS S_comma # head conj
+S_conj  ::= comma? Conj S # punct cc head
+S_comma ::= comma S # punct head
 
-NP       ::= NP NP_conj         # head conj
-NP       ::= NP NP_comma NPConj # head conj conj
-NP       ::= Conj_pre NP NP_conj         # cc:preconj head conj
-NP       ::= Conj_pre NP NP_comma NPConj # cc:preconj head conj conj
-NP_conj  ::= Conj NP # cc head
-NP_comma ::= comma NP # punct head 
+NP       ::= Conj_pre? ListNP NP_conj # cc:preconj head conj
+ListNP   ::= NP
+ListNP   ::= ListNP NP_comma # head conj
+NP_conj  ::= comma? Conj NP # punct cc head
+NP_comma ::= comma NP # punct head
 
-S       ::= S S_conj         # head conj
-S       ::= S S_comma SConj # head conj conj
-S       ::= Conj_pre S S_conj         # cc:preconj head conj
-S       ::= Conj_pre S S_comma SConj # cc:preconj head conj conj
-S_conj  ::= Conj S # cc head
-S_comma ::= comma S # punct head 
+AP       ::= Conj_pre? ListAP AP_conj # cc:preconj head conj
+ListAP   ::= AP
+ListAP   ::= ListAP AP_comma # head conj
+AP_conj  ::= comma? Conj AP # punct cc head
+AP_comma ::= comma AP # punct head
+
+VP       ::= Conj_pre? ListVP VP_conj # cc:preconj head conj
+ListVP   ::= VP
+ListVP   ::= ListVP VP_comma # head conj
+VP_conj  ::= comma? Conj VP # punct cc head
+VP_comma ::= comma VP # punct head
+
+-- in Adv conjunctions, we want to include NP_obl parts: all that matters for UD is the category of the first conjunct
+Adv       ::= Conj_pre? ListAdv Adv_conj # cc:preconj head conj
+ListAdv   ::= Adv
+ListAdv   ::= ListAdv Adv_comma # head conj
+Adv_conj  ::= comma? Conj Adv # punct cc head
+Adv_conj  ::= comma? Conj NP_obl # punct cc head
+Adv_comma ::= comma Adv # punct head
+Adv_comma ::= comma NP_obl # punct head
+
+NP_obl     ::= Conj_pre? ListNP_obl Adv_conj # cc:preconj head conj
+ListNP_obl ::= NP_obl
+ListNP_obl ::= ListNP_obl Adv_comma # head conj
+
 
 -- POS tag configurations
 #pos AUX cop do have aux
@@ -289,7 +306,7 @@ S_comma ::= comma S # punct head
 #token A old good curious black best cold modified tired bad large larger
 #token N love sleep loves sleeps man men woman women cat cats doctor beer world elephant room hint hints reason reasons loser losers movie life
 #token N house president moon Earth girl girls wine beer
-#token Adv now today here before
+#token Adv now today here before there yesterday tomorrow always
 #token Predet probably only
 #token Symb $
 
