@@ -73,8 +73,10 @@ data Grammar = Grammar {
 
 terminal :: Grammar -> Token -> [Symb]
 terminal g t =
-  [c | Just cs <- [M.lookup t (terminalmap g)], c <- cs] ++
-  [c | (s, Just p) <- [unPOS t], Just cs <- [M.lookup p (posmap g)], c <- cs]
+  let ts =
+       [c | Just cs <- [M.lookup t (terminalmap g)], c <- cs] ++
+       [c | (s, Just p) <- [unPOS t], Just cs <- [M.lookup p (posmap g)], c <- cs]
+  in if (null ts) then ["Str"] else ts
 
 -- instead of having a word in the lexicon, mark it in input as word:<POS> where POS matches a category
 --- a bit complicated because of 11:30:<NUM>
@@ -195,7 +197,7 @@ chunkParse subtrees =
     PT chunknode subs 
   where
     subs = next 0 subtreelist
-    chunknode = ("chunks", "Chunks", replicate (length subs - 1) "dep" ++ ["head"], 0.0000001)
+    chunknode = ("Chunks", "chunks", replicate (length subs - 1) "dep" ++ ["head"], 0.0000001)
 
     next :: Int -> [((Int,Int),ParseTree)] -> [ParseTree]
     next i sl = case sl of
@@ -306,7 +308,7 @@ pGrammar = combine . addRules . map words . filter relevant . lines
       _ | all isSpace l -> False
       _ -> True
 
-    combine (rs,ts,cs) = Grammar (numRules rs) (M.fromListWith (++) ts) (M.fromList cs) (posm cs)
+    combine (rs,ts,cs) = Grammar (numRules rs) (M.fromListWith (++) ts) (M.fromList (("Str","X") : cs)) (posm cs)
 
     addRules = foldr addRule ([],[],[])
     
