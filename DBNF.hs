@@ -73,9 +73,11 @@ data Grammar = Grammar {
 
 terminal :: Grammar -> Token -> [Symb]
 terminal g t =
-  let ts =
-       [c | Just cs <- [M.lookup t (terminalmap g)], c <- cs] ++
-       [c | (s, Just p) <- [unPOS t], Just cs <- [M.lookup p (posmap g)], c <- cs]
+  let
+    ts =
+       [c |                           Just cs <- [M.lookup t (terminalmap g)], c <- cs] ++
+       [c | (s, Just p) <- [unPOS t], Just cs <- [M.lookup s (terminalmap g)], c <- cs] ++
+       [c | (s, Just p) <- [unPOS t], Just cs <- [M.lookup p (posmap g)],      c <- cs]
   in if (null ts) then ["Str"] else ts
 
 -- instead of having a word in the lexicon, mark it in input as word:<POS> where POS matches a category
