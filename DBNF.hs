@@ -20,7 +20,7 @@ processRuleBased grfile startcat opts = do
   gr <- readFile grfile >>= return . pGrammar
   -- putStrLn $ unlines $ map show (rules gr) ---- debug
   putStrLn $ checkGrammar gr
-  interact (unlines . map (processOne gr startcat opts) . lines)
+  interact (unlines . map (processOne gr startcat opts) . filter (not . all isSpace) . lines)
       
 usage = "usage: RuleBased <grammar> <startcat> (-parsetrees | -deptrees) (-<number>)"
 
