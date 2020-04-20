@@ -2,6 +2,7 @@
 Utt ::= Utt Punct        # head punct
 Utt ::= Conj Utt         # cc head
 Utt ::= NP_obl comma Utt # cc punct head
+Utt ::= parenth Utt parenth # punct head punct
 
 Utt ::= S
 Utt ::= QS
@@ -153,6 +154,9 @@ NP_obl ::= Prep NP # case head
 -- noun phrases
 NP ::= PN
 NP ::= Pron
+NP ::= Num # # 0.1
+NP ::= Det # # 0.1
+
 NP ::= Det? CN # det head
 NP ::= NP comma? NP_obl # head punct nmod
 NP ::= Predet NP # det:predet head
@@ -184,6 +188,7 @@ CN ::= CN comma? AP # head punct amod # 0.01
 PN ::= PN_one PN # head flat
 
 N ::= N_one N # compound head
+N ::= PN CN # compound head
 
 Card ::= Card_one Card # compound head
 
@@ -201,6 +206,8 @@ S_sub       ::= comma? Subj S # punct mark head
 S_subcomma  ::= Subj S comma? # mark head punct
 Adv_comma   ::= Adv comma? # head punct
 NP_oblcomma ::= NP_obl comma? # head punct
+S_sub       ::= comma? Subj VP # punct mark head # 0.1
+S_subcomma  ::= Subj VP comma? # mark head punct # 0.1
 
 -- coordination
 S       ::= Conj_pre? ListS S_conj # cc:preconj head conj
@@ -253,7 +260,7 @@ ListNP_obl ::= ListNP_obl Adv_comma # head conj
 #pos DET Det IDet
 #pos PRON Pron IP RP Pron_poss there it
 #pos PART to 's
-#pos PUNCT Punct Punct_appos comma quote colon
+#pos PUNCT Punct Punct_appos comma quote colon parenth
 #pos NUM Card Digits Card_one
 #pos ADP Prep
 #pos SYM Symb
@@ -292,6 +299,7 @@ ListNP_obl ::= ListNP_obl Adv_comma # head conj
 #token colon :
 #token quote "
 #token 's 's
+#token parenth ( ) [ ]
 
 -- content word lexicon
 #token PN John Mary
