@@ -164,7 +164,7 @@ buildTrees grammar input passives = edgeTrees
     edgeTrees = [(pe, treesFor pe) | pe <- passives]
 
     treesFor (i,j,cat) = [
-      PT (cat, constr rule,[],weight rule) trees |
+      PT (cat, constr rule, labels rule, weight rule) trees |
         rule <- rules grammar,
         lhs rule == cat,  ---- TODO: rule <- rules grammar cat
         trees <- children (rhs rule) i j
@@ -235,7 +235,7 @@ markDependencies grammar =
     annotate
   where
     annotate pt = case pt of
-      PT (cat,fun,ds,w) pts -> PT (cat,fun,lookf ds fun,w) (map annotate pts)
+      PT (cat,fun,ds,w) pts -> PT (cat,fun, ds, w) (map annotate pts)
       PL (cat,tok) info -> PL (lookc cat,tok) info
       
     mark (lab,hd) pt = case pt of
@@ -253,9 +253,6 @@ markDependencies grammar =
     headTok tls = case filter ((=="head") . snd) tls of
       (PL _ (i,_,_,_),_):_ -> i
       (PT (_,_,ls,_) ts,_):_ -> headTok (zip ts ls)
-
-    lookf ds fun = if null ds then (maybe ("head" : repeat "dep") id (M.lookup fun labelMap)) else ds
-    labelMap = M.fromList [(constr r, labels r) | r <- rules grammar]
 
     lookc cat = maybe cat id (M.lookup cat (catmap grammar))
 
