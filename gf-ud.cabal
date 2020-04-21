@@ -17,7 +17,17 @@ cabal-version:       >=1.10
 
 executable gf-ud
   main-is:             MainUDGF.hs
-  -- other-modules:
+  other-modules: Backend
+               , DBNF
+               , GF2UD
+               , GFConcepts
+               , UD2GF
+               , UDAnnotations
+               , UDConcepts
+               , UDOptions
+               , UDStandard
+               , UDVisualization
+
   -- other-extensions:
   build-depends:       base, containers, pretty, gf, process
   -- hs-source-dirs:
