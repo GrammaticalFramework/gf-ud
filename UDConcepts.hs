@@ -84,7 +84,7 @@ instance UDObject UDSentence where
 instance UDObject UDWord where
   prt w@(UDWord id fo le up xp fe he de ds mi) =
     concat (intersperse "\t" [prt id,fo,le,up,xp,prt fe,prt he,de,ds,prt mi])
-  prs s = case getSeps '\t' s of
+  prs s = case getSeps '\t' (strip s) of
     id:fo:le:up:xp:fe:he:de:ds:mi:_ ->
       UDWord (prs id) fo le up xp (prs fe) (prs he) de ds (prs mi)
     _ -> error ("ERROR: " ++ s ++ " incomplete UDWord")
@@ -104,7 +104,7 @@ instance UDObject UDId where
     UDIdEmpty f -> show f
     UDIdRoot -> "0"
     UDIdNone -> "_"
-  prs s = case s of
+  prs s = case (strip s) of
     "0" -> UDIdRoot
     "_" -> UDIdNone
     _ | all isDigit s -> UDIdInt (read s)
@@ -115,7 +115,7 @@ instance UDObject UDId where
 
 instance UDObject UDData where
   prt d = udArg d ++ "=" ++ concat (intersperse "," (udVals d))
-  prs s = case break (=='=') s of
+  prs s = case break (=='=') (strip s) of
     (a,_:vs@(_:_)) -> UDData a (getSeps ',' vs)
     _ -> error ("ERROR:" ++ s ++ " invalid UDData")
 
@@ -124,7 +124,7 @@ instance UDObject d => UDObject [d] where
   prt ds = case ds of
     [] -> "_" 
     _ -> concat (intersperse "|" (map prt ds))
-  prs s = case s of
+  prs s = case (strip s) of
     "_" -> []
     _ -> map prs (getSeps '|' s)
   errors ds = concatMap errors ds
@@ -274,7 +274,16 @@ stanzas ls = case dropWhile (all isSpace) ls of
   wls -> case break (all isSpace) wls of
     (s,ss) -> s : stanzas ss
 
-
+strip :: String -> String
+strip [] = []
+strip (c:cs)
+  | isSpace c = strip cs
+  | otherwise = reverse $ strip' (reverse $ c:cs)
+  where
+    strip' [] = []
+    strip' (c:cs)
+      | isSpace c = strip' cs
+      | otherwise = (c:cs)
 ------------------
 -- evaluations
 -----------------
