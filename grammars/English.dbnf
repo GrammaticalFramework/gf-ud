@@ -103,6 +103,7 @@ S  ::= NP_oblcomma S # nmod head
 SC ::= S_that
 SC ::= QS
 SC ::= VP_to
+SC ::= VP_ger
 
 
 VP ::= V
@@ -122,8 +123,13 @@ VP ::= VP NP_obl # head obl # 0.001
 VP ::= VS S_direct # head parataxis
 
 VP_pass ::= V_pass
+VP_pass ::= V_pastpart
 VP_pass ::= VP_pass Adv # head advmod
 VP_pass ::= VP_pass NP_obl # head nmod
+
+VP_ger ::= V_ger
+VP_ger ::= VP_ger Adv # head advmod
+VP_ger ::= VP_ger NP_obl # head nmod
 
 VPSlash ::= V2
 VPSlash ::= VPSlash NP_obl  # head obl # 0.001
@@ -167,7 +173,7 @@ NP ::= NP SC # head acl
 NP ::= NP comma? S_sub # head punct acl
 NP ::= NP comma? RS # head punct acl:relcl
 NP ::= Symb Num # head nummod
-NP ::= NP comma? VP_pass # head punct acl # 0.01
+NP ::= NP comma? VP_pass # head punct acl
 
 NP_poss ::= NP 's # head case
 NP_poss ::= Pron_poss
@@ -198,9 +204,13 @@ IP ::= IDet CN # det head
 AP ::= A
 AP ::= AdA AP     # advmod head
 AP ::= AP NP_obl  # head nmod
+AP ::= V_pass
+AP ::= V_pastpart
+AP ::= V_ger
 
 -- adverbials
 -- Adv ::= Prep NP # case head
+Adv ::= Prep VP_ger # case head
 
 S_sub       ::= comma? Subj S # punct mark head
 S_subcomma  ::= Subj S comma? # mark head punct
@@ -266,6 +276,13 @@ ListNP_obl ::= ListNP_obl Adv_comma # head conj
 #pos SYM Symb
 
 #pos VERB_Voice=Pass V_pass
+-- in PUD, Voice=Pass is not used
+#pos VERB_Tense=Past|VerbForm=Part V_pastpart
+
+#pos VERB_VerbForm=Ger V_ger
+
+#pos PRON_PronType=Rel RP
+#pos PRON_PronType=Int IAdv
 
 -- structural word lexicon: normal categories
 #token Prep at from in of on to with than

@@ -285,7 +285,10 @@ prDepTree = unlines . map prOne . getTokens
     getTokens pt = case pt of
       PT _ pts -> concatMap getTokens pts
       PL (pos,tok) (i,lab,hd,_) -> [(show i,tok,pos,show hd,lab)]
-    prOne (i,t,p,h,d) = concat (intersperse "\t" [i,t,unc,p,unc,unc,h,d,unc,unc])
+    prOne (i,t,p,h,d) = concat (intersperse "\t" [i,t,unc,pos,unc,mor,h,d,unc,unc])
+      where (pos,mor) = case break (=='_') p of
+               (pos,_:mor) -> (pos,mor)
+               _ -> (p,unc)
     unc = "_"
  
 ------------------------------
