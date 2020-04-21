@@ -182,8 +182,11 @@ NP ::= Symb Num # head nummod
 ---- NP ::= NP comma? VP_pass # head punct acl # 0.01
 
 ---- TODO: NP_poss other than Pron_poss
-NP_poss ::= NP # # 0.02
+NP_poss ::= NP_gen
 NP_poss ::= Pron_poss
+
+NP_gen ::= Det? N_gen # det head
+NP_gen ::= PN_gen
 
 -- some very special rules ---
 NP        ::= Det CN_quoted # det head
@@ -267,11 +270,11 @@ ListNP_obl ::= ListNP_obl Adv_comma # head conj
 #pos NOUN N N_one
 #pos ADJ A
 #pos PROPN PN PN_one
-#pos ADV Adv IAdv AdA AdV Predet neg
+#pos ADV Adv AdA AdV Predet neg
 #pos SCONJ Subj that if
 #pos CCONJ Conj Conj_pre
 #pos DET Det IDet
-#pos PRON Pron IP RP Pron_poss it som
+#pos PRON Pron IP Pron_poss it som
 #pos PART to 's
 #pos PUNCT Punct Punct_appos comma quote colon parenth
 #pos NUM Card Digits Card_one
@@ -279,6 +282,12 @@ ListNP_obl ::= ListNP_obl Adv_comma # head conj
 #pos SYM Symb
 
 #pos VERB_Voice=Pass V_pass
+
+#pos PRON_PronType=Rel RP
+#pos PRON_PronType=Int IAdv
+
+#pos NOUN_Case=Gen N_gen
+#pos PROPN_Case=Gen PN_gen
 
 -- structural word lexicon: normal categories
 #token IP vem vad
@@ -294,7 +303,7 @@ ListNP_obl ::= ListNP_obl Adv_comma # head conj
 #token Conj och eller
 #token Conj_pre både antingen varken
 #token IDet vilken vilket vilka
-#token Pron_poss min mitt mina din ditt dina hans hennes vår vårt våra er ert era deras
+#token Pron_poss min mitt mina din ditt dina hans hennes vår vårt våra er ert era deras sin sitt sina
 #token RP som
 
 -- structural word lexicon: syncategorematic words
