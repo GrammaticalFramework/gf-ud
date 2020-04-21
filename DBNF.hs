@@ -76,9 +76,17 @@ terminal g t =
   let
     ts =
        [c |                           Just cs <- [M.lookup t (terminalmap g)], c <- cs] ++
-       [c | (s, Just p) <- [unPOS t], Just cs <- [M.lookup s (terminalmap g)], c <- cs] ++
-       [c | (s, Just p) <- [unPOS t], Just cs <- [M.lookup p (posmap g)],      c <- cs]
+       [c | (s, Just _) <- [unPOS t], Just cs <- [M.lookup s (terminalmap g)], c <- cs] ++
+       [c | (s, Just p) <- [unPOS t], c <- lookpos p]
   in if (null ts) then ["Str"] else ts
+ where
+   lookpos p = [c | pm <- normalize p, Just cs <- [M.lookup pm (posmap g)], c <- cs]
+
+  -- match if e.g. grammar gives PRON_PronType=Rel, input has PRON_Case=Acc|PronType=Rel
+   normalize p = case break (=='_') p of
+     (pos,[]) -> [pos]
+     (pos,_:feats) -> pos:[pos ++ "_" ++ fs | (po,_:fs) <- allpos, po == pos, isInfixOf fs feats] -- TODO: only one feature considered
+   allpos = map (break (=='_')) $ M.keys (posmap g)
 
 -- instead of having a word in the lexicon, mark it in input as word:<POS> where POS matches a category
 --- a bit complicated because of 11:30:<NUM>
@@ -307,7 +315,11 @@ pGrammar = combine . addRules . map words . filter relevant . lines
       _ | all isSpace l -> False
       _ -> True
 
-    combine (rs,ts,cs) = Grammar (numRules rs) (M.fromListWith (++) ts) (M.fromList (("Str","X") : cs)) (posm cs)
+    combine (rs,ts,cs) = Grammar
+      (numRules rs)
+      (M.fromListWith (++) ts)
+      (M.fromList (("Str","X") : cs))
+      (posm cs)
 
     addRules = foldr addRule ([],[],[])
     

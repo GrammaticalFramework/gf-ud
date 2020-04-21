@@ -155,11 +155,14 @@ pQuickUDSentence = prss . map completeUDWord . getSeps ";" . words
 
 
 ----------------------------------------------
--- extract word:<pos> sequences
+-- extract word:<pos> sequences, or word:<pos_feats>
 ----------------------------------------------
 
 ud2poswords :: UDSentence -> String
 ud2poswords s = unwords [udFORM u ++ ":<" ++ udUPOS u ++ ">" | u <- udWordLines s]
+
+ud2posfeatswords :: UDSentence -> String
+ud2posfeatswords s = unwords [udFORM u ++ ":<" ++ udUPOS u ++ "_" ++ prt (udFEATS u) ++ ">" | u <- udWordLines s]
 
 ----------------------------------------------
 -- converting to a hierarchical tree and back

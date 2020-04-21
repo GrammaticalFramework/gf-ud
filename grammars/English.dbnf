@@ -23,9 +23,9 @@ S ::= NP cop AdV? neg? Comp # nsubj cop advmod advmod head
 S ::= NP have AdV? neg? cop Comp # nsubj aux advmod advmod cop head
 S ::= NP aux AdV?  neg? have? cop Comp # nsubj aux advmod advmod aux cop head
 
-S ::= NP cop AdV? neg? VP_pass # nsubj:pass aux:pass advmod advmod head
-S ::= NP have AdV? neg? cop VP_pass # nsubj:pass aux advmod advmod aux:pass head
-S ::= NP aux AdV? neg? have? cop VP_pass # nsubj:pass aux advmod advmod aux aux:pass head
+S ::= NP cop AdV? neg? VP_pass # nsubj:pass aux:pass advmod advmod head # 0.8
+S ::= NP have AdV? neg? cop VP_pass # nsubj:pass aux advmod advmod aux:pass head # 0.8
+S ::= NP aux AdV? neg? have? cop VP_pass # nsubj:pass aux advmod advmod aux aux:pass head # 0.8
 
 S ::= there be_V AdV? neg? NP # expl head advmod advmod nsubj
 S ::= there have AdV? neg? be_V neg? NP # expl aux advmod advmod head nsubj
@@ -121,7 +121,7 @@ VP ::= AdV VP # advmod head
 VP ::= VP NP_obl # head obl # 0.001
 VP ::= VS S_direct # head parataxis
 
-VP_pass ::= V2
+VP_pass ::= V_pass
 VP_pass ::= VP_pass Adv # head advmod
 VP_pass ::= VP_pass NP_obl # head nmod
 
@@ -264,6 +264,8 @@ ListNP_obl ::= ListNP_obl Adv_comma # head conj
 #pos NUM Card Digits Card_one
 #pos ADP Prep
 #pos SYM Symb
+
+#pos VERB_Voice=Pass V_pass
 
 -- structural word lexicon: normal categories
 #token Prep at from in of on to with than

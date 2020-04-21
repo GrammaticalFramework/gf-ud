@@ -34,6 +34,7 @@ main = do
     "parse2pdf":_ -> getContents >>= visualizeAbsTrees initUDEnv . map pAbsTree . selectParseTrees . lines
 
     "extract-pos-words":_ -> getContents >>= putStrLn . unlines . map ud2poswords . parseUDText
+    "extract-pos-feats-words":_ -> getContents >>= putStrLn . unlines . map ud2posfeatswords . parseUDText
   
     "eval":micmac:luas:goldf:testf:_ -> do
     
@@ -59,6 +60,7 @@ helpMsg = unlines $ [
     " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",
     " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile>",
     " | gfud extract-pos-words",
+    " | gfud extract-pos-feats-words",
     " | gfud conll2pdf",
     " | gfud parse2pdf",
     " | gfud conll2latex",
