@@ -34,6 +34,8 @@ resolver: ghc-8.4.4 # lts-15.9
 #   - auto-update
 #   - wai
 packages: 
+- .
+
 extra-deps:
 - git: https://github.com/GrammaticalFramework/gf-core
   commit: b962bcd178a212f6b3cea6e2d74a2181005a4729
