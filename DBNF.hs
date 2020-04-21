@@ -76,9 +76,17 @@ terminal g t =
   let
     ts =
        [c |                           Just cs <- [M.lookup t (terminalmap g)], c <- cs] ++
-       [c | (s, Just p) <- [unPOS t], Just cs <- [M.lookup s (terminalmap g)], c <- cs] ++
-       [c | (s, Just p) <- [unPOS t], Just cs <- [M.lookup p (posmap g)],      c <- cs]
+       [c | (s, Just _) <- [unPOS t], Just cs <- [M.lookup s (terminalmap g)], c <- cs] ++
+       [c | (s, Just p) <- [unPOS t], c <- lookpos p]
   in if (null ts) then ["Str"] else ts
+ where
+   lookpos p = [c | pm <- normalize p, Just cs <- [M.lookup pm (posmap g)], c <- cs]
+
+  -- match if e.g. grammar gives PRON_PronType=Rel, input has PRON_Case=Acc|PronType=Rel
+   normalize p = case break (=='_') p of
+     (pos,[]) -> [pos]
+     (pos,_:feats) -> pos:[pos ++ "_" ++ fs | (po,_:fs) <- allpos, po == pos, isInfixOf fs feats] -- TODO: only one feature considered
+   allpos = map (break (=='_')) $ M.keys (posmap g)
 
 -- instead of having a word in the lexicon, mark it in input as word:<POS> where POS matches a category
 --- a bit complicated because of 11:30:<NUM>
@@ -164,7 +172,7 @@ buildTrees grammar input passives = edgeTrees
     edgeTrees = [(pe, treesFor pe) | pe <- passives]
 
     treesFor (i,j,cat) = [
-      PT (cat, constr rule,[],weight rule) trees |
+      PT (cat, constr rule, labels rule, weight rule) trees |
         rule <- rules grammar,
         lhs rule == cat,  ---- TODO: rule <- rules grammar cat
         trees <- children (rhs rule) i j
@@ -235,7 +243,7 @@ markDependencies grammar =
     annotate
   where
     annotate pt = case pt of
-      PT (cat,fun,ds,w) pts -> PT (cat,fun,lookf ds fun,w) (map annotate pts)
+      PT (cat,fun,ds,w) pts -> PT (cat,fun, ds, w) (map annotate pts)
       PL (cat,tok) info -> PL (lookc cat,tok) info
       
     mark (lab,hd) pt = case pt of
@@ -253,9 +261,6 @@ markDependencies grammar =
     headTok tls = case filter ((=="head") . snd) tls of
       (PL _ (i,_,_,_),_):_ -> i
       (PT (_,_,ls,_) ts,_):_ -> headTok (zip ts ls)
-
-    lookf ds fun = if null ds then (maybe ("head" : repeat "dep") id (M.lookup fun labelMap)) else ds
-    labelMap = M.fromList [(constr r, labels r) | r <- rules grammar]
 
     lookc cat = maybe cat id (M.lookup cat (catmap grammar))
 
@@ -310,7 +315,11 @@ pGrammar = combine . addRules . map words . filter relevant . lines
       _ | all isSpace l -> False
       _ -> True
 
-    combine (rs,ts,cs) = Grammar (numRules rs) (M.fromListWith (++) ts) (M.fromList (("Str","X") : cs)) (posm cs)
+    combine (rs,ts,cs) = Grammar
+      (numRules rs)
+      (M.fromListWith (++) ts)
+      (M.fromList (("Str","X") : cs))
+      (posm cs)
 
     addRules = foldr addRule ([],[],[])
     

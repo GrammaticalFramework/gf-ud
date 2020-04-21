@@ -1,0 +1,321 @@
+-- utterances and sentences
+Utt ::= Utt Punct        # head punct
+Utt ::= Conj Utt         # cc head
+Utt ::= NP_obl comma Utt # cc punct head
+Utt ::= parenth Utt parenth # punct head punct
+
+Utt ::= S
+Utt ::= QS
+Utt ::= Imp
+Utt ::= NP
+Utt ::= AP
+Utt ::= IP
+Utt ::= IAdv
+Utt ::= Num
+
+-- sentences, direct
+S ::= NP VP neg? # nsubj head advmod
+S ::= NP have neg? AdV? VP  # nsubj aux advmod advmod head
+S ::= NP aux neg? AdV? have? VP  # nsubj aux advmod advmod aux head
+
+-- subordinate
+S ::= NP neg AdV? VP # nsubj advmod advmod head
+S ::= NP neg AdV? have VP  # nsubj advmod advmod aux head
+S ::= NP neg AdV? aux have? VP  # nsubj advmod advmod aux aux head
+
+-- inverted
+S ::= V NP neg AdV? NP? NP_obl? Adv? # head nsubj advmod advmod obj obl advmod
+S ::= have NP neg AdV? VP  # aux nsubj advmod advmod head
+S ::= aux NP neg AdV? have? VP  # aux nsubj advmod advmod aux head
+
+-- with copula, direct
+S ::= NP cop neg? AdV? Comp # nsubj cop advmod advmod head
+S ::= NP have neg? AdV? cop Comp # nsubj aux advmod advmod cop head
+S ::= NP aux neg? AdV? have? cop Comp # nsubj aux advmod advmod aux cop head
+
+-- subordinate
+S ::= NP neg? AdV? aux? have? cop Comp # nsubj advmod advmod aux aux cop head
+
+-- inverted
+S ::= cop NP neg? AdV? Comp # cop nsubj advmod advmod head
+S ::= have NP neg? AdV? cop Comp # aux nsubj advmod advmod cop head
+S ::= aux NP neg? AdV? have? cop Comp # aux nsubj advmod advmod aux cop head
+
+S ::= NP VP_pass neg? # nsubj:pass head advmod # 0.8
+S ::= NP have neg? AdV? VP_pass # nsubj:pass aux advmod advmod head # 0.8
+S ::= NP aux neg? AdV? have? VP_pass # nsubj:pass aux advmod advmod aux head # 0.8
+S ::= NP V_pass neg? AdV? NP_obl? Adv? # nsubj:pass head advmod advmod obl advmod # 0.8
+
+S ::= it finnas neg? AdV? NP # expl head advmod advmod nsubj
+S ::= it neg? AdV? finnas NP # expl advmod advmod head nsubj
+S ::= finnas it neg? AdV? NP # head expl advmod advmod nsubj
+S ::= it have? AdV? neg? finnas NP # expl aux advmod advmod head nsubj
+S ::= it aux? AdV? neg? have finnas NP # expl aux advmod advmod aux head nsubj
+S ::= have? it AdV? neg? finnas NP # aux expl advmod advmod head nsubj
+S ::= aux? it AdV? neg? have finnas NP # aux expl advmod advmod aux head nsubj
+
+S ::= it cop AdV? neg? AP # expl cop advmod advmod head
+S ::= it AdV? neg? cop AP # expl advmod advmod cop head
+S ::= cop it AdV? neg? AP # cop expl advmod advmod head
+---- TODO tenses
+
+S ::= NP be_V neg? AdV? SC # nsubj head advmod advmod ccomp
+S ::= NP have neg? Adv? be_V SC # nsubj aux advmod adv head ccomp
+S ::= NP aux neg? AdV? have? be_V SC # nsubj aux advmod advmod aux head ccomp
+---- TODO word orders
+
+S ::= SC VP neg? # csubj head advmod
+S ::= SC neg VP # csubj advmod head
+---- S ::= SC cop neg? VP_pass # csubj:pass aux:pass advmod head
+---- S ::= SC have neg? cop VP_pass # csubj:pass aux advmod aux:pass head
+S ::= S_front NP VS # parataxis nsubj head
+
+QS ::= IP VP neg? AdV? # nsubj head advmod advmod
+QS ::= IP have? neg? AdV? VP # nsubj aux advmod advmod head
+QS ::= IP aux neg? AdV? have? VP # nsubj aux advmod advmod aux head
+QS ::= IP cop neg? Adv? Comp # nsubj cop advmod advmod head
+QS ::= IP aux neg? AdV? have? cop Comp # nsubj cop advmod advmod aux head
+QS ::= IP V NP neg? AdV? NP_obl? Adv? # obj head nsubj advmod advmod obl advmod
+
+QS ::= IP VP_pass neg? # nsubj:pass head advmod # 0.8
+QS ::= IP have neg? AdV? VP_pass # nsubj:pass aux advmod advmod head # 0.8
+QS ::= IP aux neg? AdV? have? VP_pass # nsubj:pass aux advmod advmod aux head # 0.8
+QS ::= IP V_pass neg? AdV? NP_obl? Adv? # nsubj:pass head advmod advmod obl advmod # 0.8
+
+QS ::= IAdv V NP neg? NP? NP_obl? Adv?  # advmod head nsubj advmod obj obl advmod
+QS ::= IAdv aux NP neg? have? VP # advmod aux nsubj advmod aux head
+QS ::= IAdv cop NP neg? Comp # advmod cop nsubj advmod head
+QS ::= IAdv have NP neg? cop Comp # advmod aux nsubj advmod cop head
+QS ::= IAdv V_pass NP neg? NP_obl? Adv? # advmod head nsubj:pass advmod obl advmod  # 0.8 
+QS ::= IAdv have NP neg? VP_pass # advmod aux nsubj:pass advmod head  # 0.8 
+QS ::= IAdv aux NP neg? have? VP_pass # advmod aux nsubj:pass advmod aux head  # 0.8 
+
+-- indirect questions
+QS ::= if S # mark head
+QS ::= IP som neg? AdV? aux? have? VP # dislocated nsubj advmod advmod aux aux head
+QS ::= IP NP does? neg? VPSlash # obj nsubj nsubj advmod head
+QS ::= IP NP aux neg? have? VPSlash # obj nsubj aux advmod aux head
+QS ::= IAdv NP neg? AdV? VP # advmod nsubj advmod advmod head
+QS ::= IAdv NP neg? AdV? aux? have? VP # advmod nsubj advmod advmod aux aux head
+QS ::= IAdv NP neg? AdV? aux? have? cop Comp # advmod nsubj advmod advmod aux aux cop head
+
+RS ::= RP neg? Adv? aux? have? VP # nsubj advmod advmod aux aux head
+RS ::= RP neg? Adv? aux? have? cop Comp # nsubj advmod advmod aux aux cop head
+RS ::= RP? NP neg? Adv? aux? have? VPSlash # obj nsubj advmod advmod aux aux head
+RS ::= RP neg? Adv? aux? have? VP_pass # nsubj:pass advmod advmod aux aux head # 0.8
+
+-- imperatives
+Imp ::= VP neg? # head advmod
+Imp ::= V neg? NP? NP_obl? Adv? # head advmod obj obl advmod 
+
+-- sentences with adverbials
+S  ::= S_subcomma S # advcl head
+S  ::= S S_sub # head advcl
+S  ::= Adv_comma S # advmod head
+S  ::= NP_oblcomma S # nmod head
+
+-- embedded sentences
+SC ::= S_that
+SC ::= QS
+SC ::= VP_to
+
+
+VP ::= V Prep_prt? # head compound:prt
+VP ::= aux # # 0.001
+VP ::= V2 Prep_prt? NP # head compound:prt obj # 0.05
+VP ::= V2 NP_obl # head obl
+VP ::= V3 NP NP # head iobj obj
+VP ::= V2C NP NP # head obj xcomp
+VP ::= V2C NP AP # head obj xcomp
+VP ::= VS S_that # head ccomp
+VP ::= VV VP_to # head xcomp
+VP ::= V2V NP VP # head obj xcomp
+VP ::= V2V NP VP_to # head obj xcomp
+VP ::= VP comma? Adv # head punct advmod
+VP ::= VP NP_obl # head obl # 0.001
+VP ::= VS S_direct # head parataxis
+
+VP_pass ::= V_pass NP_obl? Adv? # head obl advmod
+
+VPSlash ::= V2
+VPSlash ::= VPSlash NP_obl  # head obl # 0.001
+VPSlash ::= VPSlash Adv # head advmod
+VPSlash ::= VP Prep # head case # 0.001
+
+S_that ::= that? S # mark head
+
+S_direct ::= colon S # punct head
+S_direct ::= colon quote S quote # punct punct head punct
+S_front  ::= S comma # head punct
+S_front  ::= quote S quote comma # punct head punct punct
+
+Comp ::= AP
+Comp ::= NP
+Comp ::= Adv
+Comp ::= NP_obl
+Comp ::= Comp comma? NP_obl # head punct nmod
+Comp ::= Comp comma? Adv # head punct advmod
+
+-- VP with to
+VP_to ::= to neg? AdV? VP # mark advmod advmod head
+VP_to ::= to neg? AdV? cop Comp # mark advmod advmod cop head
+
+-- oblique noun phrase
+NP_obl ::= Prep NP # case head
+
+-- noun phrases
+NP ::= PN
+NP ::= Pron
+NP ::= Num # # 0.1
+NP ::= Det # # 0.1
+
+NP ::= Det? CN # det head
+NP ::= NP comma? NP_obl # head punct nmod
+NP ::= Predet NP # det:predet head
+NP ::= NP_poss CN # nmod:poss head
+NP ::= Num NP # nummod head
+NP ::= N PN # head flat
+NP ::= NP SC # head acl
+NP ::= NP comma? S_sub # head punct acl
+NP ::= NP comma? RS # head punct acl:relcl
+NP ::= Symb Num # head nummod
+---- NP ::= NP comma? VP_pass # head punct acl # 0.01
+
+---- TODO: NP_poss other than Pron_poss
+NP_poss ::= NP # # 0.02
+NP_poss ::= Pron_poss
+
+-- some very special rules ---
+NP        ::= Det CN_quoted # det head
+CN_quoted ::= quote CN quote # punct head punct
+NP        ::= NP NP_appos # head appos # 0.01
+NP_appos  ::= Punct_appos NP # punct head
+
+Num ::= Card
+Num ::= Digits
+
+CN ::= N
+CN ::= AP CN # amod head
+CN ::= CN comma? AP # head punct amod # 0.01
+
+PN ::= PN_one PN # head flat
+
+-- N ::= N_one N # compound head
+N ::= PN CN # compound head
+
+Card ::= Card_one Card # compound head
+
+IP ::= IDet CN # det head
+
+-- adjectival phrases
+AP ::= A
+AP ::= AdA AP     # advmod head
+AP ::= AP NP_obl  # head nmod
+
+-- adverbials
+-- Adv ::= Prep NP # case head
+
+S_sub       ::= comma? Subj S # punct mark head
+S_subcomma  ::= Subj S comma? # mark head punct
+Adv_comma   ::= Adv comma? # head punct
+NP_oblcomma ::= NP_obl comma? # head punct
+S_sub       ::= comma? Subj VP # punct mark head # 0.1
+S_subcomma  ::= Subj VP comma? # mark head punct # 0.1
+
+-- coordination
+S       ::= Conj_pre? ListS S_conj # cc:preconj head conj
+ListS   ::= S
+ListS   ::= ListS S_comma # head conj
+S_conj  ::= comma? Conj S # punct cc head
+S_comma ::= comma S # punct head
+
+NP       ::= Conj_pre? ListNP NP_conj # cc:preconj head conj
+ListNP   ::= NP
+ListNP   ::= ListNP NP_comma # head conj
+NP_conj  ::= comma? Conj NP # punct cc head
+NP_comma ::= comma NP # punct head
+
+AP       ::= Conj_pre? ListAP AP_conj # cc:preconj head conj
+ListAP   ::= AP
+ListAP   ::= ListAP AP_comma # head conj
+AP_conj  ::= comma? Conj AP # punct cc head
+AP_comma ::= comma AP # punct head
+
+VP       ::= Conj_pre? ListVP VP_conj # cc:preconj head conj
+ListVP   ::= VP
+ListVP   ::= ListVP VP_comma # head conj
+VP_conj  ::= comma? Conj VP # punct cc head
+VP_comma ::= comma VP # punct head
+
+-- in Adv conjunctions, we want to include NP_obl parts: all that matters for UD is the category of the first conjunct
+Adv       ::= Conj_pre? ListAdv Adv_conj # cc:preconj head conj
+ListAdv   ::= Adv
+ListAdv   ::= ListAdv Adv_comma # head conj
+Adv_conj  ::= comma? Conj Adv # punct cc head
+Adv_conj  ::= comma? Conj NP_obl # punct cc head
+Adv_comma ::= comma Adv # punct head
+Adv_comma ::= comma NP_obl # punct head
+
+NP_obl     ::= Conj_pre? ListNP_obl Adv_conj # cc:preconj head conj
+ListNP_obl ::= NP_obl
+ListNP_obl ::= ListNP_obl Adv_comma # head conj
+
+
+-- POS tag configurations
+#pos AUX cop do have aux
+#pos VERB V V2 V3 VS VV V2V V2C be_V finnas
+#pos NOUN N N_one
+#pos ADJ A
+#pos PROPN PN PN_one
+#pos ADV Adv IAdv AdA AdV Predet neg
+#pos SCONJ Subj that if
+#pos CCONJ Conj Conj_pre
+#pos DET Det IDet
+#pos PRON Pron IP RP Pron_poss it som
+#pos PART to 's
+#pos PUNCT Punct Punct_appos comma quote colon parenth
+#pos NUM Card Digits Card_one
+#pos ADP Prep Prep_prt
+#pos SYM Symb
+
+#pos VERB_Voice=Pass V_pass
+
+-- structural word lexicon: normal categories
+#token IP vem vad
+#token IAdv när hur var varför
+#token AdA mycket för
+#token AdV alltid aldrig
+#token Det en ett den det varje någon något några ingen inget inga
+#token Pron jag mig du dig han honom hon henne vi oss ni er de dem dom
+#token Subj om när eftersom
+#token aux kan kunde måste vill ville ska skall skulle
+#token Punct . ! ?
+#token Punct_appos , :
+#token Conj och eller
+#token Conj_pre både antingen varken
+#token IDet vilken vilket vilka
+#token Pron_poss min mitt mina din ditt dina hans hennes vår vårt våra er ert era deras
+#token RP som
+
+-- structural word lexicon: syncategorematic words
+#token Prep_prt av bort ner till upp ut
+#token cop är var varit vara
+#token be_V är var varit vara
+#token have ha har hade
+#token finnas finns finnes fanns funnits finnas
+#token neg inte
+#token that att
+#token to att
+#token it det
+#token if om huruvida
+#token som som
+#token comma ,
+#token colon :
+#token quote "
+#token parenth ( ) [ ]
+
+
+
+
+
+
