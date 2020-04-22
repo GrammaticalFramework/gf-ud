@@ -78,7 +78,7 @@ class UDObject a where
 instance UDObject UDSentence where
   prt s = unlines $ udCommentLines s ++ map prt (udWordLines s)
   prss ss = case span ((=="#") . take 1) ss of
-    (cs,ws) -> UDSentence cs (map prs ws)
+    (cs,ws) -> UDSentence cs (map (prs . strip) ws)
   errors s = checkUDWords (udWordLines s)
 
 instance UDObject UDWord where
@@ -86,7 +86,7 @@ instance UDObject UDWord where
     concat (intersperse "\t" [prt id,fo,le,up,xp,prt fe,prt he,de,ds,prt mi])
   prs s = case getSeps '\t' (strip s) of
     id:fo:le:up:xp:fe:he:de:ds:mi:_ ->
-      UDWord (prs id) fo le up xp (prs fe) (prs he) de ds (prs mi)
+      UDWord (prs $ strip id) fo le up xp (prs $ strip fe) (prs $ strip he) de ds (prs $ strip mi) 
     _ -> error ("ERROR: " ++ s ++ " incomplete UDWord")
   errors w@(UDWord id fo le up xp fe he de ds mi) =
     concat [errors id, checkUDPOS up, errors fe, errors he, checkUDLabel de, errors mi] ++
@@ -126,7 +126,7 @@ instance UDObject d => UDObject [d] where
     _ -> concat (intersperse "|" (map prt ds))
   prs s = case (strip s) of
     "_" -> []
-    _ -> map prs (getSeps '|' s)
+    _ -> map (prs . strip) (getSeps '|' s)
   errors ds = concatMap errors ds
 
 -- printing for Malt parser requires the metadata
@@ -264,9 +264,11 @@ checkInList desc xs x =
    xset = S.fromList xs
 
 getSeps :: Eq a => a -> [a] -> [[a]]
-getSeps p xs = case break (==p) xs of
-  (c,_:xx) -> c : getSeps p xx
-  (c,_) -> [c]
+getSeps p xs = filter (not .null) getSeps'
+  where
+    getSeps' = case break (==p) xs of
+      (c,_:xx) -> c : getSeps p xx
+      (c,_) -> [c]
 
 stanzas :: [String] -> [[String]]
 stanzas ls = case dropWhile (all isSpace) ls of
