@@ -264,9 +264,11 @@ checkInList desc xs x =
    xset = S.fromList xs
 
 getSeps :: Eq a => a -> [a] -> [[a]]
-getSeps p xs = case break (==p) xs of
-  (c,_:xx) -> c : getSeps p xx
-  (c,_) -> [c]
+getSeps p xs = filter (not .null) getSeps'
+  where
+    getSeps' = case break (==p) xs of
+      (c,_:xx) -> c : getSeps p xx
+      (c,_) -> [c]
 
 stanzas :: [String] -> [[String]]
 stanzas ls = case dropWhile (all isSpace) ls of
