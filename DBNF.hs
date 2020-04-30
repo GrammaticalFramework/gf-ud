@@ -199,20 +199,33 @@ parse :: Grammar -> Symb -> [Token] -> ([ParseTree],[ParseTree])
 parse grammar cat input = (completes,chunks)
   where
     completes = maybe [] id $ lookup (0, length input, cat) $ subtrees
-    chunks    = [chunkParse subtrees]
+    chunks    = chunkParses subtrees
     subtrees  = buildTrees grammar input (passiveEdges (buildChart grammar input))
 
-chunkParse :: [(Passive,[ParseTree])] -> ParseTree
-chunkParse subtrees = 
-    PT chunknode subs 
+-- longest match parsing, head in different places, head-final first
+chunkParses :: [(Passive,[ParseTree])] -> [ParseTree]
+chunkParses subtrees = 
+    [PT node subs | subs <- subss, node <- chunknodes subs ]
   where
-    subs = next 0 subtreelist
-    chunknode = ("Chunks", "chunks", replicate (length subs - 1) "dep" ++ ["head"], 0.0000001)
+    subss = [
+      next 0 subtreelist -- left to right longest match
+----      ,prev mx revsubtreelist  -- right to left longest match
+      ]
+    chunknodes subs = [
+      ("Chunks", "chunks", replicate m "dep" ++ ["head"] ++ replicate n "dep", 0.0000001)
+        | let len = length subs, n <- [0..len - 1], let m = len - 1 - n
+        ]
 
     next :: Int -> [((Int,Int),ParseTree)] -> [ParseTree]
     next i sl = case sl of
       [] -> []
       ((k,j),t):ss | k == i -> t : next j ss
+      _:ss -> next i ss
+
+    prev :: Int -> [((Int,Int),ParseTree)] -> [ParseTree]
+    prev i sl = case sl of
+      [] -> []
+      ((k,j),t):ss | j == i -> t : prev k ss
       _:ss -> next i ss
 
     subtreelist :: [((Int,Int),ParseTree)]
@@ -221,6 +234,9 @@ chunkParse subtrees =
         ((i,j,_),ts) <- subtrees, t:_ <- [ts] --- [rankTrees ts]
         ]
 
+    revsubtreelist = reverse subtreelist
+    mx = case revsubtreelist of ((_,j),_):_ -> j ; _ -> 0
+    
 -- context-free weight ("probability") of a tree
 
 treeWeight :: ParseTree -> Double
