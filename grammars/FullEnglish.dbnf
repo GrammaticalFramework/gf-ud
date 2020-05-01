@@ -362,24 +362,415 @@ ListNP_obl ::= ListNP_obl Adv_comma # head conj
 --VP ::= VS S_direct # head parataxis
 
 
--- content word lexicon
---#token PN John Mary
---#token V sleeps sleep slept walk walks walked sing sings sang sung move moves moved happen happens happened leave leaves left run runs ran
---#token V2 sees see saw seen love loves loved look looks give gives gave concern concerns concerned make makes made decide decided
---#token V2 know knows knew known
---#token V3 give gives gave
---#token V2C call calls called consider considers considered
---#token V2V see sees saw consider considers considered stop stops stopped
---#token VS say says said believe believes
---#token VV want wants try tries
---#token A old good curious black best cold modified tired bad large larger
---#token N love sleep loves sleeps man men woman women cat cats doctor beer world elephant room hint hints reason reasons loser losers movie life
---#token N house president moon Earth girl girls wine beer
---#token Adv now today here before there yesterday tomorrow always
---#token Predet probably only
---#token Symb $
 
+-- default dependencies for chunking
+-- learned from en_ewt-ud-train.conllu, by taking the most frequent for each pos (#dep) and pos-pos pair (#dirdep)
 
+-- contex-free
+#dep ADJ amod
+#dep ADP case
+#dep ADV advmod
+#dep AUX aux
+#dep CCONJ cc
+#dep DET det
+#dep INTJ discourse
+#dep NOUN obj
+#dep NUM nummod
+#dep PART mark
+#dep PRON nsubj
+#dep PROPN compound
+#dep PUNCT punct
+#dep SCONJ mark
+#dep SYM case
+#dep VERB advcl
+#dep X goeswith
+
+-- context-dependent, True = dep before head
+#dirdep ADJ ADJ False conj
+#dirdep ADJ ADJ True amod
+#dirdep ADJ ADV False advcl
+#dirdep ADJ ADV True obl:npmod
+#dirdep ADJ AUX False conj
+#dirdep ADJ AUX True advmod
+#dirdep ADJ DET False conj
+#dirdep ADJ DET True advmod
+#dirdep ADJ NOUN False amod
+#dirdep ADJ NOUN True amod
+#dirdep ADJ NUM False conj
+#dirdep ADJ NUM True advmod
+#dirdep ADJ PRON False amod
+#dirdep ADJ PRON True advmod
+#dirdep ADJ PROPN False conj
+#dirdep ADJ PROPN True amod
+#dirdep ADJ SCONJ False fixed
+#dirdep ADJ SYM False amod
+#dirdep ADJ SYM True advmod
+#dirdep ADJ VERB False xcomp
+#dirdep ADJ VERB True nsubj
+#dirdep ADJ X False conj
+#dirdep ADP ADJ False fixed
+#dirdep ADP ADJ True case
+#dirdep ADP ADP False fixed
+#dirdep ADP ADP True case
+#dirdep ADP ADV False fixed
+#dirdep ADP ADV True case
+#dirdep ADP CCONJ True case
+#dirdep ADP DET False fixed
+#dirdep ADP DET True case
+#dirdep ADP INTJ True case
+#dirdep ADP NOUN False nmod
+#dirdep ADP NOUN True case
+#dirdep ADP NUM True case
+#dirdep ADP PRON False case
+#dirdep ADP PRON True case
+#dirdep ADP PROPN True case
+#dirdep ADP SCONJ False fixed
+#dirdep ADP SYM True case
+#dirdep ADP VERB False compound:prt
+#dirdep ADP VERB True mark
+#dirdep ADP X True case
+#dirdep ADV ADJ False advmod
+#dirdep ADV ADJ True advmod
+#dirdep ADV ADP True advmod
+#dirdep ADV ADV False fixed
+#dirdep ADV ADV True advmod
+#dirdep ADV AUX False advmod
+#dirdep ADV AUX True advmod
+#dirdep ADV CCONJ False advmod
+#dirdep ADV DET False obl
+#dirdep ADV DET True advmod
+#dirdep ADV INTJ False advmod
+#dirdep ADV NOUN False advmod
+#dirdep ADV NOUN True advmod
+#dirdep ADV NUM False advmod
+#dirdep ADV NUM True advmod
+#dirdep ADV PART False advcl
+#dirdep ADV PART True advmod
+#dirdep ADV PRON False advmod
+#dirdep ADV PRON True advmod
+#dirdep ADV PROPN False advmod
+#dirdep ADV PROPN True advmod
+#dirdep ADV PUNCT True advmod
+#dirdep ADV SCONJ False fixed
+#dirdep ADV SCONJ True advmod
+#dirdep ADV SYM False advmod
+#dirdep ADV SYM True advmod
+#dirdep ADV VERB False advmod
+#dirdep ADV VERB True advmod
+#dirdep AUX ADJ False cop
+#dirdep AUX ADJ True cop
+#dirdep AUX ADP True cop
+#dirdep AUX ADV False cop
+#dirdep AUX ADV True cop
+#dirdep AUX AUX False conj
+#dirdep AUX AUX True aux
+#dirdep AUX DET False aux
+#dirdep AUX DET True cop
+#dirdep AUX INTJ True cop
+#dirdep AUX NOUN False cop
+#dirdep AUX NOUN True cop
+#dirdep AUX NUM True cop
+#dirdep AUX PRON False cop
+#dirdep AUX PRON True cop
+#dirdep AUX PROPN False cop
+#dirdep AUX PROPN True cop
+#dirdep AUX SYM True cop
+#dirdep AUX VERB False aux:pass
+#dirdep AUX VERB True aux
+#dirdep AUX X True cop
+#dirdep CCONJ ADJ False cc
+#dirdep CCONJ ADJ True cc
+#dirdep CCONJ ADP True cc
+#dirdep CCONJ ADV True cc
+#dirdep CCONJ AUX True cc
+#dirdep CCONJ CCONJ False conj
+#dirdep CCONJ CCONJ True cc
+#dirdep CCONJ DET True cc
+#dirdep CCONJ INTJ True cc
+#dirdep CCONJ NOUN False cc
+#dirdep CCONJ NOUN True cc
+#dirdep CCONJ NUM True cc
+#dirdep CCONJ PART True cc
+#dirdep CCONJ PRON True cc
+#dirdep CCONJ PROPN True cc
+#dirdep CCONJ PUNCT True cc
+#dirdep CCONJ SCONJ False fixed
+#dirdep CCONJ SCONJ True cc
+#dirdep CCONJ SYM True cc
+#dirdep CCONJ VERB False cc
+#dirdep CCONJ VERB True cc
+#dirdep CCONJ X True cc
+#dirdep DET ADJ False obl
+#dirdep DET ADJ True det
+#dirdep DET ADV False obl
+#dirdep DET ADV True mark
+#dirdep DET DET False conj
+#dirdep DET DET True det:predet
+#dirdep DET INTJ False vocative
+#dirdep DET INTJ True nsubj
+#dirdep DET NOUN False nmod
+#dirdep DET NOUN True det
+#dirdep DET NUM False nmod
+#dirdep DET NUM True det
+#dirdep DET PRON False det
+#dirdep DET PRON True det
+#dirdep DET PROPN False cc:preconj
+#dirdep DET PROPN True det
+#dirdep DET SCONJ False fixed
+#dirdep DET SYM False advmod
+#dirdep DET SYM True det
+#dirdep DET VERB False obj
+#dirdep DET VERB True nsubj
+#dirdep DET X True det
+#dirdep INTJ ADJ False discourse
+#dirdep INTJ ADJ True discourse
+#dirdep INTJ ADP False discourse
+#dirdep INTJ ADV False discourse
+#dirdep INTJ ADV True discourse
+#dirdep INTJ AUX True discourse
+#dirdep INTJ CCONJ False discourse
+#dirdep INTJ DET False discourse
+#dirdep INTJ INTJ False discourse
+#dirdep INTJ INTJ True discourse
+#dirdep INTJ NOUN False discourse
+#dirdep INTJ NOUN True discourse
+#dirdep INTJ NUM True discourse
+#dirdep INTJ PRON True discourse
+#dirdep INTJ PROPN False discourse
+#dirdep INTJ PROPN True discourse
+#dirdep INTJ VERB False discourse
+#dirdep INTJ VERB True discourse
+#dirdep NOUN ADJ False obl
+#dirdep NOUN ADJ True nsubj
+#dirdep NOUN ADP False fixed
+#dirdep NOUN ADP True nsubj
+#dirdep NOUN ADV False obl
+#dirdep NOUN ADV True obl:npmod
+#dirdep NOUN AUX False nsubj
+#dirdep NOUN AUX True nsubj
+#dirdep NOUN DET False nmod
+#dirdep NOUN DET True nsubj
+#dirdep NOUN INTJ False vocative
+#dirdep NOUN NOUN False nmod
+#dirdep NOUN NOUN True compound
+#dirdep NOUN NUM False appos
+#dirdep NOUN NUM True nsubj
+#dirdep NOUN PRON False nmod
+#dirdep NOUN PRON True nsubj
+#dirdep NOUN PROPN False appos
+#dirdep NOUN PROPN True compound
+#dirdep NOUN PUNCT False dep
+#dirdep NOUN SCONJ False fixed
+#dirdep NOUN SCONJ True obl:npmod
+#dirdep NOUN SYM False appos
+#dirdep NOUN SYM True nsubj
+#dirdep NOUN VERB False obj
+#dirdep NOUN VERB True nsubj
+#dirdep NOUN X False appos
+#dirdep NOUN X True compound
+#dirdep NUM ADJ False obl
+#dirdep NUM ADJ True nsubj
+#dirdep NUM ADV False obl
+#dirdep NUM ADV True advmod
+#dirdep NUM AUX False obl
+#dirdep NUM DET False nmod
+#dirdep NUM DET True det
+#dirdep NUM NOUN False nummod
+#dirdep NUM NOUN True nummod
+#dirdep NUM NUM False nmod
+#dirdep NUM NUM True compound
+#dirdep NUM PRON False nmod
+#dirdep NUM PROPN False nummod
+#dirdep NUM PROPN True nummod
+#dirdep NUM SYM False nummod
+#dirdep NUM SYM True nummod
+#dirdep NUM VERB False obl
+#dirdep NUM VERB True nsubj
+#dirdep NUM X False obl
+#dirdep PART ADJ False conj
+#dirdep PART ADJ True advmod
+#dirdep PART ADP True mark
+#dirdep PART ADV False fixed
+#dirdep PART ADV True advmod
+#dirdep PART AUX False advmod
+#dirdep PART AUX True advmod
+#dirdep PART DET False advmod
+#dirdep PART DET True advmod
+#dirdep PART NOUN False case
+#dirdep PART NOUN True advmod
+#dirdep PART NUM False case
+#dirdep PART NUM True mark
+#dirdep PART PRON False case
+#dirdep PART PRON True advmod
+#dirdep PART PROPN False case
+#dirdep PART PROPN True advmod
+#dirdep PART SCONJ False fixed
+#dirdep PART SYM True mark
+#dirdep PART VERB False advmod
+#dirdep PART VERB True mark
+#dirdep PRON ADJ False obl
+#dirdep PRON ADJ True nsubj
+#dirdep PRON ADP True nsubj
+#dirdep PRON ADV False obl
+#dirdep PRON ADV True nsubj
+#dirdep PRON AUX False nsubj
+#dirdep PRON AUX True nsubj
+#dirdep PRON DET False nmod
+#dirdep PRON DET True nsubj
+#dirdep PRON INTJ False vocative
+#dirdep PRON NOUN False nmod
+#dirdep PRON NOUN True nmod:poss
+#dirdep PRON NUM False nmod
+#dirdep PRON NUM True nsubj
+#dirdep PRON PRON False conj
+#dirdep PRON PRON True nsubj
+#dirdep PRON PROPN False conj
+#dirdep PRON PROPN True nsubj
+#dirdep PRON SYM False appos
+#dirdep PRON SYM True nsubj
+#dirdep PRON VERB False obj
+#dirdep PRON VERB True nsubj
+#dirdep PROPN ADJ False obl
+#dirdep PROPN ADJ True nsubj
+#dirdep PROPN ADV False obl
+#dirdep PROPN ADV True nsubj
+#dirdep PROPN AUX False nsubj
+#dirdep PROPN AUX True nsubj
+#dirdep PROPN CCONJ False obl
+#dirdep PROPN DET False nmod
+#dirdep PROPN INTJ False vocative
+#dirdep PROPN NOUN False nmod
+#dirdep PROPN NOUN True compound
+#dirdep PROPN NUM False nmod
+#dirdep PROPN NUM True nsubj
+#dirdep PROPN PRON False nmod
+#dirdep PROPN PRON True nsubj
+#dirdep PROPN PROPN False flat
+#dirdep PROPN PROPN True compound
+#dirdep PROPN PUNCT False conj
+#dirdep PROPN SYM False appos
+#dirdep PROPN SYM True compound
+#dirdep PROPN VERB False obl
+#dirdep PROPN VERB True nsubj
+#dirdep PUNCT ADJ False punct
+#dirdep PUNCT ADJ True punct
+#dirdep PUNCT ADP False punct
+#dirdep PUNCT ADP True punct
+#dirdep PUNCT ADV False punct
+#dirdep PUNCT ADV True punct
+#dirdep PUNCT AUX False punct
+#dirdep PUNCT AUX True punct
+#dirdep PUNCT CCONJ False punct
+#dirdep PUNCT CCONJ True punct
+#dirdep PUNCT DET False punct
+#dirdep PUNCT DET True punct
+#dirdep PUNCT INTJ False punct
+#dirdep PUNCT INTJ True punct
+#dirdep PUNCT NOUN False punct
+#dirdep PUNCT NOUN True punct
+#dirdep PUNCT NUM False punct
+#dirdep PUNCT NUM True punct
+#dirdep PUNCT PART False punct
+#dirdep PUNCT PART True punct
+#dirdep PUNCT PRON False punct
+#dirdep PUNCT PRON True punct
+#dirdep PUNCT PROPN False punct
+#dirdep PUNCT PROPN True punct
+#dirdep PUNCT PUNCT True dep
+#dirdep PUNCT SCONJ False punct
+#dirdep PUNCT SCONJ True punct
+#dirdep PUNCT SYM False punct
+#dirdep PUNCT SYM True punct
+#dirdep PUNCT VERB False punct
+#dirdep PUNCT VERB True punct
+#dirdep PUNCT X False punct
+#dirdep PUNCT X True punct
+#dirdep SCONJ ADJ False fixed
+#dirdep SCONJ ADJ True mark
+#dirdep SCONJ ADP False fixed
+#dirdep SCONJ ADP True mark
+#dirdep SCONJ ADV False fixed
+#dirdep SCONJ ADV True mark
+#dirdep SCONJ AUX True mark
+#dirdep SCONJ DET True mark
+#dirdep SCONJ INTJ True mark
+#dirdep SCONJ NOUN False nmod
+#dirdep SCONJ NOUN True mark
+#dirdep SCONJ NUM True mark
+#dirdep SCONJ PART True mark
+#dirdep SCONJ PRON False mark
+#dirdep SCONJ PRON True case
+#dirdep SCONJ PROPN True mark
+#dirdep SCONJ SCONJ False fixed
+#dirdep SCONJ SYM True mark
+#dirdep SCONJ VERB False ccomp
+#dirdep SCONJ VERB True mark
+#dirdep SYM ADJ False discourse
+#dirdep SYM ADJ True obl:npmod
+#dirdep SYM ADP False punct
+#dirdep SYM ADV False obl
+#dirdep SYM ADV True cc
+#dirdep SYM CCONJ True cc
+#dirdep SYM NOUN False nmod
+#dirdep SYM NOUN True compound
+#dirdep SYM NUM False punct
+#dirdep SYM NUM True case
+#dirdep SYM PRON True nsubj
+#dirdep SYM PROPN False list
+#dirdep SYM PROPN True punct
+#dirdep SYM SYM False conj
+#dirdep SYM SYM True case
+#dirdep SYM VERB False obj
+#dirdep SYM VERB True nsubj:pass
+#dirdep SYM X False punct
+#dirdep SYM X True punct
+#dirdep VERB ADJ False advcl
+#dirdep VERB ADJ True advcl
+#dirdep VERB ADP False conj
+#dirdep VERB ADV False advcl
+#dirdep VERB ADV True advcl
+#dirdep VERB AUX False conj
+#dirdep VERB AUX True advcl
+#dirdep VERB CCONJ False advcl
+#dirdep VERB DET False acl:relcl
+#dirdep VERB DET True case
+#dirdep VERB INTJ False conj
+#dirdep VERB INTJ True parataxis
+#dirdep VERB NOUN False acl:relcl
+#dirdep VERB NOUN True amod
+#dirdep VERB NUM False parataxis
+#dirdep VERB NUM True parataxis
+#dirdep VERB PART False advcl
+#dirdep VERB PRON False acl:relcl
+#dirdep VERB PRON True advcl
+#dirdep VERB PROPN False acl:relcl
+#dirdep VERB PROPN True amod
+#dirdep VERB SCONJ False fixed
+#dirdep VERB SYM False advcl
+#dirdep VERB SYM True advcl
+#dirdep VERB VERB False conj
+#dirdep VERB VERB True advcl
+#dirdep VERB X False parataxis
+#dirdep VERB X True parataxis
+#dirdep X ADJ False advmod
+#dirdep X ADJ True nummod
+#dirdep X ADP True goeswith
+#dirdep X ADV False conj
+#dirdep X ADV True goeswith
+#dirdep X NOUN False appos
+#dirdep X NOUN True goeswith
+#dirdep X NUM False conj
+#dirdep X PRON True goeswith
+#dirdep X PROPN False list
+#dirdep X PROPN True compound
+#dirdep X PUNCT False goeswith
+#dirdep X PUNCT True nummod
+#dirdep X SCONJ True goeswith
+#dirdep X SYM True advmod
+#dirdep X VERB False obl
+#dirdep X VERB True nummod
+#dirdep X X False goeswith
+#dirdep X X True compound
 
 
 

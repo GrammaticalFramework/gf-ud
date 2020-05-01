@@ -67,7 +67,9 @@ data Grammar = Grammar {
   rules        :: [Rule],
   terminalmap  :: M.Map Token [Symb], -- token to cats
   catmap       :: M.Map Symb Symb,    -- cat to UD pos
-  posmap       :: M.Map Symb [Symb]   -- pos to cats
+  posmap       :: M.Map Symb [Symb],  -- pos to cats
+  depmap       :: M.Map Symb Symb,    -- pos to label
+  dirdepmap    :: M.Map (Symb,Symb,Bool) Symb     -- (pos,headpos,ifbefore) to label
   }
   deriving Show
 
@@ -199,12 +201,12 @@ parse :: Grammar -> Symb -> [Token] -> ([ParseTree],[ParseTree])
 parse grammar cat input = (completes,chunks)
   where
     completes = maybe [] id $ lookup (0, length input, cat) $ subtrees
-    chunks    = chunkParses subtrees
+    chunks    = chunkParses grammar subtrees
     subtrees  = buildTrees grammar input (passiveEdges (buildChart grammar input))
 
 -- longest match parsing, head in different places, head-final first
-chunkParses :: [(Passive,[ParseTree])] -> [ParseTree]
-chunkParses subtrees = 
+chunkParses :: Grammar -> [(Passive,[ParseTree])] -> [ParseTree]
+chunkParses gr subtrees = 
     [PT node subs | subs <- subss, node <- chunknodes subs ]
   where
     subss = [
@@ -212,8 +214,12 @@ chunkParses subtrees =
 ----      ,prev mx revsubtreelist  -- right to left longest match
       ]
     chunknodes subs = [
-      ("Chunks", "chunks", replicate m "dep" ++ ["head"] ++ replicate n "dep", 0.0000001)
-        | let len = length subs, n <- [0..len - 1], let m = len - 1 - n
+      ("Chunks", "chunks", take n dlabs ++ ["head"] ++ drop (n+1) dlabs, 0.0000001)
+        | let len = length subs,
+          n <- [0..len - 1],
+          let sposs = [ (t,posOf t) | t <- subs],
+          let hpos  = snd (sposs !! n),
+          let dlabs = [dirLabelOf t (p,hpos,i<n) | (i,(t,p)) <- zip [0..] sposs]
         ]
 
     next :: Int -> [((Int,Int),ParseTree)] -> [ParseTree]
@@ -236,6 +242,17 @@ chunkParses subtrees =
 
     revsubtreelist = reverse subtreelist
     mx = case revsubtreelist of ((_,j),_):_ -> j ; _ -> 0
+
+    dirLabelOf t pqb = maybe (labelOf t) id $ M.lookup pqb (dirdepmap gr)
+    
+    labelOf t = maybe "dep" id $ M.lookup (catOf t) (depmap gr)
+      
+    posOf t = maybe "X" id $  M.lookup (catOf t) (catmap gr)
+      
+    catOf t = case t of
+      PT (cat,_,_,_) _ -> cat     
+      PL (cat,_) _ -> cat
+
     
 -- context-free weight ("probability") of a tree
 
@@ -334,20 +351,24 @@ pGrammar = combine . addRules . map words . filter relevant . lines
       _ | all isSpace l -> False
       _ -> True
 
-    combine (rs,ts,cs) = Grammar
+    combine (rs,ts,cs,ds,dds) = Grammar
       (numRules rs)
       (M.fromListWith (++) ts)
       (M.fromList (("Str","X") : cs))
       (posm cs)
+      (M.fromList ds)
+      (M.fromList dds)
 
-    addRules = foldr addRule ([],[],[])
+    addRules = foldr addRule ([],[],[],[],[])
     
-    addRule ws g@(rs,ts,cs) = case ws of
-      "#token":c:ww -> (rs, [(w,[c]) | w <- ww] ++ ts, cs)
+    addRule ws g@(rs,ts,cs,ds,dds) = case ws of
+      "#token":c:ww -> (rs, [(w,[c]) | w <- ww] ++ ts, cs,ds,dds)
 
-      "#pos":c:ww   -> (rs, ts,[(w,c) | w <- ww] ++ cs)
+      "#pos":c:ww   -> (rs, ts,[(w,c) | w <- ww] ++ cs,ds,dds)
+      "#dep":p:l:_   -> (rs, ts, cs, (p,l):ds,dds)
+      "#dirdep":p:q:b:l:_   -> (rs, ts, cs, ds, ((p,q,read b),l):dds)
       c:"::=":ww -> (
-        expandRule (getRule (unwords ws) c (splitSemic ww)) ++ rs, ts,cs)
+        expandRule (getRule (unwords ws) c (splitSemic ww)) ++ rs, ts,cs,ds,dds)
       _ -> error ("rule not parsed: " ++ unwords ws)
 
     expandRule r = [
