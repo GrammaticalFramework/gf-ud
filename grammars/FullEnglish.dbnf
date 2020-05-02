@@ -40,6 +40,8 @@ S ::= SC VP # csubj head
 S ::= SC do neg VP_inf # csubj aux advmod head
 S ::= SC cop neg? VP_pass # csubj:pass aux:pass advmod head
 S ::= SC have neg? cop VP_pass # csubj:pass aux advmod aux:pass head
+S ::= SC cop neg? Comp # csubj cop advmod head
+S ::= SC have neg? cop Comp # csubj aux advmod cop head
 S ::= S_front NP V # parataxis nsubj head
 
 QS ::= do NP neg? VP # aux nsubj advmod head
@@ -216,6 +218,7 @@ IP ::= IDet CN # det head
 AP ::= A
 AP ::= AdA AP     # advmod head
 AP ::= AP NP_obl  # head nmod
+AP ::= AP SC  # head ccomp # 0.01
 AP ::= V_pass
 AP ::= V_pastpart
 AP ::= V_ger
@@ -223,6 +226,7 @@ AP ::= V_ger
 -- adverbials
 -- Adv ::= Prep NP # case head
 Adv ::= Prep VP_ger # case head
+Adv ::= VP_ger # case head # 0.01
 
 S_sub       ::= comma? Subj S # punct mark head
 S_subcomma  ::= Subj S comma? # mark head punct
