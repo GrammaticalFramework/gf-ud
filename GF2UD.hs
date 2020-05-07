@@ -4,7 +4,6 @@ import UDConcepts
 import GFConcepts
 import UDAnnotations
 import UDOptions
-import UDVisualization
 
 import PGF hiding (CncLabels)
 
@@ -53,7 +52,6 @@ testTree i opts env t = do
   ifOpt opts "err" $ unlines (errors u)
   
 --  if isOpt opts "vud" then (visualizeUDSentences env [u]) else return ()
-
 
   return u
 
