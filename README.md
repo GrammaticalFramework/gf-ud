@@ -8,11 +8,18 @@ The conversions are based on algorithms presented in the papers
 
 - P Kolachina and A Ranta, From Abstract Syntax to Universal Dependencies, 
   LiLT (Linguistic Issues in Language Technology) 13, 2016 ("gf2ud")
-  http://csli-lilt.stanford.edu/ojs/index.php/LiLT/article/view/71/73 
+  http://csli-lilt.stanford.edu/ojs/index.php/LiLT/article/view/71/73
+  (this link has been unreachable large parts of 2020)
   
 - A Ranta and P Kolachina, From Universal Dependencies to Abstract Syntax,
   Proceedings of the NoDaLiDa 2017 Workshop on Universal Dependencies, 2017 ("ud2gf")
   https://www.aclweb.org/anthology/W17-0414.pdf
+
+Both papers are available as parts of Prasanth Kolachina's PhD thesis
+
+- Multilingual Abstractions: Abstract Syntax Trees and Universal
+  Dependencies, 2019
+  https://gupea.ub.gu.se/bitstream/2077/60331/1/gupea_2077_60331_1.pdf
   
 as well as some earlier code in gf-contrib/ud2gf and in gf-core/src/, mostly by 
 Aarne Ranta and Prasanth Kolachina. Differences from those sources may be documented 

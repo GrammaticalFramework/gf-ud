@@ -43,7 +43,7 @@ Finished: Tue Oct 13 16:34:01 CEST 2020
 
 Test parsing with maltparser:
 ```
-  java -jar maltparser.jar -c test -i data/wordnet-test.conllu -o out/wordnet-test-out.conllu -m parse
+  java -jar maltparser.jar -c wordnet-parser -i data/wordnet-test.conllu -o out/wordnet-test-out.conllu -m parse
 ```
 You should see this kind of output:
 ```
