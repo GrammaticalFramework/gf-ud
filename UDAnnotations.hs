@@ -26,7 +26,7 @@ getEnv pref eng cat = do
   abslabels <- readFile (stdAbsLabelsFile pref) >>= return . pAbsLabels
   cnclabels <- readFile (stdCncLabelsFile pref eng) >>= return . const . pCncLabels
   let env = mkUDEnv pgf abslabels cnclabels (stdLanguage pref eng) cat
-  putStrLn $ unlines $ checkAbsLabels env abslabels
+  putStrLn $ unlines $ map ("##"++) $ checkAbsLabels env abslabels
   return $ addMissing env
   
 mkUDEnv pgf absl cncl eng cat =

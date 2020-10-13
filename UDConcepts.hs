@@ -216,6 +216,22 @@ head_Label = "head"
 root_Label = "root"
 x_POS = "X" -- the dummy POS
 
+adjustUDIds :: UDSentence -> UDSentence
+adjustUDIds uds =
+  if ids == [1..length ws]
+  then uds
+  else uds{udWordLines = map fix ws}
+ where
+  ws = udWordLines uds
+  ids = [n | UDIdInt n <- map udID ws]
+  fixes = zip (map udID ws) (map UDIdInt [1..length ws])
+  fix udw = udw {
+    udID = let idw = udID udw in maybe idw id (lookup idw fixes),
+    udHEAD = let idw = udHEAD udw in maybe idw id (lookup idw fixes),
+    udDEPS = "ADJUSTED"
+    }
+
+
 
 ---------------------
 -- auxiliaries

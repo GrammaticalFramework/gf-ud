@@ -47,7 +47,7 @@ testTree i opts env t = do
   let u2 = wordTree2udTree u1
   ifOpt opts "ut" $ prUDTree u2
   
-  let u = udTree2sentence u2
+  let u = adjustUDIds (udTree2sentence u2)
   ifOpt opts "ud" $ prUDSentence i u
   ifOpt opts "err" $ unlines (errors u)
   
@@ -91,7 +91,8 @@ prTokenInfo (TokenInfo w l p m) = unwords [w,l,p,prt m]
 
 gf2ud :: UDEnv -> Language -> PGF.Tree -> UDSentence
 gf2ud env lang =
-    udTree2sentence
+    adjustUDIds --- hack: should check why needed
+  . udTree2sentence
   . wordTree2udTree
   . labelledTree2wordTree
   . annotTree2labelledTree env lang

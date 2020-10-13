@@ -29,6 +29,8 @@ main = do
   
     "conll2pdf":_ -> getContents >>= visualizeUDSentences . parseUDText
   
+    "check":_ -> getContents >>= putStrLn . checkUDSentences . parseUDText
+  
     "parse2latex":file:_ -> getContents >>= absTrees2latex initUDEnv file . map pAbsTree . selectParseTrees . lines
     
     "parse2pdf":_ -> getContents >>= visualizeAbsTrees initUDEnv . map pAbsTree . selectParseTrees . lines
@@ -122,6 +124,9 @@ utt = "Utt"
 termInfix = "Infix"
 termcat = "Term"
 
+checkUDSentences :: [UDSentence] -> String
+checkUDSentences uds = unlines $
+  errorsInUDSentences uds
 
 -------------------
 
