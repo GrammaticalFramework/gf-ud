@@ -8,7 +8,7 @@ Train a parser as follows:
 ```
   cat data/wordnet-train.conllu | udpipe --train wordnet.udpipe
 ```
-This takes several minutes.
+This takes several minutes (about 20 on my Macbook Pro 2019).
 
 Test the parser with string input:
 ```

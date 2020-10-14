@@ -9,6 +9,7 @@ import PGF
 import qualified Data.Map.Strict as M
 import Data.List
 import Data.Ord
+import qualified Data.Set as S
 
 autest = do
   pgf <- readPGF "grammars/Structures.pgf"
@@ -79,4 +80,22 @@ paths g = phs mx
 ---- approximating distance
 distance :: Ord a => Graph a -> a -> a -> Int
 distance g a b = minimum $ map length $ paths g a b
-  
+
+
+---------------------------------------------------
+--- find syncategorematic words
+
+syncatWords :: PGF -> Language -> [(String,[CId])]
+syncatWords pgf eng =
+  let
+    morpho = buildMorpho pgf eng
+    fullform = fullFormLexicon morpho
+    cfuns = [f | f <- functions pgf, Just ty <- [functionType pgf f], (_:_,_,_) <- [unType ty]]
+    cfunset = S.fromList cfuns 
+    isCfun f = S.member f cfunset
+    syncats = [(s,f) | (s,fas) <- fullform, (f,a) <- fas, isCfun f]
+    nubsyncats = concatMap (take 1) $ group $ sort syncats
+    gsyncats = groupBy (\ (x,_) (y,_) -> x == y) nubsyncats
+  in
+    [(s,map snd ss) | ss@((s,_):_) <- gsyncats]
+
