@@ -1,7 +1,69 @@
-# Training and testing UD parsing with Maltparser
+# Training and testing UD parsing
+
+## Short version with UDPipe, with .conllu files in place:
+
+Install UDPipe from https://github.com/ufal/udpipe
+
+Train a parser as follows:
+```
+  cat data/wordnet-train.conllu | udpipe --train wordnet.udpipe
+```
+This takes several minutes.
+
+Test the parser with string input:
+```
+  echo "this is very good" | udpipe --tokenize --tag --parse wordnet.udpipe
+```
+You should see a CoNLL tree.
+
+Test the parser with a test treebank input:
+```
+  cat data/wordnet-test.conllu | udpipe --parse wordnet.udpipe >out/wn-udpipe.conllu
+```
+Evaluate the result
+```
+  gfud eval macro LAS data/wordnet-test.conllu out/wn-udpipe.conllu
+```
+You should see something like
+```
+evaluating macro LAS data/wordnet-test.conllu out/wn-udpipe.conllu
+UDScore {udScore = 0.968626273814021, udMatching = 506, udTotalLength = 2532, udSamesLength = 2412, udPerfectMatch = 442}
+```
+This section was adapted from the excellent tutorial on https://wiki.apertium.org/wiki/UDPipe
 
 
-## Short version, with .conllu files in place:
+## Longer version, starting with building treebanks with gf2ud
+
+Example: use the gf-wordnet grammar.
+
+Clone gf-wordnet from
+```
+  https://github.com/GrammaticalFramework/gf-wordnet
+```
+Build a pgf grammar:
+```
+  gf-wordnet$ gf -make ParseEng.gf
+```
+Make this grammar available in ud-gf:
+```
+  gf-ud/grammars$ ln -s <path-to-gf-wordnet>/Parse.pgf
+```
+Split wordnet example treebank into training and test sets:
+```
+  head -6500 data/wordnet-examples.gft >data/wordnet-train.gft 
+  tail -506 data/wordnet-examples.gft >data/wordnet-test.gft 
+```
+Convert these GF treebanks to UD treebanks
+```
+  cat data/wordnet-train.gft | ./gfud -gf2ud grammars/Parse Eng Phr ud | grep -v "##" | sed '/./,$!d' >out/wordnet-train.conllu
+  cat data/wordnet-test.gft | ./gfud -gf2ud grammars/Parse Eng Phr ud | grep -v "##" | sed '/./,$!d' >out/wordnet-test.conllu
+```
+
+Now you have the .conllu files to start from in the "short version".
+But notice that they are in out/ not in data/ since they are generated files.
+
+
+## Short version with Maltparser, with .conllu files in place:
 
 Train maltparser with the training treebank
 ```
@@ -75,36 +137,5 @@ You should see this kind of output:
 evaluating macro LAS data/wordnet-test.conllu out/wordnet-test-out.conllu
 UDScore {udScore = 0.6565243304126713, udMatching = 506, udTotalLength = 2532, udSamesLength = 1373, udPerfectMatch = 183}
 ```
-
-
-## Longer version, starting with building treebanks with gf2ud
-
-Example: use the gf-wordnet grammar.
-
-Clone gf-wordnet from
-```
-  https://github.com/GrammaticalFramework/gf-wordnet
-```
-Build a pgf grammar:
-```
-  gf-wordnet$ gf -make ParseEng.gf
-```
-Make this grammar available in ud-gf:
-```
-  gf-ud/grammars$ ln -s <path-to-gf-wordnet>/Parse.pgf
-```
-Split wordnet example treebank into training and test sets:
-```
-  head -6500 data/wordnet-examples.gft >data/wordnet-train.gft 
-  tail -506 data/wordnet-examples.gft >data/wordnet-test.gft 
-```
-Convert these GF treebanks to UD treebanks
-```
-  cat data/wordnet-train.gft | ./gfud -gf2ud grammars/Parse Eng Phr ud | grep -v "##" | sed '/./,$!d' >out/wordnet-train.conllu
-  cat data/wordnet-test.gft | ./gfud -gf2ud grammars/Parse Eng Phr ud | grep -v "##" | sed '/./,$!d' >out/wordnet-test.conllu
-```
-
-Now you have the .conllu files to start from in the "short version".
-But notice that they are in out/ not in data/ since they are generated files.
 
 
