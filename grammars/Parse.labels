@@ -49,8 +49,9 @@
 #fun ConsVPI head conj -- VPI -> ListVPI -> ListVPI
 #fun ConsVPS head conj -- VPS -> ListVPS -> ListVPS
 #fun DetCN det head -- Det -> CN -> NP
+#fun ExistIPQS aux advmod head -- Temp -> Pol -> NP -> S
+#fun ExistNPQS aux advmod head -- Temp -> Pol -> NP -> S
 #fun ExistS aux advmod head -- Temp -> Pol -> NP -> S
-#fun FlatPN head flat -- PN -> PN -> PN
 #fun FunRP case nmod head -- Prep -> NP -> RP -> RP
 #fun IDig head -- Dig -> Digits
 #fun IIDig nummod head -- Dig -> Digits -> Digits
@@ -62,15 +63,11 @@
 #fun MkVPI head -- VP -> VPI
 #fun MkVPS aux advmod head -- Temp -> Pol -> VP -> VPS
 #fun OrdNumeral head -- Numeral -> Ord
-#fun PassVP head -- V -> VP
 #fun PositA head -- A -> AP
 #fun PositAdvAdj head -- A -> Adv
-#fun PossPlNP nmod:poss head -- Pron -> CN -> NP
-#fun PossSgNP nmod:poss head -- Pron -> CN -> NP
 #fun PredVPS nsubj head -- NP -> VPS -> S
 #fun PrepIP case head -- Prep -> IP -> IAdv
 #fun PrepNP case head -- Prep -> NP -> Adv
-#fun PrepPP case head -- Prep -> NP -> PP
 #fun ProgrVP head -- VP -> VP
 #fun PunctUttText head punct -- Utt -> Punct -> Text
 #fun QuantPlCN det head -- Quant -> CN -> NP
@@ -79,11 +76,10 @@
 #fun QuestIAdv advmod head -- IAdv -> Cl -> QCl ---- not active
 #fun QuestIComp head nsubj -- IComp -> NP -> QCl
 #fun QuestIAdvNPVP advmod nsubj head -- IAdv -> NP -> VP -> QCl ---- temporary
-#fun QuestNP VP nsubj head -- NP -> VP -> QS ---- temporary
-#fun QuestQCl aux advmod head -- Temp -> Pol -> QCl -> QS ---- temporary
 #fun QuestQVP nsubj head -- IP -> QVP -> QCl
 #fun QuestSlash obj head -- IP -> ClSlash -> QCl
 #fun QuestVP nsubj head -- IP -> VP -> QCl
+#fun QuestVPS nsubj head -- IP -> VPS -> QS
 #fun RelCN head acl -- CN -> RS -> CN
 #fun RelCl head -- Cl -> RCl
 #fun RelSlash mark head -- RP -> ClSlash -> RCl
@@ -114,6 +110,7 @@
 #fun pot2plus nummod head -- Sub10 -> Sub100 -> Sub1000
 #fun pot3 head -- Sub1000 -> Sub1000000
 #fun pot3plus nummod head -- Sub1000 -> Sub1000 -> Sub1000000
+#fun pot4plus nummod head -- Sub1000 -> Sub1000000 -> Sub1000000000
 
 #cat Ant X
 #cat Dig NUM
@@ -138,7 +135,7 @@
 #cat Quant DET
 #cat CAdv ADV
 #cat PConj CCONJ
-#cat Punct PUNCT
+#cat Mark PUNCT
 #cat CN NOUN
 #cat NP PRON ----
 #cat ACard ADV
@@ -147,6 +144,8 @@
 #cat Digit NUM
 #cat Sub10 NUM
 #cat Sub100 NUM
+#cat Sub1000 NUM
+#cat Sub1000000000 NUM
 #cat IP PRON
 #cat IQuant DET
 
@@ -218,7 +217,7 @@ CompQS head
 CompS head
 CompVP aux advmod nsubj head --- mod mod _ head
 ComparA amod head
-ComparAdv empty case head nmod --- _ head mod mod
+ComparAdv advmod case head nmod --- _ head mod mod
 ComplA2 head nmod
 ComplBareVS head ccomp
 ComplDirectVQ head ccomp
@@ -229,7 +228,7 @@ ComplSlash head obj
 ComplSlashIP head obj
 ComplSlashPartLast head obj
 ComplVA head xcomp
-ComplVPI2 head comp
+ComplVPI2 head obj
 ComplVPIVV head xcomp
 ComplVPS2 head obj
 ComplVQ head ccomp
@@ -282,7 +281,7 @@ EmbedS head
 EmbedSSlash head
 EmbedVP aux advmod obj head --- _ _ _ head
 EmptyRelSlash head
-EnoughAP head empty empty xcomp --- head _ _ mod
+EnoughAP head aux advmod xcomp --- head _ _ mod
 EnoughAdv head
 ExistIP head
 ExistIPAdv head advmod
@@ -408,6 +407,7 @@ RelNP head acl
 RelS head advcl
 RelSlash mark head
 RelVP mark head
+SQuestVPS nsubj head
 SSubjS head mark advcl
 SelfAdVVP head
 SelfAdvVP head
@@ -421,8 +421,8 @@ SlashPrep head case
 SlashV2A head xcomp
 SlashV2Q head ccomp
 SlashV2S head ccomp
-SlashV2V head empty empty xcomp
-SlashV2VNP head obj empty empty xcomp
+SlashV2V head aux advmod xcomp
+SlashV2VNP head obj aux advmod xcomp
 SlashV2a head
 SlashVP nsubj head
 SlashVS nsubj head ccomp
@@ -431,14 +431,14 @@ StrandQuestSlash obj head
 StrandRelSlash obj head
 SubjRelNP head acl ---
 SubjS mark head
-TTAnt empty head --- head head
+TTAnt aux head --- head head
 TimeNP head
 Use2N3 head
 Use3N3 head
 UseA2 head
 UseACard head
 UseAdAACard advmod head
-UseCl empty empty head
+UseCl aux advmod head
 UseComp head
 UseComp_estar head
 UseComparA head
@@ -465,14 +465,14 @@ UttDatIP head
 UttDatNP head
 UttIAdv head
 UttIP head
-UttImpPl empty head
-UttImpPol empty head
-UttImpSg empty head
+UttImpPl aux head
+UttImpPol aux head
+UttImpSg aux head
 UttInterj head
 UttNP head
 UttQS head
 UttS head
-UttVP empty empty obj head --- _ _ _ head
+UttVP aux advmod obj head --- _ _ _ head
 UttVPS obj head --- _ head
 UttVPShort head
 VPSlashPrep head case --- head mod
@@ -503,24 +503,7 @@ n_unit_CN nummod nmod head ---
 n_units_AP nummod nmod head --- mod mod head
 n_units_of_NP nummod head nmod --- mod mod mod
 none_of_NP_affair_VP head
-num head
----pot0 head
----pot0as1 head
----pot1 head
----pot1as2 head
----pot1plus *
----pot1to19 head
----pot2 head
----pot2as3 head
----pot2plus *
----pot3 head
----pot3as4 head
----pot3plus *
----pot4 head
----pot4plus *
-tend_VP head
-timeHour head
----timeHourMinute *
+timeHourMinute head nummod
 timeunitAdv nummod head
 timeunitRange nummod nummod head ---
 weather_adjCl head

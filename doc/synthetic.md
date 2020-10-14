@@ -62,6 +62,12 @@ Convert these GF treebanks to UD treebanks
 Now you have the .conllu files to start from in the "short version".
 But notice that they are in out/ not in data/ since they are generated files.
 
+It can also make sense to check the validity of the generated treebanks:
+```
+  gfud check <out/wordnet-train.conllu
+```
+If this command returns no messages, the treebank should be OK.
+
 
 ## Short version with Maltparser, with .conllu files in place:
 
