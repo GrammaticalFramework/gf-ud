@@ -22,20 +22,21 @@
 #word ' ' _
 #word , , _
 
-#lemma MkVPI to To mark head
-#lemma AddStoVP that That mark head
-#lemma UseComp,ProgrVP be Cop cop head
-#lemma UseComp,ProgrVP,UseV have Have aux head
-#lemma UseV,ImpVP do Do aux head
-#lemma UseComp,UseV will Will aux head
-#lemma UseComp,UseV would Would aux head
-#lemma UseComp,ProgrVP,UseV,ImpVP,PassVP not Neg advmod head
-#lemma PossPron 's Gen case head
-#lemma PossPron ' Gen case head
-#lemma ExtAdvS , Comma punct head
+#lemma DEFAULT_ do Do aux head
+#lemma DEFAULT_ be Cop cop head
+#lemma DEFAULT_ have Have aux head
+#lemma DEFAULT_ will Will aux head
+#lemma DEFAULT_ would Would aux head
+#lemma DEFAULT_ that That mark head
+#lemma DEFAULT_ to To mark head
+#lemma DEFAULT_ there There expl head
+#lemma DEFAULT_ not Neg advmod head
+#lemma DEFAULT_ , Comma punct head
+#lemma DEFAULT_ 's Gen case head
+#lemma DEFAULT_ ' Gen case head
+
 #lemma PassVP be Cop aux:pass head
 
-#lemma ExistS there There expl head
 #lemma ExistS be V cop head  --- in UD, the copula is the head!
 
 #morpho N 0 Number=Sing

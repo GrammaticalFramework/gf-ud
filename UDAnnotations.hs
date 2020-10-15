@@ -5,6 +5,7 @@ import PGF hiding (CncLabels)
 import GFConcepts
 
 import qualified Data.Map as M
+import qualified Data.Set as S
 import Data.List
 import Data.Char
 import Data.Maybe
@@ -25,8 +26,10 @@ getEnv pref eng cat = do
   pgf <- readPGF (stdGrammarFile pref)
   abslabels <- readFile (stdAbsLabelsFile pref) >>= return . pAbsLabels
   cnclabels <- readFile (stdCncLabelsFile pref eng) >>= return . const . pCncLabels
-  let env = mkUDEnv pgf abslabels cnclabels (stdLanguage pref eng) cat
+  let actlang = stdLanguage pref eng
+  let env = mkUDEnv pgf abslabels cnclabels actlang cat
   putStrLn $ unlines $ map ("##"++) $ checkAbsLabels env abslabels
+  putStrLn $ unlines $ map ("##"++) $ checkCncLabels env (cnclabels actlang)
   return $ addMissing env
   
 mkUDEnv pgf absl cncl eng cat =
@@ -248,3 +251,64 @@ allFunsEnv env =
 
 mkBackup ast cat = RTree (mkCId (showCId cat ++ "Backup")) [ast]
 isBackupFunction f = isSuffixOf "Backup" (showCId f)
+
+
+{-
+data CncLabels = CncLabels {
+  wordLabels    :: M.Map String (String,[UDData]),         -- word -> (lemma,morpho)          e.g. #word been be Tense=Past|VerbForm=Part
+  lemmaLabels   :: M.Map (Fun,String) (Cat,(Label,Label)), -- (fun,lemma) -> (auxcat,(label,targetLabel)), e.g. #lemma UseComp be Cop cop head
+  morphoLabels  :: M.Map (Cat,Int) [UDData],               -- (cat,int) -> morphotag,              e.g. #morpho V,V2,VS 0 VerbForm=Inf
+  discontLabels :: M.Map (Cat,Int) (POS,Label,Label),      -- (cat,field) -> (pos,label,target)    e.g. #discont  V2  5,ADP,case,obj   6,ADV,advmod,head
+  multiLabels   :: M.Map Cat (Bool, Label)                 -- cat -> (if-head-first, other-labels) e.g. #multiword Prep head first fixed
+  }
+
+data UDEnv = UDEnv {
+  udFormat    :: String, -- default .conllu
+  absLabels   :: AbsLabels,
+  cncLabels   :: Language -> CncLabels,
+  pgfGrammar  :: PGF,
+  actLanguage :: Language,
+  startCategory :: PGF.Type
+  }
+-}
+
+checkCncLabels :: UDEnv -> CncLabels -> [String]
+checkCncLabels env cls = 
+  ["syncat word not covered: " ++ w |
+      (w,_) <- syncats,
+      Nothing <- [M.lookup w (wordLabels cls)]
+  ] ++
+  ["lemma not covered: " ++ w ++ " @ " ++ unwords (map showCId mfs) |
+     (wf,funs) <- syncats,
+     w <- nub [w | Just (w,_) <- [M.lookup wf (wordLabels cls)]],
+     let mfs = [f | f <- funs, Nothing <- [lookFunLemma f w]],
+     not (null mfs)
+  ]
+  ---- ++ map show syncats -- debug
+  where
+    syncats = syncatWords (pgfGrammar env) (actLanguage env)
+    lookFunLemma = lookupFunLemma env (actLanguage env)
+
+lookupFunLemma env lang f w = case M.lookup (f,w) labels of
+  Just r -> Just r
+  _ -> M.lookup (mkCId "DEFAULT_",w) labels --- brittle to use this function name
+ where
+  labels = lemmaLabels (cncLabels env lang)
+
+---------------------------------------------------
+--- find syncategorematic words
+
+syncatWords :: PGF -> Language -> [(String,[Fun])]
+syncatWords pgf eng =
+  let
+    morpho = buildMorpho pgf eng
+    fullform = fullFormLexicon morpho
+    cfuns = [f | f <- functions pgf, Just ty <- [functionType pgf f], (_:_,_,_) <- [unType ty]]
+    cfunset = S.fromList cfuns 
+    isCfun f = S.member f cfunset
+    syncats = [(s,[f]) | (s,fas) <- fullform, (f,a) <- fas, isCfun f]
+    syncatmap = M.fromListWith (++) syncats
+  in
+    [(s,nub fs) | (s,fs) <- M.assocs syncatmap]
+
+
