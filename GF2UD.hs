@@ -110,7 +110,7 @@ wordTree2udTree = annot UDIdRoot where
          (UDWord {
            udID     = UDIdInt position,
            udFORM   = tokWord tok,
-           udLEMMA  = tokLemma tok,
+           udLEMMA  = let l = tokLemma tok in if null l then tokWord tok else l,
            udUPOS   = tokPOS tok,
            udXPOS   = showCId (anCat node),
            udFEATS  = tokMorpho tok,
