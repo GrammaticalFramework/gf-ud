@@ -59,15 +59,15 @@ initAbsLabels = AbsLabels (Just "UD2") M.empty M.empty
 
 -- is be VERB cop head
 data CncLabels = CncLabels {
-  wordLabels    :: M.Map String (String,[UDData]),         -- word -> (lemma,morpho)          e.g. #word been be AUX  Tense=Past|VerbForm=Part
-  lemmaLabels   :: M.Map (Fun,String) (Cat,(Label,Label)), -- (fun,lemma) -> (auxcat,(label,targetLabel)), e.g. #lemma UseComp be Cop cop head
-  morphoLabels  :: M.Map (Cat,Int) [UDData],               -- (cat,int) -> morphotag,              e.g. #morpho V,V2,VS 0 VerbForm=Inf
-  discontLabels :: M.Map (Cat,Int) (POS,Label,Label),      -- (cat,field) -> (pos,label,target)    e.g. #discont  V2  5,ADP,case,obj   6,ADV,advmod,head
-  multiLabels   :: M.Map Cat (Bool, Label),                -- cat -> (if-head-first, other-labels) e.g. #multiword Prep head first fixed
-  auxCategories     :: M.Map CId String,  -- ud2gf only
-  macroFunctions    :: M.Map CId (AbsType,(([CId],AbsTree),[(Label,[UDData])])), -- ud2gf only
-  altFunLabels      :: M.Map CId [[Label]], -- all labellings, ud2gf only, added by #altfun
-  disabledFunctions :: M.Map Fun ()  -- list of functions not to be used in ud2gf, added by #disable
+  wordLabels     :: M.Map String (String,[UDData]),         -- word -> (lemma,morpho)                    e.g. #word been be Tense=Past|VerbForm=Part
+  lemmaLabels    :: M.Map (Fun,String) (Cat,(Label,Label)), -- (fun,lemma) -> (auxcat,(label,tgtLabel)), e.g. #lemma DEFAULT_ be Cop cop head
+  morphoLabels   :: M.Map (Cat,Int) [UDData],               -- (cat,int) -> morphotag,                   e.g. #morpho V,V2,VS 0 VerbForm=Inf
+  discontLabels  :: M.Map (Cat,Int) (POS,Label,Label),      -- (cat,field) -> (pos,label,target)         e.g. #discont  V2  5,ADP,case,obj   6,ADV,advmod,head
+  multiLabels    :: M.Map Cat (Bool, Label),                -- cat -> (if-head-first, other-labels)      e.g. #multiword Prep head first fixed
+  auxCategories  :: M.Map CId String,                       -- auxcat -> cat, in both gf2ud and ud2gf,   e.g. #auxcat Cop AUX
+  macroFunctions :: M.Map CId (AbsType,(([CId],AbsTree),[(Label,[UDData])])), -- ud2gf only,         e.g. #auxfun MkVPS_Fut will vp : Will -> VP -> VPS = MkVPS (TTAnt TFut ASimul) PPos vp ; aux head
+  altFunLabels   :: M.Map CId [[Label]],                                      -- ud2gf only,         e.g. #altfun ComplSlash head obl
+  disabledFunctions :: M.Map Fun ()                                           -- not to be used in ud2gf, e.g. #disable the_Det thePl_Det
 
   }
 
@@ -159,7 +159,9 @@ pCncLabels = dispatch . map words . uncomment . lines
  where
   dispatch = foldr add initCncLabels
   add ws labs = case ws of
+    "#morpho"  :cs:i:"_":_  | all isDigit i -> labs{morphoLabels = inserts [((mkCId c,read i),[]::[UDData]) | c <- getSeps ',' cs] (morphoLabels labs)}
     "#morpho"  :cs:i:p:_  | all isDigit i -> labs{morphoLabels = inserts [((mkCId c,read i),(prs p)::[UDData]) | c <- getSeps ',' cs] (morphoLabels labs)}
+    "#word"    :w:l:"_":_ -> labs{wordLabels   = M.insert w (l,[]) (wordLabels labs)}
     "#word"    :w:l:m:_ -> labs{wordLabels   = M.insert w (l,prs m) (wordLabels labs)}
     "#lemma"   :w:l:c:p:t:_ -> labs{lemmaLabels  = inserts [((mkCId f,l),(mkCId c,(p,t))) | f <- getSeps ',' w] (lemmaLabels labs)}
     "#discont" :c:h:ps    -> labs{discontLabels = inserts
@@ -285,11 +287,18 @@ checkCncLabels env cls =
      w <- nub [w | Just (w,_) <- [M.lookup wf (wordLabels cls)]],
      let mfs = [f | f <- funs, Nothing <- [lookFunLemma f w]],
      not (null mfs)
-  ]
-  ---- ++ map show syncats -- debug
-  where
+  ] ++
+  ["morpho mapping missing:\n" ++ showLexcatTable ex1 |
+     ex@(c,tfs) <- lexcats,
+     let ms = [i | (i,tf) <- tfs, Nothing <- [M.lookup (c,i) (morphoLabels cls)]],
+     not (null ms),
+     let ex1 = (c, [tfs !! i | i <- ms])
+    ]
+  
+ where
     syncats = syncatWords (pgfGrammar env) (actLanguage env)
     lookFunLemma = lookupFunLemma env (actLanguage env)
+    lexcats = lexcatTables (pgfGrammar env) (actLanguage env)
 
 lookupFunLemma env lang f w = case M.lookup (f,w) labels of
   Just r -> Just r
@@ -313,4 +322,19 @@ syncatWords pgf eng =
   in
     [(s,nub fs) | (s,fs) <- M.assocs syncatmap]
 
+
+lexcatTables :: PGF -> Language -> [(Cat,[(Int,(String,String))])]
+lexcatTables pgf eng =
+  let
+    lcatfuns = [(c,f) |   -- cat and its first function that takes no arguments
+        c <- categories pgf, f:_ <- [generateAllDepth pgf (mkType [] c []) (Just 0)]]
+    example f = tabularLinearizes pgf eng f
+  in
+    [(c,zip [0..] ts) | (c,f) <- lcatfuns, ts:_ <- [example f]]
+
+showLexcatTable :: (Cat,[(Int,(String,String))]) -> String
+showLexcatTable (c,tfs) = unlines [
+  unwords ["##","#morpho",showCId c, show i,"--",f,w] |
+    (i,(f,w)) <- tfs
+    ]
 
