@@ -14,8 +14,8 @@ import Data.Maybe
 
 data UDEnv = UDEnv {
   udFormat    :: String, -- default .conllu
-  absLabels   :: AbsLabels,
-  cncLabels   :: Language -> CncLabels,
+  absLabels   :: AbsLabels,  -- language-independent labels
+  cncLabels   :: CncLabels, -- language-dependent labels, even those that work on AST only
   pgfGrammar  :: PGF,
   actLanguage :: Language,
   startCategory :: PGF.Type
@@ -25,17 +25,17 @@ getEnv :: String -> String -> String -> IO UDEnv
 getEnv pref eng cat = do
   pgf <- readPGF (stdGrammarFile pref)
   abslabels <- readFile (stdAbsLabelsFile pref) >>= return . pAbsLabels
-  cnclabels <- readFile (stdCncLabelsFile pref eng) >>= return . const . pCncLabels
+  cnclabels <- readFile (stdCncLabelsFile pref eng) >>= return . pCncLabels
   let actlang = stdLanguage pref eng
   let env = mkUDEnv pgf abslabels cnclabels actlang cat
   putStrLn $ unlines $ map ("##"++) $ checkAbsLabels env abslabels
-  putStrLn $ unlines $ map ("##"++) $ checkCncLabels env (cnclabels actlang)
+  putStrLn $ unlines $ map ("##"++) $ checkCncLabels env cnclabels
   return $ addMissing env
   
 mkUDEnv pgf absl cncl eng cat =
   initUDEnv {pgfGrammar = pgf, absLabels = absl, cncLabels = cncl, actLanguage = eng, startCategory = maybe undefined id $ readType cat}
 initUDEnv =
-  UDEnv "conllu" initAbsLabels (const initCncLabels) (error "no pgf") (error "no language") (error "no startcat")
+  UDEnv "conllu" initAbsLabels initCncLabels (error "no pgf") (error "no language") (error "no startcat")
 
 
 stdLanguage pref eng = mkLanguage $ tail (dropWhile (/='/') pref ++ eng)
@@ -51,15 +51,11 @@ parseEng env s = head $ parse (pgfGrammar env) (actLanguage env) (startCategory 
 data AbsLabels = AbsLabels {
   annotGuideline    :: Maybe String,
   funLabels         :: M.Map CId [Label],
-  catLabels         :: M.Map CId String,
-  auxCategories     :: M.Map CId String,  -- ud2gf only
-  macroFunctions    :: M.Map CId (AbsType,(([CId],AbsTree),[(Label,[UDData])])), -- ud2gf only
-  altFunLabels      :: M.Map CId [[Label]], -- all labellings, ud2gf only, added by #altfun
-  disabledFunctions :: M.Map Fun ()  -- list of functions not to be used in ud2gf, added by #disable
+  catLabels         :: M.Map CId String
   }
 
 initAbsLabels :: AbsLabels
-initAbsLabels = AbsLabels (Just "UD2") M.empty M.empty M.empty M.empty M.empty M.empty
+initAbsLabels = AbsLabels (Just "UD2") M.empty M.empty
 
 -- is be VERB cop head
 data CncLabels = CncLabels {
@@ -67,10 +63,15 @@ data CncLabels = CncLabels {
   lemmaLabels   :: M.Map (Fun,String) (Cat,(Label,Label)), -- (fun,lemma) -> (auxcat,(label,targetLabel)), e.g. #lemma UseComp be Cop cop head
   morphoLabels  :: M.Map (Cat,Int) [UDData],               -- (cat,int) -> morphotag,              e.g. #morpho V,V2,VS 0 VerbForm=Inf
   discontLabels :: M.Map (Cat,Int) (POS,Label,Label),      -- (cat,field) -> (pos,label,target)    e.g. #discont  V2  5,ADP,case,obj   6,ADV,advmod,head
-  multiLabels   :: M.Map Cat (Bool, Label)                 -- cat -> (if-head-first, other-labels) e.g. #multiword Prep head first fixed
+  multiLabels   :: M.Map Cat (Bool, Label),                -- cat -> (if-head-first, other-labels) e.g. #multiword Prep head first fixed
+  auxCategories     :: M.Map CId String,  -- ud2gf only
+  macroFunctions    :: M.Map CId (AbsType,(([CId],AbsTree),[(Label,[UDData])])), -- ud2gf only
+  altFunLabels      :: M.Map CId [[Label]], -- all labellings, ud2gf only, added by #altfun
+  disabledFunctions :: M.Map Fun ()  -- list of functions not to be used in ud2gf, added by #disable
+
   }
 
-initCncLabels = CncLabels M.empty M.empty M.empty M.empty M.empty
+initCncLabels = CncLabels M.empty M.empty M.empty M.empty M.empty M.empty M.empty M.empty M.empty
 
 -- check the soundness of labels
 
@@ -121,10 +122,6 @@ pAbsLabels = dispatch . map words . uncomment . lines
     "#guidelines":w:_   -> labs{annotGuideline = Just w} --- overwrites earlier declaration
     "#fun":f:xs         -> labs{funLabels = M.insert (mkCId f) xs (funLabels labs)}
     "#cat":c:p:[]       -> labs{catLabels = M.insert (mkCId c) p (catLabels labs)}
-    "#auxcat":c:p:[]    -> labs{auxCategories = M.insert (mkCId c) p (auxCategories labs)}
-    "#auxfun":f:typdef  -> labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f:typdef)) (macroFunctions labs)}
-    "#disable":fs       -> labs{disabledFunctions = inserts [(mkCId f,()) | f <- fs] (disabledFunctions labs)}
-    "#altfun":f:xs      -> labs{altFunLabels = M.insertWith (++) (mkCId f) [xs] (altFunLabels labs)}
     
   --- fun or cat without keywords, for backward compatibility
     f:xs@(_:_:_)        -> labs{funLabels = M.insert (mkCId f) xs (funLabels labs)}
@@ -170,6 +167,11 @@ pCncLabels = dispatch . map words . uncomment . lines
                                 [((mkCId c,read i),(pos,lab,hd))                | p <- ps, i:pos:lab:hd:_ <- [getSeps ',' p]])
                                    (discontLabels labs)}
     "#multiword":c:hp:lab:_  -> labs{multiLabels = M.insert (mkCId c) (hp/="head-last",lab) (multiLabels labs)}
+    "#auxcat":c:p:[]    -> labs{auxCategories = M.insert (mkCId c) p (auxCategories labs)}
+    "#auxfun":f:typdef  -> labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f:typdef)) (macroFunctions labs)}
+    "#disable":fs       -> labs{disabledFunctions = inserts [(mkCId f,()) | f <- fs] (disabledFunctions labs)}
+    "#altfun":f:xs      -> labs{altFunLabels = M.insertWith (++) (mkCId f) [xs] (altFunLabels labs)}
+
     _ -> labs --- ignores silently
 
   readRange s = case break (=='-') s of
@@ -211,7 +213,7 @@ isExoType = not . isEndoType
 catsForPOS :: UDEnv -> M.Map POS [Either Cat Cat]
 catsForPOS env = M.fromListWith (++) $ 
   [(p,[Left  c]) | (c, p) <- M.assocs (catLabels (absLabels env))] ++
-  [(p,[Right c]) | (c, p) <- M.assocs (auxCategories (absLabels env))]
+  [(p,[Right c]) | (c, p) <- M.assocs (auxCategories (cncLabels env))]
 
 
 ----------------------------------------
@@ -220,7 +222,7 @@ catsForPOS env = M.fromListWith (++) $
 
 -- CId (AbsType,(([CId],AbsTree),[Label]))
 expandMacro :: UDEnv -> AbsTree -> AbsTree
-expandMacro env tr@(RTree f ts) = case M.lookup f (macroFunctions (absLabels env)) of
+expandMacro env tr@(RTree f ts) = case M.lookup f (macroFunctions (cncLabels env)) of
   Just (_,((xx,df),_)) -> subst (zip xx (map (expandMacro env) ts)) df
   _ -> RTree f (map (expandMacro env) ts)
  where
@@ -234,17 +236,17 @@ expandMacro env tr@(RTree f ts) = case M.lookup f (macroFunctions (absLabels env
 allFunsEnv :: UDEnv -> [(Fun,LabelledType)]
 allFunsEnv env =
     [(f,(val,zip args ls))  |
-      (f,((val,args),((xx,df),ls))) <- M.assocs (macroFunctions (absLabels env))]
+      (f,((val,args),((xx,df),ls))) <- M.assocs (macroFunctions (cncLabels env))]
      ++
     [(f, mkLabelledType typ labels) |
       (f,labels) <- M.assocs (funLabels (absLabels env)),
-                    M.notMember f (disabledFunctions (absLabels env)),
+                    M.notMember f (disabledFunctions (cncLabels env)),
                     not (isBackupFunction f), ---- apply backups only later
       Just typ   <- [functionType (pgfGrammar env) f]
     ]
      ++
     [(f, mkLabelledType typ labels) |
-      (f,labelss) <- M.assocs (altFunLabels (absLabels env)),
+      (f,labelss) <- M.assocs (altFunLabels (cncLabels env)),
       labels      <- labelss,
       Just typ    <- [functionType (pgfGrammar env) f]
     ]
@@ -265,7 +267,7 @@ data CncLabels = CncLabels {
 data UDEnv = UDEnv {
   udFormat    :: String, -- default .conllu
   absLabels   :: AbsLabels,
-  cncLabels   :: Language -> CncLabels,
+  cncLabels   :: CncLabels,
   pgfGrammar  :: PGF,
   actLanguage :: Language,
   startCategory :: PGF.Type
@@ -293,7 +295,7 @@ lookupFunLemma env lang f w = case M.lookup (f,w) labels of
   Just r -> Just r
   _ -> M.lookup (mkCId "DEFAULT_",w) labels --- brittle to use this function name
  where
-  labels = lemmaLabels (cncLabels env lang)
+  labels = lemmaLabels (cncLabels env)
 
 ---------------------------------------------------
 --- find syncategorematic words

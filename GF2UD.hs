@@ -189,12 +189,12 @@ expr2annottree env lang tree =
  where
    pgf = pgfGrammar env
    lookCat c = maybe x_POS id (M.lookup c (catLabels (absLabels env)))
-   lookWord d w = maybe d id (M.lookup w (wordLabels (cncLabels env lang)))
+   lookWord d w = maybe d id (M.lookup w (wordLabels (cncLabels env)))
    lookupLemma f w = lookupFunLemma env lang f w              -- (fun,lemma) -> (label,targetLabel)
-   lookMorpho d c i = maybe d id (M.lookup (c,i) (morphoLabels (cncLabels env lang))) -- i'th form of cat c
-   lookupDiscont c i = (M.lookup (c,i) (discontLabels (cncLabels env lang)))          -- (cat,field) -> (pos,label,targetLabel)
-   lookAuxPos c = maybe x_POS id (M.lookup c (auxCategories (absLabels env)))            -- auxcat -> pos --- auxcat should really be language-dependent
-   lookupMulti c = M.lookup c (multiLabels (cncLabels env lang))
+   lookMorpho d c i = maybe d id (M.lookup (c,i) (morphoLabels (cncLabels env))) -- i'th form of cat c
+   lookupDiscont c i = (M.lookup (c,i) (discontLabels (cncLabels env)))          -- (cat,field) -> (pos,label,targetLabel)
+   lookAuxPos c = maybe x_POS id (M.lookup c (auxCategories (cncLabels env)))            -- auxcat -> pos --- auxcat should really be language-dependent
+   lookupMulti c = M.lookup c (multiLabels (cncLabels env))
 
    -- convert postorder GF to AnnotTree by adding words from bracketed linearization, categories and their UD pos tags, morpho indices
    addWordsAndCats (RTree (f,i) ts) = RTree node (map addWordsAndCats ts ++ toktrees)

@@ -411,12 +411,12 @@ analyseWords env = mapRTree lemma2fun
     Left c -> case parse (pgfGrammar env) (actLanguage env) (mkType [] c []) w of
       ts -> [(at,c) | t <- ts,
                       let at = expr2abstree t,
-                      all (\f -> M.notMember f (disabledFunctions (absLabels env))) (allNodesRTree at)]
+                      all (\f -> M.notMember f (disabledFunctions (cncLabels env))) (allNodesRTree at)]
     Right c -> case elem (w,c) auxWords of
       True -> [(newWordTree w c, c)]
       _ -> []
 
-  auxWords = [(lemma,cat) | ((fun_,lemma),(cat,labels_)) <- M.assocs (lemmaLabels (cncLabels env (actLanguage env)))]
+  auxWords = [(lemma,cat) | ((fun_,lemma),(cat,labels_)) <- M.assocs (lemmaLabels (cncLabels env))]
 
 -- auxiliaries 
 newWordTree w c = RTree (mkCId (w ++ "__x__" ++ showCId c)) [] ---

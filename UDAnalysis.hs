@@ -91,7 +91,7 @@ allPosOfCat env cat0 = nub [
   unaries = [(val,arg) | fun@(f,(val,[(arg,_)])) <- allFunsEnv env]
   possLexCat =
     M.assocs (catLabels (absLabels env)) ++
-    M.assocs (auxCategories (absLabels env))
+    M.assocs (auxCategories (cncLabels env))
   expands cat = cat : [cat2 | (c,cat1) <- unaries, c==cat, cat2 <- expands cat1]
 
 -------------------------------------
