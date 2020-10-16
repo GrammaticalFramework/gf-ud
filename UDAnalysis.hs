@@ -3,12 +3,27 @@ module UDAnalysis where
 import UDConcepts
 import GFConcepts
 import UDAnnotations
+import UDOptions
 
 import PGF
 
 import Data.List
 import qualified Data.Map as M
 
+
+-- get statistics from a tree collection: a frequency list in descending order
+udFrequencies :: Opts -> [UDSentence] -> [([String],Int)]
+udFrequencies opts = frequencyList . map f . concatMap udWordLines
+  where
+    f = \w -> [fun w | (opt,fun) <- optfuns, isOpt opts opt]
+    optfuns = [
+      ("FORM ", udFORM),
+      ("LEMMA", udLEMMA),
+      ("POS",   udUPOS),
+      ("FEATS", prt . udFEATS),
+      ("DISTANCE", \w -> show (udid2int (udHEAD w) - udid2int (udID w))),
+      ("DEPREL", udDEPREL)
+      ]
 
 -------------------
 -- another look at the UD2GF task: analyse what shapes of UD trees there are in a treebank

@@ -8,6 +8,7 @@ import UDOptions
 import UDConcepts
 import GFConcepts (pAbsTree)
 import UDVisualization
+import UDAnalysis
 
 import PGF
 
@@ -29,7 +30,11 @@ main = do
   
     "conll2pdf":_ -> getContents >>= visualizeUDSentences . parseUDText
   
-    "check":_ -> getContents >>= putStrLn . checkUDSentences . parseUDText
+    "check-treebank":_ -> getContents >>= putStrLn . checkUDSentences . parseUDText
+
+    "check-annotations":path:lang:cat:_ -> checkAnnotations path lang cat
+    
+    "statistics":opts -> getContents >>= mapM_ print . udFrequencies (selectOpts opts) . parseUDText
   
     "parse2latex":file:_ -> getContents >>= absTrees2latex initUDEnv file . map pAbsTree . selectParseTrees . lines
     
@@ -61,6 +66,9 @@ helpMsg = unlines $ [
     "   gfud (-ud2gf|-gf2ud|-string2gf2ud|-gf2udpar) <path> <language> <startcat>",
     " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",
     " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile>",
+    " | gfud check-treebank",
+    " | gfud check-annotations <path> <language> <startcat>",
+    " | gfud statistics <option>*",
     " | gfud extract-pos-words",
     " | gfud extract-pos-feats-words",
     " | gfud conll2pdf",

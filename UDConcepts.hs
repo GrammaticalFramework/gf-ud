@@ -242,6 +242,12 @@ int2udid n = case n of
    0 -> UDIdRoot
    _ -> UDIdInt n
 
+udid2int :: UDId -> Int
+udid2int i = case i of
+   UDIdRange m n -> m ---
+   UDIdInt n -> n
+   _ -> 0 --- Root, None, Float
+
 nextUDId :: UDId -> UDId
 nextUDId ui = int2udid (udPosition ui + 1)
 

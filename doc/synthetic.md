@@ -55,8 +55,8 @@ Split wordnet example treebank into training and test sets:
 ```
 Convert these GF treebanks to UD treebanks
 ```
-  cat data/wordnet-train.gft | ./gfud -gf2ud grammars/Parse Eng Phr ud | grep -v "##" | sed '/./,$!d' >out/wordnet-train.conllu
-  cat data/wordnet-test.gft | ./gfud -gf2ud grammars/Parse Eng Phr ud | grep -v "##" | sed '/./,$!d' >out/wordnet-test.conllu
+  cat data/wordnet-train.gft | ./gfud -gf2ud grammars/Parse Eng Phr ud | sed '/./,$!d' >out/wordnet-train.conllu
+  cat data/wordnet-test.gft | ./gfud -gf2ud grammars/Parse Eng Phr ud | sed '/./,$!d' >out/wordnet-test.conllu
 ```
 
 Now you have the .conllu files to start from in the "short version".

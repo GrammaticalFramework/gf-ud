@@ -28,9 +28,14 @@ getEnv pref eng cat = do
   cnclabels <- readFile (stdCncLabelsFile pref eng) >>= return . pCncLabels
   let actlang = stdLanguage pref eng
   let env = mkUDEnv pgf abslabels cnclabels actlang cat
-  putStrLn $ unlines $ map ("##"++) $ checkAbsLabels env abslabels
-  putStrLn $ unlines $ map ("##"++) $ checkCncLabels env cnclabels
   return $ addMissing env
+  
+checkAnnotations :: String -> String -> String -> IO ()
+checkAnnotations pref eng cat = do
+  env <- getEnv pref eng cat
+  putStrLn $ unlines $ checkAbsLabels env (absLabels env)
+  putStrLn $ unlines $ checkCncLabels env (cncLabels env)
+
   
 mkUDEnv pgf absl cncl eng cat =
   initUDEnv {pgfGrammar = pgf, absLabels = absl, cncLabels = cncl, actLanguage = eng, startCategory = maybe undefined id $ readType cat}
@@ -139,9 +144,18 @@ addMissing env = env {
           (f,(_,[_])) <- pgf2functions (pgfGrammar env),
           Nothing <- [M.lookup f (funLabels (absLabels env))]
           ]
-       }
-    }
-
+       },
+    cncLabels = (cncLabels env){
+      morphoLabels =
+        foldr (\ (k,v) m -> M.insert k v m) (morphoLabels (cncLabels env))
+         [((c,0),[]) |
+            ex@(c,tfs) <- lexcatTables (pgfGrammar env) (actLanguage env),
+            length tfs == 1,
+            Nothing <- [M.lookup (c,0) (morphoLabels (cncLabels env))]
+        ]
+     }
+   }
+ 
 -- #macro PredCop np cop comp : NP -> Cop -> Comp -> Cl = PredVP np (UseComp comp) ; subj cop head
 -- CId (AbsType,(([CId],AbsTree),[Label]))
 pMacroFunction (f:ws) = case break (==":") ws of
