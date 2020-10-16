@@ -348,7 +348,7 @@ lexcatTables pgf eng =
 
 showLexcatTable :: (Cat,[(Int,(String,String))]) -> String
 showLexcatTable (c,tfs) = unlines [
-  unwords ["##","#morpho",showCId c, show i,"--",f,w] |
+  unwords ["#morpho",showCId c, show i,"--",f,w] |
     (i,(f,w)) <- tfs
     ]
 
