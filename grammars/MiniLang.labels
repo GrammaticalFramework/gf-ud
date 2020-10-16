@@ -24,38 +24,3 @@
 #cat V	      VERB
 #cat V2	      VERB
 
--- below needed in ud2gf only
-
-#auxfun UseAP_Cop cop comp : Cop -> AP -> VP = UseAP comp ; cop head
-
-#auxfun QuestCl_Do aux cl : Do -> Cl -> QCl = QuestCl cl ; aux head
-
-#auxfun UseCl_Sim cl : Cl -> S = UseCl TSim PPos cl ; head
-#auxfun UseCl_Ant have cl : Have -> Cl -> S = UseCl TAnt PPos cl ; aux head
-#auxfun UseCl_NegSim do neg cl : Do -> Neg -> Cl -> S = UseCl TSim PNeg cl ; aux advmod head
-#auxfun UseCl_NegAnt have neg cl : Have -> Neg -> Cl -> S = UseCl TAnt PNeg cl ; aux advmod head
-#auxfun UseCl_NegCop neg cl : Neg -> Cl -> S = UseCl TSim PNeg cl ; advmod head
-
-
-#auxcat Cop AUX
-#auxcat Do AUX
-#auxcat Have AUX
-#auxcat Neg PART
-
-#disable UseAP QuestCl UseCl
-
-#altfun ComplV2 head obl
-
--- to deal with the_Det / thePl_Det, together with a #lemma for The in MiniLangEng.labels
-#auxcat The DET
-#auxfun DetCN_theSg det cn : The -> CN -> NP = DetCN the_Det cn ; det head[Number=Sing]
-#auxfun DetCN_thePl det cn : The -> CN -> NP = DetCN thePl_Det cn ; det head[Number=Plur]
-#disable the_Det thePl_Det
-
--- disable plurals as mass terms
-#auxfun MassNP_sg cn : CN -> NP = MassNP cn ; head[Number=Sing]
-#auxfun DetCN_aPl cn : CN -> NP = DetCN aPl_Det cn ; head[Number=Plur]
-#disable MassNP
-
-
-
