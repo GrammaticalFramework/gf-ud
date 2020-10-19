@@ -97,13 +97,14 @@ UDScore {udScore = 0.4673854319745826, udMatching = 1000, udTotalLength = 21183,
 
 Parsing command-line text input:
 ```
-$ echo "John loves Mary" | gfud dbnf grammars/English.dbnf Utt
+$ echo "John loves Mary" | gfud dbnf grammars/English.dbnf S
+
 # text = John loves Mary
-# analyses = 2
-# parsetree = (Utt (NP (N (PN John) (CN (N loves))) (PN Mary)))
-1	John	_	PROPN	_	_	2	compound	_	_
-2	loves	_	NOUN	_	_	0	root	_	_
-3	Mary	_	PROPN	_	_	2	flat	_	_ç∂
+# analyses = 1
+# parsetree = (S (NP (PN John)) (VP (V2 loves) (NP (PN Mary))))
+1	John	_	PROPN	_	_	2	nsubj	_	_
+2	loves	_	VERB	_	_	0	root	_	_
+3	Mary	_	PROPN	_	_	2	obj	_	_
 ```
 Parsing POS tagged text, which can first be extracted from CoNLLU (ignoring the head and deprel fields):
 ```
