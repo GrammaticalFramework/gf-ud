@@ -31,14 +31,21 @@ When using annotations and checking their completeness, gfud automatically adds 
 
 ## Abstract annotations
 
-**Function**: ``#fun`` <abstract syntax function> <labels>
+**Function**: ``#fun`` <abstract syntax function> <labellings>
 ```
-   #fun ComplV2  head obj
+   #fun AdvVP  head advmod
 ```
 There must be a label for each argument.
 Exactly one argument must have the label ``head``.
 If the function has 1 or 0 arguments, the annotation is not needed.
 Otherwise, ``gfud`` gives a warning about missing annotations.
+A generalized form of this is a **nonlocal annotation**, such as
+```
+   #fun AdvVP  head PrepNP>obl
+```
+which says that the second argument of ``AdvVP`` gets label ``obl`` if it is a tree formed by the function ``PrepNP``.
+Nonlocal annotations override normal (local) function annotations.
+
 
 **Category**: ``#cat`` <abstract syntax category> <POS tag>
 ```

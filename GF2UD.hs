@@ -151,7 +151,7 @@ annotTree2labelledTree env lang =
   . addLabels root_Label
  where
    pgf = pgfGrammar env
-   lookFun f = maybe defaultLabels id (M.lookup f (funLabels (absLabels env)))
+   lookFun f = maybe [([],defaultLabels)] id (M.lookup f (funLabels (absLabels env)))
    defaultLabels = head_Label:repeat dep_Label
 
    propagateLabels tr@(RTree node trs) = 
@@ -173,9 +173,17 @@ annotTree2labelledTree env lang =
    -- labels added from fun annotations; for syncat words, from their lemma annotations
    --- relying on the order proper nodes + syncat word nodes
    addLabels label tr@(RTree node trs) = case lookFun (anFun node) of
-       ls -> RTree
+      fsls -> case funLabelMatches fsls (map (anFun . root) trs) of
+        ls:_ -> RTree  --- make sure the first match is the best!
              (if anLabel node == dep_Label then node{anLabel = label} else node) -- don't change a predefined label
              [addLabels lab t | (lab,t) <- zip (ls++[anLabel (root t) | t <- trs, isJust (anToken (root t))]) trs]
+             
+   funLabelMatches psls fs = [ls |
+      (ps,ls) <- psls,
+      all funMatch (zip fs ps)
+     ] ++ [defaultLabels]
+     
+   funMatch (f,p) = maybe True (f==) p -- Nothing matches any function
 
 
 -- decorate abstract tree with word information

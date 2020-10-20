@@ -8,6 +8,7 @@
 #fun AdjCN amod head -- AP -> CN -> CN
 #fun AdjDAP head amod
 #fun AdnCAdv advmod head
+#fun AdvAP head PrepNP>nmod
 #fun AdvAP head advmod
 #fun AdvAdv head advmod
 #fun AdvCN head nmod -- CN -> Adv -> CN
@@ -15,15 +16,21 @@
 #fun AdvIP head advmod -- IP -> Adv -> IP
 #fun AdvImp advmod head
 #fun AdvIsNP head nsubj
+#fun AdvNP head PrepNP>nmod
 #fun AdvNP head nmod
 #fun AdvQVP head obj
 #fun AdvQVP head obj -- VP -> IAdv -> QVP
 #fun AdvRAP head case nmod
 #fun AdvRNP head case nmod
 #fun AdvRVP head case nmod
+#fun AdvS PrepNP>obl head
 #fun AdvS advmod head
+#fun AdvSlash head PrepNP>obl
 #fun AdvSlash head advmod
+#fun AdvVP head PrepNP>obl -- VP -> (PrepNP : Prep -> NP -> Adv) -> VP
+#fun AdvVP head SubjS>advcl -- VP -> (PrepNP : Prep -> NP -> Adv) -> VP
 #fun AdvVP head advmod -- VP -> Adv -> VP
+#fun AdvVPSlash head PrepNP>obl
 #fun AdvVPSlash head advmod
 #fun ApposCN head appos
 #fun ApposNP head appos

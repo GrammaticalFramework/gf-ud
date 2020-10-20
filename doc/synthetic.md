@@ -64,7 +64,7 @@ But notice that they are in out/ not in data/ since they are generated files.
 
 It can also make sense to check the validity of the generated treebanks:
 ```
-  gfud check <out/wordnet-train.conllu
+  gfud check-treebank <out/wordnet-train.conllu
 ```
 If this command returns no messages, the treebank should be OK.
 
