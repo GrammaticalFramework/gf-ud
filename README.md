@@ -71,7 +71,7 @@ More treebanks can be found in https://universaldependencies.org/ and also synth
 
 Check the integrity of a treebank (to make sure standard tools such as Malt parser don't fail):
 ```
-$ gfud check-treebank <test.conllu
+$ gfud check-treebank <test.conllucheck
 ```
 Compute statistics of features and their combinations (frequency list sorted in descending order)
 ```
@@ -151,6 +151,6 @@ Training a parser with a synthetic UD treebank:  https://github.com/GrammaticalF
 
 ## Annotation syntax for gf2ud and ud2gf
 
-See https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/annotations.txt 
+See https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/annotations.md 
 
 
