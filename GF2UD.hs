@@ -44,7 +44,7 @@ testTree i opts env t = do
   let u1 = applyNonlocalAnnotations env eng u0
   ifOpt opts "an3" $ prLinesRTree prAnnotNode u1
   
-  let u2 = wordTree2udTree u1
+  let u2 = adjustUDTree env (wordTree2udTree u1)
   ifOpt opts "ut" $ prUDTree u2
   
   let u = adjustUDIds (udTree2sentence u2)
@@ -93,11 +93,21 @@ gf2ud :: UDEnv -> Language -> PGF.Tree -> UDSentence
 gf2ud env lang =
     adjustUDIds --- hack: should check why needed
   . udTree2sentence
+  . adjustUDTree env
   . wordTree2udTree
   . labelledTree2wordTree
   . annotTree2labelledTree env lang
   . expr2annottree env lang
-  
+
+adjustUDTree :: UDEnv -> UDTree -> UDTree
+adjustUDTree env tr@(RTree node trs) = RTree (adjust node atrs) atrs
+  where
+    atrs = map (adjustUDTree env) trs
+    adjust n ts = case M.lookup (udDEPREL n) changemap of
+      Just [(e,CAbove d)] | any ((==d) . udDEPREL . root) ts -> n{udDEPREL = e}
+      Just [(e,CFeatures fs)] | all (flip elem (udFEATS n)) fs -> n{udDEPREL = e}
+      _ -> n
+    changemap = changeLabels (cncLabels env)
 
 -- change node structure, create links to heads
 wordTree2udTree :: AnnotTree -> UDTree

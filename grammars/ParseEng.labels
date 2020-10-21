@@ -87,6 +87,8 @@
 #auxcat Comma PUNCT
 #auxcat There PRON
 
+#change obj > obl above case
+#change det > nmod:poss features Poss=Yes|PronType=Prs
 
 -------------------------------------------------------
 -- below this, needed in ud2gf only

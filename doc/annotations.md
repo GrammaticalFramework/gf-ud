@@ -41,10 +41,14 @@ If the function has 1 or 0 arguments, the annotation is not needed.
 Otherwise, ``gfud`` gives a warning about missing annotations.
 A generalized form of this is a **nonlocal annotation**, such as
 ```
-   #fun AdvVP  head PrepNP>obl
+   #fun AdvVP _ PrepNP > head obl
 ```
 which says that the second argument of ``AdvVP`` gets label ``obl`` if it is a tree formed by the function ``PrepNP``.
 Nonlocal annotations override normal (local) function annotations.
+The above local annotation can be seen as a shorthand of
+```
+   #fun AdvVP _ _ > head advmod
+```
 
 
 **Category**: ``#cat`` <abstract syntax category> <POS tag>
@@ -139,6 +143,17 @@ This follows the guidelines in https://universaldependencies.org/u/overview/spec
 The guideline example is //in spite of//, where //in// is the ``head`` and the other words are ``fixed``.
 
 //NB: #multiword works so far only in the gf2ude direction, and head-last is not supported at all yet//
+
+**Change of label**: ``#change <label> > <label> <condition>``:
+```
+  #change obj > obl above case
+  #change det > nmod:poss features Poss=Yes|PronType=Prs
+```
+These annotations are used at the last step of gf2ud to capture discrepancies between the grammar and the annotation standard that are difficult to define in another way.
+The ``above`` condition changes the label in a node that dominates a certain label.
+In the example shown, the ``case`` label appears in object that has a preposition, which is a concrete syntax feature.
+The ``features`` condition changes the label if the node has certain morphological features.
+In the example, possessive pronouns are get the label ``nmod:poss`` instead of the usual ``det``.
 
 
 ## Special concrete annotations for ud2gf

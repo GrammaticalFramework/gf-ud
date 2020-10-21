@@ -70,13 +70,18 @@ data CncLabels = CncLabels {
   discontLabels  :: M.Map (Cat,Int) (POS,Label,Label),      -- (cat,field) -> (pos,label,target)         e.g. #discont  V2  5,ADP,case,obj   6,ADV,advmod,head
   multiLabels    :: M.Map Cat (Bool, Label),                -- cat -> (if-head-first, other-labels)      e.g. #multiword Prep head first fixed
   auxCategories  :: M.Map CId String,                       -- auxcat -> cat, in both gf2ud and ud2gf,   e.g. #auxcat Cop AUX
+  changeLabels   :: M.Map Label [(Label,Condition)],        -- change to another label afterwards        e.g. #change obj>obl above case 
   macroFunctions :: M.Map CId (AbsType,(([CId],AbsTree),[(Label,[UDData])])), -- ud2gf only,         e.g. #auxfun MkVPS_Fut will vp : Will -> VP -> VPS = MkVPS (TTAnt TFut ASimul) PPos vp ; aux head
   altFunLabels   :: M.Map CId [[Label]],                                      -- ud2gf only,         e.g. #altfun ComplSlash head obl
   disabledFunctions :: M.Map Fun ()                                           -- not to be used in ud2gf, e.g. #disable the_Det thePl_Det
 
   }
 
-initCncLabels = CncLabels M.empty M.empty M.empty M.empty M.empty M.empty M.empty M.empty M.empty
+data Condition =
+    CAbove Label        -- to change a label if it dominates this label
+  | CFeatures [UDData]  -- if it has these features
+  
+initCncLabels = CncLabels M.empty M.empty M.empty M.empty M.empty M.empty M.empty M.empty M.empty M.empty
 
 -- check the soundness of labels
 
@@ -126,6 +131,7 @@ pAbsLabels = dispatch . map words . uncomment . lines
   dispatch = foldr add initAbsLabels
   add ws labs = case ws of
     "#guidelines":w:_   -> labs{annotGuideline = Just w} --- overwrites earlier declaration
+    "#fun":f:xs | elem ">" xs -> labs{funLabels = insertFunLabels (mkCId f) (map getMaybeFun fs, ls) (funLabels labs)} where (fs,_:ls) = break (==">") xs
     "#fun":f:xs         -> labs{funLabels = insertFunLabels (mkCId f) (unzip (map pFunLabel xs)) (funLabels labs)}
     "#cat":c:p:[]       -> labs{catLabels = M.insert (mkCId c) p (catLabels labs)}
     
@@ -145,6 +151,10 @@ pAbsLabels = dispatch . map words . uncomment . lines
   pFunLabel x = case break (=='>') x of
     (f,_:l) -> (Just (mkCId f), l)
     _ -> (Nothing, x)
+
+  getMaybeFun x = case x of
+    "_" -> Nothing
+    _ -> Just (mkCId x)
 
 addMissing env = env {
   absLabels = (absLabels env){
@@ -194,6 +204,7 @@ pCncLabels = dispatch . map words . uncomment . lines
                                    (discontLabels labs)}
     "#multiword":c:hp:lab:_  -> labs{multiLabels = M.insert (mkCId c) (hp/="head-last",lab) (multiLabels labs)}
     "#auxcat":c:p:[]    -> labs{auxCategories = M.insert (mkCId c) p (auxCategories labs)}
+    "#change":c1:">":c2:ws  -> labs{changeLabels = M.insert c1 [(c2, pCondition ws)] (changeLabels labs)}
     "#auxfun":f:typdef  -> labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f:typdef)) (macroFunctions labs)}
     "#disable":fs       -> labs{disabledFunctions = inserts [(mkCId f,()) | f <- fs] (disabledFunctions labs)}
     "#altfun":f:xs      -> labs{altFunLabels = M.insertWith (++) (mkCId f) [xs] (altFunLabels labs)}
@@ -203,6 +214,11 @@ pCncLabels = dispatch . map words . uncomment . lines
   readRange s = case break (=='-') s of
     (a@(_:_),_:b@(_:_)) | all isDigit a && all isDigit b -> [read a .. read b]
     _ -> error $ "no valid numeric range from " ++ s
+
+  pCondition ws = case ws of
+    "above":d:_ -> CAbove d
+    "features":fs -> CFeatures (prs (unwords fs))
+    _ -> error $ "cannot parse #change condition " ++ unwords ws
 
 uncomment :: [String] -> [String]
 uncomment = filter (not . all isSpace)  . map uncom

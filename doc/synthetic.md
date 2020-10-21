@@ -26,9 +26,28 @@ Evaluate the result
 ```
 You should see something like
 ```
-evaluating macro LAS data/wordnet-test.conllu out/wn-udpipe.conllu
-UDScore {udScore = 0.968626273814021, udMatching = 506, udTotalLength = 2532, udSamesLength = 2412, udPerfectMatch = 442}
+  evaluating macro LAS data/wordnet-test.conllu out/wn-udpipe.conllu
+  UDScore {udScore = 0.968626273814021, udMatching = 506, udTotalLength = 2532,
+    udSamesLength = 2412, udPerfectMatch = 442}
 ```
+Here is a test parsing a standard UD treebank with the synthesized parser:
+```
+  $ cat en_ewt-ud-test.conllu | udpipe --parse wordnet.udpipe >out/wn-ewt-test.conllu 
+  Loading UDPipe model: done.
+```
+```
+  $ gfud eval macro LAS en_ewt-ud-test.conllu out/wn-ewt-test.conllu 
+  evaluating macro LAS en_ewt-ud-test.conllu out/wn-ewt-test.conllu
+  UDScore {udScore = 0.5806928238086716, udMatching = 1184, udTotalLength = 15071,
+    udSamesLength = 7738, udPerfectMatch = 256}
+```
+```
+  $ gfud eval macro UAS en_ewt-ud-test.conllu out/wn-ewt-test.conllu 
+  evaluating macro UAS en_ewt-ud-test.conllu out/wn-ewt-test.conllu
+  UDScore {udScore = 0.6602289703465873, udMatching = 1184, udTotalLength = 15071,
+    udSamesLength = 9105, udPerfectMatch = 333}
+```
+
 This section was adapted from the excellent tutorial on https://wiki.apertium.org/wiki/UDPipe
 
 

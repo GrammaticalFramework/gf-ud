@@ -8,7 +8,7 @@
 1	dirty	dirty	ADJ	A	Degree=Pos	2	amod	_	FUN=dirty_1_A
 2	clothes	clothes	NOUN	N	Number=Plur	0	root	_	FUN=clothes_N
 3	lying	lie	VERB	V	Tense=Pres|VerbForm=Part	2	amod	_	FUN=lie_2_V
-4	around	around	ADV	Adv	FORM=0	3	advmod	_	FUN=around_8_Adv
+4	around	around	ADV	Adv	_	3	advmod	_	FUN=around_8_Adv
 
 # sent_id = gfud1000003
 # text = Dutch painters
@@ -55,7 +55,7 @@
 # text = individual drops of rain
 1	individual	individual	ADJ	A	Degree=Pos	2	amod	_	FUN=individual_1_A
 2	drops	drop	NOUN	N	Number=Plur	0	root	_	FUN=drop_1_N
-3	of	of	ADP	Prep	FORM=0	4	case	_	FUN=of_1_Prep
+3	of	of	ADP	Prep	_	4	case	_	FUN=of_1_Prep
 4	rain	rain	NOUN	N	Number=Sing	2	nmod	_	FUN=rain_1_N
 
 # sent_id = gfud1000012
@@ -198,7 +198,7 @@
 # sent_id = gfud1000039
 # text = aliens of equivocal loyalty
 1	aliens	alien	NOUN	N	Number=Plur	0	root	_	FUN=alienMasc_1_N
-2	of	of	ADP	Prep	FORM=0	4	case	_	FUN=of_2_Prep
+2	of	of	ADP	Prep	_	4	case	_	FUN=of_2_Prep
 3	equivocal	equivocal	ADJ	A	Degree=Pos	4	amod	_	FUN=equivocal_2_A
 4	loyalty	loyalty	NOUN	N	Number=Sing	1	nmod	_	FUN=loyalty_1_N
 
@@ -227,14 +227,14 @@
 # sent_id = gfud1000043
 # text = an altogether new approach
 1	an	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
-2	altogether	altogether	ADV	AdA	FORM=0	3	advmod	_	FUN=altogether_AdA
+2	altogether	altogether	ADV	AdA	_	3	advmod	_	FUN=altogether_AdA
 3	new	new	ADJ	A	Degree=Pos	4	amod	_	FUN=new_1_A
 4	approach	approach	NOUN	N	Number=Sing	0	root	_	FUN=approach_1_N
 
 # sent_id = gfud1000044
 # text = a yet sadder tale
 1	a	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
-2	yet	yet	ADV	AdA	FORM=0	3	advmod	_	FUN=yet_3_AdA
+2	yet	yet	ADV	AdA	_	3	advmod	_	FUN=yet_3_AdA
 3	sadder	sad	ADJ	A	Degree=Cmp	4	amod	_	FUN=sad_1_A
 4	tale	tale	NOUN	N	Number=Sing	0	root	_	FUN=tale_1_N
 
@@ -243,14 +243,14 @@
 1	a	a	DET	Quant	FORM=0	2	det	_	FUN=IndefArt
 2	face	face	NOUN	N	Number=Sing	0	root	_	FUN=face_1_N
 3	beaded	beaded	ADJ	A	Degree=Pos	2	amod	_	FUN=beaded_A
-4	with	with	ADP	Prep	FORM=0	5	case	_	FUN=with_Prep
-5	sweat	sweat	NOUN	N	Number=Sing	3	advmod	_	FUN=sweat_1_N
+4	with	with	ADP	Prep	_	5	case	_	FUN=with_Prep
+5	sweat	sweat	NOUN	N	Number=Sing	3	nmod	_	FUN=sweat_1_N
 
 # sent_id = gfud1000046
 # text = a dialectical and agonistic approach
 1	a	a	DET	Quant	FORM=0	5	det	_	FUN=IndefArt
 2	dialectical	dialectical	ADJ	A	Degree=Pos	5	amod	_	FUN=dialectical_A
-3	and	and	CCONJ	Conj	FORM=1	2	cc	_	FUN=and_Conj
+3	and	and	CCONJ	Conj	_	2	cc	_	FUN=and_Conj
 4	agonistic	agonistic	ADJ	A	Degree=Pos	2	conj	_	FUN=agonistic_2_A
 5	approach	approach	NOUN	N	Number=Sing	0	root	_	FUN=approach_1_N
 
@@ -259,7 +259,7 @@
 1	a	a	DET	Quant	FORM=0	6	det	_	FUN=IndefArt
 2	technically	technical	ADJ	A	FORM=6	3	advmod	_	FUN=technical_1_A
 3	perfect	perfect	ADJ	A	Degree=Pos	6	amod	_	FUN=perfect_1_A
-4	but	but	CCONJ	Conj	FORM=1	3	cc	_	FUN=but_1_Conj
+4	but	but	CCONJ	Conj	_	3	cc	_	FUN=but_1_Conj
 5	arid	arid	ADJ	A	Degree=Pos	3	conj	_	FUN=arid_2_A
 6	performance	performance	NOUN	N	Number=Sing	0	root	_	FUN=performance_2_N
 7	of	of	X	CN	_	6	dep	_	FUN=PossNP
@@ -501,7 +501,7 @@
 1	an	a	DET	Quant	FORM=0	3	det	_	FUN=IndefArt
 2	Elizabethan	Elizabethan	ADJ	A	Degree=Pos	3	amod	_	FUN=elizabethan_A
 3	tragedy	tragedy	NOUN	N	Number=Sing	0	root	_	FUN=tragedy_1_N
-4	admissive	admissive	ADJ	A2	FORM=0	3	amod	_	FUN=admissive_of_A2
+4	admissive	admissive	ADJ	A2	Degree=Pos	3	amod	_	FUN=admissive_of_A2
 5	of	admissive	ADJ	A2	FORM=7	4	dep	_	FUN=admissive_of_A2
 6	comic	comic	ADJ	A	Degree=Pos	7	amod	_	FUN=comic_1_A
 7	scenes	scene	NOUN	N	Number=Plur	4	nmod	_	FUN=scene_1_N
@@ -522,9 +522,9 @@
 # text = a fantastic idea of his own importance
 1	a	a	DET	Quant	FORM=0	3	det	_	FUN=IndefArt
 2	fantastic	fantastic	ADJ	A	Degree=Pos	3	amod	_	FUN=fantastic_3_A
-3	idea	idea	NOUN	N2	FORM=0	0	root	_	FUN=idea_of_N2
+3	idea	idea	NOUN	N2	Number=Sing	0	root	_	FUN=idea_of_N2
 4	of	idea	NOUN	N2	FORM=4	3	dep	_	FUN=idea_of_N2
-5	his	he	PRON	Pron	Poss=Yes|PronType=Prs	7	det	_	FUN=he_Pron
+5	his	he	PRON	Pron	Poss=Yes|PronType=Prs	7	nmod:poss	_	FUN=he_Pron
 6	own	own	ADJ	A	Degree=Pos	7	amod	_	FUN=own_A
 7	importance	importance	NOUN	N	Number=Sing	3	nmod	_	FUN=importance_1_N
 
@@ -651,7 +651,7 @@
 3	programme	programme	NOUN	N	Number=Sing	0	root	_	FUN=programme_1_N
 4	of	of	X	CN	_	3	dep	_	FUN=PossNP
 5	baroque	baroque	ADJ	A	Degree=Pos	8	amod	_	FUN=baroque_1_A
-6	and	and	CCONJ	Conj	FORM=1	5	cc	_	FUN=and_Conj
+6	and	and	CCONJ	Conj	_	5	cc	_	FUN=and_Conj
 7	contemporary	contemporary	ADJ	A	Degree=Pos	5	conj	_	FUN=contemporary_1_A
 8	music	music	NOUN	N	Number=Sing	3	nmod	_	FUN=music_1_N
 
@@ -871,7 +871,7 @@
 2	acerb	acerb	ADJ	A	Degree=Pos	3	amod	_	FUN=acerb_2_A
 3	tone	tone	NOUN	N	Number=Sing	0	root	_	FUN=tone_1_N
 4	piercing	pierce	VERB	V2	Tense=Pres|VerbForm=Part	3	amod	_	FUN=pierce_3_V2
-5	otherwise	otherwise	ADV	AdA	FORM=0	6	advmod	_	FUN=otherwise_AdA
+5	otherwise	otherwise	ADV	AdA	_	6	advmod	_	FUN=otherwise_AdA
 6	flowery	flowery	ADJ	A	Degree=Pos	7	amod	_	FUN=flowery_2_A
 7	prose	prose	NOUN	N	Number=Sing	4	obj	_	FUN=prose_1_N
 
@@ -880,20 +880,20 @@
 1	a	a	DET	Quant	FORM=0	3	det	_	FUN=IndefArt
 2	volatile	volatile	ADJ	A	Degree=Pos	3	amod	_	FUN=volatile_2_A
 3	situation	situation	NOUN	N	Number=Sing	0	root	_	FUN=situation_1_N
-4	with	with	ADP	Prep	FORM=0	5	case	_	FUN=with_Prep
+4	with	with	ADP	Prep	_	5	case	_	FUN=with_Prep
 5	troops	troop	NOUN	N	Number=Plur	3	nmod	_	FUN=troop_1_N
-6	and	and	CCONJ	Conj	FORM=1	5	cc	_	FUN=and_Conj
+6	and	and	CCONJ	Conj	_	5	cc	_	FUN=and_Conj
 7	rioters	rioter	NOUN	N	Number=Plur	5	conj	_	FUN=rioter_N
 8	eager	eager	ADJ	A	Degree=Pos	5	amod	_	FUN=eager_A
-9	for	for	ADP	Prep	FORM=0	11	case	_	FUN=for_Prep
+9	for	for	ADP	Prep	_	11	case	_	FUN=for_Prep
 10	a	a	DET	Quant	FORM=0	11	det	_	FUN=IndefArt
-11	confrontation	confrontation	NOUN	N	Number=Sing	8	advmod	_	FUN=confrontation_4_N
+11	confrontation	confrontation	NOUN	N	Number=Sing	8	nmod	_	FUN=confrontation_4_N
 
 # sent_id = gfud1000146
 # text = a list of approved candidates
 1	a	a	DET	Quant	FORM=0	2	det	_	FUN=IndefArt
 2	list	list	NOUN	N	Number=Sing	0	root	_	FUN=list_1_N
-3	of	of	ADP	Prep	FORM=0	5	case	_	FUN=of_1_Prep
+3	of	of	ADP	Prep	_	5	case	_	FUN=of_1_Prep
 4	approved	approved	ADJ	A	Degree=Pos	5	amod	_	FUN=approved_A
 5	candidates	candidate	NOUN	N	Number=Plur	2	nmod	_	FUN=candidateMasc_1_N
 
@@ -901,13 +901,13 @@
 # text = a set of books
 1	a	a	DET	Quant	FORM=0	2	det	_	FUN=IndefArt
 2	set	set	NOUN	N	Number=Sing	0	root	_	FUN=set_1_N
-3	of	of	ADP	Prep	FORM=0	4	case	_	FUN=of_1_Prep
+3	of	of	ADP	Prep	_	4	case	_	FUN=of_1_Prep
 4	books	book	NOUN	N	Number=Plur	2	nmod	_	FUN=book_2_N
 
 # sent_id = gfud1000148
 # text = a batch of letters
 1	a	a	DET	Quant	FORM=0	2	det	_	FUN=IndefArt
-2	batch	batch	NOUN	N2	FORM=0	0	root	_	FUN=batch_of_N2
+2	batch	batch	NOUN	N2	Number=Sing	0	root	_	FUN=batch_of_N2
 3	of	batch	NOUN	N2	FORM=4	2	dep	_	FUN=batch_of_N2
 4	letters	letter	NOUN	N	Number=Plur	2	nmod	_	FUN=letter_1_N
 
@@ -915,12 +915,12 @@
 # text = a backhanded and dishonest way of reaching his goal
 1	a	a	DET	Quant	FORM=0	5	det	_	FUN=IndefArt
 2	backhanded	backhanded	ADJ	A	Degree=Pos	5	amod	_	FUN=backhanded_2_A
-3	and	and	CCONJ	Conj	FORM=1	2	cc	_	FUN=and_Conj
+3	and	and	CCONJ	Conj	_	2	cc	_	FUN=and_Conj
 4	dishonest	dishonest	ADJ	A	Degree=Pos	2	conj	_	FUN=dishonest_1_A
 5	way	way	NOUN	N	Number=Sing	0	root	_	FUN=way_1_N
 6	of	of	X	CN	_	5	dep	_	FUN=PossNP
 7	reaching	reach	VERB	V2	Tense=Pres|VerbForm=Part	5	nmod	_	FUN=reach_5_V2
-8	his	he	PRON	Pron	Poss=Yes|PronType=Prs	9	det	_	FUN=he_Pron
+8	his	he	PRON	Pron	Poss=Yes|PronType=Prs	9	nmod:poss	_	FUN=he_Pron
 9	goal	goal	NOUN	N	Number=Sing	7	obj	_	FUN=goal_1_N
 
 # sent_id = gfud1000150
@@ -1016,10 +1016,10 @@
 # sent_id = gfud1000162
 # text = campaigning in his own behalf
 1	campaigning	campaign	VERB	V	Tense=Pres|VerbForm=Part	0	root	_	FUN=campaign_3_V
-2	in	in	ADP	Prep	FORM=0	5	case	_	FUN=in_1_Prep
-3	his	he	PRON	Pron	Poss=Yes|PronType=Prs	5	det	_	FUN=he_Pron
+2	in	in	ADP	Prep	_	5	case	_	FUN=in_1_Prep
+3	his	he	PRON	Pron	Poss=Yes|PronType=Prs	5	nmod:poss	_	FUN=he_Pron
 4	own	own	ADJ	A	Degree=Pos	5	amod	_	FUN=own_A
-5	behalf	behalf	NOUN	N	Number=Sing	1	advmod	_	FUN=behalf_2_N
+5	behalf	behalf	NOUN	N	Number=Sing	1	obl	_	FUN=behalf_2_N
 
 # sent_id = gfud1000163
 # text = snarled unbrushed hair
@@ -1341,13 +1341,13 @@
 2	fish	fish	NOUN	N	Number=Sing	0	root	_	FUN=fish_1_N
 3	that	which	PRON	RP	FORM=3	4	mark	_	FUN=that_RP
 4	evolved	evolve	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	2	acl	_	FUN=evolve_2_V
-5	in	in	ADP	Prep	FORM=0	7	case	_	FUN=in_1_Prep
+5	in	in	ADP	Prep	_	7	case	_	FUN=in_1_Prep
 6	dark	dark	ADJ	A	Degree=Pos	7	amod	_	FUN=dark_1_A
-7	caves	cave	NOUN	N	Number=Plur	4	advmod	_	FUN=cave_N
+7	caves	cave	NOUN	N	Number=Plur	4	obl	_	FUN=cave_N
 
 # sent_id = gfud1000226
 # text = just a tentative schedule
-1	just	just	DET	Predet	FORM=0	4	det	_	FUN=just_1_Predet
+1	just	just	DET	Predet	_	4	det	_	FUN=just_1_Predet
 2	a	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
 3	tentative	tentative	ADJ	A	Degree=Pos	4	amod	_	FUN=tentative_1_A
 4	schedule	schedule	NOUN	N	Number=Sing	0	root	_	FUN=schedule_1_N
@@ -1355,33 +1355,33 @@
 # sent_id = gfud1000227
 # text = originally all brahmans were priests
 1	originally	original	ADJ	A	FORM=6	5	advmod	_	FUN=original_1_A
-2	all	all	DET	Predet	FORM=0	3	det	_	FUN=all_Predet
+2	all	all	DET	Predet	_	3	det	_	FUN=all_Predet
 3	brahmans	brahman	NOUN	N	Number=Plur	5	nsubj	_	FUN=brahman_2_N
 4	were	be	AUX	VP	Mood=Ind|Tense=Past|VerbForm=Fin	5	cop	_	FUN=UseComp
 5	priests	priest	NOUN	N	Number=Plur	0	root	_	FUN=priest_2_N
 
 # sent_id = gfud1000228
 # text = in the dark he had to depend on touch and his senses of smell and hearing
-1	in	in	ADP	Prep	FORM=0	3	case	_	FUN=in_1_Prep
+1	in	in	ADP	Prep	_	3	case	_	FUN=in_1_Prep
 2	the	the	DET	Quant	FORM=0	3	det	_	FUN=DefArt
-3	dark	dark	NOUN	N	Number=Sing	5	advmod	_	FUN=dark_1_N
+3	dark	dark	NOUN	N	Number=Sing	5	obl	_	FUN=dark_1_N
 4	he	he	PRON	Pron	Case=Nom|PronType=Prs	5	nsubj	_	FUN=he_Pron
 5	had	have	VERB	VV	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=have_5_VV
-6	to	to	X	VP	_	5	dep	_	FUN=ComplVV
+6	to	to	PART	VP	_	5	mark	_	FUN=ComplVV
 7	depend	depend	VERB	V2	VerbForm=Inf	5	xcomp	_	FUN=depend_on_2_V2
 8	on	on	ADP	V2	_	7	case	_	FUN=depend_on_2_V2
 9	touch	touch	NOUN	N	Number=Sing	7	obj	_	FUN=touch_2_N
-10	and	and	CCONJ	Conj	FORM=1	9	cc	_	FUN=and_Conj
-11	his	he	PRON	Pron	Poss=Yes|PronType=Prs	12	det	_	FUN=he_Pron
+10	and	and	CCONJ	Conj	_	9	cc	_	FUN=and_Conj
+11	his	he	PRON	Pron	Poss=Yes|PronType=Prs	12	nmod:poss	_	FUN=he_Pron
 12	senses	sense	NOUN	N	Number=Plur	9	conj	_	FUN=sense_3_N
-13	of	of	ADP	Prep	FORM=0	14	case	_	FUN=of_3_Prep
+13	of	of	ADP	Prep	_	14	case	_	FUN=of_3_Prep
 14	smell	smell	NOUN	N	Number=Sing	12	nmod	_	FUN=smell_4_N
-15	and	and	CCONJ	Conj	FORM=1	14	cc	_	FUN=and_Conj
+15	and	and	CCONJ	Conj	_	14	cc	_	FUN=and_Conj
 16	hearing	hearing	NOUN	N	Number=Sing	14	conj	_	FUN=hearing_6_N
 
 # sent_id = gfud1000229
 # text = when the restaurant caught fire the patrons ran amuck , blocking the exit
-1	when	when	SCONJ	Subj	FORM=0	4	mark	_	FUN=when_Subj
+1	when	when	SCONJ	Subj	_	4	mark	_	FUN=when_Subj
 2	the	the	DET	Quant	FORM=0	3	det	_	FUN=DefArt
 3	restaurant	restaurant	NOUN	N	Number=Sing	4	nsubj	_	FUN=restaurant_N
 4	caught	catch	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	8	advmod	_	FUN=catch_1_V2
@@ -1389,22 +1389,22 @@
 6	the	the	DET	Quant	FORM=1	7	det	_	FUN=DefArt
 7	patrons	patron	NOUN	N	Number=Plur	8	nsubj	_	FUN=patron_2_N
 8	ran	run	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=run_1_V
-9	amuck	amuck	ADV	Adv	FORM=0	8	advmod	_	FUN=amuck_1_Adv
-10	,	,	X	VP	_	8	dep	_	FUN=ExtAdvVP
+9	amuck	amuck	ADV	Adv	_	8	advmod	_	FUN=amuck_1_Adv
+10	,	,	PUNCT	VP	_	8	punct	_	FUN=ExtAdvVP
 11	blocking	block	VERB	V2	Tense=Pres|VerbForm=Part	8	advmod	_	FUN=block_1_V2
 12	the	the	DET	Quant	FORM=0	13	det	_	FUN=DefArt
 13	exit	exit	NOUN	N	Number=Sing	11	obj	_	FUN=exit_1_N
 
 # sent_id = gfud1000230
 # text = altogether he earns dollars
-1	altogether	altogether	ADV	Adv	FORM=0	3	advmod	ADJUSTED	FUN=altogether_2_Adv
+1	altogether	altogether	ADV	Adv	_	3	advmod	ADJUSTED	FUN=altogether_2_Adv
 2	he	he	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	ADJUSTED	FUN=he_Pron
 3	earns	earn	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	ADJUSTED	FUN=earn_1_V2
 4	dollars	dollar	NOUN	N	Number=Plur	3	obj	ADJUSTED	FUN=dollar_1_N
 
 # sent_id = gfud1000231
 # text = today we have computers
-1	today	today	ADV	Adv	FORM=0	3	advmod	_	FUN=today_1_Adv
+1	today	today	ADV	Adv	_	3	advmod	_	FUN=today_1_Adv
 2	we	we	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=we_Pron
 3	have	have	VERB	V2	VerbForm=Inf	0	root	_	FUN=have_1_V2
 4	computers	computer	NOUN	N	Number=Plur	3	obj	_	FUN=computer_1_N
@@ -1415,7 +1415,7 @@
 2	gave	give	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=give_4_V2
 3	the	the	DET	Quant	FORM=0	4	det	_	FUN=DefArt
 4	trophy	trophy	NOUN	N	Number=Sing	2	obj	_	FUN=trophy_1_N
-5	but	but	CCONJ	Conj	FORM=1	2	cc	_	FUN=but_2_Conj
+5	but	but	CCONJ	Conj	_	2	cc	_	FUN=but_2_Conj
 6	he	he	PRON	Pron	Case=Nom|PronType=Prs	7	nsubj	_	FUN=he_Pron
 7	made	make	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	2	conj	_	FUN=make_1_V2
 8	the	the	DET	Quant	FORM=0	9	det	_	FUN=DefArt
@@ -1423,18 +1423,18 @@
 
 # sent_id = gfud1000233
 # text = actually , I have not seen the film
-1	actually	actually	ADV	Adv	FORM=0	6	advmod	_	FUN=actually_4_Adv
+1	actually	actually	ADV	Adv	_	6	advmod	_	FUN=actually_4_Adv
 2	,	,	PUNCT	S	_	6	punct	_	FUN=ExtAdvS
 3	I	I	PRON	Pron	Case=Nom|PronType=Prs	6	nsubj	_	FUN=i_Pron
-4	have	have	X	VPSlash	VerbForm=Inf	6	dep	_	FUN=SlashV2a
-5	not	not	X	VPSlash	Polarity=Neg	6	dep	_	FUN=SlashV2a
+4	have	have	AUX	VPSlash	VerbForm=Inf	6	aux	_	FUN=SlashV2a
+5	not	not	PART	VPSlash	Polarity=Neg	6	advmod	_	FUN=SlashV2a
 6	seen	see	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=see_7_V2
 7	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
 8	film	film	NOUN	N	Number=Sing	6	obj	_	FUN=film_1_N
 
 # sent_id = gfud1000234
 # text = such an enormous response was astonishing
-1	such	such	DET	Predet	FORM=0	4	det	_	FUN=such_1_Predet
+1	such	such	DET	Predet	_	4	det	_	FUN=such_1_Predet
 2	an	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
 3	enormous	enormous	ADJ	A	Degree=Pos	4	amod	_	FUN=enormous_A
 4	response	response	NOUN	N	Number=Sing	6	nsubj	_	FUN=response_2_N
@@ -1445,19 +1445,19 @@
 # text = I left my keys inside the car and locked the doors
 1	I	I	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=i_Pron
 2	left	leave	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=leave_14_V2
-3	my	I	PRON	Pron	Poss=Yes|PronType=Prs	4	det	_	FUN=i_Pron
+3	my	I	PRON	Pron	Poss=Yes|PronType=Prs	4	nmod:poss	_	FUN=i_Pron
 4	keys	key	NOUN	N	Number=Plur	2	obj	_	FUN=key_1_N
-5	inside	inside	ADP	Prep	FORM=0	7	case	_	FUN=inside_Prep
+5	inside	inside	ADP	Prep	_	7	case	_	FUN=inside_Prep
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
-7	car	car	NOUN	N	Number=Sing	2	advmod	_	FUN=car_1_N
-8	and	and	CCONJ	Conj	FORM=1	2	cc	_	FUN=and_Conj
+7	car	car	NOUN	N	Number=Sing	2	obl	_	FUN=car_1_N
+8	and	and	CCONJ	Conj	_	2	cc	_	FUN=and_Conj
 9	locked	lock	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	2	conj	_	FUN=lock_1_V2
 10	the	the	DET	Quant	FORM=1	11	det	_	FUN=DefArt
 11	doors	door	NOUN	N	Number=Plur	9	obj	_	FUN=door_1_N
 
 # sent_id = gfud1000236
 # text = only an automaton would not have noticed
-1	only	only	DET	Predet	FORM=0	3	det	_	FUN=only_Predet
+1	only	only	DET	Predet	_	3	det	_	FUN=only_Predet
 2	an	a	DET	Quant	FORM=0	3	det	_	FUN=IndefArt
 3	automaton	automaton	NOUN	N	Number=Sing	7	nsubj	_	FUN=automaton_1_N
 4	would	would	AUX	VP	VerbForm=Fin	7	aux	_	FUN=UseV
@@ -1470,18 +1470,18 @@
 1	the	the	DET	Quant	FORM=0	3	det	_	FUN=DefArt
 2	new	new	ADJ	A	Degree=Pos	3	amod	_	FUN=new_1_A
 3	line	line	NOUN	N	Number=Sing	10	nsubj	_	FUN=line_22_N
-4	of	of	ADP	Prep	FORM=0	5	case	_	FUN=of_1_Prep
+4	of	of	ADP	Prep	_	5	case	_	FUN=of_1_Prep
 5	cars	car	NOUN	N	Number=Plur	3	nmod	_	FUN=car_1_N
 6	will	will	AUX	VP	VerbForm=Fin	10	aux	_	FUN=UseComp
-7	soon	soon	ADV	AdV	FORM=0	10	advmod	_	FUN=soon_AdV
+7	soon	soon	ADV	AdV	_	10	advmod	_	FUN=soon_AdV
 8	be	be	AUX	VP	VerbForm=Inf	10	cop	_	FUN=UseComp
-9	on	on	ADP	Prep	FORM=0	10	case	_	FUN=on_1_Prep
+9	on	on	ADP	Prep	_	10	case	_	FUN=on_1_Prep
 10	sale	sale	NOUN	N	Number=Sing	0	root	_	FUN=sale_4_N
 
 # sent_id = gfud1000238
 # text = this will permit the rain to run off
 1	this	this	DET	Quant	FORM=4	3	nsubj	_	FUN=this_Quant
-2	will	will	X	VPSlash	VerbForm=Fin	3	dep	_	FUN=SlashV2V
+2	will	will	AUX	VPSlash	VerbForm=Fin	3	aux	_	FUN=SlashV2V
 3	permit	permit	VERB	V2V	VerbForm=Inf	0	root	_	FUN=permit_V2V
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 5	rain	rain	NOUN	N	Number=Sing	3	obj	_	FUN=rain_1_N
@@ -1492,10 +1492,10 @@
 # sent_id = gfud1000239
 # text = life in the camps had brutalized him
 1	life	life	NOUN	N	Number=Sing	6	nsubj	_	FUN=life_1_N
-2	in	in	ADP	Prep	FORM=0	4	case	_	FUN=in_1_Prep
+2	in	in	ADP	Prep	_	4	case	_	FUN=in_1_Prep
 3	the	the	DET	Quant	FORM=1	4	det	_	FUN=DefArt
 4	camps	camp	NOUN	N	Number=Plur	1	nmod	_	FUN=camp_5_N
-5	had	have	X	VPSlash	Mood=Ind|Tense=Past|VerbForm=Fin	6	dep	_	FUN=SlashV2a
+5	had	have	AUX	VPSlash	Mood=Ind|Tense=Past|VerbForm=Fin	6	aux	_	FUN=SlashV2a
 6	brutalized	brutalize	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=brutalize_2_V2
 7	him	he	PRON	Pron	Case=Acc|PronType=Prs	6	obj	_	FUN=he_Pron
 
@@ -1503,50 +1503,50 @@
 # text = they had never traveled abroad
 1	they	they	PRON	Pron	Case=Nom|PronType=Prs	4	nsubj	_	FUN=they_Pron
 2	had	have	AUX	VP	Mood=Ind|Tense=Past|VerbForm=Fin	4	aux	_	FUN=UseV
-3	never	never	ADV	AdV	FORM=0	4	advmod	_	FUN=never_1_AdV
+3	never	never	ADV	AdV	_	4	advmod	_	FUN=never_1_AdV
 4	traveled	travel	VERB	V	Tense=Past|VerbForm=Part	0	root	_	FUN=travel_1_V
-5	abroad	abroad	ADV	Adv	FORM=0	4	advmod	_	FUN=abroad_1_Adv
+5	abroad	abroad	ADV	Adv	_	4	advmod	_	FUN=abroad_1_Adv
 
 # sent_id = gfud1000241
 # text = the president's assurances were not respected
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	president's	president	NOUN	N	FORM=1	3	nmod	_	FUN=presidentMasc_1_N
-3	assurances	assurance	NOUN	N	Number=Plur	6	nsubj	_	FUN=assurance_3_N
-4	were	be	X	VP	Mood=Ind|Tense=Past|VerbForm=Fin	6	dep	_	FUN=PassVPSlash
-5	not	not	X	VP	Polarity=Neg	6	dep	_	FUN=PassVPSlash
+3	assurances	assurance	NOUN	N	Number=Plur	6	nsubj:pass	_	FUN=assurance_3_N
+4	were	be	AUX	VP	Mood=Ind|Tense=Past|VerbForm=Fin	6	cop	_	FUN=PassVPSlash
+5	not	not	PART	VP	Polarity=Neg	6	advmod	_	FUN=PassVPSlash
 6	respected	respect	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=respect_2_V2
 
 # sent_id = gfud1000242
 # text = she did not want to answer
 1	she	she	PRON	Pron	Case=Nom|PronType=Prs	4	nsubj	_	FUN=she_Pron
-2	did	do	X	VP	Mood=Ind|Tense=Past|VerbForm=Fin	4	dep	_	FUN=ComplVV
-3	not	not	X	VP	Polarity=Neg	4	dep	_	FUN=ComplVV
+2	did	do	AUX	VP	Mood=Ind|Tense=Past|VerbForm=Fin	4	aux	_	FUN=ComplVV
+3	not	not	PART	VP	Polarity=Neg	4	advmod	_	FUN=ComplVV
 4	want	want	VERB	VV	VerbForm=Inf	0	root	_	FUN=want_VV
-5	to	to	X	VP	_	4	dep	_	FUN=ComplVV
+5	to	to	PART	VP	_	4	mark	_	FUN=ComplVV
 6	answer	answer	VERB	V	VerbForm=Inf	4	xcomp	_	FUN=answer_1_V
 
 # sent_id = gfud1000243
 # text = there was a search for beauty that had somehow gone adrift
-1	there	there	X	Cl	_	4	dep	_	FUN=ExistNP
-2	was	be	X	Cl	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	4	dep	_	FUN=ExistNP
+1	there	there	PRON	Cl	_	4	expl	_	FUN=ExistNP
+2	was	be	AUX	Cl	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	4	cop	_	FUN=ExistNP
 3	a	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
 4	search	search	NOUN	N	Number=Sing	0	root	_	FUN=search_1_N
-5	for	for	ADP	Prep	FORM=0	6	case	_	FUN=for_Prep
+5	for	for	ADP	Prep	_	6	case	_	FUN=for_Prep
 6	beauty	beauty	NOUN	N	Number=Sing	4	nmod	_	FUN=beauty_1_N
 7	that	which	PRON	RP	FORM=3	10	mark	_	FUN=that_RP
 8	had	have	AUX	VP	Mood=Ind|Tense=Past|VerbForm=Fin	10	aux	_	FUN=UseV
-9	somehow	somehow	ADV	AdV	FORM=0	10	advmod	_	FUN=somehow_1_AdV
+9	somehow	somehow	ADV	AdV	_	10	advmod	_	FUN=somehow_1_AdV
 10	gone	go	VERB	V	Tense=Past|VerbForm=Part	4	acl	_	FUN=go_4_V
-11	adrift	adrift	ADV	Adv	FORM=0	10	advmod	_	FUN=adrift_2_Adv
+11	adrift	adrift	ADV	Adv	_	10	advmod	_	FUN=adrift_2_Adv
 
 # sent_id = gfud1000244
 # text = there was a hesitation in his speech
-1	there	there	X	Cl	_	4	dep	_	FUN=ExistNPAdv
-2	was	be	X	Cl	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	4	dep	_	FUN=ExistNPAdv
+1	there	there	PRON	Cl	_	4	expl	_	FUN=ExistNPAdv
+2	was	be	AUX	Cl	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	4	cop	_	FUN=ExistNPAdv
 3	a	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
 4	hesitation	hesitation	NOUN	N	Number=Sing	0	root	_	FUN=hesitation_3_N
-5	in	in	ADP	Prep	FORM=0	7	case	_	FUN=in_1_Prep
-6	his	he	PRON	Pron	Poss=Yes|PronType=Prs	7	det	_	FUN=he_Pron
+5	in	in	ADP	Prep	_	7	case	_	FUN=in_1_Prep
+6	his	he	PRON	Pron	Poss=Yes|PronType=Prs	7	nmod:poss	_	FUN=he_Pron
 7	speech	speech	NOUN	N	Number=Sing	4	nmod	_	FUN=speech_1_N
 
 # sent_id = gfud1000245
@@ -1556,10 +1556,10 @@
 3	a	a	DET	Quant	FORM=0	5	det	_	FUN=IndefArt
 4	small	small	ADJ	A	Degree=Pos	5	amod	_	FUN=small_1_A
 5	house	house	NOUN	N	Number=Sing	0	root	_	FUN=house_1_N
-6	with	with	ADP	Prep	FORM=0	9	case	_	FUN=with_Prep
-7	almost	almost	DET	Predet	FORM=0	9	det	_	FUN=almost_Predet
+6	with	with	ADP	Prep	_	9	case	_	FUN=with_Prep
+7	almost	almost	DET	Predet	_	9	det	_	FUN=almost_Predet
 8	no	no	DET	Quant	FORM=0	9	det	_	FUN=no_Quant
-9	yard	yard	NOUN	N	Number=Sing	5	advmod	_	FUN=yard_2_N
+9	yard	yard	NOUN	N	Number=Sing	5	obl	_	FUN=yard_2_N
 
 # sent_id = gfud1000246
 # text = it was a bewildering array of books
@@ -1568,20 +1568,20 @@
 3	a	a	DET	Quant	FORM=0	5	det	_	FUN=IndefArt
 4	bewildering	bewildering	ADJ	A	Degree=Pos	5	amod	_	FUN=bewildering_A
 5	array	array	NOUN	N	Number=Sing	0	root	_	FUN=array_2_N
-6	of	of	ADP	Prep	FORM=0	7	case	_	FUN=of_1_Prep
+6	of	of	ADP	Prep	_	7	case	_	FUN=of_1_Prep
 7	books	book	NOUN	N	Number=Plur	5	nmod	_	FUN=book_2_N
 
 # sent_id = gfud1000247
 # text = the children in the audience attended the recital quietly
 1	the	the	DET	Quant	FORM=1	2	det	_	FUN=DefArt
 2	children	child	NOUN	N	Number=Plur	6	nsubj	_	FUN=child_1_N
-3	in	in	ADP	Prep	FORM=0	5	case	_	FUN=in_1_Prep
+3	in	in	ADP	Prep	_	5	case	_	FUN=in_1_Prep
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 5	audience	audience	NOUN	N	Number=Sing	2	nmod	_	FUN=audience_1_N
 6	attended	attend	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=attend_5_V2
 7	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
 8	recital	recital	NOUN	N	Number=Sing	6	obj	_	FUN=recital_3_N
-9	quietly	quietly	ADV	Adv	FORM=0	6	advmod	_	FUN=quietly_1_Adv
+9	quietly	quietly	ADV	Adv	_	6	advmod	_	FUN=quietly_1_Adv
 
 # sent_id = gfud1000248
 # text = the pump suddenly cut out
@@ -1596,23 +1596,23 @@
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=he_Pron
 2	suddenly	sudden	ADJ	A	FORM=6	1	nmod	_	FUN=sudden_A
 3	appeared	appear	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=appear_2_V
-4	at	at	ADP	Prep	FORM=0	6	case	_	FUN=at_1_Prep
+4	at	at	ADP	Prep	_	6	case	_	FUN=at_1_Prep
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	wedding	wedding	NOUN	N	Number=Sing	3	advmod	_	FUN=wedding_1_N
+6	wedding	wedding	NOUN	N	Number=Sing	3	obl	_	FUN=wedding_1_N
 
 # sent_id = gfud1000250
 # text = his compositions always started with the lyrics
-1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	2	det	_	FUN=he_Pron
+1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	2	nmod:poss	_	FUN=he_Pron
 2	compositions	composition	NOUN	N	Number=Plur	4	nsubj	_	FUN=composition_1_N
-3	always	always	ADV	AdV	FORM=0	4	advmod	_	FUN=always_1_AdV
+3	always	always	ADV	AdV	_	4	advmod	_	FUN=always_1_AdV
 4	started	start	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=start_1_V
-5	with	with	ADP	Prep	FORM=0	7	case	_	FUN=with_Prep
+5	with	with	ADP	Prep	_	7	case	_	FUN=with_Prep
 6	the	the	DET	Quant	FORM=1	7	det	_	FUN=DefArt
-7	lyrics	lyric	NOUN	N	Number=Plur	4	advmod	_	FUN=lyric_1_N
+7	lyrics	lyric	NOUN	N	Number=Plur	4	obl	_	FUN=lyric_1_N
 
 # sent_id = gfud1000251
 # text = his quick adeptness was a product of good design
-1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	3	det	_	FUN=he_Pron
+1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	3	nmod:poss	_	FUN=he_Pron
 2	quick	quick	ADJ	A	Degree=Pos	3	amod	_	FUN=quick_1_A
 3	adeptness	adeptness	NOUN	N	Number=Sing	6	nsubj	_	FUN=adeptness_N
 4	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	6	cop	_	FUN=UseComp
@@ -1624,7 +1624,7 @@
 
 # sent_id = gfud1000252
 # text = his body rejected the liver of the donor
-1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	2	det	_	FUN=he_Pron
+1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	2	nmod:poss	_	FUN=he_Pron
 2	body	body	NOUN	N	Number=Sing	3	nsubj	_	FUN=body_1_N
 3	rejected	reject	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=reject_5_V2
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
@@ -1635,37 +1635,37 @@
 
 # sent_id = gfud1000253
 # text = his music was his central interest
-1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	2	det	_	FUN=he_Pron
+1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	2	nmod:poss	_	FUN=he_Pron
 2	music	music	NOUN	N	Number=Sing	6	nsubj	_	FUN=music_3_N
 3	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	6	cop	_	FUN=UseComp
-4	his	he	PRON	Pron	Poss=Yes|PronType=Prs	6	det	_	FUN=he_Pron
+4	his	he	PRON	Pron	Poss=Yes|PronType=Prs	6	nmod:poss	_	FUN=he_Pron
 5	central	central	ADJ	A	Degree=Pos	6	amod	_	FUN=central_1_A
 6	interest	interest	NOUN	N	Number=Sing	0	root	_	FUN=interest_2_N
 
 # sent_id = gfud1000254
 # text = my horse lost the race by a nose
-1	my	I	PRON	Pron	Poss=Yes|PronType=Prs	2	det	_	FUN=i_Pron
+1	my	I	PRON	Pron	Poss=Yes|PronType=Prs	2	nmod:poss	_	FUN=i_Pron
 2	horse	horse	NOUN	N	Number=Sing	3	nsubj	_	FUN=horse_1_N
 3	lost	lose	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=lose_1_V2
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 5	race	race	NOUN	N	Number=Sing	3	obj	_	FUN=race_2_N
-6	by	by	ADP	Prep	FORM=0	8	case	_	FUN=by_4_Prep
+6	by	by	ADP	Prep	_	8	case	_	FUN=by_4_Prep
 7	a	a	DET	Quant	FORM=0	8	det	_	FUN=IndefArt
-8	nose	nose	NOUN	N	Number=Sing	3	advmod	_	FUN=nose_4_N
+8	nose	nose	NOUN	N	Number=Sing	3	obl	_	FUN=nose_4_N
 
 # sent_id = gfud1000255
 # text = her former friend became her worst enemy
-1	her	she	PRON	Pron	Poss=Yes|PronType=Prs	3	det	_	FUN=she_Pron
+1	her	she	PRON	Pron	Poss=Yes|PronType=Prs	3	nmod:poss	_	FUN=she_Pron
 2	former	former	ADJ	A	Degree=Pos	3	amod	_	FUN=former_1_A
 3	friend	friend	NOUN	N	Number=Sing	4	nsubj	_	FUN=friend_1_N
 4	became	become	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=become_2_V2
-5	her	she	PRON	Pron	Poss=Yes|PronType=Prs	7	det	_	FUN=she_Pron
+5	her	she	PRON	Pron	Poss=Yes|PronType=Prs	7	nmod:poss	_	FUN=she_Pron
 6	worst	bad	ADJ	A	Degree=Sup	5	amod	_	FUN=bad_1_A
 7	enemy	enemy	NOUN	N	Number=Sing	4	obj	_	FUN=enemy_1_N
 
 # sent_id = gfud1000256
 # text = her coming was a serious complication
-1	her	she	PRON	Pron	Poss=Yes|PronType=Prs	2	det	_	FUN=she_Pron
+1	her	she	PRON	Pron	Poss=Yes|PronType=Prs	2	nmod:poss	_	FUN=she_Pron
 2	coming	coming	NOUN	N	Number=Sing	6	nsubj	_	FUN=coming_1_N
 3	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	6	cop	_	FUN=UseComp
 4	a	a	DET	Quant	FORM=0	6	det	_	FUN=IndefArt
@@ -1674,10 +1674,10 @@
 
 # sent_id = gfud1000257
 # text = their answer was to sue me
-1	their	they	PRON	Pron	Poss=Yes|PronType=Prs	2	det	_	FUN=they_Pron
+1	their	they	PRON	Pron	Poss=Yes|PronType=Prs	2	nmod:poss	_	FUN=they_Pron
 2	answer	answer	NOUN	N	Number=Sing	5	nsubj	_	FUN=answer_5_N
 3	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	5	cop	_	FUN=UseComp
-4	to	to	X	Comp	_	5	dep	_	FUN=CompVP
+4	to	to	PART	Comp	_	5	mark	_	FUN=CompVP
 5	sue	sue	VERB	V2	VerbForm=Inf	0	root	_	FUN=sue_V2
 6	me	I	PRON	Pron	Case=Acc|PronType=Prs	5	obj	_	FUN=i_Pron
 
@@ -1692,21 +1692,21 @@
 # text = the survivors of the fire were taken to a hospital
 1	the	the	DET	Quant	FORM=1	2	det	_	FUN=DefArt
 2	survivors	survivor	NOUN	N	Number=Plur	7	nsubj	_	FUN=survivor_1_N
-3	of	of	ADP	Prep	FORM=0	5	case	_	FUN=of_1_Prep
+3	of	of	ADP	Prep	_	5	case	_	FUN=of_1_Prep
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 5	fire	fire	NOUN	N	Number=Sing	2	nmod	_	FUN=fire_1_N
-6	were	be	X	VP	Mood=Ind|Tense=Past|VerbForm=Fin	7	dep	_	FUN=PassVPSlash
+6	were	be	AUX	VP	Mood=Ind|Tense=Past|VerbForm=Fin	7	cop	_	FUN=PassVPSlash
 7	taken	take	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=take_1_V2
-8	to	to	ADP	Prep	FORM=0	10	case	_	FUN=to_2_Prep
+8	to	to	ADP	Prep	_	10	case	_	FUN=to_2_Prep
 9	a	a	DET	Quant	FORM=0	10	det	_	FUN=IndefArt
-10	hospital	hospital	NOUN	N	Number=Sing	7	advmod	_	FUN=hospital_1_N
+10	hospital	hospital	NOUN	N	Number=Sing	7	obl	_	FUN=hospital_1_N
 
 # sent_id = gfud1000260
 # text = the actors tried to create a realistic portrayal of the Africans
 1	the	the	DET	Quant	FORM=1	2	det	_	FUN=DefArt
 2	actors	actor	NOUN	N	Number=Plur	3	nsubj	_	FUN=actor_1_N
 3	tried	try	VERB	VV	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=try_VV
-4	to	to	X	VP	_	3	dep	_	FUN=ComplVV
+4	to	to	PART	VP	_	3	mark	_	FUN=ComplVV
 5	create	create	VERB	V2	VerbForm=Inf	3	xcomp	_	FUN=create_5_V2
 6	a	a	DET	Quant	FORM=0	8	det	_	FUN=IndefArt
 7	realistic	realistic	ADJ	A	Degree=Pos	8	amod	_	FUN=realistic_1_A
@@ -1720,10 +1720,10 @@
 1	the	the	DET	Quant	FORM=1	2	det	_	FUN=DefArt
 2	children	child	NOUN	N	Number=Plur	3	nsubj	_	FUN=child_1_N
 3	ran	run	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=run_1_V
-4	down	down	ADP	Prep	FORM=0	6	case	_	FUN=down_Prep
+4	down	down	ADP	Prep	_	6	case	_	FUN=down_Prep
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	hill	hill	NOUN	N	Number=Sing	3	advmod	_	FUN=hill_1_N
-7	amain	amain	ADV	Adv	FORM=0	3	advmod	_	FUN=amain_1_Adv
+6	hill	hill	NOUN	N	Number=Sing	3	obl	_	FUN=hill_1_N
+7	amain	amain	ADV	Adv	_	3	advmod	_	FUN=amain_1_Adv
 
 # sent_id = gfud1000262
 # text = the flames blustered
@@ -1746,7 +1746,7 @@
 2	results	result	NOUN	N	Number=Plur	3	nsubj	_	FUN=result_4_N
 3	promised	promise	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=promise_4_V2
 4	fame	fame	NOUN	N	Number=Sing	3	obj	_	FUN=fame_1_N
-5	and	and	CCONJ	Conj	FORM=1	4	cc	_	FUN=and_Conj
+5	and	and	CCONJ	Conj	_	4	cc	_	FUN=and_Conj
 6	glory	glory	NOUN	N	Number=Sing	4	conj	_	FUN=glory_1_N
 
 # sent_id = gfud1000265
@@ -1760,8 +1760,8 @@
 # sent_id = gfud1000266
 # text = the windows were knocked out
 1	the	the	DET	Quant	FORM=1	2	det	_	FUN=DefArt
-2	windows	window	NOUN	N	Number=Plur	4	nsubj	_	FUN=window_1_N
-3	were	be	X	VP	Mood=Ind|Tense=Past|VerbForm=Fin	4	dep	_	FUN=PassVPSlash
+2	windows	window	NOUN	N	Number=Plur	4	nsubj:pass	_	FUN=window_1_N
+3	were	be	AUX	VP	Mood=Ind|Tense=Past|VerbForm=Fin	4	cop	_	FUN=PassVPSlash
 4	knocked	knock	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=knock_out_3_V2
 5	out	out	ADP	V2	_	4	compound:prt	_	FUN=knock_out_3_V2
 
@@ -1771,7 +1771,7 @@
 2	cold	cold	ADJ	A	Degree=Pos	3	amod	_	FUN=cold_1_A
 3	water	water	NOUN	N	Number=Sing	4	nsubj	_	FUN=water_1_N
 4	quenched	quench	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=quench_1_V2
-5	his	he	PRON	Pron	Poss=Yes|PronType=Prs	6	det	_	FUN=he_Pron
+5	his	he	PRON	Pron	Poss=Yes|PronType=Prs	6	nmod:poss	_	FUN=he_Pron
 6	thirst	thirst	NOUN	N	Number=Sing	4	obj	_	FUN=thirst_1_N
 
 # sent_id = gfud1000268
@@ -1780,7 +1780,7 @@
 2	good	good	ADJ	A	Degree=Pos	3	amod	_	FUN=good_1_A
 3	news	news	NOUN	N	Number=Sing	4	nsubj	_	FUN=news_1_N
 4	sent	send	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=send_aloft_V2
-5	her	she	PRON	Pron	Poss=Yes|PronType=Prs	6	det	_	FUN=she_Pron
+5	her	she	PRON	Pron	Poss=Yes|PronType=Prs	6	nmod:poss	_	FUN=she_Pron
 6	spirits	spirit	NOUN	N	Number=Plur	4	obj	_	FUN=spirit_3_N
 7	aloft	aloft	ADP	V2	_	4	compound:prt	_	FUN=send_aloft_V2
 
@@ -1792,18 +1792,18 @@
 4	banged	bang	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=bang_around_V2
 5	around	around	ADP	V2	_	7	case	_	FUN=bang_around_V2
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
-7	house	house	NOUN	N	Number=Sing	4	obj	_	FUN=house_1_N
+7	house	house	NOUN	N	Number=Sing	4	obl	_	FUN=house_1_N
 
 # sent_id = gfud1000270
 # text = the amount of homework decreased towards the end of the semester
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	amount	amount	NOUN	N	Number=Sing	5	nsubj	_	FUN=amount_3_N
-3	of	of	ADP	Prep	FORM=0	4	case	_	FUN=of_1_Prep
+3	of	of	ADP	Prep	_	4	case	_	FUN=of_1_Prep
 4	homework	homework	NOUN	N	Number=Sing	2	nmod	_	FUN=homework_N
 5	decreased	decrease	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=decrease_1_V
-6	towards	towards	ADP	Prep	FORM=0	8	case	_	FUN=towards_Prep
+6	towards	towards	ADP	Prep	_	8	case	_	FUN=towards_Prep
 7	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
-8	end	end	NOUN	N	Number=Sing	5	advmod	_	FUN=end_1_N
+8	end	end	NOUN	N	Number=Sing	5	obl	_	FUN=end_1_N
 9	of	of	X	CN	_	8	dep	_	FUN=PossNP
 10	the	the	DET	Quant	FORM=0	11	det	_	FUN=DefArt
 11	semester	semester	NOUN	N	Number=Sing	8	nmod	_	FUN=semester_1_N
@@ -1827,9 +1827,9 @@
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 5	evidence	evidence	NOUN	N	Number=Sing	2	nmod	_	FUN=evidence_3_N
 6	worked	work	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=work_3_V
-7	in	in	ADP	Prep	FORM=0	9	case	_	FUN=in_1_Prep
-8	his	he	PRON	Pron	Poss=Yes|PronType=Prs	9	det	_	FUN=he_Pron
-9	favour	favour	NOUN	N	Number=Sing	6	advmod	_	FUN=favour_3_N
+7	in	in	ADP	Prep	_	9	case	_	FUN=in_1_Prep
+8	his	he	PRON	Pron	Poss=Yes|PronType=Prs	9	nmod:poss	_	FUN=he_Pron
+9	favour	favour	NOUN	N	Number=Sing	6	obl	_	FUN=favour_3_N
 
 # sent_id = gfud1000273
 # text = the inn keeper could bed all the new arrivals
@@ -1838,7 +1838,7 @@
 3	keeper	keeper	NOUN	N	Number=Sing	4	nsubj	_	FUN=keeper_1_N
 4	could	be	VERB	VV	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=can_2_VV
 5	bed	bed	VERB	V2	VerbForm=Inf	4	xcomp	_	FUN=bed_1_V2
-6	all	all	DET	Predet	FORM=0	9	det	_	FUN=all_Predet
+6	all	all	DET	Predet	_	9	det	_	FUN=all_Predet
 7	the	the	DET	Quant	FORM=1	9	det	_	FUN=DefArt
 8	new	new	ADJ	A	Degree=Pos	9	amod	_	FUN=new_1_A
 9	arrivals	arrival	NOUN	N	Number=Plur	5	obj	_	FUN=arrival_3_N
@@ -1848,12 +1848,12 @@
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	accountant	accountant	NOUN	N	Number=Sing	3	nsubj	_	FUN=accountant_N
 3	absconded	abscond	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=abscond_V
-4	with	with	ADP	Prep	FORM=0	6	case	_	FUN=with_Prep
+4	with	with	ADP	Prep	_	6	case	_	FUN=with_Prep
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	cash	cash	NOUN	N	Number=Sing	3	advmod	_	FUN=cash_1_N
-7	from	from	ADP	Prep	FORM=0	9	case	_	FUN=from_Prep
+6	cash	cash	NOUN	N	Number=Sing	3	obl	_	FUN=cash_1_N
+7	from	from	ADP	Prep	_	9	case	_	FUN=from_Prep
 8	the	the	DET	Quant	FORM=0	9	det	_	FUN=DefArt
-9	safe	safe	NOUN	N	Number=Sing	3	advmod	_	FUN=safe_1_N
+9	safe	safe	NOUN	N	Number=Sing	3	obl	_	FUN=safe_1_N
 
 # sent_id = gfud1000275
 # text = the arrow missed the target
@@ -1868,17 +1868,17 @@
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	ball	ball	NOUN	N	Number=Sing	3	nsubj	_	FUN=ball_1_N
 3	rolled	roll	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=roll_1_V
-4	into	into	ADP	Prep	FORM=0	7	case	_	FUN=into_1_Prep
+4	into	into	ADP	Prep	_	7	case	_	FUN=into_1_Prep
 5	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
 6	corner	corner	NOUN	N	Number=Sing	7	compound	_	FUN=corner_1_N
-7	pocket	pocket	NOUN	N	Number=Sing	3	advmod	_	FUN=pocket_1_N
+7	pocket	pocket	NOUN	N	Number=Sing	3	obl	_	FUN=pocket_1_N
 
 # sent_id = gfud1000277
 # text = the building was in good repair
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	building	building	NOUN	N	Number=Sing	6	nsubj	_	FUN=building_1_N
 3	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	6	cop	_	FUN=UseComp
-4	in	in	ADP	Prep	FORM=0	6	case	_	FUN=in_1_Prep
+4	in	in	ADP	Prep	_	6	case	_	FUN=in_1_Prep
 5	good	good	ADJ	A	Degree=Pos	6	amod	_	FUN=good_1_A
 6	repair	repair	NOUN	N	Number=Sing	0	root	_	FUN=repair_2_N
 
@@ -1893,7 +1893,7 @@
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	child	child	NOUN	N	Number=Sing	3	nsubj	_	FUN=child_1_N
 3	clasped	clasp	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=clasp_4_V2
-4	my	I	PRON	Pron	Poss=Yes|PronType=Prs	5	det	_	FUN=i_Pron
+4	my	I	PRON	Pron	Poss=Yes|PronType=Prs	5	nmod:poss	_	FUN=i_Pron
 5	hands	hand	NOUN	N	Number=Plur	3	obj	_	FUN=hand_1_N
 
 # sent_id = gfud1000280
@@ -1917,9 +1917,9 @@
 2	dictionary	dictionary	NOUN	N	Number=Sing	3	nsubj	ADJUSTED	FUN=dictionary_N
 3	gave	give	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	ADJUSTED	FUN=give_4_V2
 4	senses	sense	NOUN	N	Number=Plur	3	obj	ADJUSTED	FUN=sense_2_N
-5	for	for	ADP	Prep	FORM=0	7	case	ADJUSTED	FUN=for_Prep
+5	for	for	ADP	Prep	_	7	case	ADJUSTED	FUN=for_Prep
 6	the	the	DET	Quant	FORM=0	7	det	ADJUSTED	FUN=DefArt
-7	word	word	NOUN	N	Number=Sing	3	advmod	ADJUSTED	FUN=word_1_N
+7	word	word	NOUN	N	Number=Sing	3	obl	ADJUSTED	FUN=word_1_N
 
 # sent_id = gfud1000283
 # text = the door opened
@@ -1944,8 +1944,8 @@
 2	film	film	NOUN	N	Number=Sing	4	nsubj	_	FUN=film_2_N
 3	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	4	cop	_	FUN=UseComp
 4	sensitive	sensitive	ADJ	A	Degree=Pos	0	root	_	FUN=sensitive_1_A
-5	to	to	ADP	Prep	FORM=0	6	case	_	FUN=to_3_Prep
-6	attack	attack	NOUN	N2	FORM=0	4	advmod	_	FUN=attack_by_N2
+5	to	to	ADP	Prep	_	6	case	_	FUN=to_3_Prep
+6	attack	attack	NOUN	N2	Number=Sing	4	nmod	_	FUN=attack_by_N2
 7	by	attack	NOUN	N2	FORM=4	6	dep	_	FUN=attack_by_N2
 8	acids	acid	NOUN	N	Number=Plur	6	nmod	_	FUN=acid_1_N
 
@@ -1970,7 +1970,7 @@
 # text = the jury awarded dollars to the plaintiff
 1	the	the	DET	Quant	FORM=0	2	det	ADJUSTED	FUN=DefArt
 2	jury	jury	NOUN	N	Number=Sing	3	nsubj	ADJUSTED	FUN=jury_1_N
-3	awarded	award	VERB	V3	FORM=4	0	root	ADJUSTED	FUN=award_to_V3
+3	awarded	award	VERB	V3	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	ADJUSTED	FUN=award_to_V3
 4	dollars	dollar	NOUN	N	Number=Plur	3	iobj	ADJUSTED	FUN=dollar_1_N
 5	to	award	VERB	V3	FORM=6	3	dep	ADJUSTED	FUN=award_to_V3
 6	the	the	DET	Quant	FORM=0	7	det	ADJUSTED	FUN=DefArt
@@ -2003,9 +2003,9 @@
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	path	path	NOUN	N	Number=Sing	3	nsubj	_	FUN=path_2_N
 3	ascended	ascend	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=ascend_6_V
-4	to	to	ADP	Prep	FORM=0	6	case	_	FUN=to_1_Prep
+4	to	to	ADP	Prep	_	6	case	_	FUN=to_1_Prep
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	top	top	NOUN	N	Number=Sing	3	advmod	_	FUN=top_1_N
+6	top	top	NOUN	N	Number=Sing	3	obl	_	FUN=top_1_N
 7	of	of	X	CN	_	6	dep	_	FUN=PossNP
 8	the	the	DET	Quant	FORM=0	9	det	_	FUN=DefArt
 9	hill	hill	NOUN	N	Number=Sing	6	nmod	_	FUN=hill_1_N
@@ -2015,7 +2015,7 @@
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	plant	plant	NOUN	N	Number=Sing	3	nsubj	_	FUN=plant_2_N
 3	sprouted	sprout	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=sprout_2_V
-4	early	early	ADV	Adv	FORM=0	3	advmod	_	FUN=early_1_Adv
+4	early	early	ADV	Adv	_	3	advmod	_	FUN=early_1_Adv
 5	this	this	DET	Quant	FORM=0	6	det	_	FUN=this_Quant
 6	year	year	NOUN	N	Number=Sing	3	advmod	_	FUN=year_1_N
 
@@ -2024,7 +2024,7 @@
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	police	police	NOUN	N	Number=Sing	3	nsubj	_	FUN=police_N
 3	attempted	attempt	VERB	VV	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=attempt_1_VV
-4	to	to	X	VP	_	3	dep	_	FUN=ComplVV
+4	to	to	PART	VP	_	3	mark	_	FUN=ComplVV
 5	stop	stop	VERB	V2	VerbForm=Inf	3	xcomp	_	FUN=stop_2_V2
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
 7	thief	thief	NOUN	N	Number=Sing	5	obj	_	FUN=thief_N
@@ -2035,18 +2035,18 @@
 2	punch	punch	NOUN	N	Number=Sing	3	nsubj	_	FUN=punch_1_N
 3	caught	catch	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=catch_3_V2
 4	him	he	PRON	Pron	Case=Acc|PronType=Prs	3	obj	_	FUN=he_Pron
-5	in	in	ADP	Prep	FORM=0	7	case	_	FUN=in_1_Prep
+5	in	in	ADP	Prep	_	7	case	_	FUN=in_1_Prep
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
-7	stomach	stomach	NOUN	N	Number=Sing	3	advmod	_	FUN=stomach_1_N
+7	stomach	stomach	NOUN	N	Number=Sing	3	obl	_	FUN=stomach_1_N
 
 # sent_id = gfud1000296
 # text = the room was bathed in sunlight
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	room	room	NOUN	N	Number=Sing	4	nsubj	_	FUN=room_1_N
-3	was	be	X	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	4	dep	_	FUN=PassVPSlash
+3	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	4	cop	_	FUN=PassVPSlash
 4	bathed	bathe	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=bathe_2_V2
-5	in	in	ADP	Prep	FORM=0	6	case	_	FUN=in_1_Prep
-6	sunlight	sunlight	NOUN	N	Number=Sing	4	advmod	_	FUN=sunlight_N
+5	in	in	ADP	Prep	_	6	case	_	FUN=in_1_Prep
+6	sunlight	sunlight	NOUN	N	Number=Sing	4	obl	_	FUN=sunlight_N
 
 # sent_id = gfud1000297
 # text = the senator blistered the administration in his speech on Friday
@@ -2055,9 +2055,9 @@
 3	blistered	blister	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=blister_2_V2
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 5	administration	administration	NOUN	N	Number=Sing	3	obj	_	FUN=administration_2_N
-6	in	in	ADP	Prep	FORM=0	8	case	_	FUN=in_1_Prep
-7	his	he	PRON	Pron	Poss=Yes|PronType=Prs	8	det	_	FUN=he_Pron
-8	speech	speech	NOUN	N	Number=Sing	3	advmod	_	FUN=speech_1_N
+6	in	in	ADP	Prep	_	8	case	_	FUN=in_1_Prep
+7	his	he	PRON	Pron	Poss=Yes|PronType=Prs	8	nmod:poss	_	FUN=he_Pron
+8	speech	speech	NOUN	N	Number=Sing	3	obl	_	FUN=speech_1_N
 9	on	on	X	Adv	_	10	dep	_	FUN=weekdayPunctualAdv
 10	Friday	Friday	NOUN	Weekday	FORM=0	3	advmod	_	FUN=friday_Weekday
 
@@ -2073,10 +2073,10 @@
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	structure	structure	NOUN	N	Number=Sing	3	nsubj	_	FUN=structure_1_N
 3	consisted	consist	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=consist_4_V
-4	of	of	ADP	Prep	FORM=0	6	case	_	FUN=of_1_Prep
+4	of	of	ADP	Prep	_	6	case	_	FUN=of_1_Prep
 5	a	a	DET	Quant	FORM=0	6	det	_	FUN=IndefArt
-6	series	series	NOUN	N	Number=Sing	3	advmod	_	FUN=series_1_N
-7	of	of	ADP	Prep	FORM=0	8	case	_	FUN=of_1_Prep
+6	series	series	NOUN	N	Number=Sing	3	obl	_	FUN=series_1_N
+7	of	of	ADP	Prep	_	8	case	_	FUN=of_1_Prep
 8	arches	arch	NOUN	N	Number=Plur	6	nmod	_	FUN=arch_1_N
 
 # sent_id = gfud1000300
@@ -2084,7 +2084,7 @@
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	tradition	tradition	NOUN	N	Number=Sing	5	nsubj	_	FUN=tradition_1_N
 3	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	5	cop	_	FUN=UseComp
-4	still	still	ADV	AdV	FORM=0	5	advmod	_	FUN=still_1_AdV
+4	still	still	ADV	AdV	_	5	advmod	_	FUN=still_1_AdV
 5	alive	alive	ADJ	A	Degree=Pos	0	root	_	FUN=alive_5_A
 
 # sent_id = gfud1000301
@@ -2092,8 +2092,8 @@
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	weather	weather	NOUN	N	Number=Sing	3	nsubj	_	FUN=weather_N
 3	improved	improve	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=improve_V
-4	toward	toward	ADP	Prep	FORM=0	5	case	_	FUN=toward_Prep
-5	evening	evening	NOUN	N	Number=Sing	3	advmod	_	FUN=evening_1_N
+4	toward	toward	ADP	Prep	_	5	case	_	FUN=toward_Prep
+5	evening	evening	NOUN	N	Number=Sing	3	obl	_	FUN=evening_1_N
 
 # sent_id = gfud1000302
 # text = inmates broke jail
@@ -2108,7 +2108,7 @@
 3	resulted	result	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=result_in_V2
 4	in	in	ADP	V2	_	6	case	_	FUN=result_in_V2
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	annihilation	annihilation	NOUN	N	Number=Sing	3	obj	_	FUN=annihilation_2_N
+6	annihilation	annihilation	NOUN	N	Number=Sing	3	obl	_	FUN=annihilation_2_N
 7	of	of	X	CN	_	6	dep	_	FUN=PossNP
 8	the	the	DET	Quant	FORM=0	9	det	_	FUN=DefArt
 9	atoll	atoll	NOUN	N	Number=Sing	6	nmod	_	FUN=atoll_N
@@ -2118,10 +2118,10 @@
 1	kids	kid	NOUN	N	Number=Plur	3	nsubj	_	FUN=kid_1_N
 2	were	be	AUX	VP	Mood=Ind|Tense=Past|VerbForm=Fin	3	cop	_	FUN=ProgrVP
 3	breaking	break	VERB	V	Tense=Pres|VerbForm=Part	0	root	_	FUN=break_37_V
-4	at	at	ADP	Prep	FORM=0	7	case	_	FUN=at_1_Prep
+4	at	at	ADP	Prep	_	7	case	_	FUN=at_1_Prep
 5	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
 6	street	street	NOUN	N	Number=Sing	7	compound	_	FUN=street_1_N
-7	corner	corner	NOUN	N	Number=Sing	3	advmod	_	FUN=corner_4_N
+7	corner	corner	NOUN	N	Number=Sing	3	obl	_	FUN=corner_4_N
 
 # sent_id = gfud1000305
 # text = a heated hydraulic press was required for adhesion
@@ -2131,13 +2131,13 @@
 4	press	press	NOUN	N	Number=Sing	6	nsubj	_	FUN=press_7_N
 5	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	6	cop	_	FUN=UseComp
 6	required	required	ADJ	A	Degree=Pos	0	root	_	FUN=required_1_A
-7	for	for	ADP	Prep	FORM=0	8	case	_	FUN=for_Prep
-8	adhesion	adhesion	NOUN	N	Number=Sing	6	advmod	_	FUN=adhesion_3_N
+7	for	for	ADP	Prep	_	8	case	_	FUN=for_Prep
+8	adhesion	adhesion	NOUN	N	Number=Sing	6	nmod	_	FUN=adhesion_3_N
 
 # sent_id = gfud1000306
 # text = an atmosphere of defeat pervaded the candidate's headquarters
 1	an	a	DET	Quant	FORM=0	2	det	_	FUN=IndefArt
-2	atmosphere	atmosphere	NOUN	N2	FORM=0	5	nsubj	_	FUN=atmosphere_of_N2
+2	atmosphere	atmosphere	NOUN	N2	Number=Sing	5	nsubj	_	FUN=atmosphere_of_N2
 3	of	atmosphere	NOUN	N2	FORM=4	2	dep	_	FUN=atmosphere_of_N2
 4	defeat	defeat	NOUN	N	Number=Sing	2	nmod	_	FUN=defeat_1_N
 5	pervaded	pervade	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=pervade_V2
@@ -2155,12 +2155,12 @@
 # text = wild rice was served as an accompaniment to the main dish
 1	wild	wild	ADJ	A	Degree=Pos	2	amod	_	FUN=wild_1_A
 2	rice	rice	NOUN	N	Number=Sing	4	nsubj	_	FUN=rice_1_N
-3	was	be	X	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	4	dep	_	FUN=PassVPSlash
+3	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	4	cop	_	FUN=PassVPSlash
 4	served	serve	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=serve_5_V2
-5	as	as	ADP	Prep	FORM=0	7	case	_	FUN=as_Prep
+5	as	as	ADP	Prep	_	7	case	_	FUN=as_Prep
 6	an	a	DET	Quant	FORM=0	7	det	_	FUN=IndefArt
-7	accompaniment	accompaniment	NOUN	N	Number=Sing	4	advmod	_	FUN=accompaniment_3_N
-8	to	to	ADP	Prep	FORM=0	11	case	_	FUN=to_3_Prep
+7	accompaniment	accompaniment	NOUN	N	Number=Sing	4	obl	_	FUN=accompaniment_3_N
+8	to	to	ADP	Prep	_	11	case	_	FUN=to_3_Prep
 9	the	the	DET	Quant	FORM=0	11	det	_	FUN=DefArt
 10	main	main	ADJ	A	Degree=Pos	11	amod	_	FUN=main_2_A
 11	dish	dish	NOUN	N	Number=Sing	7	nmod	_	FUN=dish_2_N
@@ -2176,8 +2176,8 @@
 # text = the best student was recognized by the dean
 1	the	the	DET	Quant	FORM=0	3	det	_	FUN=DefArt
 2	best	good	ADJ	A	Degree=Sup	1	amod	_	FUN=good_8_A
-3	student	student	NOUN	N	Number=Sing	5	nsubj	_	FUN=studentMasc_1_N
-4	was	be	X	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	5	dep	_	FUN=PassAgentVPSlash
+3	student	student	NOUN	N	Number=Sing	5	nsubj:pass	_	FUN=studentMasc_1_N
+4	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	5	cop	_	FUN=PassAgentVPSlash
 5	recognized	recognize	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=recognize_9_V2
 6	by	by	X	VP	_	5	dep	_	FUN=PassAgentVPSlash
 7	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
@@ -2209,8 +2209,8 @@
 3	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 4	dirty	dirty	ADJ	A	Degree=Pos	5	amod	_	FUN=dirty_1_A
 5	work	work	NOUN	N	Number=Sing	2	obj	_	FUN=work_1_N
-6	while	while	SCONJ	Subj	FORM=0	9	mark	_	FUN=while_Subj
-7	her	she	PRON	Pron	Poss=Yes|PronType=Prs	8	det	_	FUN=she_Pron
+6	while	while	SCONJ	Subj	_	9	mark	_	FUN=while_Subj
+7	her	she	PRON	Pron	Poss=Yes|PronType=Prs	8	nmod:poss	_	FUN=she_Pron
 8	sisters	sister	NOUN	N	Number=Plur	9	nsubj	_	FUN=sister_1_N
 9	preened	preen	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	5	nmod	_	FUN=preen_3_V2
 10	themselves	myself	PRON	RNP	FORM=9	9	obj	_	FUN=ReflPron
@@ -2218,11 +2218,11 @@
 # sent_id = gfud1000314
 # text = he always spoke in grammatical sentences
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=he_Pron
-2	always	always	ADV	AdV	FORM=0	3	advmod	_	FUN=always_1_AdV
+2	always	always	ADV	AdV	_	3	advmod	_	FUN=always_1_AdV
 3	spoke	speak	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=speak_1_V
-4	in	in	ADP	Prep	FORM=0	6	case	_	FUN=in_1_Prep
+4	in	in	ADP	Prep	_	6	case	_	FUN=in_1_Prep
 5	grammatical	grammatical	ADJ	A	Degree=Pos	6	amod	_	FUN=grammatical_1_A
-6	sentences	sentence	NOUN	N	Number=Plur	3	advmod	_	FUN=sentence_1_N
+6	sentences	sentence	NOUN	N	Number=Plur	3	obl	_	FUN=sentence_1_N
 
 # sent_id = gfud1000315
 # text = he drowned his sorrows in whiskey at the bar
@@ -2230,22 +2230,22 @@
 2	drowned	drown	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=drown_2_V2
 3	his	his	X	RNP	_	4	dep	_	FUN=ReflPoss
 4	sorrows	sorrow	NOUN	N	Number=Plur	2	obj	_	FUN=sorrow_1_N
-5	in	in	ADP	Prep	FORM=0	6	case	_	FUN=in_1_Prep
-6	whiskey	whiskey	NOUN	N	Number=Sing	2	advmod	_	FUN=whiskey_1_N
-7	at	at	ADP	Prep	FORM=0	9	case	_	FUN=at_1_Prep
+5	in	in	ADP	Prep	_	6	case	_	FUN=in_1_Prep
+6	whiskey	whiskey	NOUN	N	Number=Sing	2	obl	_	FUN=whiskey_1_N
+7	at	at	ADP	Prep	_	9	case	_	FUN=at_1_Prep
 8	the	the	DET	Quant	FORM=0	9	det	_	FUN=DefArt
-9	bar	bar	NOUN	N	Number=Sing	2	advmod	_	FUN=bar_1_N
+9	bar	bar	NOUN	N	Number=Sing	2	obl	_	FUN=bar_1_N
 
 # sent_id = gfud1000316
 # text = he stared over the edge with a feeling of awe
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=he_Pron
 2	stared	stare	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=stare_1_V
-3	over	over	ADP	Prep	FORM=0	5	case	_	FUN=over_1_Prep
+3	over	over	ADP	Prep	_	5	case	_	FUN=over_1_Prep
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
-5	edge	edge	NOUN	N	Number=Sing	2	advmod	_	FUN=edge_1_N
-6	with	with	ADP	Prep	FORM=0	8	case	_	FUN=with_Prep
+5	edge	edge	NOUN	N	Number=Sing	2	obl	_	FUN=edge_1_N
+6	with	with	ADP	Prep	_	8	case	_	FUN=with_Prep
 7	a	a	DET	Quant	FORM=0	8	det	_	FUN=IndefArt
-8	feeling	feeling	NOUN	N	Number=Sing	2	advmod	_	FUN=feeling_1_N
+8	feeling	feeling	NOUN	N	Number=Sing	2	obl	_	FUN=feeling_1_N
 9	of	of	X	CN	_	8	dep	_	FUN=PossNP
 10	awe	awe	NOUN	N	Number=Sing	8	nmod	_	FUN=awe_1_N
 
@@ -2255,20 +2255,20 @@
 2	breathed	breathe	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=breathe_3_V2
 3	new	new	ADJ	A	Degree=Pos	4	amod	_	FUN=new_1_A
 4	life	life	NOUN	N	Number=Sing	2	obj	_	FUN=life_1_N
-5	into	into	ADP	Prep	FORM=0	8	case	_	FUN=into_1_Prep
+5	into	into	ADP	Prep	_	8	case	_	FUN=into_1_Prep
 6	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
 7	old	old	ADJ	A	Degree=Pos	8	amod	_	FUN=old_1_A
-8	house	house	NOUN	N	Number=Sing	2	advmod	_	FUN=house_1_N
+8	house	house	NOUN	N	Number=Sing	2	obl	_	FUN=house_1_N
 
 # sent_id = gfud1000318
 # text = he felt contempt for all banausic occupations
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=he_Pron
 2	felt	feel	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=feel_1_V2
 3	contempt	contempt	NOUN	N	Number=Sing	2	obj	_	FUN=contempt_1_N
-4	for	for	ADP	Prep	FORM=0	7	case	_	FUN=for_Prep
-5	all	all	DET	Predet	FORM=0	7	det	_	FUN=all_Predet
+4	for	for	ADP	Prep	_	7	case	_	FUN=for_Prep
+5	all	all	DET	Predet	_	7	det	_	FUN=all_Predet
 6	banausic	banausic	ADJ	A	Degree=Pos	7	amod	_	FUN=banausic_A
-7	occupations	occupation	NOUN	N	Number=Plur	2	advmod	_	FUN=occupation_1_N
+7	occupations	occupation	NOUN	N	Number=Plur	2	obl	_	FUN=occupation_1_N
 
 # sent_id = gfud1000319
 # text = he had a consultation with the judge
@@ -2276,9 +2276,9 @@
 2	had	have	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=have_1_V2
 3	a	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
 4	consultation	consultation	NOUN	N	Number=Sing	2	obj	_	FUN=consultation_1_N
-5	with	with	ADP	Prep	FORM=0	7	case	_	FUN=with_Prep
+5	with	with	ADP	Prep	_	7	case	_	FUN=with_Prep
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
-7	judge	judge	NOUN	N	Number=Sing	2	advmod	_	FUN=judge_1_N
+7	judge	judge	NOUN	N	Number=Sing	2	obl	_	FUN=judge_1_N
 
 # sent_id = gfud1000320
 # text = he lost the hole when his approach rolled over the green
@@ -2286,13 +2286,13 @@
 2	lost	lose	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=lose_1_V2
 3	the	the	DET	Quant	FORM=0	4	det	_	FUN=DefArt
 4	hole	hole	NOUN	N	Number=Sing	2	obj	_	FUN=hole_1_N
-5	when	when	SCONJ	Subj	FORM=0	8	mark	_	FUN=when_Subj
-6	his	he	PRON	Pron	Poss=Yes|PronType=Prs	7	det	_	FUN=he_Pron
+5	when	when	SCONJ	Subj	_	8	mark	_	FUN=when_Subj
+6	his	he	PRON	Pron	Poss=Yes|PronType=Prs	7	nmod:poss	_	FUN=he_Pron
 7	approach	approach	NOUN	N	Number=Sing	8	nsubj	_	FUN=approach_9_N
-8	rolled	roll	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	2	advmod	_	FUN=roll_1_V
-9	over	over	ADP	Prep	FORM=0	11	case	_	FUN=over_1_Prep
+8	rolled	roll	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	2	advcl	_	FUN=roll_1_V
+9	over	over	ADP	Prep	_	11	case	_	FUN=over_1_Prep
 10	the	the	DET	Quant	FORM=0	11	det	_	FUN=DefArt
-11	green	green	NOUN	N	Number=Sing	8	advmod	_	FUN=green_6_N
+11	green	green	NOUN	N	Number=Sing	8	obl	_	FUN=green_6_N
 
 # sent_id = gfud1000321
 # text = he provided a liaison with the guerrillas
@@ -2300,9 +2300,9 @@
 2	provided	provide	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=provide_1_V2
 3	a	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
 4	liaison	liaison	NOUN	N	Number=Sing	2	obj	_	FUN=liaison_2_N
-5	with	with	ADP	Prep	FORM=0	7	case	_	FUN=with_Prep
+5	with	with	ADP	Prep	_	7	case	_	FUN=with_Prep
 6	the	the	DET	Quant	FORM=1	7	det	_	FUN=DefArt
-7	guerrillas	guerrilla	NOUN	N	Number=Plur	2	advmod	_	FUN=guerrilla_N
+7	guerrillas	guerrilla	NOUN	N	Number=Plur	2	obl	_	FUN=guerrilla_N
 
 # sent_id = gfud1000322
 # text = he spent a quiet afternoon in the park
@@ -2311,19 +2311,19 @@
 3	a	a	DET	Quant	FORM=0	5	det	_	FUN=IndefArt
 4	quiet	quiet	ADJ	A	Degree=Pos	5	amod	_	FUN=quiet_1_A
 5	afternoon	afternoon	NOUN	N	Number=Sing	2	obj	_	FUN=afternoon_N
-6	in	in	ADP	Prep	FORM=0	8	case	_	FUN=in_1_Prep
+6	in	in	ADP	Prep	_	8	case	_	FUN=in_1_Prep
 7	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
-8	park	park	NOUN	N	Number=Sing	2	advmod	_	FUN=park_1_N
+8	park	park	NOUN	N	Number=Sing	2	obl	_	FUN=park_1_N
 
 # sent_id = gfud1000323
 # text = he wooed her with the confident dash of a cavalry officer
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=he_Pron
 2	wooed	woo	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=woo_2_V2
 3	her	she	PRON	Pron	Case=Acc|PronType=Prs	2	obj	_	FUN=she_Pron
-4	with	with	ADP	Prep	FORM=0	7	case	_	FUN=with_Prep
+4	with	with	ADP	Prep	_	7	case	_	FUN=with_Prep
 5	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
 6	confident	confident	ADJ	A	Degree=Pos	7	amod	_	FUN=confident_1_A
-7	dash	dash	NOUN	N	Number=Sing	2	advmod	_	FUN=dash_1_N
+7	dash	dash	NOUN	N	Number=Sing	2	obl	_	FUN=dash_1_N
 8	of	of	X	CN	_	7	dep	_	FUN=PossNP
 9	a	a	DET	Quant	FORM=0	11	det	_	FUN=IndefArt
 10	cavalry	cavalry	NOUN	N	Number=Sing	11	compound	_	FUN=cavalry_1_N
@@ -2332,12 +2332,12 @@
 # sent_id = gfud1000324
 # text = he was called on for an aliyah
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=he_Pron
-2	was	be	X	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	3	dep	_	FUN=PassVPSlash
+2	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	3	cop	_	FUN=PassVPSlash
 3	called	call	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=call_on_2_V2
 4	on	on	ADP	V2	_	3	compound:prt	_	FUN=call_on_2_V2
-5	for	for	ADP	Prep	FORM=0	7	case	_	FUN=for_Prep
+5	for	for	ADP	Prep	_	7	case	_	FUN=for_Prep
 6	an	a	DET	Quant	FORM=0	7	det	_	FUN=IndefArt
-7	aliyah	aliyah	NOUN	N	Number=Sing	3	advmod	_	FUN=aliyah_1_N
+7	aliyah	aliyah	NOUN	N	Number=Sing	3	obl	_	FUN=aliyah_1_N
 
 # sent_id = gfud1000325
 # text = he expressed his appreciation in a short note
@@ -2345,10 +2345,10 @@
 2	expressed	express	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=express_1_V2
 3	his	his	X	RNP	_	4	dep	_	FUN=ReflPoss
 4	appreciation	appreciation	NOUN	N	Number=Sing	2	obj	_	FUN=appreciation_3_N
-5	in	in	ADP	Prep	FORM=0	8	case	_	FUN=in_1_Prep
+5	in	in	ADP	Prep	_	8	case	_	FUN=in_1_Prep
 6	a	a	DET	Quant	FORM=0	8	det	_	FUN=IndefArt
 7	short	short	ADJ	A	Degree=Pos	8	amod	_	FUN=short_1_A
-8	note	note	NOUN	N	Number=Sing	2	advmod	_	FUN=note_7_N
+8	note	note	NOUN	N	Number=Sing	2	obl	_	FUN=note_7_N
 
 # sent_id = gfud1000326
 # text = he slackened his pace as he got tired
@@ -2356,47 +2356,47 @@
 2	slackened	slacken	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=slacken_2_V2
 3	his	his	X	RNP	_	4	dep	_	FUN=ReflPoss
 4	pace	pace	NOUN	N	Number=Sing	2	obj	_	FUN=pace_2_N
-5	as	as	SCONJ	Subj	FORM=0	7	mark	_	FUN=as_1_Subj
+5	as	as	SCONJ	Subj	_	7	mark	_	FUN=as_1_Subj
 6	he	he	PRON	Pron	Case=Nom|PronType=Prs	7	nsubj	_	FUN=he_Pron
-7	got	get	VERB	VA	FORM=4	2	advmod	_	FUN=get_7_VA
+7	got	get	VERB	VA	Mood=Ind|Tense=Past|VerbForm=Fin	2	advcl	_	FUN=get_7_VA
 8	tired	tired	ADJ	A	Degree=Pos	7	xcomp	_	FUN=tired_1_A
 
 # sent_id = gfud1000327
 # text = he acted with the best motives
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=he_Pron
 2	acted	act	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=act_1_V
-3	with	with	ADP	Prep	FORM=0	6	case	_	FUN=with_Prep
+3	with	with	ADP	Prep	_	6	case	_	FUN=with_Prep
 4	the	the	DET	Quant	FORM=1	6	det	_	FUN=DefArt
 5	best	good	ADJ	A	Degree=Sup	4	amod	_	FUN=good_1_A
-6	motives	motive	NOUN	N	Number=Plur	2	advmod	_	FUN=motive_1_N
+6	motives	motive	NOUN	N	Number=Plur	2	obl	_	FUN=motive_1_N
 
 # sent_id = gfud1000328
 # text = he went elsewhere
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=he_Pron
 2	went	go	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=go_1_V
-3	elsewhere	elsewhere	ADV	Adv	FORM=0	2	advmod	_	FUN=elsewhere_Adv
+3	elsewhere	elsewhere	ADV	Adv	_	2	advmod	_	FUN=elsewhere_Adv
 
 # sent_id = gfud1000329
 # text = he spoke with great ardour
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=he_Pron
 2	spoke	speak	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=speak_1_V
-3	with	with	ADP	Prep	FORM=0	5	case	_	FUN=with_Prep
+3	with	with	ADP	Prep	_	5	case	_	FUN=with_Prep
 4	great	great	ADJ	A	Degree=Pos	5	amod	_	FUN=great_1_A
-5	ardour	ardour	NOUN	N	Number=Sing	2	advmod	_	FUN=ardour_3_N
+5	ardour	ardour	NOUN	N	Number=Sing	2	obl	_	FUN=ardour_3_N
 
 # sent_id = gfud1000330
 # text = he worked in the coal beds
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=he_Pron
 2	worked	work	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=work_2_V
-3	in	in	ADP	Prep	FORM=0	6	case	_	FUN=in_1_Prep
+3	in	in	ADP	Prep	_	6	case	_	FUN=in_1_Prep
 4	the	the	DET	Quant	FORM=1	6	det	_	FUN=DefArt
 5	coal	coal	NOUN	N	Number=Sing	6	compound	_	FUN=coal_1_N
-6	beds	bed	NOUN	N	Number=Plur	2	advmod	_	FUN=bed_5_N
+6	beds	bed	NOUN	N	Number=Plur	2	obl	_	FUN=bed_5_N
 
 # sent_id = gfud1000331
 # text = he gave the suspect a quick frisk
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=he_Pron
-2	gave	give	VERB	V3	FORM=4	0	root	_	FUN=give_1_V3
+2	gave	give	VERB	V3	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=give_1_V3
 3	the	the	DET	Quant	FORM=0	4	det	_	FUN=DefArt
 4	suspect	suspect	NOUN	N	Number=Sing	2	iobj	_	FUN=suspect_1_N
 5	a	a	DET	Quant	FORM=0	7	det	_	FUN=IndefArt
@@ -2418,7 +2418,7 @@
 4	of	of	ADP	V2	_	7	case	_	FUN=avail_of_V2
 5	the	the	DET	Quant	FORM=1	7	det	_	FUN=DefArt
 6	available	available	ADJ	A	Degree=Pos	7	amod	_	FUN=available_1_A
-7	resources	resource	NOUN	N	Number=Plur	2	obj	_	FUN=resource_1_N
+7	resources	resource	NOUN	N	Number=Plur	2	obl	_	FUN=resource_1_N
 
 # sent_id = gfud1000334
 # text = he ate a large bag of popcorn
@@ -2427,7 +2427,7 @@
 3	a	a	DET	Quant	FORM=0	5	det	_	FUN=IndefArt
 4	large	large	ADJ	A	Degree=Pos	5	amod	_	FUN=large_1_A
 5	bag	bag	NOUN	N	Number=Sing	2	obj	_	FUN=bag_5_N
-6	of	of	ADP	Prep	FORM=0	7	case	_	FUN=of_2_Prep
+6	of	of	ADP	Prep	_	7	case	_	FUN=of_2_Prep
 7	popcorn	popcorn	NOUN	N	Number=Sing	5	nmod	_	FUN=popcorn_1_N
 
 # sent_id = gfud1000335
@@ -2472,9 +2472,9 @@
 # text = he saw that he had lost his audience
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=he_Pron
 2	saw	see	VERB	VS	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=see_6_VS
-3	that	that	X	VP	_	2	dep	_	FUN=ComplVS
+3	that	that	PART	VP	_	2	mark	_	FUN=ComplVS
 4	he	he	PRON	Pron	Case=Nom|PronType=Prs	6	nsubj	_	FUN=he_Pron
-5	had	have	X	VPSlash	Mood=Ind|Tense=Past|VerbForm=Fin	6	dep	_	FUN=SlashV2a
+5	had	have	AUX	VPSlash	Mood=Ind|Tense=Past|VerbForm=Fin	6	aux	_	FUN=SlashV2a
 6	lost	lose	VERB	V2	Tense=Past|VerbForm=Part	2	ccomp	_	FUN=lose_1_V2
 7	his	his	X	RNP	_	8	dep	_	FUN=ReflPoss
 8	audience	audience	NOUN	N	Number=Sing	6	obj	_	FUN=audience_3_N
@@ -2487,7 +2487,7 @@
 4	at	at	ADP	V2	_	7	case	_	FUN=laugh_at_V2
 5	his	his	X	RNP	_	7	dep	_	FUN=ReflPoss
 6	own	own	ADJ	A	Degree=Pos	7	amod	_	FUN=own_A
-7	jest	jest	NOUN	N	Number=Sing	2	obj	_	FUN=jest_1_N
+7	jest	jest	NOUN	N	Number=Sing	2	obl	_	FUN=jest_1_N
 
 # sent_id = gfud1000342
 # text = he growled his reply
@@ -2501,12 +2501,12 @@
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=he_Pron
 2	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	3	cop	_	FUN=UseComp
 3	unable	unable	ADJ	A	Degree=Pos	0	root	_	FUN=unable_1_A
-4	to	to	X	SC	_	5	dep	_	FUN=EmbedVP
+4	to	to	PART	SC	_	5	mark	_	FUN=EmbedVP
 5	give	give	VERB	V2	VerbForm=Inf	3	acl	_	FUN=give_4_V2
 6	a	a	DET	Quant	FORM=0	8	det	_	FUN=IndefArt
 7	clear	clear	ADJ	A	Degree=Pos	8	amod	_	FUN=clear_1_A
-8	accounting	accounting	NOUN	N	Number=Sing	5	obj	_	FUN=accounting_1_N
-9	for	for	ADP	Prep	FORM=0	8	case	_	FUN=for_Prep
+8	accounting	accounting	NOUN	N	Number=Sing	5	obl	_	FUN=accounting_1_N
+9	for	for	ADP	Prep	_	8	case	_	FUN=for_Prep
 10	his	his	X	RNP	_	11	dep	_	FUN=ReflPoss
 11	actions	action	NOUN	N	Number=Plur	8	nmod	_	FUN=action_1_N
 
@@ -2514,28 +2514,28 @@
 # text = I brought my camera along
 1	I	I	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=i_Pron
 2	brought	bring	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=bring_1_V2
-3	my	I	PRON	Pron	Poss=Yes|PronType=Prs	4	det	_	FUN=i_Pron
+3	my	I	PRON	Pron	Poss=Yes|PronType=Prs	4	nmod:poss	_	FUN=i_Pron
 4	camera	camera	NOUN	N	Number=Sing	2	obj	_	FUN=camera_1_N
-5	along	along	ADV	Adv	FORM=0	2	advmod	_	FUN=along_2_Adv
+5	along	along	ADV	Adv	_	2	advmod	_	FUN=along_2_Adv
 
 # sent_id = gfud1000345
 # text = I was approached by the president in order to serve as his adviser in foreign matters
 1	I	I	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=i_Pron
-2	was	be	X	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	3	dep	_	FUN=PassAgentVPSlash
+2	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	3	cop	_	FUN=PassAgentVPSlash
 3	approached	approach	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=approach_5_V2
 4	by	by	X	VP	_	3	dep	_	FUN=PassAgentVPSlash
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
 6	president	president	NOUN	N	Number=Sing	3	nmod	_	FUN=presidentMasc_2_N
 7	in	in	X	Adv	_	10	dep	_	FUN=InOrderToVP
 8	order	order	X	Adv	_	10	dep	_	FUN=InOrderToVP
-9	to	to	X	Adv	_	10	dep	_	FUN=InOrderToVP
+9	to	to	PART	Adv	_	10	mark	_	FUN=InOrderToVP
 10	serve	serve	VERB	V	VerbForm=Inf	3	advmod	_	FUN=serve_2_V
-11	as	as	ADP	Prep	FORM=0	13	case	_	FUN=as_Prep
-12	his	he	PRON	Pron	Poss=Yes|PronType=Prs	13	det	_	FUN=he_Pron
-13	adviser	adviser	NOUN	N	Number=Sing	10	advmod	_	FUN=adviserMasc_N
-14	in	in	ADP	Prep	FORM=0	16	case	_	FUN=in_1_Prep
+11	as	as	ADP	Prep	_	13	case	_	FUN=as_Prep
+12	his	he	PRON	Pron	Poss=Yes|PronType=Prs	13	nmod:poss	_	FUN=he_Pron
+13	adviser	adviser	NOUN	N	Number=Sing	10	obl	_	FUN=adviserMasc_N
+14	in	in	ADP	Prep	_	16	case	_	FUN=in_1_Prep
 15	foreign	foreign	ADJ	A	Degree=Pos	16	amod	_	FUN=foreign_1_A
-16	matters	matter	NOUN	N	Number=Plur	10	advmod	_	FUN=matter_2_N
+16	matters	matter	NOUN	N	Number=Plur	10	obl	_	FUN=matter_2_N
 
 # sent_id = gfud1000346
 # text = I caught the aroma of coffee
@@ -2549,13 +2549,13 @@
 # sent_id = gfud1000347
 # text = it was created with the conscious aim of answering immediate needs
 1	it	it	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=it_Pron
-2	was	be	X	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	3	dep	_	FUN=PassVPSlash
+2	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	3	cop	_	FUN=PassVPSlash
 3	created	create	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=create_1_V2
-4	with	with	ADP	Prep	FORM=0	7	case	_	FUN=with_Prep
+4	with	with	ADP	Prep	_	7	case	_	FUN=with_Prep
 5	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
 6	conscious	conscious	ADJ	A	Degree=Pos	7	amod	_	FUN=conscious_1_A
-7	aim	aim	NOUN	N	Number=Sing	3	advmod	_	FUN=aim_1_N
-8	of	of	ADP	Prep	FORM=0	9	case	_	FUN=of_3_Prep
+7	aim	aim	NOUN	N	Number=Sing	3	obl	_	FUN=aim_1_N
+8	of	of	ADP	Prep	_	9	case	_	FUN=of_3_Prep
 9	answering	answer	VERB	V2	Tense=Pres|VerbForm=Part	7	nmod	_	FUN=answer_9_V2
 10	immediate	immediate	ADJ	A	Degree=Pos	11	amod	_	FUN=immediate_2_A
 11	needs	need	NOUN	N	Number=Plur	9	obj	_	FUN=need_1_N
@@ -2563,28 +2563,28 @@
 # sent_id = gfud1000348
 # text = she was becomingly dressed
 1	she	she	PRON	Pron	Case=Nom|PronType=Prs	4	nsubj	_	FUN=she_Pron
-2	was	be	X	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	4	dep	_	FUN=PassVPSlash
-3	becomingly	becomingly	ADV	AdV	FORM=0	4	advmod	_	FUN=becomingly_AdV
+2	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	4	cop	_	FUN=PassVPSlash
+3	becomingly	becomingly	ADV	AdV	_	4	advmod	_	FUN=becomingly_AdV
 4	dressed	dress	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=dress_1_V2
 
 # sent_id = gfud1000349
 # text = she went back to her parents' house
 1	she	she	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=she_Pron
 2	went	go	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=go_1_V
-3	back	back	ADV	Adv	FORM=0	2	advmod	_	FUN=back_1_Adv
-4	to	to	ADP	Prep	FORM=0	7	case	_	FUN=to_1_Prep
-5	her	she	PRON	Pron	Poss=Yes|PronType=Prs	6	det	_	FUN=she_Pron
+3	back	back	ADV	Adv	_	2	advmod	_	FUN=back_1_Adv
+4	to	to	ADP	Prep	_	7	case	_	FUN=to_1_Prep
+5	her	she	PRON	Pron	Poss=Yes|PronType=Prs	6	nmod:poss	_	FUN=she_Pron
 6	parents'	parent	NOUN	N	FORM=3	7	nmod	_	FUN=parent_1_N
-7	house	house	NOUN	N	Number=Sing	2	advmod	_	FUN=house_1_N
+7	house	house	NOUN	N	Number=Sing	2	obl	_	FUN=house_1_N
 
 # sent_id = gfud1000350
 # text = she drowned her trouble in alcohol
 1	she	she	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=she_Pron
 2	drowned	drown	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=drown_2_V2
-3	her	she	PRON	Pron	Poss=Yes|PronType=Prs	4	det	_	FUN=she_Pron
+3	her	she	PRON	Pron	Poss=Yes|PronType=Prs	4	nmod:poss	_	FUN=she_Pron
 4	trouble	trouble	NOUN	N	Number=Sing	2	obj	_	FUN=trouble_1_N
-5	in	in	ADP	Prep	FORM=0	6	case	_	FUN=in_1_Prep
-6	alcohol	alcohol	NOUN	N	Number=Sing	2	advmod	_	FUN=alcohol_1_N
+5	in	in	ADP	Prep	_	6	case	_	FUN=in_1_Prep
+6	alcohol	alcohol	NOUN	N	Number=Sing	2	obl	_	FUN=alcohol_1_N
 
 # sent_id = gfud1000351
 # text = she took the job as director of development
@@ -2592,8 +2592,8 @@
 2	took	take	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=take_12_V2
 3	the	the	DET	Quant	FORM=0	4	det	_	FUN=DefArt
 4	job	job	NOUN	N	Number=Sing	2	obj	_	FUN=job_1_N
-5	as	as	ADP	Prep	FORM=0	6	case	_	FUN=as_Prep
-6	director	director	NOUN	N	Number=Sing	2	advmod	_	FUN=director_1_N
+5	as	as	ADP	Prep	_	6	case	_	FUN=as_Prep
+6	director	director	NOUN	N	Number=Sing	2	obl	_	FUN=director_1_N
 7	of	of	X	CN	_	6	dep	_	FUN=PossNP
 8	development	development	NOUN	N	Number=Sing	6	nmod	_	FUN=development_1_N
 
@@ -2604,27 +2604,27 @@
 3	up	up	ADP	V2	_	2	compound:prt	_	FUN=pile_up_2_V2
 4	her	her	X	RNP	_	5	dep	_	FUN=ReflPoss
 5	books	book	NOUN	N	Number=Plur	2	obj	_	FUN=book_2_N
-6	in	in	ADP	Prep	FORM=0	8	case	_	FUN=in_1_Prep
-7	my	I	PRON	Pron	Poss=Yes|PronType=Prs	8	det	_	FUN=i_Pron
-8	living-room	living-room	NOUN	N	Number=Sing	2	advmod	_	FUN=living_room_N
+6	in	in	ADP	Prep	_	8	case	_	FUN=in_1_Prep
+7	my	I	PRON	Pron	Poss=Yes|PronType=Prs	8	nmod:poss	_	FUN=i_Pron
+8	living-room	living-room	NOUN	N	Number=Sing	2	obl	_	FUN=living_room_N
 
 # sent_id = gfud1000353
 # text = she acted accordingly
 1	she	she	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=she_Pron
 2	acted	act	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=act_1_V
-3	accordingly	accordingly	ADV	Adv	FORM=0	2	advmod	_	FUN=accordingly_2_Adv
+3	accordingly	accordingly	ADV	Adv	_	2	advmod	_	FUN=accordingly_2_Adv
 
 # sent_id = gfud1000354
 # text = she nodded approvingly
 1	she	she	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=she_Pron
 2	nodded	nod	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=nod_1_V
-3	approvingly	approvingly	ADV	Adv	FORM=0	2	advmod	_	FUN=approvingly_Adv
+3	approvingly	approvingly	ADV	Adv	_	2	advmod	_	FUN=approvingly_Adv
 
 # sent_id = gfud1000355
 # text = she authorized her assistant to sign the papers
 1	she	she	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=she_Pron
 2	authorized	authorize	VERB	V2V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=authorize_2_V2V
-3	her	she	PRON	Pron	Poss=Yes|PronType=Prs	4	det	_	FUN=she_Pron
+3	her	she	PRON	Pron	Poss=Yes|PronType=Prs	4	nmod:poss	_	FUN=she_Pron
 4	assistant	assistant	NOUN	N	Number=Sing	2	obj	_	FUN=assistantMasc_N
 5	to	to	ADP	V2V	_	6	mark	_	FUN=authorize_2_V2V
 6	sign	sign	VERB	V2	VerbForm=Inf	2	xcomp	_	FUN=sign_1_V2
@@ -2635,7 +2635,7 @@
 # text = she captured all the men's hearts
 1	she	she	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=she_Pron
 2	captured	capture	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=capture_2_V2
-3	all	all	DET	Predet	FORM=0	5	det	_	FUN=all_Predet
+3	all	all	DET	Predet	_	5	det	_	FUN=all_Predet
 4	the	the	DET	Quant	FORM=1	5	det	_	FUN=DefArt
 5	men's	man	NOUN	N	FORM=3	6	nmod	_	FUN=man_1_N
 6	hearts	heart	NOUN	N	Number=Plur	2	obj	_	FUN=heart_1_N
@@ -2665,11 +2665,11 @@
 7	that	which	PRON	RP	FORM=5	11	mark	_	FUN=that_RP
 8	the	the	DET	Quant	FORM=0	9	det	_	FUN=DefArt
 9	customer	customer	NOUN	N	Number=Sing	11	nsubj	_	FUN=customerMasc_N
-10	had	have	X	VPSlash	Mood=Ind|Tense=Past|VerbForm=Fin	11	dep	_	FUN=SlashV2a
+10	had	have	AUX	VPSlash	Mood=Ind|Tense=Past|VerbForm=Fin	11	aux	_	FUN=SlashV2a
 11	put	put	VERB	V2	Tense=Past|VerbForm=Part	6	acl	_	FUN=put_1_V2
-12	on	on	ADP	Prep	FORM=0	14	case	_	FUN=on_1_Prep
+12	on	on	ADP	Prep	_	14	case	_	FUN=on_1_Prep
 13	the	the	DET	Quant	FORM=0	14	det	_	FUN=DefArt
-14	conveyer-belt	conveyer-belt	NOUN	N	Number=Sing	11	advmod	_	FUN=conveyer_belt_N
+14	conveyer-belt	conveyer-belt	NOUN	N	Number=Sing	11	obl	_	FUN=conveyer_belt_N
 
 # sent_id = gfud1000360
 # text = they built their castles with an eye to their defensibility
@@ -2677,12 +2677,12 @@
 2	built	build	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=build_1_V2
 3	their	their	X	RNP	_	4	dep	_	FUN=ReflPoss
 4	castles	castle	NOUN	N	Number=Plur	2	obj	_	FUN=castle_1_N
-5	with	with	ADP	Prep	FORM=0	7	case	_	FUN=with_Prep
+5	with	with	ADP	Prep	_	7	case	_	FUN=with_Prep
 6	an	a	DET	Quant	FORM=0	7	det	_	FUN=IndefArt
-7	eye	eye	NOUN	N	Number=Sing	2	advmod	_	FUN=eye_3_N
-8	to	to	ADP	Prep	FORM=0	10	case	_	FUN=to_1_Prep
-9	their	they	PRON	Pron	Poss=Yes|PronType=Prs	10	det	_	FUN=they_Pron
-10	defensibility	defensibility	NOUN	N	Number=Sing	2	advmod	_	FUN=defensibility_N
+7	eye	eye	NOUN	N	Number=Sing	2	obl	_	FUN=eye_3_N
+8	to	to	ADP	Prep	_	10	case	_	FUN=to_1_Prep
+9	their	they	PRON	Pron	Poss=Yes|PronType=Prs	10	nmod:poss	_	FUN=they_Pron
+10	defensibility	defensibility	NOUN	N	Number=Sing	2	obl	_	FUN=defensibility_N
 
 # sent_id = gfud1000361
 # text = they hired hunters in order to keep down the deer population
@@ -2691,7 +2691,7 @@
 3	hunters	hunter	NOUN	N	Number=Plur	2	obj	_	FUN=hunter_1_N
 4	in	in	X	Adv	_	7	dep	_	FUN=InOrderToVP
 5	order	order	X	Adv	_	7	dep	_	FUN=InOrderToVP
-6	to	to	X	Adv	_	7	dep	_	FUN=InOrderToVP
+6	to	to	PART	Adv	_	7	mark	_	FUN=InOrderToVP
 7	keep	keep	VERB	V2	VerbForm=Inf	2	advmod	_	FUN=keep_down_1_V2
 8	down	down	ADP	V2	_	7	compound:prt	_	FUN=keep_down_1_V2
 9	the	the	DET	Quant	FORM=0	11	det	_	FUN=DefArt
@@ -2701,26 +2701,26 @@
 # sent_id = gfud1000362
 # text = they were awakened to the sad facts
 1	they	they	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=they_Pron
-2	were	be	X	VP	Mood=Ind|Tense=Past|VerbForm=Fin	3	dep	_	FUN=PassVPSlash
+2	were	be	AUX	VP	Mood=Ind|Tense=Past|VerbForm=Fin	3	cop	_	FUN=PassVPSlash
 3	awakened	awaken	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=awaken_3_V2
-4	to	to	ADP	Prep	FORM=0	7	case	_	FUN=to_4_Prep
+4	to	to	ADP	Prep	_	7	case	_	FUN=to_4_Prep
 5	the	the	DET	Quant	FORM=1	7	det	_	FUN=DefArt
 6	sad	sad	ADJ	A	Degree=Pos	7	amod	_	FUN=sad_1_A
-7	facts	fact	NOUN	N	Number=Plur	3	advmod	_	FUN=fact_1_N
+7	facts	fact	NOUN	N	Number=Plur	3	obl	_	FUN=fact_1_N
 
 # sent_id = gfud1000363
 # text = they battled over the budget
 1	they	they	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=they_Pron
 2	battled	battle	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=battle_V
-3	over	over	ADP	Prep	FORM=0	5	case	_	FUN=over_1_Prep
+3	over	over	ADP	Prep	_	5	case	_	FUN=over_1_Prep
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
-5	budget	budget	NOUN	N	Number=Sing	2	advmod	_	FUN=budget_1_N
+5	budget	budget	NOUN	N	Number=Sing	2	obl	_	FUN=budget_1_N
 
 # sent_id = gfud1000364
 # text = they avoided all recreational activity
 1	they	they	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=they_Pron
 2	avoided	avoid	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=avoid_1_V2
-3	all	all	DET	Predet	FORM=0	5	det	_	FUN=all_Predet
+3	all	all	DET	Predet	_	5	det	_	FUN=all_Predet
 4	recreational	recreational	ADJ	A	Degree=Pos	5	amod	_	FUN=recreational_1_A
 5	activity	activity	NOUN	N	Number=Sing	2	obj	_	FUN=activity_1_N
 
@@ -2735,28 +2735,28 @@
 # text = they recorded her singing
 1	they	they	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=they_Pron
 2	recorded	record	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=record_2_V2
-3	her	she	PRON	Pron	Poss=Yes|PronType=Prs	4	det	_	FUN=she_Pron
+3	her	she	PRON	Pron	Poss=Yes|PronType=Prs	4	nmod:poss	_	FUN=she_Pron
 4	singing	singing	NOUN	N	Number=Sing	2	obj	_	FUN=singing_1_N
 
 # sent_id = gfud1000367
 # text = they had to decide whether his misconduct was adventitious or the result of a flaw in his character
 1	they	they	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=they_Pron
 2	had	have	VERB	VV	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=have_5_VV
-3	to	to	X	VP	_	2	dep	_	FUN=ComplVV
+3	to	to	PART	VP	_	2	mark	_	FUN=ComplVV
 4	decide	decide	VERB	V	VerbForm=Inf	2	xcomp	_	FUN=decide_V
-5	whether	whether	SCONJ	Subj	FORM=0	9	mark	_	FUN=whether_Subj
-6	his	he	PRON	Pron	Poss=Yes|PronType=Prs	7	det	_	FUN=he_Pron
+5	whether	whether	SCONJ	Subj	_	9	mark	_	FUN=whether_Subj
+6	his	he	PRON	Pron	Poss=Yes|PronType=Prs	7	nmod:poss	_	FUN=he_Pron
 7	misconduct	misconduct	NOUN	N	Number=Sing	9	nsubj	_	FUN=misconduct_1_N
 8	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	9	cop	_	FUN=UseComp
-9	adventitious	adventitious	ADJ	A	Degree=Pos	4	advmod	_	FUN=adventitious_A
-10	or	or	CCONJ	Conj	FORM=1	9	cc	_	FUN=or_Conj
+9	adventitious	adventitious	ADJ	A	Degree=Pos	4	advcl	_	FUN=adventitious_A
+10	or	or	CCONJ	Conj	_	9	cc	_	FUN=or_Conj
 11	the	the	DET	Quant	FORM=0	12	det	_	FUN=DefArt
 12	result	result	NOUN	N	Number=Sing	9	conj	_	FUN=result_1_N
 13	of	of	X	CN	_	12	dep	_	FUN=PossNP
 14	a	a	DET	Quant	FORM=0	15	det	_	FUN=IndefArt
 15	flaw	flaw	NOUN	N	Number=Sing	12	nmod	_	FUN=flaw_2_N
-16	in	in	ADP	Prep	FORM=0	18	case	_	FUN=in_1_Prep
-17	his	he	PRON	Pron	Poss=Yes|PronType=Prs	18	det	_	FUN=he_Pron
+16	in	in	ADP	Prep	_	18	case	_	FUN=in_1_Prep
+17	his	he	PRON	Pron	Poss=Yes|PronType=Prs	18	nmod:poss	_	FUN=he_Pron
 18	character	character	NOUN	N	Number=Sing	15	nmod	_	FUN=character_3_N
 
 # sent_id = gfud1000368
@@ -2766,26 +2766,26 @@
 3	the	the	DET	Quant	FORM=1	4	det	_	FUN=DefArt
 4	neighbours	neighbour	NOUN	N	Number=Plur	2	obj	_	FUN=neighbour_1_N
 5	in	in	ADJ	A	FORM=6	2	advmod	_	FUN=in_2_A
-6	for	for	ADP	Prep	FORM=0	10	case	_	FUN=for_Prep
+6	for	for	ADP	Prep	_	10	case	_	FUN=for_Prep
 7	a	a	DET	Quant	FORM=0	10	det	_	FUN=IndefArt
 8	cup	cup	X	CN	_	10	dep	_	FUN=cup_of_CN
 9	of	of	X	CN	_	10	dep	_	FUN=cup_of_CN
-10	coffee	coffee	NOUN	N	Number=Sing	2	advmod	_	FUN=coffee_1_N
+10	coffee	coffee	NOUN	N	Number=Sing	2	obl	_	FUN=coffee_1_N
 
 # sent_id = gfud1000369
 # text = we invited them ashore
 1	we	we	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=we_Pron
 2	invited	invite	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=invite_1_V2
 3	them	they	PRON	Pron	Case=Acc|PronType=Prs	2	obj	_	FUN=they_Pron
-4	ashore	ashore	ADV	Adv	FORM=0	2	advmod	_	FUN=ashore_Adv
+4	ashore	ashore	ADV	Adv	_	2	advmod	_	FUN=ashore_Adv
 
 # sent_id = gfud1000370
 # text = we bedded down at midnight
 1	we	we	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=we_Pron
 2	bedded	bed	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=bed_down_V
 3	down	bed	VERB	V	FORM=5	2	dep	_	FUN=bed_down_V
-4	at	at	ADP	Prep	FORM=0	5	case	_	FUN=at_2_Prep
-5	midnight	midnight	NOUN	N	Number=Sing	2	advmod	_	FUN=midnight_N
+4	at	at	ADP	Prep	_	5	case	_	FUN=at_2_Prep
+5	midnight	midnight	NOUN	N	Number=Sing	2	obl	_	FUN=midnight_N
 
 # sent_id = gfud1000371
 # text = we ascended the mountain
@@ -2803,40 +2803,40 @@
 
 # sent_id = gfud1000373
 # text = we were surprised by the extravagance of his description
-1	we	we	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=we_Pron
-2	were	be	X	VP	Mood=Ind|Tense=Past|VerbForm=Fin	3	dep	_	FUN=PassAgentVPSlash
+1	we	we	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj:pass	_	FUN=we_Pron
+2	were	be	AUX	VP	Mood=Ind|Tense=Past|VerbForm=Fin	3	cop	_	FUN=PassAgentVPSlash
 3	surprised	surprise	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=surprise_1_V2
 4	by	by	X	VP	_	3	dep	_	FUN=PassAgentVPSlash
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
 6	extravagance	extravagance	NOUN	N	Number=Sing	3	nmod	_	FUN=extravagance_1_N
 7	of	of	X	CN	_	6	dep	_	FUN=PossNP
-8	his	he	PRON	Pron	Poss=Yes|PronType=Prs	9	det	_	FUN=he_Pron
+8	his	he	PRON	Pron	Poss=Yes|PronType=Prs	9	nmod:poss	_	FUN=he_Pron
 9	description	description	NOUN	N	Number=Sing	6	nmod	_	FUN=description_1_N
 
 # sent_id = gfud1000374
 # text = his people have been farmers for generations
-1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	2	det	_	FUN=he_Pron
+1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	2	nmod:poss	_	FUN=he_Pron
 2	people	people	NOUN	N	Number=Plur	5	nsubj	_	FUN=people_3_N
 3	have	have	AUX	VP	VerbForm=Inf	5	aux	_	FUN=UseComp
 4	been	be	AUX	VP	Tense=Past|VerbForm=Part	5	cop	_	FUN=UseComp
 5	farmers	farmer	NOUN	N	Number=Plur	0	root	_	FUN=farmer_1_N
-6	for	for	ADP	Prep	FORM=0	7	case	_	FUN=for_Prep
-7	generations	generation	NOUN	N	Number=Plur	5	advmod	_	FUN=generation_1_N
+6	for	for	ADP	Prep	_	7	case	_	FUN=for_Prep
+7	generations	generation	NOUN	N	Number=Plur	5	obl	_	FUN=generation_1_N
 
 # sent_id = gfud1000375
 # text = women have led troops in battle
 1	women	woman	NOUN	N	Number=Plur	3	nsubj	ADJUSTED	FUN=woman_1_N
-2	have	have	X	VPSlash	VerbForm=Inf	3	dep	ADJUSTED	FUN=SlashV2a
+2	have	have	AUX	VPSlash	VerbForm=Inf	3	aux	ADJUSTED	FUN=SlashV2a
 3	led	lead	VERB	V2	Tense=Past|VerbForm=Part	0	root	ADJUSTED	FUN=lead_13_V2
 4	troops	troop	NOUN	N	Number=Plur	3	obj	ADJUSTED	FUN=troop_1_N
-5	in	in	ADP	Prep	FORM=0	6	case	ADJUSTED	FUN=in_1_Prep
-6	battle	battle	NOUN	N	Number=Sing	3	advmod	ADJUSTED	FUN=battle_1_N
+5	in	in	ADP	Prep	_	6	case	ADJUSTED	FUN=in_1_Prep
+6	battle	battle	NOUN	N	Number=Sing	3	obl	ADJUSTED	FUN=battle_1_N
 
 # sent_id = gfud1000376
 # text = she has already graduated
 1	she	she	PRON	Pron	Case=Nom|PronType=Prs	4	nsubj	_	FUN=she_Pron
 2	has	have	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	4	aux	_	FUN=UseV
-3	already	already	ADV	AdV	FORM=0	4	advmod	_	FUN=already_AdV
+3	already	already	ADV	AdV	_	4	advmod	_	FUN=already_AdV
 4	graduated	graduate	VERB	V	Tense=Past|VerbForm=Part	0	root	_	FUN=graduate_V
 
 # sent_id = gfud1000377
@@ -2852,17 +2852,17 @@
 1	poignant	poignant	ADJ	A	Degree=Pos	2	amod	_	FUN=poignant_1_A
 2	grief	grief	NOUN	N	Number=Sing	3	nsubj	_	FUN=grief_1_N
 3	can	be	VERB	VV	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=can_2_VV
-4	not	not	X	VP	Polarity=Neg	3	dep	_	FUN=ComplVV
+4	not	not	PART	VP	Polarity=Neg	3	advmod	_	FUN=ComplVV
 5	endure	endure	VERB	V	VerbForm=Inf	3	xcomp	_	FUN=endure_6_V
-6	forever	forever	ADV	Adv	FORM=0	3	advmod	_	FUN=forever_1_Adv
+6	forever	forever	ADV	Adv	_	3	advmod	_	FUN=forever_1_Adv
 
 # sent_id = gfud1000379
 # text = he is not in my line of business
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	6	nsubj	_	FUN=he_Pron
 2	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	6	cop	_	FUN=UseComp
 3	not	not	PART	VP	Polarity=Neg	6	advmod	_	FUN=UseComp
-4	in	in	ADP	Prep	FORM=0	6	case	_	FUN=in_1_Prep
-5	my	I	PRON	Pron	Poss=Yes|PronType=Prs	6	det	_	FUN=i_Pron
+4	in	in	ADP	Prep	_	6	case	_	FUN=in_1_Prep
+5	my	I	PRON	Pron	Poss=Yes|PronType=Prs	6	nmod:poss	_	FUN=i_Pron
 6	line	line	NOUN	N	Number=Sing	0	root	_	FUN=line_19_N
 7	of	of	X	CN	_	6	dep	_	FUN=PossNP
 8	business	business	NOUN	N	Number=Sing	6	nmod	_	FUN=business_3_N
@@ -2871,9 +2871,9 @@
 # text = I can not bear his constant criticism
 1	I	I	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=i_Pron
 2	can	be	VERB	VV	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=can_1_VV
-3	not	not	X	VP	Polarity=Neg	2	dep	_	FUN=ComplVV
+3	not	not	PART	VP	Polarity=Neg	2	advmod	_	FUN=ComplVV
 4	bear	bear	VERB	V2	VerbForm=Inf	2	xcomp	_	FUN=bear_3_V2
-5	his	he	PRON	Pron	Poss=Yes|PronType=Prs	7	det	_	FUN=he_Pron
+5	his	he	PRON	Pron	Poss=Yes|PronType=Prs	7	nmod:poss	_	FUN=he_Pron
 6	constant	constant	ADJ	A	Degree=Pos	7	amod	_	FUN=constant_2_A
 7	criticism	criticism	NOUN	N	Number=Sing	4	obj	_	FUN=criticism_1_N
 
@@ -2881,27 +2881,27 @@
 # text = you can not survive in the army without a sense of humour
 1	you	you	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=youSgFem_Pron
 2	can	be	VERB	VV	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=can_2_VV
-3	not	not	X	VP	Polarity=Neg	2	dep	_	FUN=ComplVV
+3	not	not	PART	VP	Polarity=Neg	2	advmod	_	FUN=ComplVV
 4	survive	survive	VERB	V	VerbForm=Inf	2	xcomp	_	FUN=survive_1_V
-5	in	in	ADP	Prep	FORM=0	7	case	_	FUN=in_1_Prep
+5	in	in	ADP	Prep	_	7	case	_	FUN=in_1_Prep
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
-7	army	army	NOUN	N	Number=Sing	2	advmod	_	FUN=army_1_N
-8	without	without	ADP	Prep	FORM=0	10	case	_	FUN=without_Prep
+7	army	army	NOUN	N	Number=Sing	2	obl	_	FUN=army_1_N
+8	without	without	ADP	Prep	_	10	case	_	FUN=without_Prep
 9	a	a	DET	Quant	FORM=0	10	det	_	FUN=IndefArt
-10	sense	sense	NOUN	N	Number=Sing	2	advmod	_	FUN=sense_1_N
-11	of	of	ADP	Prep	FORM=0	12	case	_	FUN=of_3_Prep
+10	sense	sense	NOUN	N	Number=Sing	2	obl	_	FUN=sense_1_N
+11	of	of	ADP	Prep	_	12	case	_	FUN=of_3_Prep
 12	humour	humour	NOUN	N	Number=Sing	10	nmod	_	FUN=humour_6_N
 
 # sent_id = gfud1000382
 # text = there is a shortage of skilled labour in this field
-1	there	there	X	Cl	_	4	dep	_	FUN=ExistNPAdv
-2	is	be	X	Cl	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	4	dep	_	FUN=ExistNPAdv
+1	there	there	PRON	Cl	_	4	expl	_	FUN=ExistNPAdv
+2	is	be	AUX	Cl	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	4	cop	_	FUN=ExistNPAdv
 3	a	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
 4	shortage	shortage	NOUN	N	Number=Sing	0	root	_	FUN=shortage_1_N
 5	of	of	X	CN	_	4	dep	_	FUN=PossNP
 6	skilled	skilled	ADJ	A	Degree=Pos	7	amod	_	FUN=skilled_A
 7	labour	labour	NOUN	N	Number=Sing	4	nmod	_	FUN=labour_1_N
-8	in	in	ADP	Prep	FORM=0	10	case	_	FUN=in_1_Prep
+8	in	in	ADP	Prep	_	10	case	_	FUN=in_1_Prep
 9	this	this	DET	Quant	FORM=0	10	det	_	FUN=this_Quant
 10	field	field	NOUN	N	Number=Sing	4	nmod	_	FUN=field_6_N
 
@@ -2913,7 +2913,7 @@
 
 # sent_id = gfud1000384
 # text = that smoking causes health problems is an accomplished fact
-1	that	that	X	SC	_	3	dep	_	FUN=EmbedS
+1	that	that	PART	SC	_	3	mark	_	FUN=EmbedS
 2	smoking	smoking	NOUN	N	Number=Sing	3	nsubj	_	FUN=smoking_1_N
 3	causes	cause	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	9	csubj	_	FUN=cause_V2
 4	health	health	NOUN	N	Number=Sing	5	compound	_	FUN=health_1_N
@@ -2945,9 +2945,9 @@
 # sent_id = gfud1000387
 # text = carbon and sulphur and phosphorus are allotropic elements
 1	carbon	carbon	NOUN	N	Number=Sing	8	nsubj	_	FUN=carbon_1_N
-2	and	and	CCONJ	Conj	FORM=1	1	cc	_	FUN=and_Conj
+2	and	and	CCONJ	Conj	_	1	cc	_	FUN=and_Conj
 3	sulphur	sulphur	NOUN	N	Number=Sing	1	conj	_	FUN=sulphur_N
-4	and	and	CCONJ	Conj	FORM=1	1	cc	_	FUN=and_Conj
+4	and	and	CCONJ	Conj	_	1	cc	_	FUN=and_Conj
 5	phosphorus	phosphorus	NOUN	N	Number=Sing	1	conj	_	FUN=phosphorus_1_N
 6	are	be	AUX	VP	Mood=Ind|Tense=Pres|VerbForm=Fin	8	cop	_	FUN=UseComp
 7	allotropic	allotropic	ADJ	A	Degree=Pos	8	amod	_	FUN=allotropic_1_A
@@ -2959,10 +2959,10 @@
 
 # sent_id = gfud1000389
 # text = his ambition is to own his own business
-1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	2	det	_	FUN=he_Pron
+1	his	he	PRON	Pron	Poss=Yes|PronType=Prs	2	nmod:poss	_	FUN=he_Pron
 2	ambition	ambition	NOUN	N	Number=Sing	5	nsubj	_	FUN=ambition_1_N
 3	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	5	cop	_	FUN=UseComp
-4	to	to	X	Comp	_	5	dep	_	FUN=CompVP
+4	to	to	PART	Comp	_	5	mark	_	FUN=CompVP
 5	own	own	VERB	V2	VerbForm=Inf	0	root	_	FUN=own_V2
 6	his	his	X	RNP	_	8	dep	_	FUN=ReflPoss
 7	own	own	ADJ	A	Degree=Pos	8	amod	_	FUN=own_A
@@ -2970,37 +2970,37 @@
 
 # sent_id = gfud1000390
 # text = my head is throbbing
-1	my	I	PRON	Pron	Poss=Yes|PronType=Prs	2	det	_	FUN=i_Pron
+1	my	I	PRON	Pron	Poss=Yes|PronType=Prs	2	nmod:poss	_	FUN=i_Pron
 2	head	head	NOUN	N	Number=Sing	4	nsubj	_	FUN=head_1_N
 3	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	4	cop	_	FUN=ProgrVP
 4	throbbing	throb	VERB	V	Tense=Pres|VerbForm=Part	0	root	_	FUN=throb_1_V
 
 # sent_id = gfud1000391
 # text = her back arches
-1	her	she	PRON	Pron	Poss=Yes|PronType=Prs	2	det	_	FUN=she_Pron
+1	her	she	PRON	Pron	Poss=Yes|PronType=Prs	2	nmod:poss	_	FUN=she_Pron
 2	back	back	NOUN	N	Number=Sing	3	nsubj	_	FUN=back_1_N
 3	arches	arch	VERB	V	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=arch_V
 
 # sent_id = gfud1000392
 # text = our late president is still very active
-1	our	we	PRON	Pron	Poss=Yes|PronType=Prs	3	det	_	FUN=we_Pron
+1	our	we	PRON	Pron	Poss=Yes|PronType=Prs	3	nmod:poss	_	FUN=we_Pron
 2	late	late	ADJ	A	Degree=Pos	3	amod	_	FUN=late_3_A
 3	president	president	NOUN	N	Number=Sing	7	nsubj	_	FUN=presidentMasc_3_N
 4	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	7	cop	_	FUN=UseComp
-5	still	still	ADV	AdV	FORM=0	7	advmod	_	FUN=still_1_AdV
-6	very	very	ADV	AdA	FORM=0	7	advmod	_	FUN=very_AdA
+5	still	still	ADV	AdV	_	7	advmod	_	FUN=still_1_AdV
+6	very	very	ADV	AdA	_	7	advmod	_	FUN=very_AdA
 7	active	active	ADJ	A	Degree=Pos	0	root	_	FUN=active_1_A
 
 # sent_id = gfud1000393
 # text = the relations between town and gown are always sensitive
 1	the	the	DET	Quant	FORM=1	2	det	_	FUN=DefArt
 2	relations	relation	NOUN	N	Number=Plur	9	nsubj	_	FUN=relation_6_N
-3	between	between	ADP	Prep	FORM=0	4	case	_	FUN=between_Prep
+3	between	between	ADP	Prep	_	4	case	_	FUN=between_Prep
 4	town	town	NOUN	N	Number=Sing	2	nmod	_	FUN=town_1_N
-5	and	and	CCONJ	Conj	FORM=1	4	cc	_	FUN=and_Conj
+5	and	and	CCONJ	Conj	_	4	cc	_	FUN=and_Conj
 6	gown	gown	NOUN	N	Number=Sing	4	conj	_	FUN=gown_2_N
 7	are	be	AUX	VP	Mood=Ind|Tense=Pres|VerbForm=Fin	9	cop	_	FUN=UseComp
-8	always	always	ADV	AdV	FORM=0	9	advmod	_	FUN=always_1_AdV
+8	always	always	ADV	AdV	_	9	advmod	_	FUN=always_1_AdV
 9	sensitive	sensitive	ADJ	A	Degree=Pos	0	root	_	FUN=sensitive_4_A
 
 # sent_id = gfud1000394
@@ -3009,19 +3009,19 @@
 2	children	child	NOUN	N	Number=Plur	3	nsubj	_	FUN=child_1_N
 3	must	have	VERB	VV	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=must_1_VV
 4	learn	learn	VERB	VV	VerbForm=Inf	3	xcomp	_	FUN=learn_VV
-5	to	to	X	VP	_	4	dep	_	FUN=ComplVV
+5	to	to	PART	VP	_	4	mark	_	FUN=ComplVV
 6	behave	behave	VERB	V	VerbForm=Inf	4	xcomp	_	FUN=behave_3_V
 
 # sent_id = gfud1000395
 # text = the models show by analogy how matter is built up
 1	the	the	DET	Quant	FORM=1	2	det	_	FUN=DefArt
 2	models	model	NOUN	N	Number=Plur	3	nsubj	_	FUN=model_1_N
-3	show	show	VERB	VQ	FORM=0	0	root	_	FUN=show_5_VQ
-4	by	by	ADP	Prep	FORM=0	5	case	_	FUN=by_1_Prep
-5	analogy	analogy	NOUN	N	Number=Sing	3	advmod	_	FUN=analogy_2_N
-6	how	how	ADV	IAdv	FORM=0	9	advmod	_	FUN=how_IAdv
-7	matter	matter	NOUN	N	Number=Sing	9	nsubj	_	FUN=matter_3_N
-8	is	be	X	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	9	dep	_	FUN=PassVPSlash
+3	show	show	VERB	VQ	VerbForm=Inf	0	root	_	FUN=show_5_VQ
+4	by	by	ADP	Prep	_	5	case	_	FUN=by_1_Prep
+5	analogy	analogy	NOUN	N	Number=Sing	3	obl	_	FUN=analogy_2_N
+6	how	how	ADV	IAdv	_	9	advmod	_	FUN=how_IAdv
+7	matter	matter	NOUN	N	Number=Sing	9	nsubj:pass	_	FUN=matter_3_N
+8	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	9	cop	_	FUN=PassVPSlash
 9	built	build	VERB	V2	Tense=Past|VerbForm=Part	3	ccomp	_	FUN=build_up_5_V2
 10	up	up	ADP	V2	_	9	compound:prt	_	FUN=build_up_5_V2
 
@@ -3031,10 +3031,10 @@
 2	American	American	ADJ	A	Degree=Pos	3	amod	_	FUN=american_1_A
 3	shopkeeper	shopkeeper	NOUN	N	Number=Sing	4	nsubj	_	FUN=shopkeeper_N
 4	differs	differ	VERB	V	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=differ_1_V
-5	from	from	ADP	Prep	FORM=0	8	case	_	FUN=from_Prep
-6	his	he	PRON	Pron	Poss=Yes|PronType=Prs	8	det	_	FUN=he_Pron
+5	from	from	ADP	Prep	_	8	case	_	FUN=from_Prep
+6	his	he	PRON	Pron	Poss=Yes|PronType=Prs	8	nmod:poss	_	FUN=he_Pron
 7	European	European	ADJ	A	Degree=Pos	8	amod	_	FUN=european_A
-8	congener	congener	NOUN	N	Number=Sing	4	advmod	_	FUN=congener_3_N
+8	congener	congener	NOUN	N	Number=Sing	4	obl	_	FUN=congener_3_N
 
 # sent_id = gfud1000397
 # text = the new car is a delight
@@ -3048,13 +3048,13 @@
 # sent_id = gfud1000398
 # text = the notion of an office running without paper is absurd
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
-2	notion	notion	NOUN	N2	FORM=0	10	nsubj	_	FUN=notion_of_N2
+2	notion	notion	NOUN	N2	Number=Sing	10	nsubj	_	FUN=notion_of_N2
 3	of	notion	NOUN	N2	FORM=4	2	dep	_	FUN=notion_of_N2
 4	an	a	DET	Quant	FORM=0	5	det	_	FUN=IndefArt
 5	office	office	NOUN	N	Number=Sing	2	nmod	_	FUN=office_1_N
 6	running	running	ADJ	A	Degree=Pos	5	amod	_	FUN=running_2_A
-7	without	without	ADP	Prep	FORM=0	8	case	_	FUN=without_Prep
-8	paper	paper	NOUN	N	Number=Sing	6	advmod	_	FUN=paper_4_N
+7	without	without	ADP	Prep	_	8	case	_	FUN=without_Prep
+8	paper	paper	NOUN	N	Number=Sing	6	nmod	_	FUN=paper_4_N
 9	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	10	cop	_	FUN=UseComp
 10	absurd	absurd	ADJ	A	Degree=Pos	0	root	_	FUN=absurd_1_A
 
@@ -3066,9 +3066,9 @@
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 5	suspect	suspect	NOUN	N	Number=Sing	2	nmod	_	FUN=suspect_2_N
 6	answers	answer	VERB	V	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=answer_8_V
-7	to	to	ADP	Prep	FORM=0	9	case	_	FUN=to_2_Prep
+7	to	to	ADP	Prep	_	9	case	_	FUN=to_2_Prep
 8	the	the	DET	Quant	FORM=0	9	det	_	FUN=DefArt
-9	description	description	NOUN	N	Number=Sing	6	advmod	_	FUN=description_1_N
+9	description	description	NOUN	N	Number=Sing	6	obl	_	FUN=description_1_N
 10	the	the	DET	Quant	FORM=0	11	det	_	FUN=DefArt
 11	victim	victim	NOUN	N	Number=Sing	12	nsubj	_	FUN=victim_1_N
 12	gave	give	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	9	acl	_	FUN=give_4_V2
@@ -3104,7 +3104,7 @@
 1	the	the	DET	Quant	FORM=0	2	det	ADJUSTED	FUN=DefArt
 2	evidence	evidence	NOUN	N	Number=Sing	3	nsubj	ADJUSTED	FUN=evidence_3_N
 3	allows	allow	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	ADJUSTED	FUN=allow_5_V2
-4	only	only	DET	Predet	FORM=0	5	det	ADJUSTED	FUN=only_Predet
+4	only	only	DET	Predet	_	5	det	ADJUSTED	FUN=only_Predet
 5	conclusion	conclusion	NOUN	N	Number=Sing	3	obj	ADJUSTED	FUN=conclusion_1_N
 
 # sent_id = gfud1000404
@@ -3112,7 +3112,7 @@
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	job	job	NOUN	N	Number=Sing	5	nsubj	_	FUN=job_1_N
 3	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	5	cop	_	FUN=UseComp
-4	still	still	ADV	AdA	FORM=0	5	advmod	_	FUN=still_1_AdA
+4	still	still	ADV	AdA	_	5	advmod	_	FUN=still_1_AdA
 5	open	open	ADJ	A	Degree=Pos	0	root	_	FUN=open_6_A
 
 # sent_id = gfud1000405
@@ -3122,7 +3122,7 @@
 3	orbits	orbit	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=orbit_around_V2
 4	around	around	ADP	V2	_	6	case	_	FUN=orbit_around_V2
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	earth	earth	NOUN	N	Number=Sing	3	obj	_	FUN=earth_1_N
+6	earth	earth	NOUN	N	Number=Sing	3	obl	_	FUN=earth_1_N
 
 # sent_id = gfud1000406
 # text = the owner is usually the namer of a boat
@@ -3143,7 +3143,7 @@
 3	ought	be	VERB	VV	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=ought_VV
 4	to	be	VERB	VV	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	3	dep	_	FUN=ought_VV
 5	be	be	AUX	VP	VerbForm=Inf	6	cop	_	FUN=UseComp
-6	proportional	proportional	ADJ	A2	FORM=0	3	xcomp	_	FUN=proportional_to_A2
+6	proportional	proportional	ADJ	A2	Degree=Pos	3	xcomp	_	FUN=proportional_to_A2
 7	to	proportional	ADJ	A2	FORM=7	6	dep	_	FUN=proportional_to_A2
 8	the	the	DET	Quant	FORM=0	9	det	_	FUN=DefArt
 9	crime	crime	NOUN	N	Number=Sing	6	nmod	_	FUN=crime_1_N
@@ -3156,7 +3156,7 @@
 4	with	with	ADP	V2	_	7	case	_	FUN=begin_with_V2
 5	a	a	DET	Quant	FORM=0	7	det	_	FUN=IndefArt
 6	convocation	convocation	NOUN	N	Number=Sing	7	compound	_	FUN=convocation_2_N
-7	ceremony	ceremony	NOUN	N	Number=Sing	3	obj	_	FUN=ceremony_1_N
+7	ceremony	ceremony	NOUN	N	Number=Sing	3	obl	_	FUN=ceremony_1_N
 
 # sent_id = gfud1000409
 # text = the system is economically inefficient and politically anarchic
@@ -3165,7 +3165,7 @@
 3	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	5	cop	_	FUN=UseComp
 4	economically	economical	ADJ	A	FORM=6	5	advmod	_	FUN=economical_1_A
 5	inefficient	inefficient	ADJ	A	Degree=Pos	0	root	_	FUN=inefficient_1_A
-6	and	and	CCONJ	Conj	FORM=1	5	cc	_	FUN=and_Conj
+6	and	and	CCONJ	Conj	_	5	cc	_	FUN=and_Conj
 7	politically	political	ADJ	A	FORM=6	8	advmod	_	FUN=political_1_A
 8	anarchic	anarchic	ADJ	A	Degree=Pos	5	conj	_	FUN=anarchic_1_A
 
@@ -3182,7 +3182,7 @@
 2	small	small	ADJ	A	Degree=Pos	3	amod	_	FUN=small_1_A
 3	groups	group	NOUN	N	Number=Plur	4	nsubj	_	FUN=group_1_N
 4	can	be	VERB	VV	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=can_2_VV
-5	sometimes	sometimes	ADV	AdV	FORM=0	4	advmod	_	FUN=sometimes_AdV
+5	sometimes	sometimes	ADV	AdV	_	4	advmod	_	FUN=sometimes_AdV
 6	exert	exert	VERB	V2	VerbForm=Inf	4	xcomp	_	FUN=exert_1_V2
 7	immense	immense	ADJ	A	Degree=Pos	9	amod	_	FUN=immense_A
 8	political	political	ADJ	A	Degree=Pos	9	amod	_	FUN=political_1_A
@@ -3195,9 +3195,9 @@
 3	cross	cross	VERB	V2	VerbForm=Inf	0	root	_	FUN=cross_1_V2
 4	a	a	DET	Quant	FORM=0	5	det	_	FUN=IndefArt
 5	synapse	synapse	NOUN	N	Number=Sing	3	obj	_	FUN=synapse_N
-6	through	through	ADP	Prep	FORM=0	8	case	_	FUN=through_2_Prep
+6	through	through	ADP	Prep	_	8	case	_	FUN=through_2_Prep
 7	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
-8	action	action	NOUN	N	Number=Sing	3	advmod	_	FUN=action_4_N
+8	action	action	NOUN	N	Number=Sing	3	obl	_	FUN=action_4_N
 9	of	of	X	CN	_	8	dep	_	FUN=PossNP
 10	neurotransmitters	neurotransmitter	NOUN	N	Number=Plur	8	nmod	_	FUN=neurotransmitter_N
 
@@ -3206,8 +3206,8 @@
 1	misfortunes	misfortune	NOUN	N	Number=Plur	2	nsubj	_	FUN=misfortune_1_N
 2	come	come	VERB	V	VerbForm=Inf	0	root	_	FUN=come_3_V
 3	fast	fast	ADJ	A	FORM=6	2	advmod	_	FUN=fast_1_A
-4	and	and	CCONJ	Conj	FORM=1	3	cc	_	FUN=and_Conj
-5	thick	thick	ADV	Adv	FORM=0	3	conj	_	FUN=thick_2_Adv
+4	and	and	CCONJ	Conj	_	3	cc	_	FUN=and_Conj
+5	thick	thick	ADV	Adv	_	3	conj	_	FUN=thick_2_Adv
 
 # sent_id = gfud1000414
 # text = a complete bleach requires applications
@@ -3221,7 +3221,7 @@
 # text = an example of the acyl group is the acetyl group
 1	an	a	DET	Quant	FORM=0	2	det	_	FUN=IndefArt
 2	example	example	NOUN	N	Number=Sing	10	nsubj	_	FUN=example_1_N
-3	of	of	ADP	Prep	FORM=0	6	case	_	FUN=of_3_Prep
+3	of	of	ADP	Prep	_	6	case	_	FUN=of_3_Prep
 4	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
 5	acyl	acyl	NOUN	N	Number=Sing	6	compound	_	FUN=acyl_N
 6	group	group	NOUN	N	Number=Sing	2	nmod	_	FUN=group_1_N
@@ -3238,17 +3238,17 @@
 4	a	a	DET	Quant	FORM=0	6	det	_	FUN=IndefArt
 5	rapid	rapid	ADJ	A	Degree=Pos	6	amod	_	FUN=rapid_1_A
 6	alternation	alternation	NOUN	N	Number=Sing	0	root	_	FUN=alternation_N
-7	between	between	ADP	Prep	FORM=0	10	case	_	FUN=between_Prep
+7	between	between	ADP	Prep	_	10	case	_	FUN=between_Prep
 8	the	the	DET	Quant	FORM=3	10	det	_	FUN=DefArt
 9	two	two	NUM	Digit	FORM=0	8	nummod	_	FUN=n2
-10	notes	note	NOUN	N	Number=Plur	6	advmod	_	FUN=note_3_N
+10	notes	note	NOUN	N	Number=Plur	6	obl	_	FUN=note_3_N
 
 # sent_id = gfud1000417
 # text = thematic vowels are part of the stem
 1	thematic	thematic	ADJ	A	Degree=Pos	2	amod	_	FUN=thematic_1_A
 2	vowels	vowel	NOUN	N	Number=Plur	4	nsubj	_	FUN=vowel_1_N
 3	are	be	AUX	VP	Mood=Ind|Tense=Pres|VerbForm=Fin	4	cop	_	FUN=UseComp
-4	part	part	NOUN	N2	FORM=0	0	root	_	FUN=part_of_N2
+4	part	part	NOUN	N2	Number=Sing	0	root	_	FUN=part_of_N2
 5	of	part	NOUN	N2	FORM=4	4	dep	_	FUN=part_of_N2
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
 7	stem	stem	NOUN	N	Number=Sing	4	nmod	_	FUN=stem_1_N
@@ -3269,14 +3269,14 @@
 # text = physicians should be held responsible for the health of their patients
 1	physicians	physician	NOUN	N	Number=Plur	2	nsubj	_	FUN=physician_N
 2	should	be	VERB	VV	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=should_VV
-3	be	be	X	VP	VerbForm=Inf	4	dep	_	FUN=PassVPSlash
-4	held	hold	VERB	V2A	FORM=2	2	xcomp	_	FUN=hold_V2A
+3	be	be	AUX	VP	VerbForm=Inf	4	cop	_	FUN=PassVPSlash
+4	held	hold	VERB	V2A	Tense=Past|VerbForm=Part	2	xcomp	_	FUN=hold_V2A
 5	responsible	responsible	ADJ	A	Degree=Pos	4	xcomp	_	FUN=responsible_1_A
-6	for	for	ADP	Prep	FORM=0	8	case	_	FUN=for_Prep
+6	for	for	ADP	Prep	_	8	case	_	FUN=for_Prep
 7	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
-8	health	health	NOUN	N	Number=Sing	5	advmod	_	FUN=health_1_N
+8	health	health	NOUN	N	Number=Sing	5	nmod	_	FUN=health_1_N
 9	of	of	X	CN	_	8	dep	_	FUN=PossNP
-10	their	they	PRON	Pron	Poss=Yes|PronType=Prs	11	det	_	FUN=they_Pron
+10	their	they	PRON	Pron	Poss=Yes|PronType=Prs	11	nmod:poss	_	FUN=they_Pron
 11	patients	patient	NOUN	N	Number=Plur	8	nmod	_	FUN=patient_1_N
 
 # sent_id = gfud1000421
@@ -3298,17 +3298,17 @@
 # text = language externalizes our thoughts
 1	language	language	NOUN	N	Number=Sing	2	nsubj	_	FUN=language_1_N
 2	externalizes	externalize	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=externalize_2_V2
-3	our	we	PRON	Pron	Poss=Yes|PronType=Prs	4	det	_	FUN=we_Pron
+3	our	we	PRON	Pron	Poss=Yes|PronType=Prs	4	nmod:poss	_	FUN=we_Pron
 4	thoughts	thought	NOUN	N	Number=Plur	2	obj	_	FUN=thought_1_N
 
 # sent_id = gfud1000424
 # text = smoking is banned in this building
 1	smoking	smoking	NOUN	N	Number=Sing	3	nsubj	_	FUN=smoking_1_N
-2	is	be	X	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	3	dep	_	FUN=PassVPSlash
+2	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	3	cop	_	FUN=PassVPSlash
 3	banned	ban	VERB	V2	Tense=Past|VerbForm=Part	0	root	_	FUN=ban_2_V2
-4	in	in	ADP	Prep	FORM=0	6	case	_	FUN=in_1_Prep
+4	in	in	ADP	Prep	_	6	case	_	FUN=in_1_Prep
 5	this	this	DET	Quant	FORM=0	6	det	_	FUN=this_Quant
-6	building	building	NOUN	N	Number=Sing	3	advmod	_	FUN=building_1_N
+6	building	building	NOUN	N	Number=Sing	3	obl	_	FUN=building_1_N
 
 # sent_id = gfud1000425
 # text = those issues have no bearing on our situation
@@ -3317,9 +3317,9 @@
 3	have	have	VERB	V2	VerbForm=Inf	0	root	_	FUN=have_1_V2
 4	no	no	DET	Quant	FORM=0	5	det	_	FUN=no_Quant
 5	bearing	bearing	NOUN	N	Number=Sing	3	obj	_	FUN=bearing_1_N
-6	on	on	ADP	Prep	FORM=0	8	case	_	FUN=on_1_Prep
-7	our	we	PRON	Pron	Poss=Yes|PronType=Prs	8	det	_	FUN=we_Pron
-8	situation	situation	NOUN	N	Number=Sing	3	advmod	_	FUN=situation_2_N
+6	on	on	ADP	Prep	_	8	case	_	FUN=on_1_Prep
+7	our	we	PRON	Pron	Poss=Yes|PronType=Prs	8	nmod:poss	_	FUN=we_Pron
+8	situation	situation	NOUN	N	Number=Sing	3	obl	_	FUN=situation_2_N
 
 # sent_id = gfud1000426
 # text = these chemicals produce a noxious vapour
@@ -3338,9 +3338,9 @@
 4	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	6	cop	_	FUN=UseComp
 5	a	a	DET	Quant	FORM=0	6	det	_	FUN=IndefArt
 6	showcase	showcase	NOUN	N	Number=Sing	0	root	_	FUN=showcase_1_N
-7	for	for	ADP	Prep	FORM=0	8	case	_	FUN=for_Prep
-8	automation	automation	NOUN	N	Number=Sing	6	advmod	_	FUN=automation_3_N
-9	and	and	CCONJ	Conj	FORM=1	8	cc	_	FUN=and_Conj
+7	for	for	ADP	Prep	_	8	case	_	FUN=for_Prep
+8	automation	automation	NOUN	N	Number=Sing	6	obl	_	FUN=automation_3_N
+9	and	and	CCONJ	Conj	_	8	cc	_	FUN=and_Conj
 10	robotic	robotic	ADJ	A	Degree=Pos	11	amod	_	FUN=robotic_1_A
 11	equipment	equipment	NOUN	N	Number=Sing	8	conj	_	FUN=equipment_N
 
@@ -3349,24 +3349,24 @@
 1	this	this	DET	Quant	FORM=0	2	det	_	FUN=this_Quant
 2	door	door	NOUN	N	Number=Sing	3	nsubj	_	FUN=door_1_N
 3	goes	go	VERB	V	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=go_25_V
-4	to	to	ADP	Prep	FORM=0	6	case	_	FUN=to_3_Prep
+4	to	to	ADP	Prep	_	6	case	_	FUN=to_3_Prep
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	basement	basement	NOUN	N	Number=Sing	3	advmod	_	FUN=basement_1_N
+6	basement	basement	NOUN	N	Number=Sing	3	obl	_	FUN=basement_1_N
 
 # sent_id = gfud1000429
 # text = this poem can be characterized as a lament for a dead lover
 1	this	this	DET	Quant	FORM=0	2	det	_	FUN=this_Quant
 2	poem	poem	NOUN	N	Number=Sing	3	nsubj	_	FUN=poem_N
 3	can	be	VERB	VV	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=can_2_VV
-4	be	be	X	VP	VerbForm=Inf	5	dep	_	FUN=PassVPSlash
+4	be	be	AUX	VP	VerbForm=Inf	5	cop	_	FUN=PassVPSlash
 5	characterized	characterize	VERB	V2	Tense=Past|VerbForm=Part	3	xcomp	_	FUN=characterize_1_V2
-6	as	as	ADP	Prep	FORM=0	8	case	_	FUN=as_Prep
+6	as	as	ADP	Prep	_	8	case	_	FUN=as_Prep
 7	a	a	DET	Quant	FORM=0	8	det	_	FUN=IndefArt
-8	lament	lament	NOUN	N	Number=Sing	3	advmod	_	FUN=lament_1_N
-9	for	for	ADP	Prep	FORM=0	12	case	_	FUN=for_Prep
+8	lament	lament	NOUN	N	Number=Sing	3	obl	_	FUN=lament_1_N
+9	for	for	ADP	Prep	_	12	case	_	FUN=for_Prep
 10	a	a	DET	Quant	FORM=0	12	det	_	FUN=IndefArt
 11	dead	dead	ADJ	A	Degree=Pos	12	amod	_	FUN=dead_1_A
-12	lover	lover	NOUN	N	Number=Sing	3	advmod	_	FUN=lover_1_N
+12	lover	lover	NOUN	N	Number=Sing	3	obl	_	FUN=lover_1_N
 
 # sent_id = gfud1000430
 # text = the second movement begins after the allegro
@@ -3374,9 +3374,9 @@
 2	second	two	NUM	Digit	FORM=2	1	amod	_	FUN=n2
 3	movement	movement	NOUN	N	Number=Sing	4	nsubj	_	FUN=movement_5_N
 4	begins	begin	VERB	V	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=begin_2_V
-5	after	after	ADP	Prep	FORM=0	7	case	_	FUN=after_Prep
+5	after	after	ADP	Prep	_	7	case	_	FUN=after_Prep
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
-7	allegro	allegro	NOUN	N	Number=Sing	4	advmod	_	FUN=allegro_1_N
+7	allegro	allegro	NOUN	N	Number=Sing	4	obl	_	FUN=allegro_1_N
 
 # sent_id = gfud1000431
 # text = every word has a syndrome of meanings
@@ -3385,7 +3385,7 @@
 3	has	have	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=have_1_V2
 4	a	a	DET	Quant	FORM=0	5	det	_	FUN=IndefArt
 5	syndrome	syndrome	NOUN	N	Number=Sing	3	obj	_	FUN=syndrome_1_N
-6	of	of	ADP	Prep	FORM=0	7	case	_	FUN=of_1_Prep
+6	of	of	ADP	Prep	_	7	case	_	FUN=of_1_Prep
 7	meanings	meaning	NOUN	N	Number=Plur	5	nmod	_	FUN=meaning_1_N
 
 # sent_id = gfud1000432
@@ -3401,11 +3401,11 @@
 2	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	4	cop	_	FUN=UseComp
 3	an	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
 4	acronym	acronym	NOUN	N	Number=Sing	0	root	_	FUN=acronym_N
-5	for	for	ADP	Prep	FORM=0	9	case	_	FUN=for_Prep
+5	for	for	ADP	Prep	_	9	case	_	FUN=for_Prep
 6	antisubmarine	antisubmarine	ADJ	A	Degree=Pos	9	amod	_	FUN=antisubmarine_A
 7	detection	detection	NOUN	N	Number=Sing	8	compound	_	FUN=detection_1_N
 8	investigation	investigation	NOUN	N	Number=Sing	9	compound	_	FUN=investigation_1_N
-9	committee	committee	NOUN	N	Number=Sing	4	advmod	_	FUN=committee_1_N
+9	committee	committee	NOUN	N	Number=Sing	4	obl	_	FUN=committee_1_N
 
 # sent_id = gfud1000434
 # text = quarterback is the most important position on the team
@@ -3415,20 +3415,20 @@
 4	most	important	ADJ	A	Degree=Sup	3	amod	_	FUN=important_1_A
 5	important	important	ADJ	A	Degree=Sup	4	dep	_	FUN=important_1_A
 6	position	position	NOUN	N	Number=Sing	0	root	_	FUN=position_9_N
-7	on	on	ADP	Prep	FORM=0	9	case	_	FUN=on_1_Prep
+7	on	on	ADP	Prep	_	9	case	_	FUN=on_1_Prep
 8	the	the	DET	Quant	FORM=0	9	det	_	FUN=DefArt
-9	team	team	NOUN	N	Number=Sing	6	advmod	_	FUN=team_1_N
+9	team	team	NOUN	N	Number=Sing	6	obl	_	FUN=team_1_N
 
 # sent_id = gfud1000435
 # text = such digressions can lead us too far afield
-1	such	such	DET	Predet	FORM=0	2	det	_	FUN=such_1_Predet
+1	such	such	DET	Predet	_	2	det	_	FUN=such_1_Predet
 2	digressions	digression	NOUN	N	Number=Plur	3	nsubj	_	FUN=digression_3_N
 3	can	be	VERB	VV	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=can_1_VV
 4	lead	lead	VERB	V2	VerbForm=Inf	3	xcomp	_	FUN=lead_1_V2
 5	us	we	PRON	Pron	Case=Acc|PronType=Prs	4	obj	_	FUN=we_Pron
-6	too	too	ADV	AdA	FORM=0	8	amod	_	FUN=too_AdA
-7	far	far	ADV	AdA	FORM=0	8	amod	_	FUN=far_AdA
-8	afield	afield	ADV	Adv	FORM=0	4	advmod	_	FUN=afield_3_Adv
+6	too	too	ADV	AdA	_	8	amod	_	FUN=too_AdA
+7	far	far	ADV	AdA	_	8	amod	_	FUN=far_AdA
+8	afield	afield	ADV	Adv	_	4	advmod	_	FUN=afield_3_Adv
 
 # sent_id = gfud1000436
 # text = this opens new possibilities
@@ -3452,8 +3452,8 @@
 2	has	have	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=have_1_V2
 3	a	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
 4	feel	feel	NOUN	N	Number=Sing	2	obj	_	FUN=feel_1_N
-5	for	for	ADP	Prep	FORM=0	6	case	_	FUN=for_Prep
-6	animals	animal	NOUN	N	Number=Plur	2	advmod	_	FUN=animal_N
+5	for	for	ADP	Prep	_	6	case	_	FUN=for_Prep
+6	animals	animal	NOUN	N	Number=Plur	2	obl	_	FUN=animal_N
 
 # sent_id = gfud1000439
 # text = he is a principal actor in this affair
@@ -3462,9 +3462,9 @@
 3	a	a	DET	Quant	FORM=0	5	det	_	FUN=IndefArt
 4	principal	principal	ADJ	A	Degree=Pos	5	amod	_	FUN=principal_A
 5	actor	actor	NOUN	N	Number=Sing	0	root	_	FUN=actor_2_N
-6	in	in	ADP	Prep	FORM=0	8	case	_	FUN=in_1_Prep
+6	in	in	ADP	Prep	_	8	case	_	FUN=in_1_Prep
 7	this	this	DET	Quant	FORM=0	8	det	_	FUN=this_Quant
-8	affair	affair	NOUN	N	Number=Sing	5	advmod	_	FUN=affair_3_N
+8	affair	affair	NOUN	N	Number=Sing	5	obl	_	FUN=affair_3_N
 
 # sent_id = gfud1000440
 # text = he exploits the new taxation system
@@ -3488,7 +3488,7 @@
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=he_Pron
 2	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	3	cop	_	FUN=UseComp
 3	young	young	ADJ	A	Degree=Pos	0	root	_	FUN=young_3_A
-4	for	for	ADP	Prep	FORM=0	3	case	_	FUN=for_Prep
+4	for	for	ADP	Prep	_	3	case	_	FUN=for_Prep
 5	his	his	X	RNP	_	6	dep	_	FUN=ReflPoss
 6	age	age	NOUN	N	Number=Sing	3	nmod	_	FUN=age_1_N
 
@@ -3503,8 +3503,8 @@
 # sent_id = gfud1000444
 # text = he is about 3 &+ 0 years old
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	6	nsubj	_	FUN=he_Pron
-2	is	be	X	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	6	dep	_	FUN=has_age_VP
-3	about	about	ADV	AdN	FORM=0	6	advmod	_	FUN=about_AdN
+2	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	6	cop	_	FUN=has_age_VP
+3	about	about	ADV	AdN	_	6	advmod	_	FUN=about_AdN
 4	3	3	NUM	Dig	FORM=0	6	nummod	_	FUN=D_3
 5	&+	&+	X	Digits	_	6	dep	_	FUN=IIDig
 6	0	0	NUM	Dig	FORM=0	0	root	_	FUN=D_0
@@ -3515,10 +3515,10 @@
 # text = I spend my pocket-money in days
 1	I	I	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	ADJUSTED	FUN=i_Pron
 2	spend	spend	VERB	V2	VerbForm=Inf	0	root	ADJUSTED	FUN=spend_3_V2
-3	my	I	PRON	Pron	Poss=Yes|PronType=Prs	4	det	ADJUSTED	FUN=i_Pron
+3	my	I	PRON	Pron	Poss=Yes|PronType=Prs	4	nmod:poss	ADJUSTED	FUN=i_Pron
 4	pocket-money	pocket-money	NOUN	N	Number=Plur	2	obj	ADJUSTED	FUN=pocket_money_N
-5	in	in	ADP	Prep	FORM=0	6	case	ADJUSTED	FUN=in_4_Prep
-6	days	day	NOUN	N	Number=Plur	2	advmod	ADJUSTED	FUN=day_4_N
+5	in	in	ADP	Prep	_	6	case	ADJUSTED	FUN=in_4_Prep
+6	days	day	NOUN	N	Number=Plur	2	obl	ADJUSTED	FUN=day_4_N
 
 # sent_id = gfud1000446
 # text = I adjoin a copy of my lawyer's letter
@@ -3526,8 +3526,8 @@
 2	adjoin	adjoin	VERB	V2	VerbForm=Inf	0	root	_	FUN=adjoin_3_V2
 3	a	a	DET	Quant	FORM=0	4	det	_	FUN=IndefArt
 4	copy	copy	NOUN	N	Number=Sing	2	obj	_	FUN=copy_1_N
-5	of	of	ADP	Prep	FORM=0	8	case	_	FUN=of_1_Prep
-6	my	I	PRON	Pron	Poss=Yes|PronType=Prs	7	det	_	FUN=i_Pron
+5	of	of	ADP	Prep	_	8	case	_	FUN=of_1_Prep
+6	my	I	PRON	Pron	Poss=Yes|PronType=Prs	7	nmod:poss	_	FUN=i_Pron
 7	lawyer's	lawyer	NOUN	N	FORM=1	8	nmod	_	FUN=lawyer_N
 8	letter	letter	NOUN	N	Number=Sing	4	nmod	_	FUN=letter_1_N
 
@@ -3544,7 +3544,7 @@
 # text = she is always moving
 1	she	she	PRON	Pron	Case=Nom|PronType=Prs	4	nsubj	_	FUN=she_Pron
 2	is	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	4	cop	_	FUN=ProgrVP
-3	always	always	ADV	AdV	FORM=0	4	advmod	_	FUN=always_1_AdV
+3	always	always	ADV	AdV	_	4	advmod	_	FUN=always_1_AdV
 4	moving	move	VERB	V	Tense=Pres|VerbForm=Part	0	root	_	FUN=move_6_V
 
 # sent_id = gfud1000449
@@ -3554,9 +3554,9 @@
 3	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 4	main	main	ADJ	A	Degree=Pos	5	amod	_	FUN=main_1_A
 5	character	character	NOUN	N	Number=Sing	0	root	_	FUN=character_1_N
-6	in	in	ADP	Prep	FORM=0	8	case	_	FUN=in_1_Prep
+6	in	in	ADP	Prep	_	8	case	_	FUN=in_1_Prep
 7	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
-8	novel	novel	NOUN	N	Number=Sing	5	advmod	_	FUN=novel_1_N
+8	novel	novel	NOUN	N	Number=Sing	5	obl	_	FUN=novel_1_N
 
 # sent_id = gfud1000450
 # text = she abhors cats
@@ -3590,24 +3590,24 @@
 2	develop	develop	VERB	V2	VerbForm=Inf	0	root	_	FUN=develop_8_V2
 3	the	the	DET	Quant	FORM=1	4	det	_	FUN=DefArt
 4	leaders	leader	NOUN	N	Number=Plur	2	obj	_	FUN=leader_1_N
-5	for	for	ADP	Prep	FORM=0	7	case	_	FUN=for_Prep
+5	for	for	ADP	Prep	_	7	case	_	FUN=for_Prep
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
-7	future	future	NOUN	N	Number=Sing	2	advmod	_	FUN=future_1_N
+7	future	future	NOUN	N	Number=Sing	2	obl	_	FUN=future_1_N
 
 # sent_id = gfud1000455
 # text = we live in an accumulative society
 1	we	we	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=we_Pron
 2	live	live	VERB	V	VerbForm=Inf	0	root	_	FUN=live_2_V
-3	in	in	ADP	Prep	FORM=0	6	case	_	FUN=in_1_Prep
+3	in	in	ADP	Prep	_	6	case	_	FUN=in_1_Prep
 4	an	a	DET	Quant	FORM=0	6	det	_	FUN=IndefArt
 5	accumulative	accumulative	ADJ	A	Degree=Pos	6	amod	_	FUN=accumulative_2_A
-6	society	society	NOUN	N	Number=Sing	2	advmod	_	FUN=society_1_N
+6	society	society	NOUN	N	Number=Sing	2	obl	_	FUN=society_1_N
 
 # sent_id = gfud1000456
 # text = you may actually be doing the right thing by walking out
 1	you	you	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=youSgFem_Pron
 2	may	be	VERB	VV	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=may_1_VV
-3	actually	actually	ADV	AdV	FORM=0	2	advmod	_	FUN=actually_2_AdV
+3	actually	actually	ADV	AdV	_	2	advmod	_	FUN=actually_2_AdV
 4	be	be	AUX	VP	VerbForm=Inf	5	cop	_	FUN=ProgrVP
 5	doing	do	VERB	V2	Tense=Pres|VerbForm=Part	2	xcomp	_	FUN=do_1_V2
 6	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
@@ -3622,7 +3622,7 @@
 1	neglected	neglect	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=neglect_4_V2
 2	his	his	X	RNP	_	3	dep	_	FUN=ReflPoss
 3	health	health	NOUN	N	Number=Sing	1	obj	_	FUN=health_1_N
-4	and	and	CCONJ	Conj	FORM=1	1	cc	_	FUN=and_Conj
+4	and	and	CCONJ	Conj	_	1	cc	_	FUN=and_Conj
 5	paid	pay	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	1	conj	_	FUN=pay_5_V2
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
 7	penalty	penalty	NOUN	N	Number=Sing	5	obj	_	FUN=penalty_3_N
@@ -3632,14 +3632,14 @@
 1	cleared	clear	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=clear_1_V2
 2	the	the	DET	Quant	FORM=0	3	det	_	FUN=DefArt
 3	mess	mess	NOUN	N	Number=Sing	1	obj	_	FUN=mess_1_N
-4	away	away	ADV	Adv	FORM=0	1	advmod	_	FUN=away_7_Adv
+4	away	away	ADV	Adv	_	1	advmod	_	FUN=away_7_Adv
 
 # sent_id = gfud1000459
 # text = believed in witches and malign spirits
 1	believed	believe	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=believe_1_V
-2	in	in	ADP	Prep	FORM=0	3	case	_	FUN=in_1_Prep
-3	witches	witch	NOUN	N	Number=Plur	1	advmod	_	FUN=witch_4_N
-4	and	and	CCONJ	Conj	FORM=1	3	cc	_	FUN=and_Conj
+2	in	in	ADP	Prep	_	3	case	_	FUN=in_1_Prep
+3	witches	witch	NOUN	N	Number=Plur	1	obl	_	FUN=witch_4_N
+4	and	and	CCONJ	Conj	_	3	cc	_	FUN=and_Conj
 5	malign	malign	ADJ	A	Degree=Pos	6	amod	_	FUN=malign_1_A
 6	spirits	spirit	NOUN	N	Number=Plur	3	conj	_	FUN=spirit_8_N
 
@@ -3655,14 +3655,14 @@
 2	on	on	ADP	V2	_	5	case	_	FUN=sit_on_V2
 3	a	a	DET	Quant	FORM=0	5	det	_	FUN=IndefArt
 4	upturned	upturned	ADJ	A	Degree=Pos	5	amod	_	FUN=upturned_1_A
-5	bucket	bucket	NOUN	N	Number=Sing	1	obj	_	FUN=bucket_2_N
+5	bucket	bucket	NOUN	N	Number=Sing	1	obl	_	FUN=bucket_2_N
 
 # sent_id = gfud1000462
 # text = decided to live apart
 1	decided	decide	VERB	VV	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=decide_VV
-2	to	to	X	VP	_	1	dep	_	FUN=ComplVV
+2	to	to	PART	VP	_	1	mark	_	FUN=ComplVV
 3	live	live	VERB	V	VerbForm=Inf	1	xcomp	_	FUN=live_1_V
-4	apart	apart	ADV	Adv	FORM=0	3	advmod	_	FUN=apart_3_Adv
+4	apart	apart	ADV	Adv	_	3	advmod	_	FUN=apart_3_Adv
 
 # sent_id = gfud1000463
 # text = has a colossal nerve
@@ -3674,7 +3674,7 @@
 # sent_id = gfud1000464
 # text = heard my friend's characteristic laugh
 1	heard	hear	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=hear_1_V2
-2	my	I	PRON	Pron	Poss=Yes|PronType=Prs	3	det	_	FUN=i_Pron
+2	my	I	PRON	Pron	Poss=Yes|PronType=Prs	3	nmod:poss	_	FUN=i_Pron
 3	friend's	friend	NOUN	N	FORM=1	5	nmod	_	FUN=friend_1_N
 4	characteristic	characteristic	ADJ	A	Degree=Pos	5	amod	_	FUN=characteristic_1_A
 5	laugh	laugh	NOUN	N	Number=Sing	1	obj	_	FUN=laugh_1_N
@@ -3683,16 +3683,16 @@
 # text = was embarrassed by her child's tantrums
 1	was	be	AUX	VP	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	2	cop	_	FUN=UseComp
 2	embarrassed	embarrassed	ADJ	A	Degree=Pos	0	root	_	FUN=embarrassed_A
-3	by	by	ADP	Prep	FORM=0	6	case	_	FUN=by_3_Prep
-4	her	she	PRON	Pron	Poss=Yes|PronType=Prs	5	det	_	FUN=she_Pron
+3	by	by	ADP	Prep	_	6	case	_	FUN=by_3_Prep
+4	her	she	PRON	Pron	Poss=Yes|PronType=Prs	5	nmod:poss	_	FUN=she_Pron
 5	child's	child	NOUN	N	FORM=1	6	nmod	_	FUN=child_2_N
-6	tantrums	tantrum	NOUN	N	Number=Plur	2	advmod	_	FUN=tantrum_N
+6	tantrums	tantrum	NOUN	N	Number=Plur	2	nmod	_	FUN=tantrum_N
 
 # sent_id = gfud1000466
 # text = walk in sadness
 1	walk	walk	VERB	V	VerbForm=Inf	0	root	_	FUN=walk_6_V
-2	in	in	ADP	Prep	FORM=0	3	case	_	FUN=in_1_Prep
-3	sadness	sadness	NOUN	N	Number=Sing	1	advmod	_	FUN=sadness_1_N
+2	in	in	ADP	Prep	_	3	case	_	FUN=in_1_Prep
+3	sadness	sadness	NOUN	N	Number=Sing	1	obl	_	FUN=sadness_1_N
 
 # sent_id = gfud1000467
 # text = beat someone's breast
@@ -3712,7 +3712,7 @@
 
 # sent_id = gfud1000470
 # text = get nauseous
-1	get	get	VERB	VA	FORM=0	0	root	_	FUN=get_7_VA
+1	get	get	VERB	VA	VerbForm=Inf	0	root	_	FUN=get_7_VA
 2	nauseous	nauseous	ADJ	A	Degree=Pos	1	xcomp	_	FUN=nauseous_1_A
 
 # sent_id = gfud1000471
@@ -3720,61 +3720,61 @@
 1	who	who	PRON	IP	FORM=0	3	nsubj	_	FUN=whoSg_IP
 2	will	will	AUX	VP	VerbForm=Fin	3	aux	_	FUN=UseV
 3	start	start	VERB	V	VerbForm=Inf	0	root	_	FUN=start_1_V
-4	?	?	PUNCT	Mark	FORM=0	3	mark	_	FUN=QuestMark
+4	?	?	PUNCT	Mark	_	3	punct	_	FUN=QuestMark
 
 # sent_id = gfud1000472
 # text = are your people still alive ?
 1	are	be	AUX	VP	Mood=Ind|Tense=Pres|VerbForm=Fin	5	cop	_	FUN=UseComp
-2	your	you	PRON	Pron	Poss=Yes|PronType=Prs	3	det	_	FUN=youSgFem_Pron
+2	your	you	PRON	Pron	Poss=Yes|PronType=Prs	3	nmod:poss	_	FUN=youSgFem_Pron
 3	people	people	NOUN	N	Number=Plur	5	nsubj	_	FUN=people_3_N
-4	still	still	ADV	AdV	FORM=0	5	advmod	_	FUN=still_1_AdV
+4	still	still	ADV	AdV	_	5	advmod	_	FUN=still_1_AdV
 5	alive	alive	ADJ	A	Degree=Pos	0	root	_	FUN=alive_1_A
-6	?	?	PUNCT	Mark	FORM=0	5	mark	_	FUN=QuestMark
+6	?	?	PUNCT	Mark	_	5	punct	_	FUN=QuestMark
 
 # sent_id = gfud1000473
 # text = do you know my sister ?
-1	do	do	X	VPSlash	VerbForm=Inf	3	dep	_	FUN=SlashV2a
+1	do	do	AUX	VPSlash	VerbForm=Inf	3	aux	_	FUN=SlashV2a
 2	you	you	PRON	Pron	Case=Nom|PronType=Prs	3	nsubj	_	FUN=youSgFem_Pron
 3	know	know	VERB	V2	VerbForm=Inf	0	root	_	FUN=know_4_V2
-4	my	I	PRON	Pron	Poss=Yes|PronType=Prs	5	det	_	FUN=i_Pron
+4	my	I	PRON	Pron	Poss=Yes|PronType=Prs	5	nmod:poss	_	FUN=i_Pron
 5	sister	sister	NOUN	N	Number=Sing	3	obj	_	FUN=sister_1_N
-6	?	?	PUNCT	Mark	FORM=0	3	mark	_	FUN=QuestMark
+6	?	?	PUNCT	Mark	_	3	punct	_	FUN=QuestMark
 
 # sent_id = gfud1000474
 # text = how are you spending your summer vacation ?
-1	how	how	ADV	IAdv	FORM=0	4	advmod	_	FUN=how_IAdv
+1	how	how	ADV	IAdv	_	4	advmod	_	FUN=how_IAdv
 2	are	be	AUX	VP	Mood=Ind|Tense=Pres|VerbForm=Fin	4	cop	_	FUN=ProgrVP
 3	you	you	PRON	Pron	Case=Nom|PronType=Prs	4	nsubj	_	FUN=youSgFem_Pron
 4	spending	spend	VERB	V2	Tense=Pres|VerbForm=Part	0	root	_	FUN=spend_1_V2
-5	your	you	PRON	Pron	Poss=Yes|PronType=Prs	7	det	_	FUN=youSgFem_Pron
+5	your	you	PRON	Pron	Poss=Yes|PronType=Prs	7	nmod:poss	_	FUN=youSgFem_Pron
 6	summer	summer	NOUN	N	Number=Sing	7	compound	_	FUN=summer_1_N
 7	vacation	vacation	NOUN	N	Number=Sing	4	obj	_	FUN=vacation_1a_N
-8	?	?	PUNCT	Mark	FORM=0	4	mark	_	FUN=QuestMark
+8	?	?	PUNCT	Mark	_	4	punct	_	FUN=QuestMark
 
 # sent_id = gfud1000475
 # text = how many cars does she have ?
-1	how	how	DET	IDet	FORM=0	3	det	_	FUN=how8many_IDet
-2	many	how	DET	IDet	FORM=0	1	dep	_	FUN=how8many_IDet
+1	how	how	DET	IDet	_	3	det	_	FUN=how8many_IDet
+2	many	how	DET	IDet	_	1	dep	_	FUN=how8many_IDet
 3	cars	car	NOUN	N	Number=Plur	6	obj	_	FUN=car_1_N
-4	does	do	X	VPSlash	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	6	dep	_	FUN=SlashV2a
+4	does	do	AUX	VPSlash	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	6	aux	_	FUN=SlashV2a
 5	she	she	PRON	Pron	Case=Nom|PronType=Prs	6	nsubj	_	FUN=she_Pron
 6	have	have	VERB	V2	VerbForm=Inf	0	root	_	FUN=have_4_V2
-7	?	?	PUNCT	Mark	FORM=0	6	mark	_	FUN=QuestMark
+7	?	?	PUNCT	Mark	_	6	punct	_	FUN=QuestMark
 
 # sent_id = gfud1000476
 # text = Susan and Rachel talked .
 1	Susan	Susan	PROPN	PN	FORM=0	4	nsubj	_	FUN=susan_PN
-2	and	and	CCONJ	Conj	FORM=1	1	cc	_	FUN=and_Conj
+2	and	and	CCONJ	Conj	_	1	cc	_	FUN=and_Conj
 3	Rachel	Rachel	PROPN	PN	FORM=0	1	conj	_	FUN=rachel_PN
 4	talked	talk	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=talk_1_V
-5	.	.	PUNCT	Mark	FORM=0	4	mark	_	FUN=FullStop
+5	.	.	PUNCT	Mark	_	4	punct	_	FUN=FullStop
 
 # sent_id = gfud1000477
 # text = the clothes dried .
 1	the	the	DET	Quant	FORM=1	2	det	_	FUN=DefArt
 2	clothes	clothes	NOUN	N	Number=Plur	3	nsubj	_	FUN=clothes_N
 3	dried	dry	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=dry_1_V
-4	.	.	PUNCT	Mark	FORM=0	3	mark	_	FUN=FullStop
+4	.	.	PUNCT	Mark	_	3	punct	_	FUN=FullStop
 
 # sent_id = gfud1000478
 # text = the lack of money limited the help .
@@ -3785,17 +3785,17 @@
 5	limited	limit	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=limit_2_V2
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
 7	help	help	NOUN	N	Number=Sing	5	obj	_	FUN=help_3_N
-8	.	.	PUNCT	Mark	FORM=0	5	mark	_	FUN=FullStop
+8	.	.	PUNCT	Mark	_	5	punct	_	FUN=FullStop
 
 # sent_id = gfud1000479
 # text = the dog barked at the cat .
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	dog	dog	NOUN	N	Number=Sing	3	nsubj	_	FUN=dog_1_N
 3	barked	bark	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=bark_4_V
-4	at	at	ADP	Prep	FORM=0	6	case	_	FUN=at_3_Prep
+4	at	at	ADP	Prep	_	6	case	_	FUN=at_3_Prep
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	cat	cat	NOUN	N	Number=Sing	3	advmod	_	FUN=cat_1_N
-7	.	.	PUNCT	Mark	FORM=0	3	mark	_	FUN=FullStop
+6	cat	cat	NOUN	N	Number=Sing	3	obl	_	FUN=cat_1_N
+7	.	.	PUNCT	Mark	_	3	punct	_	FUN=FullStop
 
 # sent_id = gfud1000480
 # text = the jeweller decorated the ring with the name .
@@ -3804,37 +3804,37 @@
 3	decorated	decorate	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=decorate_4_V2
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 5	ring	ring	NOUN	N	Number=Sing	3	obj	_	FUN=ring_8_N
-6	with	with	ADP	Prep	FORM=0	8	case	_	FUN=with_Prep
+6	with	with	ADP	Prep	_	8	case	_	FUN=with_Prep
 7	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
-8	name	name	NOUN	N	Number=Sing	3	advmod	_	FUN=name_1_N
-9	.	.	PUNCT	Mark	FORM=0	3	mark	_	FUN=FullStop
+8	name	name	NOUN	N	Number=Sing	3	obl	_	FUN=name_1_N
+9	.	.	PUNCT	Mark	_	3	punct	_	FUN=FullStop
 
 # sent_id = gfud1000481
 # text = the princess curtseyed to the queen .
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	princess	princess	NOUN	N	Number=Sing	3	nsubj	_	FUN=princess_N
 3	curtseyed	curtsey	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=curtsey_V
-4	to	to	ADP	Prep	FORM=0	6	case	_	FUN=to_2_Prep
+4	to	to	ADP	Prep	_	6	case	_	FUN=to_2_Prep
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	queen	queen	NOUN	N	Number=Sing	3	advmod	_	FUN=queen_2_N
-7	.	.	PUNCT	Mark	FORM=0	3	mark	_	FUN=FullStop
+6	queen	queen	NOUN	N	Number=Sing	3	obl	_	FUN=queen_2_N
+7	.	.	PUNCT	Mark	_	3	punct	_	FUN=FullStop
 
 # sent_id = gfud1000482
 # text = the yen appreciated again !
 1	the	the	DET	Quant	FORM=0	2	det	_	FUN=DefArt
 2	yen	yen	NOUN	N	Number=Sing	3	nsubj	_	FUN=yen_2_N
 3	appreciated	appreciate	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=appreciate_4_V
-4	again	again	ADV	Adv	FORM=0	3	advmod	_	FUN=again_Adv
-5	!	!	PUNCT	Mark	FORM=0	3	mark	_	FUN=ExclMark
+4	again	again	ADV	Adv	_	3	advmod	_	FUN=again_Adv
+5	!	!	PUNCT	Mark	_	3	punct	_	FUN=ExclMark
 
 # sent_id = gfud1000483
 # text = water poured onto the plants .
 1	water	water	NOUN	N	Number=Sing	2	nsubj	_	FUN=water_1_N
 2	poured	pour	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=pour_4_V
-3	onto	onto	ADP	Prep	FORM=0	5	case	_	FUN=onto_Prep
+3	onto	onto	ADP	Prep	_	5	case	_	FUN=onto_Prep
 4	the	the	DET	Quant	FORM=1	5	det	_	FUN=DefArt
-5	plants	plant	NOUN	N	Number=Plur	2	advmod	_	FUN=plant_2_N
-6	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+5	plants	plant	NOUN	N	Number=Plur	2	obl	_	FUN=plant_2_N
+6	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000484
 # text = Brown presented the plaque .
@@ -3842,7 +3842,7 @@
 2	presented	present	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=present_1_V2
 3	the	the	DET	Quant	FORM=0	4	det	_	FUN=DefArt
 4	plaque	plaque	NOUN	N	Number=Sing	2	obj	_	FUN=plaque_2_N
-5	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+5	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000485
 # text = Carol cut the bread .
@@ -3850,34 +3850,34 @@
 2	cut	cut	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=cut_1_V2
 3	the	the	DET	Quant	FORM=0	4	det	_	FUN=DefArt
 4	bread	bread	NOUN	N	Number=Sing	2	obj	_	FUN=bread_1_N
-5	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+5	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000486
 # text = Cynthia ate .
 1	Cynthia	Cynthia	PROPN	PN	FORM=0	2	nsubj	_	FUN=cynthia_PN
 2	ate	eat	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=eat_2_V
-3	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+3	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000487
 # text = Jackie accompanied Rose to the store .
 1	Jackie	Jackie	PROPN	PN	FORM=0	2	nsubj	_	FUN=jackie_PN
 2	accompanied	accompany	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=accompany_2_V2
 3	Rose	Rose	PROPN	PN	FORM=0	2	obj	_	FUN=rose_PN
-4	to	to	ADP	Prep	FORM=0	6	case	_	FUN=to_1_Prep
+4	to	to	ADP	Prep	_	6	case	_	FUN=to_1_Prep
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	store	store	NOUN	N	Number=Sing	2	advmod	_	FUN=store_1_N
-7	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+6	store	store	NOUN	N	Number=Sing	2	obl	_	FUN=store_1_N
+7	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000488
 # text = John worked with Paul on the task .
 1	John	John	PROPN	PN	FORM=0	2	nsubj	_	FUN=john_2_PN
 2	worked	work	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=work_1_V
-3	with	with	ADP	Prep	FORM=0	4	case	_	FUN=with_Prep
-4	Paul	Paul	PROPN	PN	FORM=0	2	advmod	_	FUN=paul_1_PN
-5	on	on	ADP	Prep	FORM=0	7	case	_	FUN=on_2_Prep
+3	with	with	ADP	Prep	_	4	case	_	FUN=with_Prep
+4	Paul	Paul	PROPN	PN	FORM=0	2	obl	_	FUN=paul_1_PN
+5	on	on	ADP	Prep	_	7	case	_	FUN=on_2_Prep
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
-7	task	task	NOUN	N	Number=Sing	2	advmod	_	FUN=task_1_N
-8	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+7	task	task	NOUN	N	Number=Sing	2	obl	_	FUN=task_1_N
+8	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000489
 # text = Martha carved a piece of wood into a toy for the baby .
@@ -3887,71 +3887,71 @@
 4	piece	piece	NOUN	N	Number=Sing	2	obj	_	FUN=piece_3_N
 5	of	of	X	CN	_	4	dep	_	FUN=PartNP
 6	wood	wood	NOUN	N	Number=Sing	4	nmod	_	FUN=wood_1_N
-7	into	into	ADP	Prep	FORM=0	9	case	_	FUN=into_4_Prep
+7	into	into	ADP	Prep	_	9	case	_	FUN=into_4_Prep
 8	a	a	DET	Quant	FORM=0	9	det	_	FUN=IndefArt
-9	toy	toy	NOUN	N	Number=Sing	2	advmod	_	FUN=toy_1_N
-10	for	for	ADP	Prep	FORM=0	12	case	_	FUN=for_Prep
+9	toy	toy	NOUN	N	Number=Sing	2	obl	_	FUN=toy_1_N
+10	for	for	ADP	Prep	_	12	case	_	FUN=for_Prep
 11	the	the	DET	Quant	FORM=0	12	det	_	FUN=DefArt
-12	baby	baby	NOUN	N	Number=Sing	2	advmod	_	FUN=baby_4_N
-13	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+12	baby	baby	NOUN	N	Number=Sing	2	obl	_	FUN=baby_4_N
+13	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000490
 # text = Nora brought Pamela the book .
 1	Nora	Nora	PROPN	PN	FORM=0	2	nsubj	_	FUN=nora_PN
-2	brought	bring	VERB	V3	FORM=4	0	root	_	FUN=bring_1_V3
+2	brought	bring	VERB	V3	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=bring_1_V3
 3	Pamela	Pamela	PROPN	PN	FORM=0	2	iobj	_	FUN=pamela_PN
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 5	book	book	NOUN	N	Number=Sing	2	obj	_	FUN=book_2_N
-6	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+6	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000491
 # text = Sharon fainted at the sight of the accident .
 1	Sharon	Sharon	PROPN	PN	FORM=0	2	nsubj	_	FUN=sharon_PN
 2	fainted	faint	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=faint_V
-3	at	at	ADP	Prep	FORM=0	5	case	_	FUN=at_6_Prep
+3	at	at	ADP	Prep	_	5	case	_	FUN=at_6_Prep
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
-5	sight	sight	NOUN	N	Number=Sing	2	advmod	_	FUN=sight_1_N
+5	sight	sight	NOUN	N	Number=Sing	2	obl	_	FUN=sight_1_N
 6	of	of	X	CN	_	5	dep	_	FUN=PossNP
 7	the	the	DET	Quant	FORM=0	8	det	_	FUN=DefArt
 8	accident	accident	NOUN	N	Number=Sing	5	nmod	_	FUN=accident_1_N
-9	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+9	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000492
 # text = Susan talked with Rachel about the problem .
 1	Susan	Susan	PROPN	PN	FORM=0	2	nsubj	_	FUN=susan_PN
 2	talked	talk	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=talk_1_V
-3	with	with	ADP	Prep	FORM=0	4	case	_	FUN=with_Prep
-4	Rachel	Rachel	PROPN	PN	FORM=0	2	advmod	_	FUN=rachel_PN
-5	about	about	ADP	Prep	FORM=0	7	case	_	FUN=about_1_Prep
+3	with	with	ADP	Prep	_	4	case	_	FUN=with_Prep
+4	Rachel	Rachel	PROPN	PN	FORM=0	2	obl	_	FUN=rachel_PN
+5	about	about	ADP	Prep	_	7	case	_	FUN=about_1_Prep
 6	the	the	DET	Quant	FORM=0	7	det	_	FUN=DefArt
-7	problem	problem	NOUN	N	Number=Sing	2	advmod	_	FUN=problem_1_N
-8	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+7	problem	problem	NOUN	N	Number=Sing	2	obl	_	FUN=problem_1_N
+8	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000493
 # text = he drank out of the goblet .
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=he_Pron
 2	drank	drink	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=drink_2_V
-3	out	out	ADP	Prep	FORM=0	6	case	_	FUN=out_of_2_Prep
+3	out	out	ADP	Prep	_	6	case	_	FUN=out_of_2_Prep
 4	of	of	ADP	Prep	_	3	fixed	_	FUN=out_of_2_Prep
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	goblet	goblet	NOUN	N	Number=Sing	2	advmod	_	FUN=goblet_2_N
-7	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+6	goblet	goblet	NOUN	N	Number=Sing	2	obl	_	FUN=goblet_2_N
+7	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000494
 # text = he refrained .
 1	he	he	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=he_Pron
 2	refrained	refrain	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=refrain_1_V
-3	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+3	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000495
 # text = I understood it as a joke .
 1	I	I	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=i_Pron
 2	understood	understand	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=understand_1_V2
 3	it	it	PRON	Pron	Case=Acc|PronType=Prs	2	obj	_	FUN=it_Pron
-4	as	as	ADP	Prep	FORM=0	6	case	_	FUN=as_Prep
+4	as	as	ADP	Prep	_	6	case	_	FUN=as_Prep
 5	a	a	DET	Quant	FORM=0	6	det	_	FUN=IndefArt
-6	joke	joke	NOUN	N	Number=Sing	2	advmod	_	FUN=joke_4_N
-7	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+6	joke	joke	NOUN	N	Number=Sing	2	obl	_	FUN=joke_4_N
+7	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000496
 # text = I defended building the house .
@@ -3960,58 +3960,58 @@
 3	building	build	VERB	V2	Tense=Pres|VerbForm=Part	2	obj	_	FUN=build_1_V2
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 5	house	house	NOUN	N	Number=Sing	3	obj	_	FUN=house_1_N
-6	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+6	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000497
 # text = I owned oxen .
 1	I	I	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	ADJUSTED	FUN=i_Pron
 2	owned	own	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	ADJUSTED	FUN=own_V2
 3	oxen	ox	NOUN	N	Number=Plur	2	obj	ADJUSTED	FUN=ox_1_N
-4	.	.	PUNCT	Mark	FORM=0	2	mark	ADJUSTED	FUN=FullStop
+4	.	.	PUNCT	Mark	_	2	punct	ADJUSTED	FUN=FullStop
 
 # sent_id = gfud1000498
 # text = she lectured to the class about her travels .
 1	she	she	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=she_Pron
 2	lectured	lecture	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=lecture_1_V
-3	to	to	ADP	Prep	FORM=0	2	case	_	FUN=to_2_Prep
+3	to	to	ADP	Prep	_	2	case	_	FUN=to_2_Prep
 4	the	the	DET	Quant	FORM=0	5	det	_	FUN=DefArt
 5	class	class	NOUN	N	Number=Sing	2	nmod	_	FUN=class_5_N
-6	about	about	ADP	Prep	FORM=0	5	case	_	FUN=about_1_Prep
+6	about	about	ADP	Prep	_	5	case	_	FUN=about_1_Prep
 7	her	her	X	RNP	_	8	dep	_	FUN=ReflPoss
 8	travels	travel	NOUN	N	Number=Plur	5	nmod	_	FUN=travel_1_N
-9	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+9	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000499
 # text = they spanked him to death .
 1	they	they	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=they_Pron
 2	spanked	spank	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=spank_V2
 3	him	he	PRON	Pron	Case=Acc|PronType=Prs	2	obj	_	FUN=he_Pron
-4	to	to	ADP	Prep	FORM=0	5	case	_	FUN=to_1_Prep
-5	death	death	NOUN	N	Number=Sing	2	advmod	_	FUN=death_1_N
-6	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+4	to	to	ADP	Prep	_	5	case	_	FUN=to_1_Prep
+5	death	death	NOUN	N	Number=Sing	2	obl	_	FUN=death_1_N
+6	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000500
 # text = they battled .
 1	they	they	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=they_Pron
 2	battled	battle	VERB	V	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=battle_V
-3	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+3	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000501
 # text = we committed John .
 1	we	we	PRON	Pron	Case=Nom|PronType=Prs	2	nsubj	_	FUN=we_Pron
 2	committed	commit	VERB	V2	Mood=Ind|Tense=Past|VerbForm=Fin	0	root	_	FUN=commit_3_V2
 3	John	John	PROPN	PN	FORM=0	2	obj	_	FUN=john_2_PN
-4	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+4	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
 # sent_id = gfud1000502
 # text = this flyer and that flyer differ .
 1	this	this	DET	Quant	FORM=0	2	det	_	FUN=this_Quant
 2	flyer	flyer	NOUN	N	Number=Sing	6	nsubj	_	FUN=flyer_1_N
-3	and	and	CCONJ	Conj	FORM=1	2	cc	_	FUN=and_Conj
+3	and	and	CCONJ	Conj	_	2	cc	_	FUN=and_Conj
 4	that	that	DET	Quant	FORM=0	5	det	_	FUN=that_Quant
 5	flyer	flyer	NOUN	N	Number=Sing	2	conj	_	FUN=flyer_1_N
 6	differ	differ	VERB	V	VerbForm=Inf	0	root	_	FUN=differ_1_V
-7	.	.	PUNCT	Mark	FORM=0	6	mark	_	FUN=FullStop
+7	.	.	PUNCT	Mark	_	6	punct	_	FUN=FullStop
 
 # sent_id = gfud1000503
 # text = the kids are assembling .
@@ -4019,24 +4019,24 @@
 2	kids	kid	NOUN	N	Number=Plur	4	nsubj	_	FUN=kid_4_N
 3	are	be	AUX	VP	Mood=Ind|Tense=Pres|VerbForm=Fin	4	cop	_	FUN=ProgrVP
 4	assembling	assemble	VERB	V	Tense=Pres|VerbForm=Part	0	root	_	FUN=assemble_2_V
-5	.	.	PUNCT	Mark	FORM=0	4	mark	_	FUN=FullStop
+5	.	.	PUNCT	Mark	_	4	punct	_	FUN=FullStop
 
 # sent_id = gfud1000504
 # text = bees are swarming in the garden .
 1	bees	bee	NOUN	N	Number=Plur	3	nsubj	_	FUN=bee_1_N
 2	are	be	AUX	VP	Mood=Ind|Tense=Pres|VerbForm=Fin	3	cop	_	FUN=ProgrVP
 3	swarming	swarm	VERB	V	Tense=Pres|VerbForm=Part	0	root	_	FUN=swarm_1_V
-4	in	in	ADP	Prep	FORM=0	6	case	_	FUN=in_1_Prep
+4	in	in	ADP	Prep	_	6	case	_	FUN=in_1_Prep
 5	the	the	DET	Quant	FORM=0	6	det	_	FUN=DefArt
-6	garden	garden	NOUN	N	Number=Sing	3	advmod	_	FUN=garden_1_N
-7	.	.	PUNCT	Mark	FORM=0	3	mark	_	FUN=FullStop
+6	garden	garden	NOUN	N	Number=Sing	3	obl	_	FUN=garden_1_N
+7	.	.	PUNCT	Mark	_	3	punct	_	FUN=FullStop
 
 # sent_id = gfud1000505
 # text = this beggars description !
 1	this	this	DET	Quant	FORM=4	2	nsubj	_	FUN=this_Quant
 2	beggars	beggar	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=beggar_1_V2
 3	description	description	NOUN	N	Number=Sing	2	obj	_	FUN=description_1_N
-4	!	!	PUNCT	Mark	FORM=0	2	mark	_	FUN=ExclMark
+4	!	!	PUNCT	Mark	_	2	punct	_	FUN=ExclMark
 
 # sent_id = gfud1000506
 # text = they allow us to be smokers .
@@ -4046,5 +4046,5 @@
 4	to	to	ADP	V2V	_	6	mark	_	FUN=allow_2_V2V
 5	be	be	AUX	VP	VerbForm=Inf	6	cop	_	FUN=UseComp
 6	smokers	smoker	NOUN	N	Number=Plur	2	xcomp	_	FUN=smoker_1_N
-7	.	.	PUNCT	Mark	FORM=0	2	mark	_	FUN=FullStop
+7	.	.	PUNCT	Mark	_	2	punct	_	FUN=FullStop
 
