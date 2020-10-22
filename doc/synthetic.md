@@ -8,8 +8,11 @@ Train a parser as follows:
 ```
   cat data/wordnet-train.conllu | udpipe --train wordnet.udpipe
 ```
-This takes several minutes (about 20 on my Macbook Pro 2019).
-
+This takes several minutes (over 20 on my Macbook Pro 2019).
+Just training the parser, when tokenizer and tagger are not needed (e.g. when testing against a treebank), takes 6 minutes:
+```
+  cat data/wordnet-train.conllu | udpipe --tokenizer none --tagger none --train wordnet.udpipe
+```
 Test the parser with string input:
 ```
   echo "this is very good" | udpipe --tokenize --tag --parse wordnet.udpipe
@@ -86,6 +89,21 @@ It can also make sense to check the validity of the generated treebanks:
   gfud check-treebank <out/wordnet-train.conllu
 ```
 If this command returns no messages, the treebank should be OK.
+
+
+## Error analysis
+
+An informative first step in error analysis is to use gfud to show statistics of different things in the natural and synthetic treebanks.
+For example,
+```
+  $ gfud statistics POS DEPREL <en_ewt-ud-test.conllu 
+  (["PUNCT","punct"],3064)
+  (["ADP","case"],1857)
+  (["DET","det"],1826)
+  (["PRON","nsubj"],1258)
+```
+shows the frequencies of postag-deplabel combinations.
+If the distributions differ a lot, one can get hints about how the synthetic treebank should be biased or completed with natural data.
 
 
 ## Short version with Maltparser, with .conllu files in place:
