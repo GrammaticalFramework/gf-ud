@@ -187,8 +187,8 @@ prUDTree :: UDTree -> String
 prUDTree = prLinesRTree prt
 
 -- "prints" the "linearized" UD tree 
-prDepTreeString :: UDTree -> String
-prDepTreeString t = unwords [udFORM n | n <- sortOn udID (allNodesRTree t)]
+prUDTreeString :: UDTree -> String
+prUDTreeString t = unwords [udFORM n | n <- sortOn udID (allNodesRTree t)]
 
 --------------------
 -- checking for permissible values
