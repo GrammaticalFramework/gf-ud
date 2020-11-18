@@ -47,6 +47,8 @@ extra-deps:
 - random-1.1@sha256:7b67624fd76ddf97c206de0801dc7e888097e9d572974be9b9ea6551d76965df,1777
 - syb-0.7.1@sha256:8d37b1e4d04a9aa8512dc6c2a06e02afc015a2fd3e735bdfeeacb5e2e853323c,2462
 - utf8-string-1.0.1.1@sha256:68cc6cf665e7212334a51b63d6936daeaca023b2cfe8637d130acfe95f91700b,1151
+- multiset-0.3.4.3@sha256:968192524bd38ffa29856e1e3f9f6f8a5704f98899d4b25f8ebd425001594f61,1790
+- split-0.2.3.4@sha256:bad9bfc9e8e0aca4ac1f7b3a2767ee6b1c199d4a1b6960db5cc3d7674aee5d73,2564
 
 # The following packages have been ignored due to incompatibility with the
 # resolver compiler, dependency conflicts with other packages
