@@ -37,7 +37,7 @@ data UDWord = UDWord {
   udDEPREL :: Label,    -- the label of this word
   udDEPS   :: String,   -- "Enhanced dependency graph in the form of a list of head-deprel pairs"
   udMISC   :: [UDData]  -- "any other annotation"
-  }
+  } deriving (Show,Eq,Ord)
 
 type POS = String
 type Label = String
@@ -185,6 +185,10 @@ udTree2sentence t = UDSentence {
 
 prUDTree :: UDTree -> String
 prUDTree = prLinesRTree prt
+
+-- "prints" the "linearized" UD tree 
+prDepTreeString :: UDTree -> String
+prDepTreeString t = unwords [udFORM n | n <- sortOn udID (allNodesRTree t)]
 
 --------------------
 -- checking for permissible values
