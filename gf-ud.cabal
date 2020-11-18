@@ -22,11 +22,13 @@ executable gf-ud
                , GF2UD
                , GFConcepts
                , UD2GF
+               , UDAnalysis
                , UDAnnotations
                , UDConcepts
                , UDOptions
                , UDStandard
                , UDVisualization
+               , AlignTrees
 
   -- other-extensions:
   build-depends:       base, containers, pretty, gf, process
