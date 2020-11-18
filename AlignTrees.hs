@@ -8,6 +8,7 @@ import qualified Data.MultiSet as MS
 import qualified Data.Map as M
 import qualified Data.Set as S
 import Data.Maybe
+import System.Environment (getArgs)
 
 -- | Data type definitions etc.
 
@@ -22,8 +23,8 @@ instance Show Alignment where
 -- (and to compare them ignoring the context)
 prAlignment :: Alignment -> String
 prAlignment (A (t,u)) = t' ++ "|" ++ u'
-  where (t',u') = (dropWhile (== ' ') $ prDepTreeString t, 
-                   dropWhile (== ' ') $ prDepTreeString u)
+  where (t',u') = (dropWhile (== ' ') $ prUDTreeString t, 
+                   dropWhile (== ' ') $ prUDTreeString u)
 
 -- two alignment are considered equal whenever their "linearization" is the
 -- same (so to ignore all info excepts words and their order)
@@ -39,7 +40,7 @@ instance Eq Alignment where
 instance Ord Alignment where
   (A (t1,u1)) <= (A (t2,u2)) = k t2 u2 <= k t1 u1
     where 
-      k t u = (sizeRTree t,prDepTreeString t,sizeRTree u,prDepTreeString u)
+      k t u = (sizeRTree t,prUDTreeString t,sizeRTree u,prUDTreeString u)
 
 -- alignments are a mapping with key k :: Alignment, 
 -- value a :: (set of reasons, n_occurrences)
@@ -286,3 +287,45 @@ isLabelled l = (== l) . udSimpleDEPREL . root
 -- get label without subtypes
 udSimpleDEPREL :: UDWord -> Label
 udSimpleDEPREL = takeWhile (/= ':') . udDEPREL
+
+-- | Testing stuff (TODO: probably re(move))
+
+-- necessary functions & types from EvAlign, adapted
+toLinAlignment :: (Alignment, (S.Set Reason, Int)) -> LinAlignment
+toLinAlignment (A (t, u), (rs, n)) = 
+  LAlignment (dropWhile (== ' ') $ prUDTreeString t, 
+              dropWhile (== ' ') $ prUDTreeString u) (S.toList rs) n
+
+data LinAlignment = LAlignment {
+    ltrees :: (String, String),
+    lreasons :: [Reason],
+    loccurrences :: Int
+  } deriving (Eq)
+
+instance Show LinAlignment where
+  show (LAlignment (t,u) r n) = t ++ "|" ++ u ++ (show r) ++ (show n)
+
+-- read conll format from two parellel conll files & align. Output .ca format
+testAlignDepTrees :: FilePath -> FilePath -> IO ()
+testAlignDepTrees a b = do
+  ts <- parseUDFile a >>= return . map udSentence2tree
+  us <- parseUDFile b >>= return . map udSentence2tree
+  print ts
+  let tus = take 100 $ zip ts us -- TODO: rm take & drop!
+  -- maps of alignments
+  let atus = align criteria tus 
+  -- list of "linearized" alignments
+  let atus' = map toLinAlignment (M.toList atus)
+  -- sorted by "confidence"
+  let atus'' = sortOn (\la -> 
+                        let rs = lreasons la \\ [HEAD, PREV] 
+                        in (
+                            -(length rs), 
+                            -(loccurrences la), 
+                            tail rs
+                          )) atus'
+  mapM_ (putStrLn . show) atus''
+
+main = do
+  a:b:_ <- getArgs
+  testAlignDepTrees a b
