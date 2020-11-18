@@ -29,6 +29,7 @@ executable gf-ud
                , UDOptions
                , UDStandard
                , UDVisualization
+               , AlignTrees
 
   -- other-extensions:
   build-depends:       base, containers, pretty, gf, process
