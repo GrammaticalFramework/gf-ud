@@ -177,7 +177,7 @@ alignSent as cs (t,u) = M.fromListWith combineVals (alignSent' as cs (t,u))
     -- instead, for simplicity TODO: simplify code by not having a helper 
     alignSent' as cs (t@(RTree n ts), u@(RTree m us))
       -- 1+ criteria match
-      | null cs' = prune as'
+      | (not . null) cs' = prune as'
       -- the alignment is known TODO: handle heads better
       | A (t,u) `M.member` as = [
           (A (t,u),(S.singleton PREV,1)), 
@@ -286,7 +286,9 @@ isLabelled l = (== l) . udSimpleDEPREL . root
 
 -- get label without subtypes
 udSimpleDEPREL :: UDWord -> Label
-udSimpleDEPREL = takeWhile (/= ':') . udDEPREL
+udSimpleDEPREL w = case break (==':') (udDEPREL w) of 
+  (ud, ':':subtype) -> ud
+  (ud, "") -> ud
 
 -- | Testing stuff (TODO: probably re(move))
 
@@ -310,11 +312,11 @@ testAlignDepTrees :: FilePath -> FilePath -> IO ()
 testAlignDepTrees a b = do
   ts <- parseUDFile a >>= return . map udSentence2tree
   us <- parseUDFile b >>= return . map udSentence2tree
-  print ts
-  let tus = take 100 $ zip ts us -- TODO: rm take & drop!
+  let tus = take 100 $ zip ts us -- TODO: rm take
   -- maps of alignments
   let atus = align criteria tus 
   -- list of "linearized" alignments
+  print atus
   let atus' = map toLinAlignment (M.toList atus)
   -- sorted by "confidence"
   let atus'' = sortOn (\la -> 
