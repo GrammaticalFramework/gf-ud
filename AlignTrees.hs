@@ -294,25 +294,30 @@ udSimpleDEPREL w = case break (==':') (udDEPREL w) of
 
 -- turn an alignment into a pair of conll sentences
 alignment2sentencePair :: Alignment -> (UDSentence, UDSentence)
-alignment2sentencePair (A (t,u)) = (udTree2sentence t', udTree2sentence u')
-  where (t',u') = (completeUDTree t, completeUDTree u)
+alignment2sentencePair (A (t,u)) = (subtree2Sentence t, subtree2Sentence u)
 
--- turn a subtree into a "complete" UD tree (has a root, nodes [1..n])
-completeUDTree :: UDTree -> UDTree
-completeUDTree = markRoot . adjustIds
+-- turn a subtree into a "complete" UD tree (has a root, nodes [1..n]) in 
+-- CONLL format
+subtree2Sentence :: UDTree -> UDSentence
+subtree2Sentence = adjustIds . markRoot
   where 
     markRoot (RTree n ts) = RTree (n { 
-      udDEPREL = "root:" ++ udDEPREL n, 
-      udHEAD = UDIdInt 0
+      udDEPREL = "root:" ++ udDEPREL n,
+      udHEAD = UDIdRoot
     }) ts
-    adjustIds t = mapRTree (decrHEAD . decrID) t
+    adjustIds t = UDSentence cs (map (replaceIds ids) us)
       where 
-        rHEAD = udid2int $ udHEAD $ root t
-        minID = minimum $ map (udid2int . udID) (allNodesRTree t)
-        decrID n = n { udID = UDIdInt (udid2int (udID n) - minID + 1)}
-        decrHEAD n = n { 
-          udHEAD = UDIdInt (udid2int (udHEAD n) - (minID - 1))
-        }
+        (UDSentence cs us) = udTree2sentence t
+        ids = map udID us
+        replaceIds ids w = case udHEAD w of 
+          UDIdRoot -> w {
+            udID = i' $ udID w
+          }
+          udIDInt -> w {
+            udID = i' $ udID w,
+            udHEAD = i' $ udHEAD w
+          }
+          where i' i = UDIdInt $ 1 + fromJust (i `elemIndex` ids)
 
 -- | Testing stuff (TODO: probably re(move))
 
@@ -365,5 +370,5 @@ alignConll a b = do
 main = do
   a:b:_ <- getArgs
   cs <- alignConll a b
-  mapM_ (putStrLn . prt . fst) cs
+  -- mapM_ (putStrLn . prt . fst) cs
   mapM_ (putStrLn . prt . snd) cs
