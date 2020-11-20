@@ -290,6 +290,30 @@ udSimpleDEPREL w = case break (==':') (udDEPREL w) of
   (ud, ':':subtype) -> ud
   (ud, "") -> ud
 
+-- | Aligned subtrees to conll files
+
+-- turn an alignment into a pair of conll sentences
+alignment2sentencePair :: Alignment -> (UDSentence, UDSentence)
+alignment2sentencePair (A (t,u)) = (udTree2sentence t', udTree2sentence u')
+  where (t',u') = (completeUDTree t, completeUDTree u)
+
+-- turn a subtree into a "complete" UD tree (has a root, nodes [1..n])
+completeUDTree :: UDTree -> UDTree
+completeUDTree = markRoot . adjustIds
+  where 
+    markRoot (RTree n ts) = RTree (n { 
+      udDEPREL = "root:" ++ udDEPREL n, 
+      udHEAD = UDIdInt 0
+    }) ts
+    adjustIds t = mapRTree (decrHEAD . decrID) t
+      where 
+        rHEAD = udid2int $ udHEAD $ root t
+        minID = minimum $ map (udid2int . udID) (allNodesRTree t)
+        decrID n = n { udID = UDIdInt (udid2int (udID n) - minID + 1)}
+        decrHEAD n = n { 
+          udHEAD = UDIdInt (udid2int (udHEAD n) - (minID - 1))
+        }
+
 -- | Testing stuff (TODO: probably re(move))
 
 -- necessary functions & types from EvAlign, adapted
@@ -316,7 +340,6 @@ testAlignDepTrees a b = do
   -- maps of alignments
   let atus = align criteria tus 
   -- list of "linearized" alignments
-  print atus
   let atus' = map toLinAlignment (M.toList atus)
   -- sorted by "confidence"
   let atus'' = sortOn (\la -> 
@@ -326,8 +349,21 @@ testAlignDepTrees a b = do
                             -(loccurrences la), 
                             tail rs
                           )) atus'
-  mapM_ (putStrLn . show) atus''
+  mapM_ print atus''
+
+-- read conll format from two parellel .conll files & align. Return aligned 
+-- subtrees in .conll format
+alignConll :: FilePath -> FilePath -> IO [(UDSentence,UDSentence)]
+alignConll a b = do
+  ts <- parseUDFile a >>= return . map udSentence2tree
+  us <- parseUDFile b >>= return . map udSentence2tree
+  let tus = take 100 $ zip ts us -- TODO: rm take
+  -- list of alignments
+  let atus = map fst (M.toList $ align criteria tus)
+  return $ map alignment2sentencePair atus
 
 main = do
   a:b:_ <- getArgs
-  testAlignDepTrees a b
+  cs <- alignConll a b
+  mapM_ (putStrLn . prt . fst) cs
+  mapM_ (putStrLn . prt . snd) cs
