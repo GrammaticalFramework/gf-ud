@@ -2,6 +2,7 @@ module UDAnnotations where
 
 import UDConcepts
 import PGF hiding (CncLabels)
+import RTree
 import GFConcepts
 
 import qualified Data.Map as M
