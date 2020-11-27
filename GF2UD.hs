@@ -1,5 +1,6 @@
 module GF2UD where
 
+import RTree
 import UDConcepts
 import GFConcepts
 import UDAnnotations
