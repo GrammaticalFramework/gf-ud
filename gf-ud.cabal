@@ -29,9 +29,8 @@ executable gf-ud
                , UDOptions
                , UDStandard
                , UDVisualization
-               , AlignTrees
 
   -- other-extensions:
-  build-depends:       base, containers, pretty, gf, process, split, multiset
+  build-depends:       base, containers, pretty, gf, process
   -- hs-source-dirs:
   default-language:    Haskell2010
