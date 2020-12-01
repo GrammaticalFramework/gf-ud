@@ -105,7 +105,7 @@ allPosOfCat env cat0 = nub [
  where
   unaries = [(val,arg) | fun@(f,(val,[(arg,_)])) <- allFunsEnv env]
   possLexCat =
-    M.assocs (catLabels (absLabels env)) ++
+    [(c,p) | (c,(p,_)) <- M.assocs (catLabels (absLabels env))] ++
     M.assocs (auxCategories (cncLabels env))
   expands cat = cat : [cat2 | (c,cat1) <- unaries, c==cat, cat2 <- expands cat1]
 
@@ -113,4 +113,19 @@ allPosOfCat env cat0 = nub [
 -- descending sorted frequency list of anything, e.g. types in UD trees
 frequencyList :: Ord a => [a] -> [(a,Int)]
 frequencyList xs = sortOn ((0-) . snd) $ M.assocs $ M.fromListWith (+) [(x,1) | x <- xs]
+
+
+-----------------------------------------------------
+-- lexical entries obtained from lemma + primary cat
+
+lexicalEntries :: UDEnv -> [UDSentence] -> [((String, String),Int)] -- lemma, cat, #occurrences
+lexicalEntries env uds = M.assocs (M.fromListWith (+) [(wc,1) | Just wc <- map entry allwords])
+ where
+  allwords = concatMap udWordLines uds
+  entry udw = case M.lookup (udUPOS udw) (catsForPOS env) of
+    Just cps -> case [c | Left (c,True) <- cps] of
+      cat:_  -> Just (udLEMMA udw, showCId cat)
+      _ -> Nothing
+    _ -> Nothing
+
 

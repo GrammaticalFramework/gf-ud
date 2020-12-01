@@ -42,7 +42,13 @@ main = do
 
     "extract-pos-words":_ -> getContents >>= putStrLn . unlines . map ud2poswords . parseUDText
     "extract-pos-feats-words":_ -> getContents >>= putStrLn . unlines . map ud2posfeatswords . parseUDText
-  
+
+    "lexical-entries":annots:_ -> do
+       env <- getAnnotEnv annots
+       uds <- getContents >>= return . parseUDText
+       let entries = lexicalEntries env uds
+       putStrLn $ unlines [unwords [w ++ "_" ++ c, c, "--", show i] | ((w,c),i) <- entries]
+
     "eval":micmac:luas:goldf:testf:_ -> do
     
       putStrLn (unwords ("evaluating": tail xx))
@@ -71,6 +77,7 @@ helpMsg = unlines $ [
     " | gfud statistics <option>*",
     " | gfud extract-pos-words",
     " | gfud extract-pos-feats-words",
+    " | gfud lexical-entries <abslabels-file>",
     " | gfud conll2pdf",
     " | gfud parse2pdf",
     " | gfud conll2latex",

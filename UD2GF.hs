@@ -395,7 +395,7 @@ analyseWords env = mapRTree lemma2fun
    where
     (isUnknown,justWords) = getWordTrees (devLemma dn) (cats (devPOS dn))
     
-  cats pos = maybe [] id $ M.lookup pos (catsForPOS env)
+  cats pos = maybe [] (map (either (Left. fst) Right)) $ M.lookup pos (catsForPOS env)
 
   -- find all functions that are possible parses of the word in any appropriate category
   --- it is still possible that some other category is meant

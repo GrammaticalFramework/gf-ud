@@ -275,14 +275,14 @@
 #fun timeunitAdv nummod head
 #fun timeunitRange nummod nummod head ---
 
-#cat A ADJ
+#cat A ADJ primary
 #cat A2 ADJ
 #cat ACard ADV
 #cat AP ADJ
 #cat AdA ADV
 #cat AdN ADV
 #cat AdV ADV
-#cat Adv ADV
+#cat Adv ADV primary
 #cat Ant X
 #cat Bracket X
 #cat CAdv ADV
@@ -296,7 +296,7 @@
 #cat Conj CONJ
 #cat DAP DET
 #cat Definition X
-#cat Det DET
+#cat Det DET primary
 #cat Dig NUM
 #cat Digit NUM
 #cat Digits NUM
@@ -331,7 +331,7 @@
 #cat Mark PUNCT
 #cat Month NOUN
 #cat Monthday NUM
-#cat N NOUN
+#cat N NOUN primary
 #cat N2 NOUN
 #cat N3 NOUN
 #cat NP PRON ----
@@ -340,11 +340,11 @@
 #cat Ord NUM
 #cat PConj CCONJ
 #cat PConj CONJ
-#cat PN PROPN
+#cat PN PROPN primary
 #cat Phr X
 #cat Pol X
 #cat Predet DET
-#cat Prep ADP
+#cat Prep ADP primary
 #cat Pron PRON
 #cat QCl X
 #cat QS X
@@ -371,7 +371,7 @@
 #cat Text X
 #cat Timeunit NOUN
 #cat Utt X
-#cat V VERB
+#cat V VERB primary
 #cat V2 VERB
 #cat V2A VERB
 #cat V2Q VERB
