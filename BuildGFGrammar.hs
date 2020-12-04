@@ -8,13 +8,16 @@ import PGF
 import qualified Data.Map as M
 import System.Environment (getArgs)
 
+testBuildGrammar =
+  readFile "data/example-eng-ita-aligns.txt" >>=
+  buildGFGrammar "grammars/Extract.pgf" ["grammars/MorphoDictEng.pgf", "grammars/MorphoDictIta.pgf"]
 
-buildGFGrammar :: FilePath -> [FilePath] -> IO ()
-buildGFGrammar abstr dicts = do
+buildGFGrammar :: FilePath -> [FilePath] -> String -> IO ()
+buildGFGrammar abstr dicts als = do
   env <- getGrammarEnv abstr dicts
-  aligns <- getContents >>= return . readAlignments
+  let aligns = readAlignments als
   let ruless = map (tree2rules env) aligns
-  mapM_ print ruless
+  putStrLn $ unlines $ map prBuiltRules ruless
 
 
 getGrammarEnv :: FilePath -> [FilePath] -> IO GrammarEnv
@@ -55,16 +58,16 @@ data LangEnv = LangEnv {
   resourcemodules :: [String] -- to be opened
   }
 
-data BuildOutcome = BuildOutcome {
+data BuiltRules = BuiltRules {
   funname  :: String,
   funcats  :: [(LangName,String)], -- can be different cats in different langs
   linrules :: [(LangName,String)],
-  unknowns :: [(LangName,[CId])]
+  unknowns :: [(LangName,[(String,String)])] -- unknown lex item with its cat
   }
   deriving Show
 
-tree2rules :: GrammarEnv -> [(LangName,Tree)] -> BuildOutcome
-tree2rules env lts = BuildOutcome {
+tree2rules :: GrammarEnv -> [(LangName,Tree)] -> BuiltRules
+tree2rules env lts = BuiltRules {
   funname = fun,
   funcats  = [(lang, showCId cat) | (lang,tree) <- lts, (cat,_) <- [valcat lang (rootfun tree)]],
   linrules = [(lang, linrule lang tree) | (lang,tree) <- lts],
@@ -83,22 +86,29 @@ tree2rules env lts = BuildOutcome {
          (_,cat,_) -> (cat,1)                     -- word in lexicon
        _ -> (mkCId (last (partsOfFun f)),2) -- unknown word
 
-   unknown l t = [f |
+   unknown l t = [(showCId f, showCId c) |
      f <- lexitems t,
-     (_,2) <- [valcat l f]
+     (c,2) <- [valcat l f]
      ]
 
    linrule lang tree = showExpr [] tree
-
    lexitems t = leavesRTree (expr2abstree t)
-
    rootfun t = root (expr2abstree t)
-
    synpgf = syntaxpgf env
-
    (firstlang,firsttree) = head lts
-
    envoflang l = maybe (error ("unknown lang " ++ l)) id $ M.lookup l (langenvs env)
+
+prBuiltRules br = unlines $ [
+  let cat:cats = map snd (funcats br) in
+    unwords ["fun",funname br,":",cat,";","--",unwords cats]
+  ] ++ [
+  unwords ["lin",funname br,"=",lin,";","--",lang] | (lang,lin) <- linrules br
+  ] ++ [
+  unwords ["oper",fun,"=","mk"++cat, word fun,";","--",lang] | (lang,funcats) <- unknowns br, (fun,cat) <- funcats
+  ]
+ where
+   word f = "\"" ++ takeWhile (/='_') f ++ "\""
+   
 
 readAlignments :: String -> [[(LangName,Tree)]]
 readAlignments = map (map getOne) . stanzas . lines

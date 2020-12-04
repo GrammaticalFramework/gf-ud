@@ -1,0 +1,1856 @@
+Eng: AdjCN (PositA artificial_A) (UseN intelligence_N)
+Ita: PrepNP di_Prep (MassNP (AdjCN (PositA artificiale_A) (UseN intelligenza_N)))
+
+Eng: AdjCN (PositA many_A) (UseN scientist_N)
+Ita: DetCN molto_Det (UseN scienziato_N)
+
+Eng: AdjCN (PositA martial_A) (UseN art_N)
+Ita: PrepNP di_Prep (DetCN (PluralNP (AdjCN (PositA marziale_A) (UseN arte_N))))
+
+Eng: AdjCN (PositA other_A) (UseN nation_N)
+Ita: PrepCN (UseN aiuto_N) (PrepNP ad_Prep (DetCN altro_Det (UseN nazione_N)))
+
+Eng: AdjCN (PositA serbian_A) (UseN nationality_N)
+Ita: DetCN il_Det (AdjCN (PositA serbo_A) (UseN nazionalità_N))
+
+Eng: AdjCN (PositA several_A) (UseN analyst_N)
+Ita: DetCN diverso_Det (UseN analista_N)
+
+Eng: AdvCN (UseN everyone_N) not_Adv
+Ita: AdvCN (UseN tutto_N) non_Adv
+
+Eng: DetCN a_Det (AdjCN (PositA criminal_A) (UseN history_N))
+Ita: AdjCN (PositA penale_A) (UseN precedente_N)
+
+Eng: DetCN a_Det (AdjCN (PositA little_A) (UseN pressure_N))
+Ita: UsePron vi_Pron
+
+Eng: DetCN a_Det (AdjCN (PositA political_A) (UseN dimension_N))
+Ita: PrepNP da_Prep (DetCN a_Det (AdjCN (PositA politico_A) (UseN dimensione_N)))
+
+Eng: DetCN a_Det (PrepCN (UseN lot_N) (PrepNP possess_Prep (MassNP (UseN competition_N))))
+Ita: DetCN a_Det (AdjCN (PositA grande_A) (UseN concorrenza_N))
+
+Eng: DetCN a_Det (UseN (CompoundN access_N fee_N))
+Ita: DetCN a_Det (PrepCN (UseN tariffa_N) (PrepNP di_Prep (MassNP (UseN accesso_N))))
+
+Eng: DetCN a_Det (UseN (CompoundN battery_N fault_N))
+Ita: DetCN il_Det (UseN colpa_N)
+
+Eng: DetCN a_Det (UseN concert_N)
+Ita: DetCN a_Det (UseN concerto_N)
+
+Eng: DetCN a_Det (UseN fight_N)
+Ita: DetCN a_Det (UseN rissa_N)
+
+Eng: DetCN a_Det (UseN scan_N)
+Ita: DetCN a_Det (UseN ecografia_N)
+
+Eng: DetCN a_Det (UseN witness_N)
+Ita: DetCN a_Det (UseN testimone_N)
+
+Eng: DetCN any_Det (AdjCN (PositA new_A) (UseN legislation_N))
+Ita: UsePron li_Pron
+
+Eng: DetCN either_Det (UseN way_N)
+Ita: PrepNP in_Prep (DetCN il_Det (AdjCN (PositA entrambi_A) (UseN caso_N)))
+
+Eng: DetCN no_Det (UseN injury_N)
+Ita: UseN ferito_N
+
+Eng: DetCN some_Det (UseN (CompoundN security_N expert_N))
+Ita: DetCN alcuno_Det (PrepCN (UseN esperto_N) (PrepNP in_Prep (MassNP (UseN sicurezza_N))))
+
+Eng: DetCN that_Det (UseN invitation_N)
+Ita: DetCN il_Det (UseN invito_N)
+
+Eng: DetCN that_Det (UseN share_N)
+Ita: DetCN a_Det (AdjCN (PositA costante_A) (UseN crescita_N))
+
+Eng: DetCN the_Det (AdjCN (PositA new_A) (UseN spending_N))
+Ita: DetCN il_Det (AdjCN (PositA nuovo_A) (UseN spesa_N))
+
+Eng: DetCN the_Det (AdjCN (PositA same_A) (UseN venue_N))
+Ita: PrepNP di_Prep (DetCN il_Det (AdjCN (PositA stesso_A) (UseN luogo_N)))
+
+Eng: DetCN the_Det (AdjCN (PositA same_A) (UseN year_N))
+Ita: DetCN il_Det (AdjCN (PositA stesso_A) (UseN anno_N))
+
+Eng: DetCN the_Det (AdjCN (PositA scientific_A) (UseN method_N))
+Ita: DetCN il_Det (AdjCN (PositA scientifico_A) (UseN metodo_N))
+
+Eng: DetCN the_Det (AdvCN (UseN government_N) here_Adv)
+Ita: DetCN il_Det (UseN governo_N)
+
+Eng: DetCN the_Det (UseN (CompoundN feasibility_N study_N))
+Ita: DetCN il_Det (PrepCN (UseN studio_N) (PrepNP di_Prep (MassNP (UseN fattibilità_N))))
+
+Eng: DetCN the_Det (UseN (CompoundN transition_N team_N))
+Ita: DetCN il_Det (PrepCN (UseN team_N) (PrepNP di_Prep (MassNP (UseN transizione_N))))
+
+Eng: DetCN the_Det (UseN analysis_N)
+Ita: DetCN il_Det (UseN analisi_N)
+
+Eng: DetCN the_Det (UseN company_N)
+Ita: DetCN il_Det (UseN compagnia_N)
+
+Eng: DetCN the_Det (UseN disruption_N)
+Ita: DetCN il_Det (UseN interruzione_N)
+
+Eng: DetCN the_Det (UseN gathering_N)
+Ita: DetCN il_Det (UseN incontro_N)
+
+Eng: DetCN the_Det (UseN jet_N)
+Ita: DetCN il_Det (UseN jet_N)
+
+Eng: DetCN the_Det (UseN post_N)
+Ita: PrepNP su_Prep (DetCN il_Det (UseN post_N))
+
+Eng: DetCN the_Det (UseN show_N)
+Ita: DetCN il_Det (UseN show_N)
+
+Eng: DetCN the_Det (UseN suspect_N)
+Ita: DetCN il_Det (UseN sospettare_N)
+
+Eng: DetCN the_Det (UseN suspect_N)
+Ita: DetCN il_Det (UseN sospetto_N)
+
+Eng: DetCN the_Det (UseN victim_N)
+Ita: DetCN il_Det (UseN vittima_N)
+
+Eng: DetCN this_Det (AdjCN (PositA same_A) (UseN pattern_N))
+Ita: DetCN il_Det (AdjCN (PositA stesso_A) (UseN configurazione_N))
+
+Eng: DetCN this_Det (UseN morning_N)
+Ita: DetCN this_Det (UseN mattina_N)
+
+Eng: PredVP (UsePN Guilbeault_PN) (UseV say_V)
+Ita: PredVP (UsePN Guilbeault_PN) (UseV affermare_V)
+
+Eng: PredVP (UsePN Tarlo_PN) (UseV say_V)
+Ita: PredVP (UsePN Tarlo_PN) (UseV affermare_V)
+
+Eng: PredVP (UsePron she_Pron) (UseV say_V)
+Ita: UttVP (UseV affermare_V)
+
+Eng: PrepCN (AdjCN (PositA frequent_A) (UseN trip_N)) (PrepNP to_Prep (UsePN Russia_PN))
+Ita: DetCN molto_Det (PrepCN (UseN viaggio_N) (PrepNP in_Prep (UsePN Russia_PN)))
+
+Eng: PrepCN (UseN student_N) (PrepNP like_Prep (UsePN Rai_PN))
+Ita: PrepCN (UseN studente_N) (PrepNP come_Prep (UsePN Rai_PN))
+
+Eng: PrepNP against_Prep (DetCN a_Det (UseN agent_N))
+Ita: PrepNP a_Prep (DetCN a_Det (UseN agente_N))
+
+Eng: PrepNP at_Prep (DetCN the_Det (UseN school_N))
+Ita: DetCN alcuno_Det (UseN consigliere_N)
+
+Eng: PrepNP behind_Prep (UsePron it_Pron)
+Ita: recondito_A
+
+Eng: PrepNP by8means_Prep (DetCN (PluralNP (UseN blogger_N)))
+Ita: PrepNP in_Prep (MassNP (UseN precedenza_N))
+
+Eng: PrepNP by8means_Prep (DetCN the_Det (UseN way_N))
+Ita: Comunque_Adv
+
+Eng: PrepNP for_Prep (DetCN (PluralNP (AdjCN (PositA male_A) (AdjCN (PositA hormonal_A) (UseN contraceptive_N)))))
+Ita: PrepNP di_Prep (MassNP (AdjCN (PositA ormonale_A) (AdjCN (PositA maschile_A) (UseN contraccezione_N))))
+
+Eng: PrepNP for_Prep (DetCN (PluralNP (AdjCN (PositA unconventional_A) (UseN penalty_N))))
+Ita: PrepNP by8means_Prep (DetCN (PluralNP (AdjCN (PositA insolito_A) (UseN punizione_N))))
+
+Eng: PrepNP for_Prep (DetCN the_Det (UseN course_N))
+Ita: PrepNP di_Prep (DetCN il_Det (UseN corso_N))
+
+Eng: PrepNP for_Prep (UsePN Beijing_PN)
+Ita: PrepNP by8means_Prep (UsePN Pechino_PN)
+
+Eng: PrepNP from_Prep (DetCN the_Det (AdjCN (PositA democratic_A) (UseN side_N)))
+Ita: DetCN this_Det (UseN anno_N)
+
+Eng: PrepNP from_Prep (DetCN this_Det (UseN experiment_N))
+Ita: PrepNP di_Prep (DetCN this_Det (UseN esperimento_N))
+
+Eng: PrepNP in_Prep (DetCN (PluralNP (AdjCN (PositA recent_A) (UseN year_N))))
+Ita: PrepNP in_Prep (DetCN il_Det (AdjCN (PositA ultimi_A) (UseN anno_N)))
+
+Eng: PrepNP in_Prep (DetCN a_Det (UseN (CompoundN blog_N post_N)))
+Ita: UseN lunedì_N
+
+Eng: PrepNP in_Prep (DetCN a_Det (UseN lifetime_N))
+Ita: PrepNP da_Prep (DetCN a_Det (UseN individuo_N))
+
+Eng: PrepNP in_Prep (DetCN the_Det (AdjCN (PositA right_A) (UseN direction_N)))
+Ita: PrepNP in_Prep (DetCN il_Det (AdjCN (PositA giusto_A) (UseN direzione_N)))
+
+Eng: PrepNP in_Prep (DetCN the_Det (UseN experiment_N))
+Ita: PrepNP in_Prep (DetCN il_Det (UseN esperimento_N))
+
+Eng: PrepNP in_Prep (DetCN this_Det (UseN area_N))
+Ita: PrepNP in_Prep (DetCN this_Det (UseN area_N))
+
+Eng: PrepNP in_Prep (MassNP (UseN (CompoundN tumour_N dna_N)))
+Ita: PrepNP in_Prep (DetCN il_Det (AdjCN (PositA tumorale_A) (UseN DNA_N)))
+
+Eng: PrepNP in_Prep (UsePN April_PN)
+Ita: PrepNP in_Prep (MassNP (UseN aprile_N))
+
+Eng: PrepNP in_Prep (UsePN Belgrade_PN)
+Ita: UsePN Belgrado_PN
+
+Eng: PrepNP in_Prep (UsePN July_PN)
+Ita: PrepNP a_Prep (MassNP (UseN luglio_N))
+
+Eng: PrepNP in_Prep (UsePN Ontario_PN)
+Ita: PrepNP in_Prep (UsePN Ontario_PN)
+
+Eng: PrepNP in_Prep (UsePN September_PN)
+Ita: PrepNP a_Prep (MassNP (UseN settembre_N))
+
+Eng: PrepNP like_Prep (UsePN Rai_PN)
+Ita: PrepNP come_Prep (UsePN Rai_PN)
+
+Eng: PrepNP on_Prep (UsePron youPl_Pron)
+Ita: PrepNP sotto_Prep (MassNP (UseN pressione_N))
+
+Eng: PrepNP over_Prep (DetCN the_Det (UseN year_N))
+Ita: PrepNP in_Prep (DetCN il_Det (UseN anno_N))
+
+Eng: PrepNP per_Prep (MassNP (UseN person_N))
+Ita: PrepNP a_Prep (MassNP (UseN persona_N))
+
+Eng: PrepNP possess_Prep (DetCN (PluralNP (AdjCN (PositA legal_A) (UseN immigrant_N))))
+Ita: PrepNP di_Prep (DetCN (PluralNP (AdjCN (PositA legale_A) (UseN immigrato_N))))
+
+Eng: PrepNP possess_Prep (DetCN (PluralNP (UseN datum_N)))
+Ita: PrepNP di_Prep (DetCN (PluralNP (AdjCN (PositA storico_A) (UseN dato_N))))
+
+Eng: PrepNP possess_Prep (DetCN (PluralNP (UseN word_N)))
+Ita: PrepNP di_Prep (DetCN (PluralNP (UseN opinione_N)))
+
+Eng: PrepNP possess_Prep (DetCN a_Det (UseN photo_N))
+Ita: PrepNP di_Prep (DetCN a_Det (UseN foto_N))
+
+Eng: PrepNP possess_Prep (DetCN each_Det (UseN (CompoundN airline_N brand_N)))
+Ita: PrepNP di_Prep (DetCN every_Det (UseN compagnia_N))
+
+Eng: PrepNP possess_Prep (DetCN the_Det (AdjCN (PositA digital_A) (UseN transition_N)))
+Ita: PrepNP di_Prep (DetCN il_Det (AdjCN (PositA digitale_A) (UseN transizione_N)))
+
+Eng: PrepNP possess_Prep (DetCN the_Det (AdjCN (PositA total_A) (UseN vote_N)))
+Ita: PrepNP di_Prep (DetCN il_Det (AdjCN (PositA totale_A) (UseN voto_N)))
+
+Eng: PrepNP possess_Prep (DetCN the_Det (UseN debate_N))
+Ita: PrepNP di_Prep (DetCN il_Det (UseN dibattito_N))
+
+Eng: PrepNP possess_Prep (DetCN the_Det (UseN republic_N))
+Ita: PrepNP di_Prep (DetCN il_Det (UseN repubblica_N))
+
+Eng: PrepNP possess_Prep (MassNP (UseN competition_N))
+Ita: grande_A
+
+Eng: PrepNP possess_Prep (MassNP (UseN power_N))
+Ita: PrepNP di_Prep (MassNP (UseN potere_N))
+
+Eng: PrepNP to_Prep (MassNP (UseN jail_N))
+Ita: PrepNP in_Prep (MassNP (UseN prigione_N))
+
+Eng: PrepNP to_Prep (UsePN Russia_PN)
+Ita: PrepNP in_Prep (UsePN Russia_PN)
+
+Eng: PrepNP with_Prep (DetCN (PluralNP (UseN (CompoundN technology_N lobbyist_N))))
+Ita: PrepNP con_Prep (DetCN (PluralNP (AdjCN (PositA tecnologico_A) (UseN lobbisti_N))))
+
+Eng: PrepNP with_Prep (DetCN (PluralNP (UseN counsellor_N)))
+Ita: PrepNP presso_Prep (DetCN il_Det (UseN scuola_N))
+
+Eng: UseN (CompoundN access_N fee_N)
+Ita: PrepCN (UseN tariffa_N) (PrepNP di_Prep (MassNP (UseN accesso_N)))
+
+Eng: UseN (CompoundN air_N mattress_N)
+Ita: AdjCN (PositA gonfiabile_A) (UseN materasso_N)
+
+Eng: UseN (CompoundN airline_N brand_N)
+Ita: UseN compagnia_N
+
+Eng: UseN (CompoundN bank_N account_N)
+Ita: AdjCN (PositA considerevole_A) (AdjCN (PositA bancario_A) (UseN conto_N))
+
+Eng: UseN (CompoundN battery_N fault_N)
+Ita: UseN colpa_N
+
+Eng: UseN (CompoundN blog_N post_N)
+Ita: UseN blog_N
+
+Eng: UseN (CompoundN census_N bureau_N)
+Ita: PrepCN (UseN giorno_N) (PrepNP di_Prep (DetCN il_Det (UseN elezione_N)))
+
+Eng: UseN (CompoundN climate_N change_N)
+Ita: DetCN il_Det (AdjCN (PositA climatico_A) (UseN cambiamento_N))
+
+Eng: UseN (CompoundN dress_N code_N)
+Ita: UseN abbigliamento_N
+
+Eng: UseN (CompoundN election_N day_N)
+Ita: '1996_Adv'
+
+Eng: UseN (CompoundN feasibility_N study_N)
+Ita: PrepCN (UseN studio_N) (PrepNP di_Prep (MassNP (UseN fattibilità_N)))
+
+Eng: UseN (CompoundN hair_N market_N)
+Ita: PrepCN (UseN industria_N) (PrepNP di_Prep (DetCN il_Det (UseN capello_N)))
+
+Eng: UseN (CompoundN police_N department_N)
+Ita: UsePron quanto_Pron
+
+Eng: UseN (CompoundN police_N spokesman_N)
+Ita: PrepCN (UseN portavoce_N) (PrepNP di_Prep (DetCN il_Det (UseN polizia_N)))
+
+Eng: UseN (CompoundN power_N cell_N)
+Ita: UsePron questo_Pron
+
+Eng: UseN (CompoundN security_N expert_N)
+Ita: PrepCN (UseN esperto_N) (PrepNP in_Prep (MassNP (UseN sicurezza_N)))
+
+Eng: UseN (CompoundN technology_N lobbyist_N)
+Ita: AdjCN (PositA tecnologico_A) (UseN lobbisti_N)
+
+Eng: UseN (CompoundN traffic_N police_N)
+Ita: AdjCN (PositA stradale_A) (UseN polizia_N)
+
+Eng: UseN (CompoundN transition_N team_N)
+Ita: PrepCN (UseN team_N) (PrepNP di_Prep (MassNP (UseN transizione_N)))
+
+Eng: UseN (CompoundN travel_N expert_N)
+Ita: PrepCN (UseN esperto_N) (PrepNP di_Prep (DetCN (PluralNP (UseN viaggio_N))))
+
+Eng: UseN (CompoundN tumour_N dna_N)
+Ita: AdjCN (PositA tumorale_A) (UseN DNA_N)
+
+Eng: UseN access_N
+Ita: PrepNP di_Prep (MassNP (UseN accesso_N))
+
+Eng: UseN action_N
+Ita: UseN azione_N
+
+Eng: UseN agent_N
+Ita: UseN agente_N
+
+Eng: UseN air_N
+Ita: UseN tossicità_N
+
+Eng: UseN ally_N
+Ita: UseN alleato_N
+
+Eng: UseN altercation_N
+Ita: UseN alterco_N
+
+Eng: UseN amount_N
+Ita: UseN quantità_N
+
+Eng: UseN analysis_N
+Ita: DetCN a_Det (UseN analisi_N)
+
+Eng: UseN analysis_N
+Ita: UseN analisi_N
+
+Eng: UseN analyst_N
+Ita: UseN analista_N
+
+Eng: UseN appearance_N
+Ita: UseN apparizione_N
+
+Eng: UseN area_N
+Ita: UseN area_N
+
+Eng: UseN art_N
+Ita: UseN arte_N
+
+Eng: UseN association_N
+Ita: UseN associazione_N
+
+Eng: UseN average_N
+Ita: UttVP (UseV aggirare_V)
+
+Eng: UseN belief_N
+Ita: UseN assemblea_N
+
+Eng: UseN bladder_N
+Ita: UsePron quello_Pron
+
+Eng: UseN blogger_N
+Ita: UseN precedenza_N
+
+Eng: UseN break_N
+Ita: UttVP (UseV allontanare_V)
+
+Eng: UseN capital_N
+Ita: UseN capitale_N
+
+Eng: UseN celebrity_N
+Ita: UseN celebrità_N
+
+Eng: UseN census_N
+Ita: PrepNP di_Prep (DetCN il_Det (UseN censimento_N))
+
+Eng: UseN cigarette_N
+Ita: UseN sigaretta_N
+
+Eng: UseN city_N
+Ita: UseN aria_N
+
+Eng: UseN city_N
+Ita: UseN set_N
+
+Eng: UseN class_N
+Ita: UseN classe_N
+
+Eng: UseN club_N
+Ita: UsePN Metropolitan_PN
+
+Eng: UseN coast_N
+Ita: UseN aprile_N
+
+Eng: UseN comment_N
+Ita: UseN commento_N
+
+Eng: UseN company_N
+Ita: UseN compagnia_N
+
+Eng: UseN company_N
+Ita: UseN società_N
+
+Eng: UseN comparison_N
+Ita: UseN confronto_N
+
+Eng: UseN complaint_N
+Ita: UseN protesta_N
+
+Eng: UseN component_N
+Ita: UseN componente_N
+
+Eng: UseN concert_N
+Ita: UseN concerto_N
+
+Eng: UseN contraceptive_N
+Ita: UseN contraccezione_N
+
+Eng: UseN counsellor_N
+Ita: UseN scuola_N
+
+Eng: UseN country_N
+Ita: UseN passo_N
+
+Eng: UseN course_N
+Ita: UseN corso_N
+
+Eng: UseN date_N
+Ita: UseN data_N
+
+Eng: UseN datum_N
+Ita: UseN dato_N
+
+Eng: UseN daughter_N
+Ita: UseN figlio_N
+
+Eng: UseN day_N
+Ita: UseN giorno_N
+
+Eng: UseN debate_N
+Ita: UseN dibattito_N
+
+Eng: UseN detail_N
+Ita: UseN dettaglio_N
+
+Eng: UseN direction_N
+Ita: UseN direzione_N
+
+Eng: UseN disaster_N
+Ita: UseN disastro_N
+
+Eng: UseN disruption_N
+Ita: UseN interruzione_N
+
+Eng: UseN element_N
+Ita: UseN iridio_N
+
+Eng: UseN everyone_N
+Ita: UseN tutto_N
+
+Eng: UseN example_N
+Ita: UseN esempio_N
+
+Eng: UseN exchange_N
+Ita: UseN scambio_N
+
+Eng: UseN experiment_N
+Ita: UseN esperimento_N
+
+Eng: UseN fate_N
+Ita: UseN destino_N
+
+Eng: UseN feasibility_N
+Ita: PrepNP di_Prep (MassNP (UseN fattibilità_N))
+
+Eng: UseN fight_N
+Ita: UseN rissa_N
+
+Eng: UseN fine_N
+Ita: UseN sanzione_N
+
+Eng: UseN flight_N
+Ita: disponibile_A
+
+Eng: UseN founder_N
+Ita: UseN fondatore_N
+
+Eng: UseN friend_N
+Ita: UseN amico_N
+
+Eng: UseN game_N
+Ita: UseN gioco_N
+
+Eng: UseN gathering_N
+Ita: UseN incontro_N
+
+Eng: UseN government_N
+Ita: UseN governo_N
+
+Eng: UseN grandmother_N
+Ita: UseN 'nonna|nonno_N'
+
+Eng: UseN guitarist_N
+Ita: UseN chitarrista_N
+
+Eng: UseN hair_N
+Ita: PrepNP di_Prep (DetCN il_Det (UseN capello_N))
+
+Eng: UseN hardware_N
+Ita: UseN attrezzatura_N
+
+Eng: UseN headline_N
+Ita: UseN scalpore_N
+
+Eng: UseN height_N
+Ita: UseN picco_N
+
+Eng: UseN history_N
+Ita: UseN corso_N
+
+Eng: UseN history_N
+Ita: UseN precedente_N
+
+Eng: UseN hospital_N
+Ita: UseN ospedale_N
+
+Eng: UseN identity_N
+Ita: UttVP (UseV focalizzare_V)
+
+Eng: UseN immigrant_N
+Ita: UseN immigrato_N
+
+Eng: UseN intelligence_N
+Ita: UseN intelligenza_N
+
+Eng: UseN intent_N
+Ita: UseN fine_N
+
+Eng: UseN internet_N
+Ita: UseN (CompoundN internet_N connessione_N)
+
+Eng: UseN interview_N
+Ita: UseN giovedì_N
+
+Eng: UseN investment_N
+Ita: UseN investimento_N
+
+Eng: UseN invitation_N
+Ita: UseN invito_N
+
+Eng: UseN jail_N
+Ita: UseN prigione_N
+
+Eng: UseN jet_N
+Ita: UseN jet_N
+
+Eng: UseN level_N
+Ita: UseN livello_N
+
+Eng: UseN life_N
+Ita: UseN vita_N
+
+Eng: UseN lifetime_N
+Ita: UseN individuo_N
+
+Eng: UseN limit_N
+Ita: UseN limite_N
+
+Eng: UseN link_N
+Ita: UseN collegamento_N
+
+Eng: UseN lot_N
+Ita: UseN concorrenza_N
+
+Eng: UseN lung_N
+Ita: UseN polmone_N
+
+Eng: UseN material_N
+Ita: UseN origine_N
+
+Eng: UseN message_N
+Ita: UseN messaggio_N
+
+Eng: UseN method_N
+Ita: UseN metodo_N
+
+Eng: UseN mla_N
+Ita: UseN membro_N
+
+Eng: UseN morning_N
+Ita: UseN mattina_N
+
+Eng: UseN mutation_N
+Ita: UseN mutazione_N
+
+Eng: UseN name_N
+Ita: UseN nome_N
+
+Eng: UseN name_N
+Ita: UttVP (UseV rientrare_V)
+
+Eng: UseN nation_N
+Ita: UseN aiuto_N
+
+Eng: UseN nationality_N
+Ita: UseN nazionalità_N
+
+Eng: UseN need_N
+Ita: UseN necessità_N
+
+Eng: UseN number_N
+Ita: UseN numero_N
+
+Eng: UseN opportunity_N
+Ita: UttVP (UseV rappresentare_V)
+
+Eng: UseN parallel_N
+Ita: UseN linea_N
+
+Eng: UseN pattern_N
+Ita: UseN configurazione_N
+
+Eng: UseN penalty_N
+Ita: UseN punizione_N
+
+Eng: UseN people_N
+Ita: UseN parte_N
+
+Eng: UseN percent_N
+Ita: '%_Adv'
+
+Eng: UseN person_N
+Ita: UseN persona_N
+
+Eng: UseN photo_N
+Ita: UseN foto_N
+
+Eng: UseN pig_N
+Ita: UttVP (UseV considerare_V)
+
+Eng: UseN plan_N
+Ita: UsePN Nazioni_PN
+
+Eng: UseN plenty_N
+Ita: UseN gamma_N
+
+Eng: UseN police_N
+Ita: DetCN il_Det (UseN polizia_N)
+
+Eng: UseN police_N
+Ita: PrepNP di_Prep (DetCN il_Det (UseN polizia_N))
+
+Eng: UseN police_N
+Ita: UseN polizia_N
+
+Eng: UseN popularity_N
+Ita: UseN popolarità_N
+
+Eng: UseN potential_N
+Ita: UseN possibilità_N
+
+Eng: UseN power_N
+Ita: PrepNP di_Prep (MassNP (UseN alimentazione_N))
+
+Eng: UseN power_N
+Ita: UseN potere_N
+
+Eng: UseN president_N
+Ita: UseN presidente_N
+
+Eng: UseN president_N
+Ita: UseN qualità_N
+
+Eng: UseN promise_N
+Ita: UseN promessa_N
+
+Eng: UseN question_N
+Ita: UseN interrogativo_N
+
+Eng: UseN release_N
+Ita: UseN distribuzione_N
+
+Eng: UseN republic_N
+Ita: UseN repubblica_N
+
+Eng: UseN researcher_N
+Ita: DetCN il_Det (UseN ricercatore_N)
+
+Eng: UseN responsibility_N
+Ita: UseN responsabilità_N
+
+Eng: UseN result_N
+Ita: UseN risultato_N
+
+Eng: UseN scan_N
+Ita: UseN ecografia_N
+
+Eng: UseN schoolchildren_N
+Ita: UseN studente_N
+
+Eng: UseN scientist_N
+Ita: UseN scienziato_N
+
+Eng: UseN security_N
+Ita: PrepNP in_Prep (MassNP (UseN sicurezza_N))
+
+Eng: UseN set_N
+Ita: UttVP (UseV riferire_V)
+
+Eng: UseN share_N
+Ita: UseN crescita_N
+
+Eng: UseN shoulder_N
+Ita: UsePron voi_Pron
+
+Eng: UseN show_N
+Ita: UseN show_N
+
+Eng: UseN side_N
+Ita: UseN parte_N
+
+Eng: UseN someone_N
+Ita: UseN qualcuno_N
+
+Eng: UseN speaker_N
+Ita: PrepNP di_Prep (DetCN (PluralNP (UseN 'oratore|oratorio_N')))
+
+Eng: UseN spending_N
+Ita: UseN spesa_N
+
+Eng: UseN sponsorship_N
+Ita: UseN strategia_N
+
+Eng: UseN spotlight_N
+Ita: UseN riflettore_N
+
+Eng: UseN state_N
+Ita: UsePN Stati_PN
+
+Eng: UseN student_N
+Ita: DetCN il_Det (UseN studente_N)
+
+Eng: UseN student_N
+Ita: UseN studente_N
+
+Eng: UseN suspect_N
+Ita: UseN sospettare_N
+
+Eng: UseN suspect_N
+Ita: UseN sospetto_N
+
+Eng: UseN teacher_N
+Ita: UseN insegnante_N
+
+Eng: UseN technology_N
+Ita: UseN tecnologia_N
+
+Eng: UseN telltale_N
+Ita: UseN segnale_N
+
+Eng: UseN term_N
+Ita: UseN mandato_N
+
+Eng: UseN tissue_N
+Ita: UseN tessuto_N
+
+Eng: UseN tonight_N
+Ita: PrepNP by8means_Prep (DetCN il_Det (UseN punizione_N))
+
+Eng: UseN transit_N
+Ita: DetCN il_Det (UseN transizione_N)
+
+Eng: UseN transition_N
+Ita: PrepNP di_Prep (MassNP (UseN transizione_N))
+
+Eng: UseN transition_N
+Ita: UseN transizione_N
+
+Eng: UseN travel_N
+Ita: PrepNP di_Prep (DetCN (PluralNP (UseN viaggio_N)))
+
+Eng: UseN treatment_N
+Ita: UseN cura_N
+
+Eng: UseN trip_N
+Ita: UseN viaggio_N
+
+Eng: UseN tumour_N
+Ita: UseN tumore_N
+
+Eng: UseN victim_N
+Ita: UseN vittima_N
+
+Eng: UseN vote_N
+Ita: UseN voto_N
+
+Eng: UseN way_N
+Ita: UseN caso_N
+
+Eng: UseN way_N
+Ita: UseN ragazzo_N
+
+Eng: UseN wife_N
+Ita: UseN moglie_N
+
+Eng: UseN witness_N
+Ita: UseN testimone_N
+
+Eng: UseN word_N
+Ita: UseN opinione_N
+
+Eng: UseN year_N
+Ita: UseN anno_N
+
+Eng: UseN yuk_N
+Ita: UseN disgusto_N
+
+Eng: UsePN 'B.C._PN'
+Ita: UsePN Columbia_PN
+
+Eng: UsePN (FlatPN Melania_PN Trump_PN)
+Ita: UsePN (FlatPN Melania_PN Trump_PN)
+
+Eng: UsePN (FlatPN Michael_PN Fallon_PN)
+Ita: UsePN (FlatPN Michael_PN Fallon_PN)
+
+Eng: UsePN (FlatPN Ms_PN Pugh_PN)
+Ita: UsePN (FlatPN ms_PN Pugh_PN)
+
+Eng: UsePN (FlatPN mr_PN Osborne_PN)
+Ita: UsePN (FlatPN mr_PN Osborne_PN)
+
+Eng: UsePN (FlatPN mr_PN Panvalkar_PN)
+Ita: UsePN (FlatPN Mr_PN Panvalkar_PN)
+
+Eng: UsePN Addenbrooke_PN
+Ita: UsePN Addenbrooke_PN
+
+Eng: UsePN Andre_PN
+Ita: UsePN Andre_PN
+
+Eng: UsePN Apple_PN
+Ita: UsePN Apple_PN
+
+Eng: UsePN April_PN
+Ita: UseN aprile_N
+
+Eng: UsePN April_PN
+Ita: UseN giugno_N
+
+Eng: UsePN Associated_PN
+Ita: UsePN Press_PN
+
+Eng: UsePN BBC_PN
+Ita: UsePN BBC_PN
+
+Eng: UsePN Beijing_PN
+Ita: UsePN Pechino_PN
+
+Eng: UsePN CBC_PN
+Ita: UsePN News_PN
+
+Eng: UsePN Clinton_PN
+Ita: UsePN Clinton_PN
+
+Eng: UsePN Crimea_PN
+Ita: UsePN Crimea_PN
+
+Eng: UsePN Erik_PN
+Ita: UsePN Accordo_PN
+
+Eng: UsePN Fallon_PN
+Ita: UsePN Fallon_PN
+
+Eng: UsePN Georgetown_PN
+Ita: PrepNP di_Prep (UsePN Georgetown_PN)
+
+Eng: UsePN Google_PN
+Ita: UsePN Assistant_PN
+
+Eng: UsePN Guilbeault_PN
+Ita: UsePN Guilbeault_PN
+
+Eng: UsePN Huawei_PN
+Ita: UsePN Huawei_PN
+
+Eng: UsePN Jesse_PN
+Ita: UsePN Jesse_PN
+
+Eng: UsePN Joe_PN
+Ita: UsePN Joe_PN
+
+Eng: UsePN July_PN
+Ita: UseN luglio_N
+
+Eng: UsePN June_PN
+Ita: UseN costa_N
+
+Eng: UsePN Kamchatka_PN
+Ita: UsePN Kamchatka_PN
+
+Eng: UsePN Khanzir_PN
+Ita: UsePN Khanzir_PN
+
+Eng: UsePN Klein_PN
+Ita: UsePN Klein_PN
+
+Eng: UsePN Knightley_PN
+Ita: UsePron quello_Pron
+
+Eng: UsePN Kori_PN
+Ita: UsePN Schulman_PN
+
+Eng: UsePN LaBrocca_PN
+Ita: UsePN LaBrocca_PN
+
+Eng: UsePN Mailis_PN
+Ita: UsePN Mailis_PN
+
+Eng: UsePN Melania_PN
+Ita: UsePN Melania_PN
+
+Eng: UsePN Michael_PN
+Ita: UsePN Michael_PN
+
+Eng: UsePN Ms_PN
+Ita: UsePN ms_PN
+
+Eng: UsePN October_PN
+Ita: UseN inizio_N
+
+Eng: UsePN Ontario_PN
+Ita: UsePN Ontario_PN
+
+Eng: UsePN Osborne_PN
+Ita: UsePN Osborne_PN
+
+Eng: UsePN Pall_PN
+Ita: UsePN Pall_PN
+
+Eng: UsePN Panvalkar_PN
+Ita: UsePN Panvalkar_PN
+
+Eng: UsePN Papworth_PN
+Ita: UsePN Papworth_PN
+
+Eng: UsePN Paris_PN
+Ita: PrepNP di_Prep (UsePN Parigi_PN)
+
+Eng: UsePN Price_PN
+Ita: UsePN Price_PN
+
+Eng: UsePN Pugh_PN
+Ita: UsePN Pugh_PN
+
+Eng: UsePN RHS_PN
+Ita: UsePN RHS_PN
+
+Eng: UsePN Rai_PN
+Ita: UsePN Rai_PN
+
+Eng: UsePN Russia_PN
+Ita: UsePN Russia_PN
+
+Eng: UsePN Sakhalin_PN
+Ita: UsePN Sakhalin_PN
+
+Eng: UsePN Saqib_PN
+Ita: UsePN Saqib_PN
+
+Eng: UsePN Seagal_PN
+Ita: UsePN Seagal_PN
+
+Eng: UsePN September_PN
+Ita: UseN settembre_N
+
+Eng: UsePN Shenzhen_PN
+Ita: UsePN Shenzen_PN
+
+Eng: UsePN Siri_PN
+Ita: UsePN Siri_PN
+
+Eng: UsePN Sony_PN
+Ita: PrepNP di_Prep (UsePN Sony_PN)
+
+Eng: UsePN Sternlieb_PN
+Ita: UsePN Sternlieb_PN
+
+Eng: UsePN Tarlo_PN
+Ita: UsePN Tarlo_PN
+
+Eng: UsePN Thursday_PN
+Ita: scorso_A
+
+Eng: UsePN Trudeau_PN
+Ita: UsePN Trudeau_PN
+
+Eng: UsePN Trump_PN
+Ita: UsePN Trump_PN
+
+Eng: UsePN United_PN
+Ita: UsePN Uniti_PN
+
+Eng: UsePN Vladivostok_PN
+Ita: originario_A
+
+Eng: UsePN capitol_PN
+Ita: UsePN Hill_PN
+
+Eng: UsePN mate_PN
+Ita: UsePN Mate_PN
+
+Eng: UsePN mr_PN
+Ita: UsePN Mr_PN
+
+Eng: UsePron it_Pron
+Ita: DetCN il_Det (UseN progetto_N)
+
+Eng: UsePron it_Pron
+Ita: UseN affermazione_N
+
+Eng: UsePron it_Pron
+Ita: UsePron si_Pron
+
+Eng: UsePron that_Pron
+Ita: UsePron questo_Pron
+
+Eng: UsePron there_Pron
+Ita: UsePron ci_Pron
+
+Eng: UsePron there_Pron
+Ita: UsePron si_Pron
+
+Eng: UsePron they_Pron
+Ita: DetCN il_Det (UseN ricercatore_N)
+
+Eng: UsePron they_Pron
+Ita: UsePron chi_Pron
+
+Eng: UsePron this_Pron
+Ita: DetCN this_Det (UseN cosa_N)
+
+Eng: UsePron this_Pron
+Ita: UsePron questo_Pron
+
+Eng: UsePron this_Pron
+Ita: ciò_Det
+
+Eng: UsePron those_Pron
+Ita: UsePron chiunque_Pron
+
+Eng: UsePron we_Pron
+Ita: DetCN il_Det (UseN abbagliante_N)
+
+Eng: UsePron which_Pron
+Ita: UsePron che_Pron
+
+Eng: UsePron who_Pron
+Ita: UttVP (UseV essere_V)
+
+Eng: UsePron youSg_Pron
+Ita: UseN cosa_N
+
+Eng: UsePron youSg_Pron
+Ita: UseN pressione_N
+
+Eng: UttVP (AdvVP (UseAdv '11_Adv') only_Adv)
+Ita: '11_Adv'
+
+Eng: UttVP (AdvVP (UseAdv '20_Adv') around_Adv)
+Ita: '20_Adv'
+
+Eng: UttVP (AdvVP (UseAdv again_Adv) once_Adv)
+Ita: DetCN a_Det (AdvCN (UseN volta_N) ancora_Adv)
+
+Eng: UttVP (AdvVP (UseAdv four_Adv) about_Adv)
+Ita: '4_Adv'
+
+Eng: UttVP (UseV accord_V)
+Ita: a_Prep
+
+Eng: UttVP (UseV accord_V)
+Ita: prima_Adv
+
+Eng: UttVP (UseV annex_V)
+Ita: UttVP (UseV annesso_V)
+
+Eng: UttVP (UseV attack_V)
+Ita: UttVP (UseV attaccare_V)
+
+Eng: UttVP (UseV be_V)
+Ita: UttVP (UseV avere_V)
+
+Eng: UttVP (UseV be_V)
+Ita: UttVP (UseV essere_V)
+
+Eng: UttVP (UseV become_V)
+Ita: UttVP (UseV portare_V)
+
+Eng: UttVP (UseV cast_V)
+Ita: UttVP (UseV esprimere_V)
+
+Eng: UttVP (UseV cause_V)
+Ita: UttVP (UseV provocare_V)
+
+Eng: UttVP (UseV certify_V)
+Ita: UttVP (UseV certificato_V)
+
+Eng: UttVP (UseV charge_V)
+Ita: UttVP (UseV accusare_V)
+
+Eng: UttVP (UseV charge_V)
+Ita: UttVP (UseV addebitare_V)
+
+Eng: UttVP (UseV come_V)
+Ita: UseN consolazione_N
+
+Eng: UttVP (UseV conduct_V)
+Ita: UttVP (UseV condurre_V)
+
+Eng: UttVP (UseV cost_V)
+Ita: milione_Adv
+
+Eng: UttVP (UseV decide_V)
+Ita: UttVP (UseV decidere_V)
+
+Eng: UttVP (UseV do_V)
+Ita: UttVP (UseV riservare_V)
+
+Eng: UttVP (UseV estimate_V)
+Ita: UttVP (UseV stimare_V)
+
+Eng: UttVP (UseV explain_V)
+Ita: UttVP (UseV volgere_V)
+
+Eng: UttVP (UseV expose_V)
+Ita: UttVP (UseV esporre_V)
+
+Eng: UttVP (UseV find_V)
+Ita: UttVP (UseV riscontrare_V)
+
+Eng: UttVP (UseV follow_V)
+Ita: UttVP (UseV seguire_V)
+
+Eng: UttVP (UseV fuel_V)
+Ita: UttVP (UseV alimentare_V)
+
+Eng: UttVP (UseV give_V)
+Ita: UttVP (UseV ottenere_V)
+
+Eng: UttVP (UseV grow_V)
+Ita: UttVP (UseV crescere_V)
+
+Eng: UttVP (UseV grow_V)
+Ita: cinese_A
+
+Eng: UttVP (UseV hate_V)
+Ita: UttVP (UseV odiare_V)
+
+Eng: UttVP (UseV have_V)
+Ita: UseN legame_N
+
+Eng: UttVP (UseV have_V)
+Ita: UttVP (UseV avere_V)
+
+Eng: UttVP (UseV have_V)
+Ita: UttVP (UseV caratterizzare_V)
+
+Eng: UttVP (UseV have_V)
+Ita: UttVP (UseV lavorare_V)
+
+Eng: UttVP (UseV help_V)
+Ita: UseN aiuto_N
+
+Eng: UttVP (UseV help_V)
+Ita: UttVP (UseV contribuire_V)
+
+Eng: UttVP (UseV investigate_V)
+Ita: UttVP (UseV indagare_V)
+
+Eng: UttVP (UseV involve_V)
+Ita: UttVP (UseV coinvolgere_V)
+
+Eng: UttVP (UseV keep_V)
+Ita: UttVP (UseV mantenere_V)
+
+Eng: UttVP (UseV lack_V)
+Ita: UttVP (UseV mancare_V)
+
+Eng: UttVP (UseV learn_V)
+Ita: UttVP (UseV imparare_V)
+
+Eng: UttVP (UseV levy_V)
+Ita: UttVP (UseV imporre_V)
+
+Eng: UttVP (UseV make_V)
+Ita: UttVP (UseV fare_V)
+
+Eng: UttVP (UseV make_V)
+Ita: UttVP (UseV trattare_V)
+
+Eng: UttVP (UseV make_V)
+Ita: precedente_A
+
+Eng: UttVP (UseV meet_V)
+Ita: UttVP (UseV incontrare_V)
+
+Eng: UttVP (UseV meet_V)
+Ita: UttVP (UseV riunire_V)
+
+Eng: UttVP (UseV move_V)
+Ita: UttVP (UseV muovere_V)
+
+Eng: UttVP (UseV need_V)
+Ita: necessario_A
+
+Eng: UttVP (UseV notice_V)
+Ita: UttVP (UseV notare_V)
+
+Eng: UttVP (UseV oppose_V)
+Ita: UttVP (UseV portare_V)
+
+Eng: UttVP (UseV opt_V)
+Ita: UttVP (UseV optare_V)
+
+Eng: UttVP (UseV press_V)
+Ita: UttVP (UseV soffocare_V)
+
+Eng: UttVP (UseV provide_V)
+Ita: UttVP (UseV rappresentare_V)
+
+Eng: UttVP (UseV put_V)
+Ita: UttVP (UseV mettere_V)
+
+Eng: UttVP (UseV read_V)
+Ita: UttVP (UseV leggere_V)
+
+Eng: UttVP (UseV receive_V)
+Ita: UttVP (UseV ricevere_V)
+
+Eng: UttVP (UseV report_V)
+Ita: UttVP (UseV riportare_V)
+
+Eng: UttVP (UseV represent_V)
+Ita: UttVP (UseV rappresentante_V)
+
+Eng: UttVP (UseV request_V)
+Ita: UttVP (UseV chiedere_V)
+
+Eng: UttVP (UseV rest_V)
+Ita: UttVP (UseV dipendere_V)
+
+Eng: UttVP (UseV rise_V)
+Ita: UttVP (UseV registrare_V)
+
+Eng: UttVP (UseV ruin_V)
+Ita: UttVP (UseV rimettere_V)
+
+Eng: UttVP (UseV sack_V)
+Ita: UttVP (UseV licenziare_V)
+
+Eng: UttVP (UseV say_V)
+Ita: UttVP (UseV affermare_V)
+
+Eng: UttVP (UseV see_V)
+Ita: UttVP (UseV fare_V)
+
+Eng: UttVP (UseV see_V)
+Ita: UttVP (UseV vedere_V)
+
+Eng: UttVP (UseV seem_V)
+Ita: UttVP (UseV sembrare_V)
+
+Eng: UttVP (UseV set_V)
+Ita: UttVP (UseV considerare_V)
+
+Eng: UttVP (UseV show_V)
+Ita: UttVP (UseV mostrare_V)
+
+Eng: UttVP (UseV slate_V)
+Ita: UttVP (UseV organizzare_V)
+
+Eng: UttVP (UseV slow_V)
+Ita: UttVP (UseV affermare_V)
+
+Eng: UttVP (UseV smoke_V)
+Ita: UttVP (UseV fumare_V)
+
+Eng: UttVP (UseV talk_V)
+Ita: UttVP (UseV discutere_V)
+
+Eng: UttVP (UseV teach_V)
+Ita: UttVP (UseV insegnare_V)
+
+Eng: UttVP (UseV tell_V)
+Ita: UttVP (UseV dichiarare_V)
+
+Eng: UttVP (UseV think_V)
+Ita: UttVP (UseV credere_V)
+
+Eng: UttVP (UseV try_V)
+Ita: UttVP (UseV tentare_V)
+
+Eng: UttVP (UseV use_V)
+Ita: UttVP (UseV usare_V)
+
+Eng: UttVP (UseV wait_V)
+Ita: UttVP (UseV attendere_V)
+
+Eng: a_Det
+Ita: a_Det
+
+Eng: a_Det
+Ita: il_Det
+
+Eng: about_Prep
+Ita: contro_Prep
+
+Eng: about_Prep
+Ita: su_Prep
+
+Eng: after_Adv
+Ita: dopo_Prep
+
+Eng: afterwards_Adv
+Ita: dopo_Adv
+
+Eng: against_Prep
+Ita: a_Prep
+
+Eng: alive_A
+Ita: vivo_A
+
+Eng: alone_A
+Ita: solo_A
+
+Eng: also_Adv
+Ita: anche_Adv
+
+Eng: also_Adv
+Ita: inoltre_Adv
+
+Eng: always_Adv
+Ita: sempre_Adv
+
+Eng: and_Adv
+Ita: e_Adv
+
+Eng: and_Adv
+Ita: mentre_Adv
+
+Eng: artificial_A
+Ita: artificiale_A
+
+Eng: as_Prep
+Ita: in_Prep
+
+Eng: at_Prep
+Ita: a_Prep
+
+Eng: at_Prep
+Ita: presso_Prep
+
+Eng: be_Adv
+Ita: UsePron lo_Pron
+
+Eng: be_Adv
+Ita: UttVP (UseV essere_V)
+
+Eng: be_Adv
+Ita: avere_Adv
+
+Eng: be_Adv
+Ita: essere_Adv
+
+Eng: be_Adv
+Ita: stare_Adv
+
+Eng: before_Adv
+Ita: già_Adv
+
+Eng: before_Prep
+Ita: a_Prep
+
+Eng: before_Prep
+Ita: in_Prep
+
+Eng: better_A
+Ita: UttVP (UseV superare_V)
+
+Eng: between_Prep
+Ita: tra_Prep
+
+Eng: but_Adv
+Ita: ma_Adv
+
+Eng: but_Adv
+Ita: però_Adv
+
+Eng: by8means_Prep
+Ita: da_Prep
+
+Eng: by8means_Prep
+Ita: di_Prep
+
+Eng: by8means_Prep
+Ita: in_Prep
+
+Eng: can_Adv
+Ita: potere_Adv
+
+Eng: could_Adv
+Ita: avere_Adv
+
+Eng: could_Adv
+Ita: potere_Adv
+
+Eng: criminal_A
+Ita: penale_A
+
+Eng: despite_Prep
+Ita: nonostante_Adv
+
+Eng: different_A
+Ita: diverso_A
+
+Eng: digital_A
+Ita: digitale_A
+
+Eng: direct_A
+Ita: diretto_A
+
+Eng: directly_Adv
+Ita: non_Adv
+
+Eng: do_Adv
+Ita: avere_Adv
+
+Eng: each_Det
+Ita: every_Det
+
+Eng: earlier_Adv
+Ita: precedentemente_Adv
+
+Eng: early_A
+Ita: PrepNP di_Prep (MassNP (UseN ottobre_N))
+
+Eng: either_Det
+Ita: il_Det
+
+Eng: everyday_A
+Ita: quotidiano_A
+
+Eng: fantastic_A
+Ita: fantastico_A
+
+Eng: first_A
+Ita: primo_A
+
+Eng: first_Adv
+Ita: prima_Adv
+
+Eng: for_Prep
+Ita: by8means_Prep
+
+Eng: for_Prep
+Ita: di_Prep
+
+Eng: for_Prep
+Ita: in_Prep
+
+Eng: from_Prep
+Ita: a_Prep
+
+Eng: from_Prep
+Ita: da_Prep
+
+Eng: from_Prep
+Ita: di_Prep
+
+Eng: have_Adv
+Ita: avere_Adv
+
+Eng: have_Adv
+Ita: essere_Adv
+
+Eng: high_A
+Ita: alto_A
+
+Eng: historic_A
+Ita: grande_A
+
+Eng: hormonal_A
+Ita: maschile_A
+
+Eng: if_Adv
+Ita: by8means_Prep
+
+Eng: in_Prep
+Ita: a_Prep
+
+Eng: in_Prep
+Ita: da_Prep
+
+Eng: in_Prep
+Ita: di_Prep
+
+Eng: in_Prep
+Ita: in_Prep
+
+Eng: in_Prep
+Ita: presso_Prep
+
+Eng: in_Prep
+Ita: su_Prep
+
+Eng: initially_Adv
+Ita: abbastanza_Adv
+
+Eng: initially_Adv
+Ita: inizialmente_Adv
+
+Eng: international_A
+Ita: internazionale_A
+
+Eng: into_Prep
+Ita: con_Prep
+
+Eng: keen_A
+Ita: appassionato_A
+
+Eng: large_A
+Ita: considerevole_A
+
+Eng: legal_A
+Ita: legale_A
+
+Eng: like_Prep
+Ita: UttVP (UseV chiedere_V)
+
+Eng: like_Prep
+Ita: come_Prep
+
+Eng: like_Prep
+Ita: di_Prep
+
+Eng: likely_A
+Ita: probabile_A
+
+Eng: luckily_Adv
+Ita: PrepNP by8means_Prep (MassNP (UseN fortuna_N))
+
+Eng: male_A
+Ita: ormonale_A
+
+Eng: many_A
+Ita: UseN volta_N
+
+Eng: many_A
+Ita: avanti_Adv
+
+Eng: martial_A
+Ita: marziale_A
+
+Eng: maximum_A
+Ita: massimo_A
+
+Eng: may_Adv
+Ita: potere_Adv
+
+Eng: maybe_Adv
+Ita: forse_Adv
+
+Eng: meteoritic_A
+Ita: meteoritico_A
+
+Eng: middle_A
+Ita: crescente_A
+
+Eng: most_A
+Ita: maggiore_A
+
+Eng: most_Adv
+Ita: più_Adv
+
+Eng: much_A
+Ita: UseN parte_N
+
+Eng: national_A
+Ita: Unite_A
+
+Eng: naturally_Adv
+Ita: ovviamente_Adv
+
+Eng: new_A
+Ita: nuovo_A
+
+Eng: not_Adv
+Ita: diretto_Adv
+
+Eng: not_Adv
+Ita: non_Adv
+
+Eng: obvious_A
+Ita: evidente_A
+
+Eng: off_Prep
+Ita: da_Prep
+
+Eng: often_Adv
+Ita: spesso_Adv
+
+Eng: on_Prep
+Ita: da_Prep
+
+Eng: on_Prep
+Ita: di_Prep
+
+Eng: on_Prep
+Ita: sotto_Prep
+
+Eng: once_Adv
+Ita: ancora_Adv
+
+Eng: or_Adv
+Ita: o_Adv
+
+Eng: originally_Adv
+Ita: inizialmente_Adv
+
+Eng: other_A
+Ita: PrepNP ad_Prep (DetCN altro_Det (UseN nazione_N))
+
+Eng: other_A
+Ita: militare_A
+
+Eng: over_Prep
+Ita: in_Prep
+
+Eng: peaceful_A
+Ita: pacifico_A
+
+Eng: per_Prep
+Ita: a_Prep
+
+Eng: perhaps_Adv
+Ita: forse_Adv
+
+Eng: political_A
+Ita: politico_A
+
+Eng: possess_Prep
+Ita: di_Prep
+
+Eng: rare_A
+Ita: raro_A
+
+Eng: rather_Adv
+Ita: invece_Adv
+
+Eng: reasonable_A
+Ita: ragionevole_A
+
+Eng: recent_A
+Ita: ultimi_A
+
+Eng: religious_A
+Ita: legislativo_A
+
+Eng: right_A
+Ita: destro_A
+
+Eng: right_A
+Ita: giusto_A
+
+Eng: same_A
+Ita: UseN trattamento_N
+
+Eng: same_A
+Ita: stesso_A
+
+Eng: scientific_A
+Ita: scientifico_A
+
+Eng: serbian_A
+Ita: serbo_A
+
+Eng: short_A
+Ita: abbastanza_Adv
+
+Eng: some_Det
+Ita: alcuno_Det
+
+Eng: sometimes_Adv
+Ita: talvolta_Adv
+
+Eng: still_Adv
+Ita: ancora_Adv
+
+Eng: still_Adv
+Ita: qui_Adv
+
+Eng: stuffy_A
+Ita: UseN antico_N
+
+Eng: super_A
+Ita: super_A
+
+Eng: than_Prep
+Ita: di_Prep
+
+Eng: that_Adv
+Ita: che_Adv
+
+Eng: that_Det
+Ita: a_Det
+
+Eng: that_Det
+Ita: il_Det
+
+Eng: the_Det
+Ita: a_Det
+
+Eng: the_Det
+Ita: alcuno_Det
+
+Eng: the_Det
+Ita: il_Det
+
+Eng: the_Det
+Ita: this_Det
+
+Eng: there_Adv
+Ita: lì_Adv
+
+Eng: this_Det
+Ita: il_Det
+
+Eng: this_Det
+Ita: this_Det
+
+Eng: through_Prep
+Ita: di_Prep
+
+Eng: throughout_Prep
+Ita: in_Prep
+
+Eng: to_Adv
+Ita: by8means_Prep
+
+Eng: to_Adv
+Ita: di_Prep
+
+Eng: to_Prep
+Ita: UseN seguito_N
+
+Eng: to_Prep
+Ita: a_Prep
+
+Eng: to_Prep
+Ita: di_Prep
+
+Eng: to_Prep
+Ita: in_Prep
+
+Eng: total_A
+Ita: totale_A
+
+Eng: toxic_A
+Ita: PrepNP di_Prep (DetCN il_Det (UseN aria_N))
+
+Eng: tremendous_A
+Ita: enorme_A
+
+Eng: unbelievable_A
+Ita: incredibile_A
+
+Eng: unconventional_A
+Ita: insolito_A
+
+Eng: unfortunately_Adv
+Ita: sfortunatamente_Adv
+
+Eng: unlikely_A
+Ita: probabile_A
+
+Eng: unprecedented_A
+Ita: UseN precedente_N
+
+Eng: unreliable_A
+Ita: inaffidabile_A
+
+Eng: unusually_Adv
+Ita: strano_Adv
+
+Eng: up_Adv
+Ita: UttVP (UseV crescere_V)
+
+Eng: vague_A
+Ita: vago_A
+
+Eng: very_Adv
+Ita: deciso_Adv
+
+Eng: vocal_A
+Ita: esplicito_A
+
+Eng: well_Adv
+Ita: non_Adv
+
+Eng: when_Adv
+Ita: inizialmente_Adv
+
+Eng: whether_Adv
+Ita: se_Prep
+
+Eng: while_Adv
+Ita: mentre_Adv
+
+Eng: will_Adv
+Ita: avere_Adv
+
+Eng: will_Adv
+Ita: dovere_Adv
+
+Eng: with_Prep
+Ita: a_Prep
+
+Eng: with_Prep
+Ita: con_Prep
+
+Eng: with_Prep
+Ita: di_Prep
+
+Eng: with_Prep
+Ita: presso_Prep
