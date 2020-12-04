@@ -16,8 +16,8 @@
 #cat Det      DET primary
 #cat N	      NOUN primary
 #cat PN	      PROPN primary
-#cat Prep	      ADP primary
-#cat Pron	      PRON primary
+#cat Prep     ADP primary
+#cat Pron     PRON primary
 #cat V	      VERB primary
 
 

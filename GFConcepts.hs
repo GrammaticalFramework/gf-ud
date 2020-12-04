@@ -98,3 +98,14 @@ leavesRTree t = case t of
 mkFun :: [String] -> CId -> CId
 mkFun ws c = mkCId $ concat $ intersperse "_" (ws ++ [showCId c])
 
+partsOfFun :: CId -> [String]
+partsOfFun f = words (map (\c -> if c=='_' then ' ' else c) (showCId f))
+
+partsOfFileName :: FilePath -> (String,String,String)
+partsOfFileName s = (abstr,lang,ext)
+  where
+    (modul,_:ext) = break (=='.') s
+    (abstr,lang) = splitAt (length modul - 3) modul
+
+
+

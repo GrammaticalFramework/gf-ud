@@ -419,7 +419,7 @@ analyseWords env = mapRTree lemma2fun
   auxWords = [(lemma,cat) | ((fun_,lemma),(cat,labels_)) <- M.assocs (lemmaLabels (cncLabels env))]
 
 -- auxiliaries 
-newWordTree w c = RTree (mkCId (w ++ "__x__" ++ showCId c)) [] ---
+newWordTree w c = RTree (mkCId (w ++ "_" ++ showCId c)) [] ---
 isNewWordFun f = isInfixOf "__x__" (showCId f)
 unknownCat = mkCId "Adv" --- treat unknown words as adverbs ---- TODO: from config
 quote s = "\"" ++ s ++ "\""
