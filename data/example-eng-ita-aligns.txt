@@ -292,9 +292,6 @@ Ita: DetCN il_Det (AdjCN (PositA climatico_A) (UseN cambiamento_N))
 Eng: UseN (CompoundN dress_N code_N)
 Ita: UseN abbigliamento_N
 
-Eng: UseN (CompoundN election_N day_N)
-Ita: '1996_Adv'
-
 Eng: UseN (CompoundN feasibility_N study_N)
 Ita: PrepCN (UseN studio_N) (PrepNP di_Prep (MassNP (UseN fattibilità_N)))
 
@@ -518,7 +515,7 @@ Eng: UseN government_N
 Ita: UseN governo_N
 
 Eng: UseN grandmother_N
-Ita: UseN 'nonna|nonno_N'
+Ita: UseN nonna_N
 
 Eng: UseN guitarist_N
 Ita: UseN chitarrista_N
@@ -646,9 +643,6 @@ Ita: UseN punizione_N
 Eng: UseN people_N
 Ita: UseN parte_N
 
-Eng: UseN percent_N
-Ita: '%_Adv'
-
 Eng: UseN person_N
 Ita: UseN persona_N
 
@@ -743,7 +737,7 @@ Eng: UseN someone_N
 Ita: UseN qualcuno_N
 
 Eng: UseN speaker_N
-Ita: PrepNP di_Prep (DetCN (PluralNP (UseN 'oratore|oratorio_N')))
+Ita: PrepNP di_Prep (DetCN (PluralNP (UseN oratore_N)))
 
 Eng: UseN spending_N
 Ita: UseN spesa_N
@@ -834,9 +828,6 @@ Ita: UseN anno_N
 
 Eng: UseN yuk_N
 Ita: UseN disgusto_N
-
-Eng: UsePN 'B.C._PN'
-Ita: UsePN Columbia_PN
 
 Eng: UsePN (FlatPN Melania_PN Trump_PN)
 Ita: UsePN (FlatPN Melania_PN Trump_PN)
@@ -1084,17 +1075,8 @@ Ita: UseN cosa_N
 Eng: UsePron youSg_Pron
 Ita: UseN pressione_N
 
-Eng: UttVP (AdvVP (UseAdv '11_Adv') only_Adv)
-Ita: '11_Adv'
-
-Eng: UttVP (AdvVP (UseAdv '20_Adv') around_Adv)
-Ita: '20_Adv'
-
 Eng: UttVP (AdvVP (UseAdv again_Adv) once_Adv)
 Ita: DetCN a_Det (AdvCN (UseN volta_N) ancora_Adv)
-
-Eng: UttVP (AdvVP (UseAdv four_Adv) about_Adv)
-Ita: '4_Adv'
 
 Eng: UttVP (UseV accord_V)
 Ita: a_Prep

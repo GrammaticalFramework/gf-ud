@@ -7,6 +7,7 @@ import PGF
 
 import qualified Data.Map as M
 import System.Environment (getArgs)
+import Data.List
 
 testBuildGrammar =
   readFile "data/example-eng-ita-aligns.txt" >>=
@@ -17,27 +18,28 @@ buildGFGrammar abstr dicts als = do
   env <- getGrammarEnv abstr dicts
   let aligns = readAlignments als
   let ruless = map (tree2rules env) aligns
-  putStrLn $ unlines $ map prBuiltRules ruless
+  writeFile "out/Extracted.tmp" $ prBuiltGrammar env ruless
 
 
 getGrammarEnv :: FilePath -> [FilePath] -> IO GrammarEnv
 getGrammarEnv abstr dicts = do
   syntpgf <- readPGF abstr
+  let (_,synt,la,_) = partsOfFileName abstr
   dictpgfs <- mapM readPGF dicts
   return $ GrammarEnv {
-    absname = mkCId "Extracted",
+    absname = mkCId "Extracted",  --- hard-coded name of generated module
     syntaxpgf = syntpgf,
-    absbasemodules = [],
+    absbasemodules = [synt ++ la], --- extending the syntax module
     langenvs = M.fromList [
       (lang,
        LangEnv {
          cncname = mkCId ("Extracted" ++ lang),
          dictpgf = pgf,
-         basemodules = [],
-         resourcemodules = [abstr ++ lang]
+         basemodules = [synt++la++lang], --- extending the syntax module
+         resourcemodules = [morphodict ++ lang, "Paradigms" ++ lang]
          }) |
               (dict,pgf) <- zip dicts dictpgfs,
-              let (abstr,lang,_) = partsOfFileName dict
+              let (_,morphodict,lang,_) = partsOfFileName dict
        ]
     }
 
@@ -60,22 +62,20 @@ data LangEnv = LangEnv {
 
 data BuiltRules = BuiltRules {
   funname  :: String,
-  funcats  :: [(LangName,String)], -- can be different cats in different langs
-  linrules :: [(LangName,String)],
-  unknowns :: [(LangName,[(String,String)])] -- unknown lex item with its cat
+  linrules :: [(LangName,(String,String))],   -- term with its cat
+  unknowns :: [(LangName,[(String,String)])]  -- unknown lex item with its cat
   }
   deriving Show
 
 tree2rules :: GrammarEnv -> [(LangName,Tree)] -> BuiltRules
 tree2rules env lts = BuiltRules {
   funname = fun,
-  funcats  = [(lang, showCId cat) | (lang,tree) <- lts, (cat,_) <- [valcat lang (rootfun tree)]],
-  linrules = [(lang, linrule lang tree) | (lang,tree) <- lts],
+  linrules = [(lang, (linrule lang tree, showCId cat)) | (lang,tree) <- lts, (cat,_) <- [valcat lang (rootfun tree)]],
   unknowns = [(lang, unknown lang tree) | (lang,tree) <- lts]
   }
  where
    fun = showCId
-     (mkFun (concatMap (init . partsOfFun) (lexitems firsttree))
+     (mkFun (concatMap (init . partsOfFun) (concatMap lexitems (map snd lts)))
             (fst (valcat firstlang (rootfun firsttree))))
    
    valcat l f = case functionType synpgf f of
@@ -99,16 +99,39 @@ tree2rules env lts = BuiltRules {
    envoflang l = maybe (error ("unknown lang " ++ l)) id $ M.lookup l (langenvs env)
 
 prBuiltRules br = unlines $ [
-  let cat:cats = map snd (funcats br) in
-    unwords ["fun",funname br,":",cat,";","--",unwords cats]
+  unwords ["fun",funname br,":",cat,";","--", unwords cats,"--","Abstr"]
   ] ++ [
-  unwords ["lin",funname br,"=",lin,";","--",lang] | (lang,lin) <- linrules br
+  mark c (unwords ["lin",funname br,"=",lin,";","--",lang]) | (lang,(lin,c)) <- linrules br
   ] ++ [
   unwords ["oper",fun,"=","mk"++cat, word fun,";","--",lang] | (lang,funcats) <- unknowns br, (fun,cat) <- funcats
   ]
  where
    word f = "\"" ++ takeWhile (/='_') f ++ "\""
-   
+   cat:cats = nub (map (snd . snd) (linrules br))
+   mark c s = if c==cat then s else "--- " ++ s
+
+prBuiltGrammar env ruless = unlines $ [
+   unwords ["abstract", absn, "=",
+            concat (intersperse "," (absbasemodules env)), "**","{","-- Abstr"] 
+   ] ++ [
+   unwords ["concrete", showCId (cncname lenv), "of", absn, "=",
+            concat (intersperse ", " (basemodules lenv)), "**",
+            "open", concat (intersperse ", " (resourcemodules lenv)), "in","{","--", lang]
+     | (lang,lenv) <- M.assocs (langenvs env) 
+   ] ++
+   map prBuiltRules ruless ++ [
+  "} -- " ++ lang | lang <- "Abstr" : langs
+   ]
+ where
+   absn = showCId (absname env)
+   langs = M.keys (langenvs env)
+
+
+-- format:
+-- Eng: AdjCN (PositA several_A) (UseN analyst_N)
+-- Ita: DetCN diverso_Det (UseN analista_N)
+-- 
+-- (empty lines between stanzas)
 
 readAlignments :: String -> [[(LangName,Tree)]]
 readAlignments = map (map getOne) . stanzas . lines
