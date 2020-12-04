@@ -12,6 +12,27 @@ import Data.List
 testBuildGrammar =
   readFile "data/example-eng-ita-aligns.txt" >>=
   buildGFGrammar "grammars/Extract.pgf" ["grammars/MorphoDictEng.pgf", "grammars/MorphoDictIta.pgf"]
+-- before running the test, do
+--
+-- $ pgf -make MorphodictLang.gf -o MorphoDictLang
+-- $ pgf -make Extract*.gf
+--
+-- Then just evaluate testBuildGrammar in ghci.
+-- After this, do
+--
+-- $ grep Abstr Extracted.tmp >Extracted.gf
+-- $ grep Eng Extracted.tmp >ExtractedEng.gf
+-- $ grep Ita Extracted.tmp >ExtractedIta.gf
+--
+-- Make sure Extract*.gf and MorphoDict*.gf are on your path in GF.
+-- Then, in GF,
+--
+-- > import ExtractedEng.gf ExtractedIta.gf
+-- > gt -cat=CN -depth=0 | l -tabtreebank
+--
+-- you will see some nice things! E.g.
+--
+-- travel_expert_esperto_di_viaggio_CN	travel expert	esperto di viaggi
 
 buildGFGrammar :: FilePath -> [FilePath] -> String -> IO ()
 buildGFGrammar abstr dicts als = do

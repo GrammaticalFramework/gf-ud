@@ -1,29 +1,14 @@
 Eng: AdjCN (PositA artificial_A) (UseN intelligence_N)
 Ita: PrepNP di_Prep (MassNP (AdjCN (PositA artificiale_A) (UseN intelligenza_N)))
 
-Eng: AdjCN (PositA many_A) (UseN scientist_N)
-Ita: DetCN molto_Det (UseN scienziato_N)
-
 Eng: AdjCN (PositA martial_A) (UseN art_N)
-Ita: PrepNP di_Prep (DetCN (PluralNP (AdjCN (PositA marziale_A) (UseN arte_N))))
-
-Eng: AdjCN (PositA other_A) (UseN nation_N)
-Ita: PrepCN (UseN aiuto_N) (PrepNP ad_Prep (DetCN altro_Det (UseN nazione_N)))
-
-Eng: AdjCN (PositA serbian_A) (UseN nationality_N)
-Ita: DetCN il_Det (AdjCN (PositA serbo_A) (UseN nazionalità_N))
-
-Eng: AdjCN (PositA several_A) (UseN analyst_N)
-Ita: DetCN diverso_Det (UseN analista_N)
+Ita: PrepNP di_Prep (PluralNP (AdjCN (PositA marziale_A) (UseN arte_N)))
 
 Eng: AdvCN (UseN everyone_N) not_Adv
 Ita: AdvCN (UseN tutto_N) non_Adv
 
 Eng: DetCN a_Det (AdjCN (PositA criminal_A) (UseN history_N))
 Ita: AdjCN (PositA penale_A) (UseN precedente_N)
-
-Eng: DetCN a_Det (AdjCN (PositA little_A) (UseN pressure_N))
-Ita: UsePron vi_Pron
 
 Eng: DetCN a_Det (AdjCN (PositA political_A) (UseN dimension_N))
 Ita: PrepNP da_Prep (DetCN a_Det (AdjCN (PositA politico_A) (UseN dimensione_N)))
@@ -33,9 +18,6 @@ Ita: DetCN a_Det (AdjCN (PositA grande_A) (UseN concorrenza_N))
 
 Eng: DetCN a_Det (UseN (CompoundN access_N fee_N))
 Ita: DetCN a_Det (PrepCN (UseN tariffa_N) (PrepNP di_Prep (MassNP (UseN accesso_N))))
-
-Eng: DetCN a_Det (UseN (CompoundN battery_N fault_N))
-Ita: DetCN il_Det (UseN colpa_N)
 
 Eng: DetCN a_Det (UseN concert_N)
 Ita: DetCN a_Det (UseN concerto_N)
@@ -49,77 +31,65 @@ Ita: DetCN a_Det (UseN ecografia_N)
 Eng: DetCN a_Det (UseN witness_N)
 Ita: DetCN a_Det (UseN testimone_N)
 
-Eng: DetCN any_Det (AdjCN (PositA new_A) (UseN legislation_N))
-Ita: UsePron li_Pron
-
-Eng: DetCN either_Det (UseN way_N)
-Ita: PrepNP in_Prep (DetCN il_Det (AdjCN (PositA entrambi_A) (UseN caso_N)))
-
-Eng: DetCN no_Det (UseN injury_N)
-Ita: UseN ferito_N
-
-Eng: DetCN some_Det (UseN (CompoundN security_N expert_N))
-Ita: DetCN alcuno_Det (PrepCN (UseN esperto_N) (PrepNP in_Prep (MassNP (UseN sicurezza_N))))
-
 Eng: DetCN that_Det (UseN invitation_N)
-Ita: DetCN il_Det (UseN invito_N)
+Ita: DetCN the_Det (UseN invito_N)
 
 Eng: DetCN that_Det (UseN share_N)
 Ita: DetCN a_Det (AdjCN (PositA costante_A) (UseN crescita_N))
 
 Eng: DetCN the_Det (AdjCN (PositA new_A) (UseN spending_N))
-Ita: DetCN il_Det (AdjCN (PositA nuovo_A) (UseN spesa_N))
+Ita: DetCN the_Det (AdjCN (PositA nuovo_A) (UseN spesa_N))
 
 Eng: DetCN the_Det (AdjCN (PositA same_A) (UseN venue_N))
-Ita: PrepNP di_Prep (DetCN il_Det (AdjCN (PositA stesso_A) (UseN luogo_N)))
+Ita: PrepNP di_Prep (DetCN the_Det (AdjCN (PositA stesso_A) (UseN luogo_N)))
 
 Eng: DetCN the_Det (AdjCN (PositA same_A) (UseN year_N))
-Ita: DetCN il_Det (AdjCN (PositA stesso_A) (UseN anno_N))
+Ita: DetCN the_Det (AdjCN (PositA stesso_A) (UseN anno_N))
 
 Eng: DetCN the_Det (AdjCN (PositA scientific_A) (UseN method_N))
-Ita: DetCN il_Det (AdjCN (PositA scientifico_A) (UseN metodo_N))
+Ita: DetCN the_Det (AdjCN (PositA scientifico_A) (UseN metodo_N))
 
 Eng: DetCN the_Det (AdvCN (UseN government_N) here_Adv)
-Ita: DetCN il_Det (UseN governo_N)
+Ita: DetCN the_Det (UseN governo_N)
 
 Eng: DetCN the_Det (UseN (CompoundN feasibility_N study_N))
-Ita: DetCN il_Det (PrepCN (UseN studio_N) (PrepNP di_Prep (MassNP (UseN fattibilità_N))))
+Ita: DetCN the_Det (PrepCN (UseN studio_N) (PrepNP di_Prep (MassNP (UseN fattibilità_N))))
 
 Eng: DetCN the_Det (UseN (CompoundN transition_N team_N))
-Ita: DetCN il_Det (PrepCN (UseN team_N) (PrepNP di_Prep (MassNP (UseN transizione_N))))
+Ita: DetCN the_Det (PrepCN (UseN team_N) (PrepNP di_Prep (MassNP (UseN transizione_N))))
 
 Eng: DetCN the_Det (UseN analysis_N)
-Ita: DetCN il_Det (UseN analisi_N)
+Ita: DetCN the_Det (UseN analisi_N)
 
 Eng: DetCN the_Det (UseN company_N)
-Ita: DetCN il_Det (UseN compagnia_N)
+Ita: DetCN the_Det (UseN compagnia_N)
 
 Eng: DetCN the_Det (UseN disruption_N)
-Ita: DetCN il_Det (UseN interruzione_N)
+Ita: DetCN the_Det (UseN interruzione_N)
 
 Eng: DetCN the_Det (UseN gathering_N)
-Ita: DetCN il_Det (UseN incontro_N)
+Ita: DetCN the_Det (UseN incontro_N)
 
 Eng: DetCN the_Det (UseN jet_N)
-Ita: DetCN il_Det (UseN jet_N)
+Ita: DetCN the_Det (UseN jet_N)
 
 Eng: DetCN the_Det (UseN post_N)
-Ita: PrepNP su_Prep (DetCN il_Det (UseN post_N))
+Ita: PrepNP su_Prep (DetCN the_Det (UseN post_N))
 
 Eng: DetCN the_Det (UseN show_N)
-Ita: DetCN il_Det (UseN show_N)
+Ita: DetCN the_Det (UseN show_N)
 
 Eng: DetCN the_Det (UseN suspect_N)
-Ita: DetCN il_Det (UseN sospettare_N)
+Ita: DetCN the_Det (UseN sospettare_N)
 
 Eng: DetCN the_Det (UseN suspect_N)
-Ita: DetCN il_Det (UseN sospetto_N)
+Ita: DetCN the_Det (UseN sospetto_N)
 
 Eng: DetCN the_Det (UseN victim_N)
-Ita: DetCN il_Det (UseN vittima_N)
+Ita: DetCN the_Det (UseN vittima_N)
 
 Eng: DetCN this_Det (AdjCN (PositA same_A) (UseN pattern_N))
-Ita: DetCN il_Det (AdjCN (PositA stesso_A) (UseN configurazione_N))
+Ita: DetCN the_Det (AdjCN (PositA stesso_A) (UseN configurazione_N))
 
 Eng: DetCN this_Det (UseN morning_N)
 Ita: DetCN this_Det (UseN mattina_N)
@@ -133,35 +103,29 @@ Ita: PredVP (UsePN Tarlo_PN) (UseV affermare_V)
 Eng: PredVP (UsePron she_Pron) (UseV say_V)
 Ita: UttVP (UseV affermare_V)
 
-Eng: PrepCN (AdjCN (PositA frequent_A) (UseN trip_N)) (PrepNP to_Prep (UsePN Russia_PN))
-Ita: DetCN molto_Det (PrepCN (UseN viaggio_N) (PrepNP in_Prep (UsePN Russia_PN)))
-
 Eng: PrepCN (UseN student_N) (PrepNP like_Prep (UsePN Rai_PN))
 Ita: PrepCN (UseN studente_N) (PrepNP come_Prep (UsePN Rai_PN))
 
 Eng: PrepNP against_Prep (DetCN a_Det (UseN agent_N))
 Ita: PrepNP a_Prep (DetCN a_Det (UseN agente_N))
 
-Eng: PrepNP at_Prep (DetCN the_Det (UseN school_N))
-Ita: DetCN alcuno_Det (UseN consigliere_N)
-
 Eng: PrepNP behind_Prep (UsePron it_Pron)
 Ita: recondito_A
 
-Eng: PrepNP by8means_Prep (DetCN (PluralNP (UseN blogger_N)))
+Eng: PrepNP by8means_Prep (PluralNP (UseN blogger_N))
 Ita: PrepNP in_Prep (MassNP (UseN precedenza_N))
 
 Eng: PrepNP by8means_Prep (DetCN the_Det (UseN way_N))
 Ita: Comunque_Adv
 
-Eng: PrepNP for_Prep (DetCN (PluralNP (AdjCN (PositA male_A) (AdjCN (PositA hormonal_A) (UseN contraceptive_N)))))
+Eng: PrepNP for_Prep (PluralNP (AdjCN (PositA male_A) (AdjCN (PositA hormonal_A) (UseN contraceptive_N))))
 Ita: PrepNP di_Prep (MassNP (AdjCN (PositA ormonale_A) (AdjCN (PositA maschile_A) (UseN contraccezione_N))))
 
-Eng: PrepNP for_Prep (DetCN (PluralNP (AdjCN (PositA unconventional_A) (UseN penalty_N))))
-Ita: PrepNP by8means_Prep (DetCN (PluralNP (AdjCN (PositA insolito_A) (UseN punizione_N))))
+Eng: PrepNP for_Prep (PluralNP (AdjCN (PositA unconventional_A) (UseN penalty_N)))
+Ita: PrepNP by8means_Prep (PluralNP (AdjCN (PositA insolito_A) (UseN punizione_N)))
 
 Eng: PrepNP for_Prep (DetCN the_Det (UseN course_N))
-Ita: PrepNP di_Prep (DetCN il_Det (UseN corso_N))
+Ita: PrepNP di_Prep (DetCN the_Det (UseN corso_N))
 
 Eng: PrepNP for_Prep (UsePN Beijing_PN)
 Ita: PrepNP by8means_Prep (UsePN Pechino_PN)
@@ -172,8 +136,8 @@ Ita: DetCN this_Det (UseN anno_N)
 Eng: PrepNP from_Prep (DetCN this_Det (UseN experiment_N))
 Ita: PrepNP di_Prep (DetCN this_Det (UseN esperimento_N))
 
-Eng: PrepNP in_Prep (DetCN (PluralNP (AdjCN (PositA recent_A) (UseN year_N))))
-Ita: PrepNP in_Prep (DetCN il_Det (AdjCN (PositA ultimi_A) (UseN anno_N)))
+Eng: PrepNP in_Prep (PluralNP (AdjCN (PositA recent_A) (UseN year_N)))
+Ita: PrepNP in_Prep (DetCN the_Det (AdjCN (PositA ultimi_A) (UseN anno_N)))
 
 Eng: PrepNP in_Prep (DetCN a_Det (UseN (CompoundN blog_N post_N)))
 Ita: UseN lunedì_N
@@ -182,16 +146,16 @@ Eng: PrepNP in_Prep (DetCN a_Det (UseN lifetime_N))
 Ita: PrepNP da_Prep (DetCN a_Det (UseN individuo_N))
 
 Eng: PrepNP in_Prep (DetCN the_Det (AdjCN (PositA right_A) (UseN direction_N)))
-Ita: PrepNP in_Prep (DetCN il_Det (AdjCN (PositA giusto_A) (UseN direzione_N)))
+Ita: PrepNP in_Prep (DetCN the_Det (AdjCN (PositA giusto_A) (UseN direzione_N)))
 
 Eng: PrepNP in_Prep (DetCN the_Det (UseN experiment_N))
-Ita: PrepNP in_Prep (DetCN il_Det (UseN esperimento_N))
+Ita: PrepNP in_Prep (DetCN the_Det (UseN esperimento_N))
 
 Eng: PrepNP in_Prep (DetCN this_Det (UseN area_N))
 Ita: PrepNP in_Prep (DetCN this_Det (UseN area_N))
 
 Eng: PrepNP in_Prep (MassNP (UseN (CompoundN tumour_N dna_N)))
-Ita: PrepNP in_Prep (DetCN il_Det (AdjCN (PositA tumorale_A) (UseN DNA_N)))
+Ita: PrepNP in_Prep (DetCN the_Det (AdjCN (PositA tumorale_A) (UseN DNA_N)))
 
 Eng: PrepNP in_Prep (UsePN April_PN)
 Ita: PrepNP in_Prep (MassNP (UseN aprile_N))
@@ -215,37 +179,37 @@ Eng: PrepNP on_Prep (UsePron youPl_Pron)
 Ita: PrepNP sotto_Prep (MassNP (UseN pressione_N))
 
 Eng: PrepNP over_Prep (DetCN the_Det (UseN year_N))
-Ita: PrepNP in_Prep (DetCN il_Det (UseN anno_N))
+Ita: PrepNP in_Prep (DetCN the_Det (UseN anno_N))
 
 Eng: PrepNP per_Prep (MassNP (UseN person_N))
 Ita: PrepNP a_Prep (MassNP (UseN persona_N))
 
-Eng: PrepNP possess_Prep (DetCN (PluralNP (AdjCN (PositA legal_A) (UseN immigrant_N))))
-Ita: PrepNP di_Prep (DetCN (PluralNP (AdjCN (PositA legale_A) (UseN immigrato_N))))
+Eng: PrepNP possess_Prep (PluralNP (AdjCN (PositA legal_A) (UseN immigrant_N)))
+Ita: PrepNP di_Prep (PluralNP (AdjCN (PositA legale_A) (UseN immigrato_N)))
 
-Eng: PrepNP possess_Prep (DetCN (PluralNP (UseN datum_N)))
-Ita: PrepNP di_Prep (DetCN (PluralNP (AdjCN (PositA storico_A) (UseN dato_N))))
+Eng: PrepNP possess_Prep (PluralNP (UseN datum_N))
+Ita: PrepNP di_Prep (PluralNP (AdjCN (PositA storico_A) (UseN dato_N)))
 
-Eng: PrepNP possess_Prep (DetCN (PluralNP (UseN word_N)))
-Ita: PrepNP di_Prep (DetCN (PluralNP (UseN opinione_N)))
+Eng: PrepNP possess_Prep (PluralNP (UseN word_N))
+Ita: PrepNP di_Prep (PluralNP (UseN opinione_N))
 
 Eng: PrepNP possess_Prep (DetCN a_Det (UseN photo_N))
 Ita: PrepNP di_Prep (DetCN a_Det (UseN foto_N))
 
-Eng: PrepNP possess_Prep (DetCN each_Det (UseN (CompoundN airline_N brand_N)))
+Eng: PrepNP possess_Prep (DetCN every_Det (UseN (CompoundN airline_N brand_N)))
 Ita: PrepNP di_Prep (DetCN every_Det (UseN compagnia_N))
 
 Eng: PrepNP possess_Prep (DetCN the_Det (AdjCN (PositA digital_A) (UseN transition_N)))
-Ita: PrepNP di_Prep (DetCN il_Det (AdjCN (PositA digitale_A) (UseN transizione_N)))
+Ita: PrepNP di_Prep (DetCN the_Det (AdjCN (PositA digitale_A) (UseN transizione_N)))
 
 Eng: PrepNP possess_Prep (DetCN the_Det (AdjCN (PositA total_A) (UseN vote_N)))
-Ita: PrepNP di_Prep (DetCN il_Det (AdjCN (PositA totale_A) (UseN voto_N)))
+Ita: PrepNP di_Prep (DetCN the_Det (AdjCN (PositA totale_A) (UseN voto_N)))
 
 Eng: PrepNP possess_Prep (DetCN the_Det (UseN debate_N))
-Ita: PrepNP di_Prep (DetCN il_Det (UseN dibattito_N))
+Ita: PrepNP di_Prep (DetCN the_Det (UseN dibattito_N))
 
 Eng: PrepNP possess_Prep (DetCN the_Det (UseN republic_N))
-Ita: PrepNP di_Prep (DetCN il_Det (UseN repubblica_N))
+Ita: PrepNP di_Prep (DetCN the_Det (UseN repubblica_N))
 
 Eng: PrepNP possess_Prep (MassNP (UseN competition_N))
 Ita: grande_A
@@ -259,11 +223,11 @@ Ita: PrepNP in_Prep (MassNP (UseN prigione_N))
 Eng: PrepNP to_Prep (UsePN Russia_PN)
 Ita: PrepNP in_Prep (UsePN Russia_PN)
 
-Eng: PrepNP with_Prep (DetCN (PluralNP (UseN (CompoundN technology_N lobbyist_N))))
-Ita: PrepNP con_Prep (DetCN (PluralNP (AdjCN (PositA tecnologico_A) (UseN lobbisti_N))))
+Eng: PrepNP with_Prep (PluralNP (UseN (CompoundN technology_N lobbyist_N)))
+Ita: PrepNP con_Prep (PluralNP (AdjCN (PositA tecnologico_A) (UseN lobbisti_N)))
 
-Eng: PrepNP with_Prep (DetCN (PluralNP (UseN counsellor_N)))
-Ita: PrepNP presso_Prep (DetCN il_Det (UseN scuola_N))
+Eng: PrepNP with_Prep (PluralNP (UseN counsellor_N))
+Ita: PrepNP presso_Prep (DetCN the_Det (UseN scuola_N))
 
 Eng: UseN (CompoundN access_N fee_N)
 Ita: PrepCN (UseN tariffa_N) (PrepNP di_Prep (MassNP (UseN accesso_N)))
@@ -284,10 +248,10 @@ Eng: UseN (CompoundN blog_N post_N)
 Ita: UseN blog_N
 
 Eng: UseN (CompoundN census_N bureau_N)
-Ita: PrepCN (UseN giorno_N) (PrepNP di_Prep (DetCN il_Det (UseN elezione_N)))
+Ita: PrepCN (UseN giorno_N) (PrepNP di_Prep (DetCN the_Det (UseN elezione_N)))
 
 Eng: UseN (CompoundN climate_N change_N)
-Ita: DetCN il_Det (AdjCN (PositA climatico_A) (UseN cambiamento_N))
+Ita: DetCN the_Det (AdjCN (PositA climatico_A) (UseN cambiamento_N))
 
 Eng: UseN (CompoundN dress_N code_N)
 Ita: UseN abbigliamento_N
@@ -296,16 +260,10 @@ Eng: UseN (CompoundN feasibility_N study_N)
 Ita: PrepCN (UseN studio_N) (PrepNP di_Prep (MassNP (UseN fattibilità_N)))
 
 Eng: UseN (CompoundN hair_N market_N)
-Ita: PrepCN (UseN industria_N) (PrepNP di_Prep (DetCN il_Det (UseN capello_N)))
-
-Eng: UseN (CompoundN police_N department_N)
-Ita: UsePron quanto_Pron
+Ita: PrepCN (UseN industria_N) (PrepNP di_Prep (DetCN the_Det (UseN capello_N)))
 
 Eng: UseN (CompoundN police_N spokesman_N)
-Ita: PrepCN (UseN portavoce_N) (PrepNP di_Prep (DetCN il_Det (UseN polizia_N)))
-
-Eng: UseN (CompoundN power_N cell_N)
-Ita: UsePron questo_Pron
+Ita: PrepCN (UseN portavoce_N) (PrepNP di_Prep (DetCN the_Det (UseN polizia_N)))
 
 Eng: UseN (CompoundN security_N expert_N)
 Ita: PrepCN (UseN esperto_N) (PrepNP in_Prep (MassNP (UseN sicurezza_N)))
@@ -320,7 +278,7 @@ Eng: UseN (CompoundN transition_N team_N)
 Ita: PrepCN (UseN team_N) (PrepNP di_Prep (MassNP (UseN transizione_N)))
 
 Eng: UseN (CompoundN travel_N expert_N)
-Ita: PrepCN (UseN esperto_N) (PrepNP di_Prep (DetCN (PluralNP (UseN viaggio_N))))
+Ita: PrepCN (UseN esperto_N) (PrepNP di_Prep (PluralNP (UseN viaggio_N)))
 
 Eng: UseN (CompoundN tumour_N dna_N)
 Ita: AdjCN (PositA tumorale_A) (UseN DNA_N)
@@ -373,9 +331,6 @@ Ita: UttVP (UseV aggirare_V)
 Eng: UseN belief_N
 Ita: UseN assemblea_N
 
-Eng: UseN bladder_N
-Ita: UsePron quello_Pron
-
 Eng: UseN blogger_N
 Ita: UseN precedenza_N
 
@@ -389,7 +344,7 @@ Eng: UseN celebrity_N
 Ita: UseN celebrità_N
 
 Eng: UseN census_N
-Ita: PrepNP di_Prep (DetCN il_Det (UseN censimento_N))
+Ita: PrepNP di_Prep (DetCN the_Det (UseN censimento_N))
 
 Eng: UseN cigarette_N
 Ita: UseN sigaretta_N
@@ -521,7 +476,7 @@ Eng: UseN guitarist_N
 Ita: UseN chitarrista_N
 
 Eng: UseN hair_N
-Ita: PrepNP di_Prep (DetCN il_Det (UseN capello_N))
+Ita: PrepNP di_Prep (DetCN the_Det (UseN capello_N))
 
 Eng: UseN hardware_N
 Ita: UseN attrezzatura_N
@@ -659,10 +614,10 @@ Eng: UseN plenty_N
 Ita: UseN gamma_N
 
 Eng: UseN police_N
-Ita: DetCN il_Det (UseN polizia_N)
+Ita: DetCN the_Det (UseN polizia_N)
 
 Eng: UseN police_N
-Ita: PrepNP di_Prep (DetCN il_Det (UseN polizia_N))
+Ita: PrepNP di_Prep (DetCN the_Det (UseN polizia_N))
 
 Eng: UseN police_N
 Ita: UseN polizia_N
@@ -698,7 +653,7 @@ Eng: UseN republic_N
 Ita: UseN repubblica_N
 
 Eng: UseN researcher_N
-Ita: DetCN il_Det (UseN ricercatore_N)
+Ita: DetCN the_Det (UseN ricercatore_N)
 
 Eng: UseN responsibility_N
 Ita: UseN responsabilità_N
@@ -724,9 +679,6 @@ Ita: UttVP (UseV riferire_V)
 Eng: UseN share_N
 Ita: UseN crescita_N
 
-Eng: UseN shoulder_N
-Ita: UsePron voi_Pron
-
 Eng: UseN show_N
 Ita: UseN show_N
 
@@ -737,7 +689,7 @@ Eng: UseN someone_N
 Ita: UseN qualcuno_N
 
 Eng: UseN speaker_N
-Ita: PrepNP di_Prep (DetCN (PluralNP (UseN oratore_N)))
+Ita: PrepNP di_Prep (PluralNP (UseN oratore_N))
 
 Eng: UseN spending_N
 Ita: UseN spesa_N
@@ -752,7 +704,7 @@ Eng: UseN state_N
 Ita: UsePN Stati_PN
 
 Eng: UseN student_N
-Ita: DetCN il_Det (UseN studente_N)
+Ita: DetCN the_Det (UseN studente_N)
 
 Eng: UseN student_N
 Ita: UseN studente_N
@@ -779,10 +731,10 @@ Eng: UseN tissue_N
 Ita: UseN tessuto_N
 
 Eng: UseN tonight_N
-Ita: PrepNP by8means_Prep (DetCN il_Det (UseN punizione_N))
+Ita: PrepNP by8means_Prep (DetCN the_Det (UseN punizione_N))
 
 Eng: UseN transit_N
-Ita: DetCN il_Det (UseN transizione_N)
+Ita: DetCN the_Det (UseN transizione_N)
 
 Eng: UseN transition_N
 Ita: PrepNP di_Prep (MassNP (UseN transizione_N))
@@ -791,7 +743,7 @@ Eng: UseN transition_N
 Ita: UseN transizione_N
 
 Eng: UseN travel_N
-Ita: PrepNP di_Prep (DetCN (PluralNP (UseN viaggio_N)))
+Ita: PrepNP di_Prep (PluralNP (UseN viaggio_N))
 
 Eng: UseN treatment_N
 Ita: UseN cura_N
@@ -916,9 +868,6 @@ Ita: UsePN Khanzir_PN
 Eng: UsePN Klein_PN
 Ita: UsePN Klein_PN
 
-Eng: UsePN Knightley_PN
-Ita: UsePron quello_Pron
-
 Eng: UsePN Kori_PN
 Ita: UsePN Schulman_PN
 
@@ -1025,49 +974,7 @@ Eng: UsePN mr_PN
 Ita: UsePN Mr_PN
 
 Eng: UsePron it_Pron
-Ita: DetCN il_Det (UseN progetto_N)
-
-Eng: UsePron it_Pron
 Ita: UseN affermazione_N
-
-Eng: UsePron it_Pron
-Ita: UsePron si_Pron
-
-Eng: UsePron that_Pron
-Ita: UsePron questo_Pron
-
-Eng: UsePron there_Pron
-Ita: UsePron ci_Pron
-
-Eng: UsePron there_Pron
-Ita: UsePron si_Pron
-
-Eng: UsePron they_Pron
-Ita: DetCN il_Det (UseN ricercatore_N)
-
-Eng: UsePron they_Pron
-Ita: UsePron chi_Pron
-
-Eng: UsePron this_Pron
-Ita: DetCN this_Det (UseN cosa_N)
-
-Eng: UsePron this_Pron
-Ita: UsePron questo_Pron
-
-Eng: UsePron this_Pron
-Ita: ciò_Det
-
-Eng: UsePron those_Pron
-Ita: UsePron chiunque_Pron
-
-Eng: UsePron we_Pron
-Ita: DetCN il_Det (UseN abbagliante_N)
-
-Eng: UsePron which_Pron
-Ita: UsePron che_Pron
-
-Eng: UsePron who_Pron
-Ita: UttVP (UseV essere_V)
 
 Eng: UsePron youSg_Pron
 Ita: UseN cosa_N
@@ -1083,9 +990,6 @@ Ita: a_Prep
 
 Eng: UttVP (UseV accord_V)
 Ita: prima_Adv
-
-Eng: UttVP (UseV annex_V)
-Ita: UttVP (UseV annesso_V)
 
 Eng: UttVP (UseV attack_V)
 Ita: UttVP (UseV attaccare_V)
@@ -1106,7 +1010,7 @@ Eng: UttVP (UseV cause_V)
 Ita: UttVP (UseV provocare_V)
 
 Eng: UttVP (UseV certify_V)
-Ita: UttVP (UseV certificato_V)
+Ita: UttVP (UseV certificare_V)
 
 Eng: UttVP (UseV charge_V)
 Ita: UttVP (UseV accusare_V)
@@ -1244,7 +1148,7 @@ Eng: UttVP (UseV report_V)
 Ita: UttVP (UseV riportare_V)
 
 Eng: UttVP (UseV represent_V)
-Ita: UttVP (UseV rappresentante_V)
+Ita: UttVP (UseV rappresentare_V)
 
 Eng: UttVP (UseV request_V)
 Ita: UttVP (UseV chiedere_V)
@@ -1313,7 +1217,7 @@ Eng: a_Det
 Ita: a_Det
 
 Eng: a_Det
-Ita: il_Det
+Ita: the_Det
 
 Eng: about_Prep
 Ita: contro_Prep
@@ -1362,21 +1266,6 @@ Ita: a_Prep
 
 Eng: at_Prep
 Ita: presso_Prep
-
-Eng: be_Adv
-Ita: UsePron lo_Pron
-
-Eng: be_Adv
-Ita: UttVP (UseV essere_V)
-
-Eng: be_Adv
-Ita: avere_Adv
-
-Eng: be_Adv
-Ita: essere_Adv
-
-Eng: be_Adv
-Ita: stare_Adv
 
 Eng: before_Adv
 Ita: già_Adv
@@ -1438,17 +1327,11 @@ Ita: non_Adv
 Eng: do_Adv
 Ita: avere_Adv
 
-Eng: each_Det
-Ita: every_Det
-
 Eng: earlier_Adv
 Ita: precedentemente_Adv
 
 Eng: early_A
 Ita: PrepNP di_Prep (MassNP (UseN ottobre_N))
-
-Eng: either_Det
-Ita: il_Det
 
 Eng: everyday_A
 Ita: quotidiano_A
@@ -1631,9 +1514,6 @@ Eng: originally_Adv
 Ita: inizialmente_Adv
 
 Eng: other_A
-Ita: PrepNP ad_Prep (DetCN altro_Det (UseN nazione_N))
-
-Eng: other_A
 Ita: militare_A
 
 Eng: over_Prep
@@ -1690,9 +1570,6 @@ Ita: serbo_A
 Eng: short_A
 Ita: abbastanza_Adv
 
-Eng: some_Det
-Ita: alcuno_Det
-
 Eng: sometimes_Adv
 Ita: talvolta_Adv
 
@@ -1714,29 +1591,11 @@ Ita: di_Prep
 Eng: that_Adv
 Ita: che_Adv
 
-Eng: that_Det
-Ita: a_Det
-
-Eng: that_Det
-Ita: il_Det
-
-Eng: the_Det
-Ita: a_Det
-
-Eng: the_Det
-Ita: alcuno_Det
-
-Eng: the_Det
-Ita: il_Det
-
-Eng: the_Det
-Ita: this_Det
-
 Eng: there_Adv
 Ita: lì_Adv
 
 Eng: this_Det
-Ita: il_Det
+Ita: the_Det
 
 Eng: this_Det
 Ita: this_Det
@@ -1769,7 +1628,7 @@ Eng: total_A
 Ita: totale_A
 
 Eng: toxic_A
-Ita: PrepNP di_Prep (DetCN il_Det (UseN aria_N))
+Ita: PrepNP di_Prep (DetCN the_Det (UseN aria_N))
 
 Eng: tremendous_A
 Ita: enorme_A
