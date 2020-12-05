@@ -33,3 +33,9 @@ module RTree where
     leavesRTree t = case t of
       RTree a [] -> [a]
       RTree a ts -> concatMap leavesRTree ts
+
+    childrenRTree :: RTree a -> [RTree a]
+    childrenRTree (RTree _ ts) = ts
+
+    subRTrees :: RTree a -> [RTree a]
+    subRTrees t = t : concatMap subtrees (childrenRTree t)
