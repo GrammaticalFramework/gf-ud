@@ -14,8 +14,8 @@ testBuildGrammar =
   buildGFGrammar "grammars/Extract.pgf" ["grammars/MorphoDictEng.pgf", "grammars/MorphoDictIta.pgf"]
 -- before running the test, do
 --
--- $ pgf -make MorphodictLang.gf -o MorphoDictLang
--- $ pgf -make Extract*.gf
+-- $ gf -make MorphodictLang.gf -o MorphoDictLang
+-- $ gf -make Extract*.gf
 --
 -- Then just evaluate testBuildGrammar in ghci.
 -- After this, do
