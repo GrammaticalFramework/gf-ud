@@ -38,4 +38,4 @@ module RTree where
     childrenRTree (RTree _ ts) = ts
 
     subRTrees :: RTree a -> [RTree a]
-    subRTrees t = t : concatMap subtrees (childrenRTree t)
+    subRTrees t = t : concatMap subRTrees (childrenRTree t)
