@@ -371,11 +371,4 @@ udCorpusScore isMicro agree golds tests = UDScore {
     testgroups  = groupBy (\t u -> sent t == sent u) tests
     sent t = unwords $ map udFORM $ udWordLines t
 
----------------------------
--- transforming UD trees --
----------------------------
-
-rewriteUDTree :: UDTree -> UDTree
-rewriteUDTree udt = udt
----- TODO
 

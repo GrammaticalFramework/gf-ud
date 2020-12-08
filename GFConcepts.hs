@@ -64,3 +64,17 @@ postOrderRTree = post 0 where
 mkFun :: [String] -> CId -> CId
 mkFun ws c = mkCId $ concat $ intersperse "_" (ws ++ [showCId c])
 
+partsOfFun :: CId -> [String]
+partsOfFun f = words (map (\c -> if c=='_' then ' ' else c) (showCId f))
+
+partsOfFileName :: FilePath -> (String,String,String,String)
+partsOfFileName s = (path,abstr,lang,ext)
+  where
+    (path,file) = case break (=='/') s of
+      (p,_:f) -> (p,f)
+      _ -> ("",s)
+    (modul,_:ext) = break (=='.') file
+    (abstr,lang) = splitAt (length modul - 3) modul
+
+
+

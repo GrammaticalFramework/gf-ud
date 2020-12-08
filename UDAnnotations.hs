@@ -22,6 +22,12 @@ data UDEnv = UDEnv {
   startCategory :: PGF.Type
   }
 
+initUDEnv =
+  UDEnv "conllu" initAbsLabels initCncLabels (error "no pgf") (error "no language") (error "no startcat")
+
+mkUDEnv pgf absl cncl eng cat =
+  initUDEnv {pgfGrammar = pgf, absLabels = absl, cncLabels = cncl, actLanguage = eng, startCategory = maybe undefined id $ readType cat}
+
 getEnv :: String -> String -> String -> IO UDEnv
 getEnv pref eng cat = do
   pgf <- readPGF (stdGrammarFile pref)
@@ -30,19 +36,17 @@ getEnv pref eng cat = do
   let actlang = stdLanguage pref eng
   let env = mkUDEnv pgf abslabels cnclabels actlang cat
   return $ addMissing env
-  
+
+getAnnotEnv :: FilePath -> IO UDEnv
+getAnnotEnv file = do
+  abslabels <- readFile file >>= return . pAbsLabels
+  return $ initUDEnv {absLabels = abslabels}
+
 checkAnnotations :: String -> String -> String -> IO ()
 checkAnnotations pref eng cat = do
   env <- getEnv pref eng cat
   putStrLn $ unlines $ checkAbsLabels env (absLabels env)
   putStrLn $ unlines $ checkCncLabels env (cncLabels env)
-
-  
-mkUDEnv pgf absl cncl eng cat =
-  initUDEnv {pgfGrammar = pgf, absLabels = absl, cncLabels = cncl, actLanguage = eng, startCategory = maybe undefined id $ readType cat}
-initUDEnv =
-  UDEnv "conllu" initAbsLabels initCncLabels (error "no pgf") (error "no language") (error "no startcat")
-
 
 stdLanguage pref eng = mkLanguage $ tail (dropWhile (/='/') pref ++ eng)
 stdGrammarFile pref = pref ++ ".pgf"
@@ -57,7 +61,7 @@ parseEng env s = head $ parse (pgfGrammar env) (actLanguage env) (startCategory 
 data AbsLabels = AbsLabels {
   annotGuideline    :: Maybe String,
   funLabels         :: M.Map CId [([Maybe CId], [Label])],
-  catLabels         :: M.Map CId String
+  catLabels         :: M.Map CId (String,Bool) -- True marks primary category in ud2gf
   }
 
 initAbsLabels :: AbsLabels
@@ -119,10 +123,10 @@ checkAbsLabels env als =
       ++
       if (isEnvUD2 env) then concatMap checkUDLabel (filter (/="head") (concatMap snd ls)) else []
 
-  chCat (c,p) =
+  chCat (c,(p,_)) =
     ["unknown category " ++ showCId c | notElem c (categories pgf)] ++
     if (isEnvUD2 env) then checkUDPOS p else []
-
+---- TODO also check if primary is unique
 
 -- get the labels from file
 
@@ -134,12 +138,13 @@ pAbsLabels = dispatch . map words . uncomment . lines
     "#guidelines":w:_   -> labs{annotGuideline = Just w} --- overwrites earlier declaration
     "#fun":f:xs | elem ">" xs -> labs{funLabels = insertFunLabels (mkCId f) (map getMaybeFun fs, ls) (funLabels labs)} where (fs,_:ls) = break (==">") xs
     "#fun":f:xs         -> labs{funLabels = insertFunLabels (mkCId f) (unzip (map pFunLabel xs)) (funLabels labs)}
-    "#cat":c:p:[]       -> labs{catLabels = M.insert (mkCId c) p (catLabels labs)}
+    "#cat":c:p:[]       -> labs{catLabels = M.insert (mkCId c) (p,False) (catLabels labs)}
+    "#cat":c:p:"primary":[] -> labs{catLabels = M.insert (mkCId c) (p,True) (catLabels labs)}
     
   --- fun or cat without keywords, for backward compatibility
     f:xs@(_:_:_)        -> labs{funLabels = M.insert (mkCId f) [(replicate (length xs) Nothing, xs)] (funLabels labs)}
     f:"head":[]         -> labs{funLabels = M.insert (mkCId f) [([Nothing],[head_Label])] (funLabels labs)}
-    c:p:[]              -> labs{catLabels = M.insert (mkCId c) p (catLabels labs)}
+    c:p:[]              -> labs{catLabels = M.insert (mkCId c) (p,False) (catLabels labs)}
 
  --- ignores ill-formed lines silently
     _ -> labs 
@@ -253,9 +258,9 @@ isEndoType, isExoType :: LabelledType -> Bool
 isEndoType labtyp@(val,args) = elem val (map fst args)
 isExoType = not . isEndoType
 
-catsForPOS :: UDEnv -> M.Map POS [Either Cat Cat]
+catsForPOS :: UDEnv -> M.Map POS [Either (Cat,Bool) Cat]
 catsForPOS env = M.fromListWith (++) $ 
-  [(p,[Left  c]) | (c, p) <- M.assocs (catLabels (absLabels env))] ++
+  [(p,[Left  (c,b)]) | (c,(p,b)) <- M.assocs (catLabels (absLabels env))] ++
   [(p,[Right c]) | (c, p) <- M.assocs (auxCategories (cncLabels env))]
 
 

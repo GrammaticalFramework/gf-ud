@@ -207,7 +207,7 @@ expr2annottree env lang tree =
   
  where
    pgf = pgfGrammar env
-   lookCat c = maybe x_POS id (M.lookup c (catLabels (absLabels env)))
+   lookCat c = maybe x_POS fst (M.lookup c (catLabels (absLabels env)))
    lookWord d w = maybe d id (M.lookup w (wordLabels (cncLabels env)))
    lookupLemma f w = lookupFunLemma env lang f w              -- (fun,lemma) -> (label,targetLabel)
    lookMorpho d c i = maybe d id (M.lookup (c,i) (morphoLabels (cncLabels env))) -- i'th form of cat c
