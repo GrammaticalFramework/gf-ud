@@ -39,22 +39,23 @@ udTypeFrequencies =
   . map udSentence2tree
 
 data UDType = UDType {
-  udVal  :: (POS,[UDData]),
+  udVal  :: (POS,(Label,[UDData])),
   udArgs :: [(POS,(Label,[UDData]))]
   }
  deriving (Eq,Ord,Show)
 
-prUDType ut = unwords $ show (udVal ut) : map show (udArgs ut)
+prUDType ut = unwords $ show (udVal ut) : "<-" : map show (udArgs ut)
 
 typesInUDTree :: UDTree -> [UDType]
 typesInUDTree tr@(RTree un uts) =
-  UDType (udUPOS un,udFEATS un) [(udUPOS n,(udDEPREL n, udFEATS n)) | RTree n _ <- uts] :
+  UDType (udUPOS un,(udDEPREL un, udFEATS un)) [(udUPOS n,(udDEPREL n, udFEATS n)) | RTree n _ <- uts] :
   concatMap typesInUDTree uts
 
--- ignore argument order ---- and morphological tags
+-- ignore argument order - and morphological tags with [] instead of m
 normalizeUDType :: UDType -> UDType
 normalizeUDType ut = ut {
-  udArgs = sort [(p,(l,m)) | (p,(l,m)) <- udArgs ut]
+  udVal  = head [(p,(l,[])) | (p,(l,m)) <- [udVal ut]],
+  udArgs = {-sort-} [(p,(l,[])) | (p,(l,m)) <- udArgs ut]
   }
 
 -- a type with many arguments can subsume a type with few arguments; returns the remaining ones of the many
@@ -88,7 +89,7 @@ coverUDType many fews = case fews of
 
 labelled2udTypes :: UDEnv -> LabelledType -> [UDType]
 labelled2udTypes env (val,args) = [
-  UDType (pos,fs) udargs |
+  UDType (pos,(root_Label,fs)) udargs |  --- rootLabel?
      udargs0  <- sequence [ [(pos,(lab,feats)) |  pos <- allPosOfCat env cat] | (cat,(lab,feats)) <- args],
      (pos,fs) <- [(pos,fs) | (pos,("head",fs)) <- udargs0], --- NB: there is always exactly one head
      elem pos (allPosOfCat env val),
@@ -128,4 +129,56 @@ lexicalEntries env uds = M.assocs (M.fromListWith (+) [(wc,1) | Just wc <- map e
       _ -> Nothing
     _ -> Nothing
 
+
+----------------------------------------------------
+-- an analysis of UD types and their conversion to GF
+
+testUDTypes n file = do
+  uds <- parseUDFile file
+  let typs = udTypeFrequencies uds
+  print $  length typs
+  let gftyps = [(suggestAbsType gft, (gft, i)) | (t,i) <- typs, i >= n, let gft = ud2gfType t]
+  print $ length gftyps
+  let sgftyps = sortOn (\ ((val,_),(_,i)) -> (val, 0-i)) gftyps
+  putStrLn $ unlines $ map (\ (gft, ((t,(l,ls)),i)) ->
+    prAbsType gft ++ "\t" ++ unwords (ls ++ ["--",show i]) ++ "\t;\t" ++ l ++ " " ++ prAbsType t) $ sgftyps
+--  putStrLn $ unlines $ map (\ (t,i) -> prUDType t ++ " ; " ++ show i) $ take n typs
+
+ud2gfType :: UDType -> (AbsType,(Label,[Label]))
+ud2gfType udt@(UDType uval uargs) = ((val,args),labels)
+  where
+    val  = pos2catVal uval
+    args = map pos2cat (uargs ++ [uval])
+    labels = (fst (snd (uval)), map (fst . snd) uargs ++ [head_Label])
+
+    pos2cat (pos,(lab,_)) = mkCId pos
+    pos2catVal (pos,(lab,_)) = mkCId pos
+
+--  udVal  :: (POS,(Label,[UDData])),
+--  udArgs :: [(POS,(Label,[UDData]))]
+
+suggestAbsType :: (AbsType,(Label,[Label])) -> AbsType
+suggestAbsType ((val,args),(hlabel,labels)) = (suggestCat val hlabel, map (uncurry suggestCat) (zip args labels))
+ where
+   suggestCat v hl = case hl of
+     _ | elem hl npLabels -> mkCId "NP"
+     _ | elem hl ["nmod","obl"] -> mkCId "PP"
+     _ | elem hl ["advmod"] -> mkCId "Adv"
+     _ | elem hl ["nummod"] -> mkCId "Numeral"
+     _ -> case showCId v of
+       "NOUN" -> mkCId "CN"
+       "ADJ"  -> mkCId "AP"
+       "VERB" -> mkCId "VP"
+       "DET"  -> mkCId "Det"
+       "ADP"  -> mkCId "Prep"
+       "ADV"  -> mkCId "Adv"
+       "PRON"  -> mkCId "Pron"
+       "PROPN"  -> mkCId "PN"
+       "SCONJ" -> mkCId "Subj"
+       "CCONJ" -> mkCId "Conj"
+       "PUNCT" -> mkCId "Punct"
+       "INTJ" -> mkCId "Interj"
+       "NUM" -> mkCId "Numeral"
+       _ -> v
+   npLabels = ["nsubj","obj","iobj"]
 
