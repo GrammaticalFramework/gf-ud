@@ -19,6 +19,7 @@ testBuildGrammar =
 --
 -- $ gf -make Morphodict*.gf and rename pgf files to without Abs
 -- $ gf -make Extract*.gf (*= nothing, Eng, Ita...)
+
 -- Then just evaluate testBuildGrammar in ghci.
 --
 -- Make sure Extract*.gf and MorphoDict*.gf are on your path in GF.
