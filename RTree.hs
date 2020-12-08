@@ -43,3 +43,4 @@ childrenRTree (RTree _ ts) = ts
 
 allSubRTrees :: RTree a -> [RTree a]
 allSubRTrees t = t : concatMap allSubRTrees (childrenRTree t)
+
