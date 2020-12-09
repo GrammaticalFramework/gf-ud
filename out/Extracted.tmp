@@ -1,0 +1,2568 @@
+abstract Extracted = Extract ** { -- Abstr
+concrete ExtractedEng of Extracted = ExtractEng ** open MorphoDictEng, ParadigmsEng in { -- Eng
+concrete ExtractedIta of Extracted = ExtractIta ** open MorphoDictIta, ParadigmsIta in { -- Ita
+fun artificial_intelligence_di_artificiale_intelligenza_CN : CN ; -- PP -- Abstr
+lin artificial_intelligence_di_artificiale_intelligenza_CN = AdjCN (PositA artificial_A) (UseN intelligence_N) ; -- Eng
+--- lin artificial_intelligence_di_artificiale_intelligenza_CN = PrepNP di_Prep (MassNP (AdjCN (PositA artificiale_A) (UseN intelligenza_N))) ; -- Ita
+
+fun martial_art_di_marziale_arte_CN : CN ; -- PP -- Abstr
+lin martial_art_di_marziale_arte_CN = AdjCN (PositA martial_A) (UseN art_N) ; -- Eng
+--- lin martial_art_di_marziale_arte_CN = PrepNP di_Prep (PluralNP (AdjCN (PositA marziale_A) (UseN arte_N))) ; -- Ita
+
+fun everyone_not_tutto_non_CN : CN ; --  -- Abstr
+lin everyone_not_tutto_non_CN = AdvCN (UseN everyone_N) not_Adv ; -- Eng
+lin everyone_not_tutto_non_CN = AdvCN (UseN tutto_N) non_Adv ; -- Ita
+oper everyone_N = mkN "everyone" ; -- Eng
+oper not_Adv = mkAdv "not" ; -- Eng
+oper tutto_N = mkN "tutto" ; -- Ita
+
+fun a_criminal_history_penale_precedente_NP : NP ; -- CN -- Abstr
+lin a_criminal_history_penale_precedente_NP = DetCN a_Det (AdjCN (PositA criminal_A) (UseN history_N)) ; -- Eng
+--- lin a_criminal_history_penale_precedente_NP = AdjCN (PositA penale_A) (UseN precedente_N) ; -- Ita
+oper precedente_N = mkN "precedente" ; -- Ita
+
+fun a_political_dimension_da_a_politico_dimensione_NP : NP ; -- PP -- Abstr
+lin a_political_dimension_da_a_politico_dimensione_NP = DetCN a_Det (AdjCN (PositA political_A) (UseN dimension_N)) ; -- Eng
+--- lin a_political_dimension_da_a_politico_dimensione_NP = PrepNP da_Prep (DetCN a_Det (AdjCN (PositA politico_A) (UseN dimensione_N))) ; -- Ita
+
+fun a_lot_possess_competition_a_grande_concorrenza_NP : NP ; --  -- Abstr
+lin a_lot_possess_competition_a_grande_concorrenza_NP = DetCN a_Det (PrepCN (UseN lot_N) (PrepNP possess_Prep (MassNP (UseN competition_N)))) ; -- Eng
+lin a_lot_possess_competition_a_grande_concorrenza_NP = DetCN a_Det (AdjCN (PositA grande_A) (UseN concorrenza_N)) ; -- Ita
+
+fun a_access_fee_a_tariffa_di_accesso_NP : NP ; --  -- Abstr
+lin a_access_fee_a_tariffa_di_accesso_NP = DetCN a_Det (UseN (CompoundN access_N fee_N)) ; -- Eng
+lin a_access_fee_a_tariffa_di_accesso_NP = DetCN a_Det (PrepCN (UseN tariffa_N) (PrepNP di_Prep (MassNP (UseN accesso_N)))) ; -- Ita
+
+fun a_concert_a_concerto_NP : NP ; --  -- Abstr
+lin a_concert_a_concerto_NP = DetCN a_Det (UseN concert_N) ; -- Eng
+lin a_concert_a_concerto_NP = DetCN a_Det (UseN concerto_N) ; -- Ita
+
+fun a_fight_a_rissa_NP : NP ; --  -- Abstr
+lin a_fight_a_rissa_NP = DetCN a_Det (UseN fight_N) ; -- Eng
+lin a_fight_a_rissa_NP = DetCN a_Det (UseN rissa_N) ; -- Ita
+
+fun a_scan_a_ecografia_NP : NP ; --  -- Abstr
+lin a_scan_a_ecografia_NP = DetCN a_Det (UseN scan_N) ; -- Eng
+lin a_scan_a_ecografia_NP = DetCN a_Det (UseN ecografia_N) ; -- Ita
+
+fun a_witness_a_testimone_NP : NP ; --  -- Abstr
+lin a_witness_a_testimone_NP = DetCN a_Det (UseN witness_N) ; -- Eng
+lin a_witness_a_testimone_NP = DetCN a_Det (UseN testimone_N) ; -- Ita
+oper testimone_N = mkN "testimone" ; -- Ita
+
+fun that_invitation_the_invito_NP : NP ; --  -- Abstr
+lin that_invitation_the_invito_NP = DetCN that_Det (UseN invitation_N) ; -- Eng
+lin that_invitation_the_invito_NP = DetCN the_Det (UseN invito_N) ; -- Ita
+
+fun that_share_a_costante_crescita_NP : NP ; --  -- Abstr
+lin that_share_a_costante_crescita_NP = DetCN that_Det (UseN share_N) ; -- Eng
+lin that_share_a_costante_crescita_NP = DetCN a_Det (AdjCN (PositA costante_A) (UseN crescita_N)) ; -- Ita
+
+fun the_new_spending_the_nuovo_spesa_NP : NP ; --  -- Abstr
+lin the_new_spending_the_nuovo_spesa_NP = DetCN the_Det (AdjCN (PositA new_A) (UseN spending_N)) ; -- Eng
+lin the_new_spending_the_nuovo_spesa_NP = DetCN the_Det (AdjCN (PositA nuovo_A) (UseN spesa_N)) ; -- Ita
+
+fun the_same_venue_di_the_stesso_luogo_NP : NP ; -- PP -- Abstr
+lin the_same_venue_di_the_stesso_luogo_NP = DetCN the_Det (AdjCN (PositA same_A) (UseN venue_N)) ; -- Eng
+--- lin the_same_venue_di_the_stesso_luogo_NP = PrepNP di_Prep (DetCN the_Det (AdjCN (PositA stesso_A) (UseN luogo_N))) ; -- Ita
+
+fun the_same_year_the_stesso_anno_NP : NP ; --  -- Abstr
+lin the_same_year_the_stesso_anno_NP = DetCN the_Det (AdjCN (PositA same_A) (UseN year_N)) ; -- Eng
+lin the_same_year_the_stesso_anno_NP = DetCN the_Det (AdjCN (PositA stesso_A) (UseN anno_N)) ; -- Ita
+
+fun the_scientific_method_the_scientifico_metodo_NP : NP ; --  -- Abstr
+lin the_scientific_method_the_scientifico_metodo_NP = DetCN the_Det (AdjCN (PositA scientific_A) (UseN method_N)) ; -- Eng
+lin the_scientific_method_the_scientifico_metodo_NP = DetCN the_Det (AdjCN (PositA scientifico_A) (UseN metodo_N)) ; -- Ita
+
+fun the_government_here_the_governo_NP : NP ; --  -- Abstr
+lin the_government_here_the_governo_NP = DetCN the_Det (AdvCN (UseN government_N) here_Adv) ; -- Eng
+lin the_government_here_the_governo_NP = DetCN the_Det (UseN governo_N) ; -- Ita
+
+fun the_feasibility_study_the_studio_di_fattibilità_NP : NP ; --  -- Abstr
+lin the_feasibility_study_the_studio_di_fattibilità_NP = DetCN the_Det (UseN (CompoundN feasibility_N study_N)) ; -- Eng
+lin the_feasibility_study_the_studio_di_fattibilità_NP = DetCN the_Det (PrepCN (UseN studio_N) (PrepNP di_Prep (MassNP (UseN fattibilità_N)))) ; -- Ita
+oper fattibilità_N = mkN "fattibilità" ; -- Ita
+
+fun the_transition_team_the_team_di_transizione_NP : NP ; --  -- Abstr
+lin the_transition_team_the_team_di_transizione_NP = DetCN the_Det (UseN (CompoundN transition_N team_N)) ; -- Eng
+lin the_transition_team_the_team_di_transizione_NP = DetCN the_Det (PrepCN (UseN team_N) (PrepNP di_Prep (MassNP (UseN transizione_N)))) ; -- Ita
+oper team_N = mkN "team" ; -- Ita
+
+fun the_analysis_the_analisi_NP : NP ; --  -- Abstr
+lin the_analysis_the_analisi_NP = DetCN the_Det (UseN analysis_N) ; -- Eng
+lin the_analysis_the_analisi_NP = DetCN the_Det (UseN analisi_N) ; -- Ita
+oper analisi_N = mkN "analisi" ; -- Ita
+
+fun the_company_the_compagnia_NP : NP ; --  -- Abstr
+lin the_company_the_compagnia_NP = DetCN the_Det (UseN company_N) ; -- Eng
+lin the_company_the_compagnia_NP = DetCN the_Det (UseN compagnia_N) ; -- Ita
+
+fun the_disruption_the_interruzione_NP : NP ; --  -- Abstr
+lin the_disruption_the_interruzione_NP = DetCN the_Det (UseN disruption_N) ; -- Eng
+lin the_disruption_the_interruzione_NP = DetCN the_Det (UseN interruzione_N) ; -- Ita
+
+fun the_gathering_the_incontro_NP : NP ; --  -- Abstr
+lin the_gathering_the_incontro_NP = DetCN the_Det (UseN gathering_N) ; -- Eng
+lin the_gathering_the_incontro_NP = DetCN the_Det (UseN incontro_N) ; -- Ita
+
+fun the_jet_the_jet_NP : NP ; --  -- Abstr
+lin the_jet_the_jet_NP = DetCN the_Det (UseN jet_N) ; -- Eng
+lin the_jet_the_jet_NP = DetCN the_Det (UseN jet_N) ; -- Ita
+oper jet_N = mkN "jet" ; -- Ita
+
+fun the_post_su_the_post_NP : NP ; -- PP -- Abstr
+lin the_post_su_the_post_NP = DetCN the_Det (UseN post_N) ; -- Eng
+--- lin the_post_su_the_post_NP = PrepNP su_Prep (DetCN the_Det (UseN post_N)) ; -- Ita
+oper post_N = mkN "post" ; -- Ita
+
+fun the_show_the_show_NP : NP ; --  -- Abstr
+lin the_show_the_show_NP = DetCN the_Det (UseN show_N) ; -- Eng
+lin the_show_the_show_NP = DetCN the_Det (UseN show_N) ; -- Ita
+oper show_N = mkN "show" ; -- Ita
+
+fun the_suspect_the_sospettare_NP : NP ; --  -- Abstr
+lin the_suspect_the_sospettare_NP = DetCN the_Det (UseN suspect_N) ; -- Eng
+lin the_suspect_the_sospettare_NP = DetCN the_Det (UseN sospettare_N) ; -- Ita
+oper sospettare_N = mkN "sospettare" ; -- Ita
+
+fun the_suspect_the_sospetto_NP : NP ; --  -- Abstr
+lin the_suspect_the_sospetto_NP = DetCN the_Det (UseN suspect_N) ; -- Eng
+lin the_suspect_the_sospetto_NP = DetCN the_Det (UseN sospetto_N) ; -- Ita
+
+fun the_victim_the_vittima_NP : NP ; --  -- Abstr
+lin the_victim_the_vittima_NP = DetCN the_Det (UseN victim_N) ; -- Eng
+lin the_victim_the_vittima_NP = DetCN the_Det (UseN vittima_N) ; -- Ita
+
+fun this_same_pattern_the_stesso_configurazione_NP : NP ; --  -- Abstr
+lin this_same_pattern_the_stesso_configurazione_NP = DetCN this_Det (AdjCN (PositA same_A) (UseN pattern_N)) ; -- Eng
+lin this_same_pattern_the_stesso_configurazione_NP = DetCN the_Det (AdjCN (PositA stesso_A) (UseN configurazione_N)) ; -- Ita
+
+fun this_morning_this_mattina_NP : NP ; --  -- Abstr
+lin this_morning_this_mattina_NP = DetCN this_Det (UseN morning_N) ; -- Eng
+lin this_morning_this_mattina_NP = DetCN this_Det (UseN mattina_N) ; -- Ita
+
+fun Guilbeault_say_Guilbeault_affermare_Cl : Cl ; --  -- Abstr
+lin Guilbeault_say_Guilbeault_affermare_Cl = PredVP (UsePN Guilbeault_PN) (UseV say_V) ; -- Eng
+lin Guilbeault_say_Guilbeault_affermare_Cl = PredVP (UsePN Guilbeault_PN) (UseV affermare_V) ; -- Ita
+oper Guilbeault_PN = mkPN "Guilbeault" ; -- Eng
+oper Guilbeault_PN = mkPN "Guilbeault" ; -- Ita
+
+fun Tarlo_say_Tarlo_affermare_Cl : Cl ; --  -- Abstr
+lin Tarlo_say_Tarlo_affermare_Cl = PredVP (UsePN Tarlo_PN) (UseV say_V) ; -- Eng
+lin Tarlo_say_Tarlo_affermare_Cl = PredVP (UsePN Tarlo_PN) (UseV affermare_V) ; -- Ita
+oper Tarlo_PN = mkPN "Tarlo" ; -- Eng
+oper Tarlo_PN = mkPN "Tarlo" ; -- Ita
+
+fun she_say_affermare_Cl : Cl ; -- Utt -- Abstr
+lin she_say_affermare_Cl = PredVP (UsePron she_Pron) (UseV say_V) ; -- Eng
+--- lin she_say_affermare_Cl = UttVP (UseV affermare_V) ; -- Ita
+
+fun student_like_Rai_studente_come_Rai_CN : CN ; --  -- Abstr
+lin student_like_Rai_studente_come_Rai_CN = PrepCN (UseN student_N) (PrepNP like_Prep (UsePN Rai_PN)) ; -- Eng
+lin student_like_Rai_studente_come_Rai_CN = PrepCN (UseN studente_N) (PrepNP come_Prep (UsePN Rai_PN)) ; -- Ita
+oper Rai_PN = mkPN "Rai" ; -- Eng
+oper come_Prep = mkPrep "come" ; -- Ita
+oper Rai_PN = mkPN "Rai" ; -- Ita
+
+fun against_a_agent_a_a_agente_PP : PP ; --  -- Abstr
+lin against_a_agent_a_a_agente_PP = PrepNP against_Prep (DetCN a_Det (UseN agent_N)) ; -- Eng
+lin against_a_agent_a_a_agente_PP = PrepNP a_Prep (DetCN a_Det (UseN agente_N)) ; -- Ita
+oper agente_N = mkN "agente" ; -- Ita
+
+fun behind_it_recondito_PP : PP ; -- A -- Abstr
+lin behind_it_recondito_PP = PrepNP behind_Prep (UsePron it_Pron) ; -- Eng
+--- lin behind_it_recondito_PP = recondito_A ; -- Ita
+
+fun by8means_blogger_in_precedenza_PP : PP ; --  -- Abstr
+lin by8means_blogger_in_precedenza_PP = PrepNP by8means_Prep (PluralNP (UseN blogger_N)) ; -- Eng
+lin by8means_blogger_in_precedenza_PP = PrepNP in_Prep (MassNP (UseN precedenza_N)) ; -- Ita
+
+fun by8means_the_way_Comunque_PP : PP ; -- Adv -- Abstr
+lin by8means_the_way_Comunque_PP = PrepNP by8means_Prep (DetCN the_Det (UseN way_N)) ; -- Eng
+--- lin by8means_the_way_Comunque_PP = Comunque_Adv ; -- Ita
+oper Comunque_Adv = mkAdv "Comunque" ; -- Ita
+
+fun for_male_hormonal_contraceptive_di_ormonale_maschile_contraccezione_PP : PP ; --  -- Abstr
+lin for_male_hormonal_contraceptive_di_ormonale_maschile_contraccezione_PP = PrepNP for_Prep (PluralNP (AdjCN (PositA male_A) (AdjCN (PositA hormonal_A) (UseN contraceptive_N)))) ; -- Eng
+lin for_male_hormonal_contraceptive_di_ormonale_maschile_contraccezione_PP = PrepNP di_Prep (MassNP (AdjCN (PositA ormonale_A) (AdjCN (PositA maschile_A) (UseN contraccezione_N)))) ; -- Ita
+
+fun for_unconventional_penalty_by8means_insolito_punizione_PP : PP ; --  -- Abstr
+lin for_unconventional_penalty_by8means_insolito_punizione_PP = PrepNP for_Prep (PluralNP (AdjCN (PositA unconventional_A) (UseN penalty_N))) ; -- Eng
+lin for_unconventional_penalty_by8means_insolito_punizione_PP = PrepNP by8means_Prep (PluralNP (AdjCN (PositA insolito_A) (UseN punizione_N))) ; -- Ita
+
+fun for_the_course_di_the_corso_PP : PP ; --  -- Abstr
+lin for_the_course_di_the_corso_PP = PrepNP for_Prep (DetCN the_Det (UseN course_N)) ; -- Eng
+lin for_the_course_di_the_corso_PP = PrepNP di_Prep (DetCN the_Det (UseN corso_N)) ; -- Ita
+
+fun for_Beijing_by8means_Pechino_PP : PP ; --  -- Abstr
+lin for_Beijing_by8means_Pechino_PP = PrepNP for_Prep (UsePN Beijing_PN) ; -- Eng
+lin for_Beijing_by8means_Pechino_PP = PrepNP by8means_Prep (UsePN Pechino_PN) ; -- Ita
+oper Beijing_PN = mkPN "Beijing" ; -- Eng
+oper Pechino_PN = mkPN "Pechino" ; -- Ita
+
+fun from_the_democratic_side_this_anno_PP : PP ; -- NP -- Abstr
+lin from_the_democratic_side_this_anno_PP = PrepNP from_Prep (DetCN the_Det (AdjCN (PositA democratic_A) (UseN side_N))) ; -- Eng
+--- lin from_the_democratic_side_this_anno_PP = DetCN this_Det (UseN anno_N) ; -- Ita
+
+fun from_this_experiment_di_this_esperimento_PP : PP ; --  -- Abstr
+lin from_this_experiment_di_this_esperimento_PP = PrepNP from_Prep (DetCN this_Det (UseN experiment_N)) ; -- Eng
+lin from_this_experiment_di_this_esperimento_PP = PrepNP di_Prep (DetCN this_Det (UseN esperimento_N)) ; -- Ita
+
+fun in_recent_year_in_the_ultimi_anno_PP : PP ; --  -- Abstr
+lin in_recent_year_in_the_ultimi_anno_PP = PrepNP in_Prep (PluralNP (AdjCN (PositA recent_A) (UseN year_N))) ; -- Eng
+lin in_recent_year_in_the_ultimi_anno_PP = PrepNP in_Prep (DetCN the_Det (AdjCN (PositA ultimi_A) (UseN anno_N))) ; -- Ita
+oper ultimi_A = mkA "ultimi" ; -- Ita
+
+fun in_a_blog_post_lunedì_PP : PP ; -- CN -- Abstr
+lin in_a_blog_post_lunedì_PP = PrepNP in_Prep (DetCN a_Det (UseN (CompoundN blog_N post_N))) ; -- Eng
+--- lin in_a_blog_post_lunedì_PP = UseN lunedì_N ; -- Ita
+oper blog_N = mkN "blog" ; -- Eng
+oper lunedì_N = mkN "lunedì" ; -- Ita
+
+fun in_a_lifetime_da_a_individuo_PP : PP ; --  -- Abstr
+lin in_a_lifetime_da_a_individuo_PP = PrepNP in_Prep (DetCN a_Det (UseN lifetime_N)) ; -- Eng
+lin in_a_lifetime_da_a_individuo_PP = PrepNP da_Prep (DetCN a_Det (UseN individuo_N)) ; -- Ita
+
+fun in_the_right_direction_in_the_giusto_direzione_PP : PP ; --  -- Abstr
+lin in_the_right_direction_in_the_giusto_direzione_PP = PrepNP in_Prep (DetCN the_Det (AdjCN (PositA right_A) (UseN direction_N))) ; -- Eng
+lin in_the_right_direction_in_the_giusto_direzione_PP = PrepNP in_Prep (DetCN the_Det (AdjCN (PositA giusto_A) (UseN direzione_N))) ; -- Ita
+
+fun in_the_experiment_in_the_esperimento_PP : PP ; --  -- Abstr
+lin in_the_experiment_in_the_esperimento_PP = PrepNP in_Prep (DetCN the_Det (UseN experiment_N)) ; -- Eng
+lin in_the_experiment_in_the_esperimento_PP = PrepNP in_Prep (DetCN the_Det (UseN esperimento_N)) ; -- Ita
+
+fun in_this_area_in_this_area_PP : PP ; --  -- Abstr
+lin in_this_area_in_this_area_PP = PrepNP in_Prep (DetCN this_Det (UseN area_N)) ; -- Eng
+lin in_this_area_in_this_area_PP = PrepNP in_Prep (DetCN this_Det (UseN area_N)) ; -- Ita
+
+fun in_tumour_dna_in_the_tumorale_DNA_PP : PP ; --  -- Abstr
+lin in_tumour_dna_in_the_tumorale_DNA_PP = PrepNP in_Prep (MassNP (UseN (CompoundN tumour_N dna_N))) ; -- Eng
+lin in_tumour_dna_in_the_tumorale_DNA_PP = PrepNP in_Prep (DetCN the_Det (AdjCN (PositA tumorale_A) (UseN DNA_N))) ; -- Ita
+oper dna_N = mkN "dna" ; -- Eng
+oper DNA_N = mkN "DNA" ; -- Ita
+
+fun in_April_in_aprile_PP : PP ; --  -- Abstr
+lin in_April_in_aprile_PP = PrepNP in_Prep (UsePN April_PN) ; -- Eng
+lin in_April_in_aprile_PP = PrepNP in_Prep (MassNP (UseN aprile_N)) ; -- Ita
+oper April_PN = mkPN "April" ; -- Eng
+
+fun in_Belgrade_Belgrado_PP : PP ; -- NP -- Abstr
+lin in_Belgrade_Belgrado_PP = PrepNP in_Prep (UsePN Belgrade_PN) ; -- Eng
+--- lin in_Belgrade_Belgrado_PP = UsePN Belgrado_PN ; -- Ita
+oper Belgrade_PN = mkPN "Belgrade" ; -- Eng
+oper Belgrado_PN = mkPN "Belgrado" ; -- Ita
+
+fun in_July_a_luglio_PP : PP ; --  -- Abstr
+lin in_July_a_luglio_PP = PrepNP in_Prep (UsePN July_PN) ; -- Eng
+lin in_July_a_luglio_PP = PrepNP a_Prep (MassNP (UseN luglio_N)) ; -- Ita
+oper July_PN = mkPN "July" ; -- Eng
+
+fun in_Ontario_in_Ontario_PP : PP ; --  -- Abstr
+lin in_Ontario_in_Ontario_PP = PrepNP in_Prep (UsePN Ontario_PN) ; -- Eng
+lin in_Ontario_in_Ontario_PP = PrepNP in_Prep (UsePN Ontario_PN) ; -- Ita
+oper Ontario_PN = mkPN "Ontario" ; -- Eng
+oper Ontario_PN = mkPN "Ontario" ; -- Ita
+
+fun in_September_a_settembre_PP : PP ; --  -- Abstr
+lin in_September_a_settembre_PP = PrepNP in_Prep (UsePN September_PN) ; -- Eng
+lin in_September_a_settembre_PP = PrepNP a_Prep (MassNP (UseN settembre_N)) ; -- Ita
+oper September_PN = mkPN "September" ; -- Eng
+
+fun like_Rai_come_Rai_PP : PP ; --  -- Abstr
+lin like_Rai_come_Rai_PP = PrepNP like_Prep (UsePN Rai_PN) ; -- Eng
+lin like_Rai_come_Rai_PP = PrepNP come_Prep (UsePN Rai_PN) ; -- Ita
+oper Rai_PN = mkPN "Rai" ; -- Eng
+oper come_Prep = mkPrep "come" ; -- Ita
+oper Rai_PN = mkPN "Rai" ; -- Ita
+
+fun on_youPl_sotto_pressione_PP : PP ; --  -- Abstr
+lin on_youPl_sotto_pressione_PP = PrepNP on_Prep (UsePron youPl_Pron) ; -- Eng
+lin on_youPl_sotto_pressione_PP = PrepNP sotto_Prep (MassNP (UseN pressione_N)) ; -- Ita
+
+fun over_the_year_in_the_anno_PP : PP ; --  -- Abstr
+lin over_the_year_in_the_anno_PP = PrepNP over_Prep (DetCN the_Det (UseN year_N)) ; -- Eng
+lin over_the_year_in_the_anno_PP = PrepNP in_Prep (DetCN the_Det (UseN anno_N)) ; -- Ita
+
+fun per_person_a_persona_PP : PP ; --  -- Abstr
+lin per_person_a_persona_PP = PrepNP per_Prep (MassNP (UseN person_N)) ; -- Eng
+lin per_person_a_persona_PP = PrepNP a_Prep (MassNP (UseN persona_N)) ; -- Ita
+
+fun possess_legal_immigrant_di_legale_immigrato_PP : PP ; --  -- Abstr
+lin possess_legal_immigrant_di_legale_immigrato_PP = PrepNP possess_Prep (PluralNP (AdjCN (PositA legal_A) (UseN immigrant_N))) ; -- Eng
+lin possess_legal_immigrant_di_legale_immigrato_PP = PrepNP di_Prep (PluralNP (AdjCN (PositA legale_A) (UseN immigrato_N))) ; -- Ita
+
+fun possess_datum_di_storico_dato_PP : PP ; --  -- Abstr
+lin possess_datum_di_storico_dato_PP = PrepNP possess_Prep (PluralNP (UseN datum_N)) ; -- Eng
+lin possess_datum_di_storico_dato_PP = PrepNP di_Prep (PluralNP (AdjCN (PositA storico_A) (UseN dato_N))) ; -- Ita
+
+fun possess_word_di_opinione_PP : PP ; --  -- Abstr
+lin possess_word_di_opinione_PP = PrepNP possess_Prep (PluralNP (UseN word_N)) ; -- Eng
+lin possess_word_di_opinione_PP = PrepNP di_Prep (PluralNP (UseN opinione_N)) ; -- Ita
+
+fun possess_a_photo_di_a_foto_PP : PP ; --  -- Abstr
+lin possess_a_photo_di_a_foto_PP = PrepNP possess_Prep (DetCN a_Det (UseN photo_N)) ; -- Eng
+lin possess_a_photo_di_a_foto_PP = PrepNP di_Prep (DetCN a_Det (UseN foto_N)) ; -- Ita
+oper foto_N = mkN "foto" ; -- Ita
+
+fun possess_every_airline_brand_di_every_compagnia_PP : PP ; --  -- Abstr
+lin possess_every_airline_brand_di_every_compagnia_PP = PrepNP possess_Prep (DetCN every_Det (UseN (CompoundN airline_N brand_N))) ; -- Eng
+lin possess_every_airline_brand_di_every_compagnia_PP = PrepNP di_Prep (DetCN every_Det (UseN compagnia_N)) ; -- Ita
+
+fun possess_the_digital_transition_di_the_digitale_transizione_PP : PP ; --  -- Abstr
+lin possess_the_digital_transition_di_the_digitale_transizione_PP = PrepNP possess_Prep (DetCN the_Det (AdjCN (PositA digital_A) (UseN transition_N))) ; -- Eng
+lin possess_the_digital_transition_di_the_digitale_transizione_PP = PrepNP di_Prep (DetCN the_Det (AdjCN (PositA digitale_A) (UseN transizione_N))) ; -- Ita
+
+fun possess_the_total_vote_di_the_totale_voto_PP : PP ; --  -- Abstr
+lin possess_the_total_vote_di_the_totale_voto_PP = PrepNP possess_Prep (DetCN the_Det (AdjCN (PositA total_A) (UseN vote_N))) ; -- Eng
+lin possess_the_total_vote_di_the_totale_voto_PP = PrepNP di_Prep (DetCN the_Det (AdjCN (PositA totale_A) (UseN voto_N))) ; -- Ita
+
+fun possess_the_debate_di_the_dibattito_PP : PP ; --  -- Abstr
+lin possess_the_debate_di_the_dibattito_PP = PrepNP possess_Prep (DetCN the_Det (UseN debate_N)) ; -- Eng
+lin possess_the_debate_di_the_dibattito_PP = PrepNP di_Prep (DetCN the_Det (UseN dibattito_N)) ; -- Ita
+
+fun possess_the_republic_di_the_repubblica_PP : PP ; --  -- Abstr
+lin possess_the_republic_di_the_repubblica_PP = PrepNP possess_Prep (DetCN the_Det (UseN republic_N)) ; -- Eng
+lin possess_the_republic_di_the_repubblica_PP = PrepNP di_Prep (DetCN the_Det (UseN repubblica_N)) ; -- Ita
+
+fun possess_competition_grande_PP : PP ; -- A -- Abstr
+lin possess_competition_grande_PP = PrepNP possess_Prep (MassNP (UseN competition_N)) ; -- Eng
+--- lin possess_competition_grande_PP = grande_A ; -- Ita
+
+fun possess_power_di_potere_PP : PP ; --  -- Abstr
+lin possess_power_di_potere_PP = PrepNP possess_Prep (MassNP (UseN power_N)) ; -- Eng
+lin possess_power_di_potere_PP = PrepNP di_Prep (MassNP (UseN potere_N)) ; -- Ita
+
+fun to_jail_in_prigione_PP : PP ; --  -- Abstr
+lin to_jail_in_prigione_PP = PrepNP to_Prep (MassNP (UseN jail_N)) ; -- Eng
+lin to_jail_in_prigione_PP = PrepNP in_Prep (MassNP (UseN prigione_N)) ; -- Ita
+
+fun to_Russia_in_Russia_PP : PP ; --  -- Abstr
+lin to_Russia_in_Russia_PP = PrepNP to_Prep (UsePN Russia_PN) ; -- Eng
+lin to_Russia_in_Russia_PP = PrepNP in_Prep (UsePN Russia_PN) ; -- Ita
+oper Russia_PN = mkPN "Russia" ; -- Eng
+oper Russia_PN = mkPN "Russia" ; -- Ita
+
+fun with_technology_lobbyist_con_tecnologico_lobbisti_PP : PP ; --  -- Abstr
+lin with_technology_lobbyist_con_tecnologico_lobbisti_PP = PrepNP with_Prep (PluralNP (UseN (CompoundN technology_N lobbyist_N))) ; -- Eng
+lin with_technology_lobbyist_con_tecnologico_lobbisti_PP = PrepNP con_Prep (PluralNP (AdjCN (PositA tecnologico_A) (UseN lobbisti_N))) ; -- Ita
+oper lobbisti_N = mkN "lobbisti" ; -- Ita
+
+fun with_counsellor_presso_the_scuola_PP : PP ; --  -- Abstr
+lin with_counsellor_presso_the_scuola_PP = PrepNP with_Prep (PluralNP (UseN counsellor_N)) ; -- Eng
+lin with_counsellor_presso_the_scuola_PP = PrepNP presso_Prep (DetCN the_Det (UseN scuola_N)) ; -- Ita
+
+fun access_fee_tariffa_di_accesso_CN : CN ; --  -- Abstr
+lin access_fee_tariffa_di_accesso_CN = UseN (CompoundN access_N fee_N) ; -- Eng
+lin access_fee_tariffa_di_accesso_CN = PrepCN (UseN tariffa_N) (PrepNP di_Prep (MassNP (UseN accesso_N))) ; -- Ita
+
+fun air_mattress_gonfiabile_materasso_CN : CN ; --  -- Abstr
+lin air_mattress_gonfiabile_materasso_CN = UseN (CompoundN air_N mattress_N) ; -- Eng
+lin air_mattress_gonfiabile_materasso_CN = AdjCN (PositA gonfiabile_A) (UseN materasso_N) ; -- Ita
+oper gonfiabile_A = mkA "gonfiabile" ; -- Ita
+
+fun airline_brand_compagnia_CN : CN ; --  -- Abstr
+lin airline_brand_compagnia_CN = UseN (CompoundN airline_N brand_N) ; -- Eng
+lin airline_brand_compagnia_CN = UseN compagnia_N ; -- Ita
+
+fun bank_account_considerevole_bancario_conto_CN : CN ; --  -- Abstr
+lin bank_account_considerevole_bancario_conto_CN = UseN (CompoundN bank_N account_N) ; -- Eng
+lin bank_account_considerevole_bancario_conto_CN = AdjCN (PositA considerevole_A) (AdjCN (PositA bancario_A) (UseN conto_N)) ; -- Ita
+
+fun battery_fault_colpa_CN : CN ; --  -- Abstr
+lin battery_fault_colpa_CN = UseN (CompoundN battery_N fault_N) ; -- Eng
+lin battery_fault_colpa_CN = UseN colpa_N ; -- Ita
+
+fun blog_post_blog_CN : CN ; --  -- Abstr
+lin blog_post_blog_CN = UseN (CompoundN blog_N post_N) ; -- Eng
+lin blog_post_blog_CN = UseN blog_N ; -- Ita
+oper blog_N = mkN "blog" ; -- Eng
+oper blog_N = mkN "blog" ; -- Ita
+
+fun census_bureau_giorno_di_the_elezione_CN : CN ; --  -- Abstr
+lin census_bureau_giorno_di_the_elezione_CN = UseN (CompoundN census_N bureau_N) ; -- Eng
+lin census_bureau_giorno_di_the_elezione_CN = PrepCN (UseN giorno_N) (PrepNP di_Prep (DetCN the_Det (UseN elezione_N))) ; -- Ita
+
+fun climate_change_the_climatico_cambiamento_CN : CN ; -- NP -- Abstr
+lin climate_change_the_climatico_cambiamento_CN = UseN (CompoundN climate_N change_N) ; -- Eng
+--- lin climate_change_the_climatico_cambiamento_CN = DetCN the_Det (AdjCN (PositA climatico_A) (UseN cambiamento_N)) ; -- Ita
+
+fun dress_code_abbigliamento_CN : CN ; --  -- Abstr
+lin dress_code_abbigliamento_CN = UseN (CompoundN dress_N code_N) ; -- Eng
+lin dress_code_abbigliamento_CN = UseN abbigliamento_N ; -- Ita
+
+fun feasibility_study_studio_di_fattibilità_CN : CN ; --  -- Abstr
+lin feasibility_study_studio_di_fattibilità_CN = UseN (CompoundN feasibility_N study_N) ; -- Eng
+lin feasibility_study_studio_di_fattibilità_CN = PrepCN (UseN studio_N) (PrepNP di_Prep (MassNP (UseN fattibilità_N))) ; -- Ita
+oper fattibilità_N = mkN "fattibilità" ; -- Ita
+
+fun hair_market_industria_di_the_capello_CN : CN ; --  -- Abstr
+lin hair_market_industria_di_the_capello_CN = UseN (CompoundN hair_N market_N) ; -- Eng
+lin hair_market_industria_di_the_capello_CN = PrepCN (UseN industria_N) (PrepNP di_Prep (DetCN the_Det (UseN capello_N))) ; -- Ita
+
+fun police_spokesman_portavoce_di_the_polizia_CN : CN ; --  -- Abstr
+lin police_spokesman_portavoce_di_the_polizia_CN = UseN (CompoundN police_N spokesman_N) ; -- Eng
+lin police_spokesman_portavoce_di_the_polizia_CN = PrepCN (UseN portavoce_N) (PrepNP di_Prep (DetCN the_Det (UseN polizia_N))) ; -- Ita
+oper portavoce_N = mkN "portavoce" ; -- Ita
+
+fun security_expert_esperto_in_sicurezza_CN : CN ; --  -- Abstr
+lin security_expert_esperto_in_sicurezza_CN = UseN (CompoundN security_N expert_N) ; -- Eng
+lin security_expert_esperto_in_sicurezza_CN = PrepCN (UseN esperto_N) (PrepNP in_Prep (MassNP (UseN sicurezza_N))) ; -- Ita
+
+fun technology_lobbyist_tecnologico_lobbisti_CN : CN ; --  -- Abstr
+lin technology_lobbyist_tecnologico_lobbisti_CN = UseN (CompoundN technology_N lobbyist_N) ; -- Eng
+lin technology_lobbyist_tecnologico_lobbisti_CN = AdjCN (PositA tecnologico_A) (UseN lobbisti_N) ; -- Ita
+oper lobbisti_N = mkN "lobbisti" ; -- Ita
+
+fun traffic_police_stradale_polizia_CN : CN ; --  -- Abstr
+lin traffic_police_stradale_polizia_CN = UseN (CompoundN traffic_N police_N) ; -- Eng
+lin traffic_police_stradale_polizia_CN = AdjCN (PositA stradale_A) (UseN polizia_N) ; -- Ita
+
+fun transition_team_team_di_transizione_CN : CN ; --  -- Abstr
+lin transition_team_team_di_transizione_CN = UseN (CompoundN transition_N team_N) ; -- Eng
+lin transition_team_team_di_transizione_CN = PrepCN (UseN team_N) (PrepNP di_Prep (MassNP (UseN transizione_N))) ; -- Ita
+oper team_N = mkN "team" ; -- Ita
+
+fun travel_expert_esperto_di_viaggio_CN : CN ; --  -- Abstr
+lin travel_expert_esperto_di_viaggio_CN = UseN (CompoundN travel_N expert_N) ; -- Eng
+lin travel_expert_esperto_di_viaggio_CN = PrepCN (UseN esperto_N) (PrepNP di_Prep (PluralNP (UseN viaggio_N))) ; -- Ita
+
+fun tumour_dna_tumorale_DNA_CN : CN ; --  -- Abstr
+lin tumour_dna_tumorale_DNA_CN = UseN (CompoundN tumour_N dna_N) ; -- Eng
+lin tumour_dna_tumorale_DNA_CN = AdjCN (PositA tumorale_A) (UseN DNA_N) ; -- Ita
+oper dna_N = mkN "dna" ; -- Eng
+oper DNA_N = mkN "DNA" ; -- Ita
+
+fun access_di_accesso_CN : CN ; -- PP -- Abstr
+lin access_di_accesso_CN = UseN access_N ; -- Eng
+--- lin access_di_accesso_CN = PrepNP di_Prep (MassNP (UseN accesso_N)) ; -- Ita
+
+fun action_azione_CN : CN ; --  -- Abstr
+lin action_azione_CN = UseN action_N ; -- Eng
+lin action_azione_CN = UseN azione_N ; -- Ita
+oper azione_N = mkN "azione" ; -- Ita
+
+fun agent_agente_CN : CN ; --  -- Abstr
+lin agent_agente_CN = UseN agent_N ; -- Eng
+lin agent_agente_CN = UseN agente_N ; -- Ita
+oper agente_N = mkN "agente" ; -- Ita
+
+fun air_tossicità_CN : CN ; --  -- Abstr
+lin air_tossicità_CN = UseN air_N ; -- Eng
+lin air_tossicità_CN = UseN tossicità_N ; -- Ita
+oper tossicità_N = mkN "tossicità" ; -- Ita
+
+fun ally_alleato_CN : CN ; --  -- Abstr
+lin ally_alleato_CN = UseN ally_N ; -- Eng
+lin ally_alleato_CN = UseN alleato_N ; -- Ita
+
+fun altercation_alterco_CN : CN ; --  -- Abstr
+lin altercation_alterco_CN = UseN altercation_N ; -- Eng
+lin altercation_alterco_CN = UseN alterco_N ; -- Ita
+
+fun amount_quantità_CN : CN ; --  -- Abstr
+lin amount_quantità_CN = UseN amount_N ; -- Eng
+lin amount_quantità_CN = UseN quantità_N ; -- Ita
+oper quantità_N = mkN "quantità" ; -- Ita
+
+fun analysis_a_analisi_CN : CN ; -- NP -- Abstr
+lin analysis_a_analisi_CN = UseN analysis_N ; -- Eng
+--- lin analysis_a_analisi_CN = DetCN a_Det (UseN analisi_N) ; -- Ita
+oper analisi_N = mkN "analisi" ; -- Ita
+
+fun analysis_analisi_CN : CN ; --  -- Abstr
+lin analysis_analisi_CN = UseN analysis_N ; -- Eng
+lin analysis_analisi_CN = UseN analisi_N ; -- Ita
+oper analisi_N = mkN "analisi" ; -- Ita
+
+fun analyst_analista_CN : CN ; --  -- Abstr
+lin analyst_analista_CN = UseN analyst_N ; -- Eng
+lin analyst_analista_CN = UseN analista_N ; -- Ita
+oper analista_N = mkN "analista" ; -- Ita
+
+fun appearance_apparizione_CN : CN ; --  -- Abstr
+lin appearance_apparizione_CN = UseN appearance_N ; -- Eng
+lin appearance_apparizione_CN = UseN apparizione_N ; -- Ita
+
+fun area_area_CN : CN ; --  -- Abstr
+lin area_area_CN = UseN area_N ; -- Eng
+lin area_area_CN = UseN area_N ; -- Ita
+
+fun art_arte_CN : CN ; --  -- Abstr
+lin art_arte_CN = UseN art_N ; -- Eng
+lin art_arte_CN = UseN arte_N ; -- Ita
+
+fun association_associazione_CN : CN ; --  -- Abstr
+lin association_associazione_CN = UseN association_N ; -- Eng
+lin association_associazione_CN = UseN associazione_N ; -- Ita
+
+fun average_aggirare_CN : CN ; -- Utt -- Abstr
+lin average_aggirare_CN = UseN average_N ; -- Eng
+--- lin average_aggirare_CN = UttVP (UseV aggirare_V) ; -- Ita
+
+fun belief_assemblea_CN : CN ; --  -- Abstr
+lin belief_assemblea_CN = UseN belief_N ; -- Eng
+lin belief_assemblea_CN = UseN assemblea_N ; -- Ita
+
+fun blogger_precedenza_CN : CN ; --  -- Abstr
+lin blogger_precedenza_CN = UseN blogger_N ; -- Eng
+lin blogger_precedenza_CN = UseN precedenza_N ; -- Ita
+
+fun break_allontanare_CN : CN ; -- Utt -- Abstr
+lin break_allontanare_CN = UseN break_N ; -- Eng
+--- lin break_allontanare_CN = UttVP (UseV allontanare_V) ; -- Ita
+
+fun capital_capitale_CN : CN ; --  -- Abstr
+lin capital_capitale_CN = UseN capital_N ; -- Eng
+lin capital_capitale_CN = UseN capitale_N ; -- Ita
+oper capitale_N = mkN "capitale" ; -- Ita
+
+fun celebrity_celebrità_CN : CN ; --  -- Abstr
+lin celebrity_celebrità_CN = UseN celebrity_N ; -- Eng
+lin celebrity_celebrità_CN = UseN celebrità_N ; -- Ita
+oper celebrità_N = mkN "celebrità" ; -- Ita
+
+fun census_di_the_censimento_CN : CN ; -- PP -- Abstr
+lin census_di_the_censimento_CN = UseN census_N ; -- Eng
+--- lin census_di_the_censimento_CN = PrepNP di_Prep (DetCN the_Det (UseN censimento_N)) ; -- Ita
+
+fun cigarette_sigaretta_CN : CN ; --  -- Abstr
+lin cigarette_sigaretta_CN = UseN cigarette_N ; -- Eng
+lin cigarette_sigaretta_CN = UseN sigaretta_N ; -- Ita
+
+fun city_aria_CN : CN ; --  -- Abstr
+lin city_aria_CN = UseN city_N ; -- Eng
+lin city_aria_CN = UseN aria_N ; -- Ita
+
+fun city_set_CN : CN ; --  -- Abstr
+lin city_set_CN = UseN city_N ; -- Eng
+lin city_set_CN = UseN set_N ; -- Ita
+oper set_N = mkN "set" ; -- Ita
+
+fun class_classe_CN : CN ; --  -- Abstr
+lin class_classe_CN = UseN class_N ; -- Eng
+lin class_classe_CN = UseN classe_N ; -- Ita
+
+fun club_Metropolitan_CN : CN ; -- NP -- Abstr
+lin club_Metropolitan_CN = UseN club_N ; -- Eng
+--- lin club_Metropolitan_CN = UsePN Metropolitan_PN ; -- Ita
+oper Metropolitan_PN = mkPN "Metropolitan" ; -- Ita
+
+fun coast_aprile_CN : CN ; --  -- Abstr
+lin coast_aprile_CN = UseN coast_N ; -- Eng
+lin coast_aprile_CN = UseN aprile_N ; -- Ita
+
+fun comment_commento_CN : CN ; --  -- Abstr
+lin comment_commento_CN = UseN comment_N ; -- Eng
+lin comment_commento_CN = UseN commento_N ; -- Ita
+
+fun company_compagnia_CN : CN ; --  -- Abstr
+lin company_compagnia_CN = UseN company_N ; -- Eng
+lin company_compagnia_CN = UseN compagnia_N ; -- Ita
+
+fun company_società_CN : CN ; --  -- Abstr
+lin company_società_CN = UseN company_N ; -- Eng
+lin company_società_CN = UseN società_N ; -- Ita
+oper società_N = mkN "società" ; -- Ita
+
+fun comparison_confronto_CN : CN ; --  -- Abstr
+lin comparison_confronto_CN = UseN comparison_N ; -- Eng
+lin comparison_confronto_CN = UseN confronto_N ; -- Ita
+
+fun complaint_protesta_CN : CN ; --  -- Abstr
+lin complaint_protesta_CN = UseN complaint_N ; -- Eng
+lin complaint_protesta_CN = UseN protesta_N ; -- Ita
+
+fun component_componente_CN : CN ; --  -- Abstr
+lin component_componente_CN = UseN component_N ; -- Eng
+lin component_componente_CN = UseN componente_N ; -- Ita
+oper componente_N = mkN "componente" ; -- Ita
+
+fun concert_concerto_CN : CN ; --  -- Abstr
+lin concert_concerto_CN = UseN concert_N ; -- Eng
+lin concert_concerto_CN = UseN concerto_N ; -- Ita
+
+fun contraceptive_contraccezione_CN : CN ; --  -- Abstr
+lin contraceptive_contraccezione_CN = UseN contraceptive_N ; -- Eng
+lin contraceptive_contraccezione_CN = UseN contraccezione_N ; -- Ita
+
+fun counsellor_scuola_CN : CN ; --  -- Abstr
+lin counsellor_scuola_CN = UseN counsellor_N ; -- Eng
+lin counsellor_scuola_CN = UseN scuola_N ; -- Ita
+
+fun country_passo_CN : CN ; --  -- Abstr
+lin country_passo_CN = UseN country_N ; -- Eng
+lin country_passo_CN = UseN passo_N ; -- Ita
+
+fun course_corso_CN : CN ; --  -- Abstr
+lin course_corso_CN = UseN course_N ; -- Eng
+lin course_corso_CN = UseN corso_N ; -- Ita
+
+fun date_data_CN : CN ; --  -- Abstr
+lin date_data_CN = UseN date_N ; -- Eng
+lin date_data_CN = UseN data_N ; -- Ita
+
+fun datum_dato_CN : CN ; --  -- Abstr
+lin datum_dato_CN = UseN datum_N ; -- Eng
+lin datum_dato_CN = UseN dato_N ; -- Ita
+
+fun daughter_figlio_CN : CN ; --  -- Abstr
+lin daughter_figlio_CN = UseN daughter_N ; -- Eng
+lin daughter_figlio_CN = UseN figlio_N ; -- Ita
+
+fun day_giorno_CN : CN ; --  -- Abstr
+lin day_giorno_CN = UseN day_N ; -- Eng
+lin day_giorno_CN = UseN giorno_N ; -- Ita
+
+fun debate_dibattito_CN : CN ; --  -- Abstr
+lin debate_dibattito_CN = UseN debate_N ; -- Eng
+lin debate_dibattito_CN = UseN dibattito_N ; -- Ita
+
+fun detail_dettaglio_CN : CN ; --  -- Abstr
+lin detail_dettaglio_CN = UseN detail_N ; -- Eng
+lin detail_dettaglio_CN = UseN dettaglio_N ; -- Ita
+
+fun direction_direzione_CN : CN ; --  -- Abstr
+lin direction_direzione_CN = UseN direction_N ; -- Eng
+lin direction_direzione_CN = UseN direzione_N ; -- Ita
+
+fun disaster_disastro_CN : CN ; --  -- Abstr
+lin disaster_disastro_CN = UseN disaster_N ; -- Eng
+lin disaster_disastro_CN = UseN disastro_N ; -- Ita
+
+fun disruption_interruzione_CN : CN ; --  -- Abstr
+lin disruption_interruzione_CN = UseN disruption_N ; -- Eng
+lin disruption_interruzione_CN = UseN interruzione_N ; -- Ita
+
+fun element_iridio_CN : CN ; --  -- Abstr
+lin element_iridio_CN = UseN element_N ; -- Eng
+lin element_iridio_CN = UseN iridio_N ; -- Ita
+oper iridio_N = mkN "iridio" ; -- Ita
+
+fun everyone_tutto_CN : CN ; --  -- Abstr
+lin everyone_tutto_CN = UseN everyone_N ; -- Eng
+lin everyone_tutto_CN = UseN tutto_N ; -- Ita
+oper everyone_N = mkN "everyone" ; -- Eng
+oper tutto_N = mkN "tutto" ; -- Ita
+
+fun example_esempio_CN : CN ; --  -- Abstr
+lin example_esempio_CN = UseN example_N ; -- Eng
+lin example_esempio_CN = UseN esempio_N ; -- Ita
+
+fun exchange_scambio_CN : CN ; --  -- Abstr
+lin exchange_scambio_CN = UseN exchange_N ; -- Eng
+lin exchange_scambio_CN = UseN scambio_N ; -- Ita
+
+fun experiment_esperimento_CN : CN ; --  -- Abstr
+lin experiment_esperimento_CN = UseN experiment_N ; -- Eng
+lin experiment_esperimento_CN = UseN esperimento_N ; -- Ita
+
+fun fate_destino_CN : CN ; --  -- Abstr
+lin fate_destino_CN = UseN fate_N ; -- Eng
+lin fate_destino_CN = UseN destino_N ; -- Ita
+
+fun feasibility_di_fattibilità_CN : CN ; -- PP -- Abstr
+lin feasibility_di_fattibilità_CN = UseN feasibility_N ; -- Eng
+--- lin feasibility_di_fattibilità_CN = PrepNP di_Prep (MassNP (UseN fattibilità_N)) ; -- Ita
+oper fattibilità_N = mkN "fattibilità" ; -- Ita
+
+fun fight_rissa_CN : CN ; --  -- Abstr
+lin fight_rissa_CN = UseN fight_N ; -- Eng
+lin fight_rissa_CN = UseN rissa_N ; -- Ita
+
+fun fine_sanzione_CN : CN ; --  -- Abstr
+lin fine_sanzione_CN = UseN fine_N ; -- Eng
+lin fine_sanzione_CN = UseN sanzione_N ; -- Ita
+
+fun flight_disponibile_CN : CN ; -- A -- Abstr
+lin flight_disponibile_CN = UseN flight_N ; -- Eng
+--- lin flight_disponibile_CN = disponibile_A ; -- Ita
+
+fun founder_fondatore_CN : CN ; --  -- Abstr
+lin founder_fondatore_CN = UseN founder_N ; -- Eng
+lin founder_fondatore_CN = UseN fondatore_N ; -- Ita
+
+fun friend_amico_CN : CN ; --  -- Abstr
+lin friend_amico_CN = UseN friend_N ; -- Eng
+lin friend_amico_CN = UseN amico_N ; -- Ita
+
+fun game_gioco_CN : CN ; --  -- Abstr
+lin game_gioco_CN = UseN game_N ; -- Eng
+lin game_gioco_CN = UseN gioco_N ; -- Ita
+
+fun gathering_incontro_CN : CN ; --  -- Abstr
+lin gathering_incontro_CN = UseN gathering_N ; -- Eng
+lin gathering_incontro_CN = UseN incontro_N ; -- Ita
+
+fun government_governo_CN : CN ; --  -- Abstr
+lin government_governo_CN = UseN government_N ; -- Eng
+lin government_governo_CN = UseN governo_N ; -- Ita
+
+fun grandmother_nonna_CN : CN ; --  -- Abstr
+lin grandmother_nonna_CN = UseN grandmother_N ; -- Eng
+lin grandmother_nonna_CN = UseN nonna_N ; -- Ita
+
+fun guitarist_chitarrista_CN : CN ; --  -- Abstr
+lin guitarist_chitarrista_CN = UseN guitarist_N ; -- Eng
+lin guitarist_chitarrista_CN = UseN chitarrista_N ; -- Ita
+
+fun hair_di_the_capello_CN : CN ; -- PP -- Abstr
+lin hair_di_the_capello_CN = UseN hair_N ; -- Eng
+--- lin hair_di_the_capello_CN = PrepNP di_Prep (DetCN the_Det (UseN capello_N)) ; -- Ita
+
+fun hardware_attrezzatura_CN : CN ; --  -- Abstr
+lin hardware_attrezzatura_CN = UseN hardware_N ; -- Eng
+lin hardware_attrezzatura_CN = UseN attrezzatura_N ; -- Ita
+
+fun headline_scalpore_CN : CN ; --  -- Abstr
+lin headline_scalpore_CN = UseN headline_N ; -- Eng
+lin headline_scalpore_CN = UseN scalpore_N ; -- Ita
+
+fun height_picco_CN : CN ; --  -- Abstr
+lin height_picco_CN = UseN height_N ; -- Eng
+lin height_picco_CN = UseN picco_N ; -- Ita
+
+fun history_corso_CN : CN ; --  -- Abstr
+lin history_corso_CN = UseN history_N ; -- Eng
+lin history_corso_CN = UseN corso_N ; -- Ita
+
+fun history_precedente_CN : CN ; --  -- Abstr
+lin history_precedente_CN = UseN history_N ; -- Eng
+lin history_precedente_CN = UseN precedente_N ; -- Ita
+oper precedente_N = mkN "precedente" ; -- Ita
+
+fun hospital_ospedale_CN : CN ; --  -- Abstr
+lin hospital_ospedale_CN = UseN hospital_N ; -- Eng
+lin hospital_ospedale_CN = UseN ospedale_N ; -- Ita
+
+fun identity_focalizzare_CN : CN ; -- Utt -- Abstr
+lin identity_focalizzare_CN = UseN identity_N ; -- Eng
+--- lin identity_focalizzare_CN = UttVP (UseV focalizzare_V) ; -- Ita
+
+fun immigrant_immigrato_CN : CN ; --  -- Abstr
+lin immigrant_immigrato_CN = UseN immigrant_N ; -- Eng
+lin immigrant_immigrato_CN = UseN immigrato_N ; -- Ita
+
+fun intelligence_intelligenza_CN : CN ; --  -- Abstr
+lin intelligence_intelligenza_CN = UseN intelligence_N ; -- Eng
+lin intelligence_intelligenza_CN = UseN intelligenza_N ; -- Ita
+
+fun intent_fine_CN : CN ; --  -- Abstr
+lin intent_fine_CN = UseN intent_N ; -- Eng
+lin intent_fine_CN = UseN fine_N ; -- Ita
+oper fine_N = mkN "fine" ; -- Ita
+
+fun internet_internet_connessione_CN : CN ; --  -- Abstr
+lin internet_internet_connessione_CN = UseN internet_N ; -- Eng
+lin internet_internet_connessione_CN = UseN (CompoundN internet_N connessione_N) ; -- Ita
+oper internet_N = mkN "internet" ; -- Ita
+
+fun interview_giovedì_CN : CN ; --  -- Abstr
+lin interview_giovedì_CN = UseN interview_N ; -- Eng
+lin interview_giovedì_CN = UseN giovedì_N ; -- Ita
+oper giovedì_N = mkN "giovedì" ; -- Ita
+
+fun investment_investimento_CN : CN ; --  -- Abstr
+lin investment_investimento_CN = UseN investment_N ; -- Eng
+lin investment_investimento_CN = UseN investimento_N ; -- Ita
+
+fun invitation_invito_CN : CN ; --  -- Abstr
+lin invitation_invito_CN = UseN invitation_N ; -- Eng
+lin invitation_invito_CN = UseN invito_N ; -- Ita
+
+fun jail_prigione_CN : CN ; --  -- Abstr
+lin jail_prigione_CN = UseN jail_N ; -- Eng
+lin jail_prigione_CN = UseN prigione_N ; -- Ita
+
+fun jet_jet_CN : CN ; --  -- Abstr
+lin jet_jet_CN = UseN jet_N ; -- Eng
+lin jet_jet_CN = UseN jet_N ; -- Ita
+oper jet_N = mkN "jet" ; -- Ita
+
+fun level_livello_CN : CN ; --  -- Abstr
+lin level_livello_CN = UseN level_N ; -- Eng
+lin level_livello_CN = UseN livello_N ; -- Ita
+
+fun life_vita_CN : CN ; --  -- Abstr
+lin life_vita_CN = UseN life_N ; -- Eng
+lin life_vita_CN = UseN vita_N ; -- Ita
+
+fun lifetime_individuo_CN : CN ; --  -- Abstr
+lin lifetime_individuo_CN = UseN lifetime_N ; -- Eng
+lin lifetime_individuo_CN = UseN individuo_N ; -- Ita
+
+fun limit_limite_CN : CN ; --  -- Abstr
+lin limit_limite_CN = UseN limit_N ; -- Eng
+lin limit_limite_CN = UseN limite_N ; -- Ita
+
+fun link_collegamento_CN : CN ; --  -- Abstr
+lin link_collegamento_CN = UseN link_N ; -- Eng
+lin link_collegamento_CN = UseN collegamento_N ; -- Ita
+
+fun lot_concorrenza_CN : CN ; --  -- Abstr
+lin lot_concorrenza_CN = UseN lot_N ; -- Eng
+lin lot_concorrenza_CN = UseN concorrenza_N ; -- Ita
+
+fun lung_polmone_CN : CN ; --  -- Abstr
+lin lung_polmone_CN = UseN lung_N ; -- Eng
+lin lung_polmone_CN = UseN polmone_N ; -- Ita
+
+fun material_origine_CN : CN ; --  -- Abstr
+lin material_origine_CN = UseN material_N ; -- Eng
+lin material_origine_CN = UseN origine_N ; -- Ita
+
+fun message_messaggio_CN : CN ; --  -- Abstr
+lin message_messaggio_CN = UseN message_N ; -- Eng
+lin message_messaggio_CN = UseN messaggio_N ; -- Ita
+
+fun method_metodo_CN : CN ; --  -- Abstr
+lin method_metodo_CN = UseN method_N ; -- Eng
+lin method_metodo_CN = UseN metodo_N ; -- Ita
+
+fun mla_membro_CN : CN ; --  -- Abstr
+lin mla_membro_CN = UseN mla_N ; -- Eng
+lin mla_membro_CN = UseN membro_N ; -- Ita
+oper mla_N = mkN "mla" ; -- Eng
+
+fun morning_mattina_CN : CN ; --  -- Abstr
+lin morning_mattina_CN = UseN morning_N ; -- Eng
+lin morning_mattina_CN = UseN mattina_N ; -- Ita
+
+fun mutation_mutazione_CN : CN ; --  -- Abstr
+lin mutation_mutazione_CN = UseN mutation_N ; -- Eng
+lin mutation_mutazione_CN = UseN mutazione_N ; -- Ita
+
+fun name_nome_CN : CN ; --  -- Abstr
+lin name_nome_CN = UseN name_N ; -- Eng
+lin name_nome_CN = UseN nome_N ; -- Ita
+
+fun name_rientrare_CN : CN ; -- Utt -- Abstr
+lin name_rientrare_CN = UseN name_N ; -- Eng
+--- lin name_rientrare_CN = UttVP (UseV rientrare_V) ; -- Ita
+
+fun nation_aiuto_CN : CN ; --  -- Abstr
+lin nation_aiuto_CN = UseN nation_N ; -- Eng
+lin nation_aiuto_CN = UseN aiuto_N ; -- Ita
+
+fun nationality_nazionalità_CN : CN ; --  -- Abstr
+lin nationality_nazionalità_CN = UseN nationality_N ; -- Eng
+lin nationality_nazionalità_CN = UseN nazionalità_N ; -- Ita
+oper nazionalità_N = mkN "nazionalità" ; -- Ita
+
+fun need_necessità_CN : CN ; --  -- Abstr
+lin need_necessità_CN = UseN need_N ; -- Eng
+lin need_necessità_CN = UseN necessità_N ; -- Ita
+oper necessità_N = mkN "necessità" ; -- Ita
+
+fun number_numero_CN : CN ; --  -- Abstr
+lin number_numero_CN = UseN number_N ; -- Eng
+lin number_numero_CN = UseN numero_N ; -- Ita
+
+fun opportunity_rappresentare_CN : CN ; -- Utt -- Abstr
+lin opportunity_rappresentare_CN = UseN opportunity_N ; -- Eng
+--- lin opportunity_rappresentare_CN = UttVP (UseV rappresentare_V) ; -- Ita
+
+fun parallel_linea_CN : CN ; --  -- Abstr
+lin parallel_linea_CN = UseN parallel_N ; -- Eng
+lin parallel_linea_CN = UseN linea_N ; -- Ita
+
+fun pattern_configurazione_CN : CN ; --  -- Abstr
+lin pattern_configurazione_CN = UseN pattern_N ; -- Eng
+lin pattern_configurazione_CN = UseN configurazione_N ; -- Ita
+
+fun penalty_punizione_CN : CN ; --  -- Abstr
+lin penalty_punizione_CN = UseN penalty_N ; -- Eng
+lin penalty_punizione_CN = UseN punizione_N ; -- Ita
+
+fun people_parte_CN : CN ; --  -- Abstr
+lin people_parte_CN = UseN people_N ; -- Eng
+lin people_parte_CN = UseN parte_N ; -- Ita
+oper people_N = mkN "people" ; -- Eng
+
+fun person_persona_CN : CN ; --  -- Abstr
+lin person_persona_CN = UseN person_N ; -- Eng
+lin person_persona_CN = UseN persona_N ; -- Ita
+
+fun photo_foto_CN : CN ; --  -- Abstr
+lin photo_foto_CN = UseN photo_N ; -- Eng
+lin photo_foto_CN = UseN foto_N ; -- Ita
+oper foto_N = mkN "foto" ; -- Ita
+
+fun pig_considerare_CN : CN ; -- Utt -- Abstr
+lin pig_considerare_CN = UseN pig_N ; -- Eng
+--- lin pig_considerare_CN = UttVP (UseV considerare_V) ; -- Ita
+
+fun plan_Nazioni_CN : CN ; -- NP -- Abstr
+lin plan_Nazioni_CN = UseN plan_N ; -- Eng
+--- lin plan_Nazioni_CN = UsePN Nazioni_PN ; -- Ita
+oper Nazioni_PN = mkPN "Nazioni" ; -- Ita
+
+fun plenty_gamma_CN : CN ; --  -- Abstr
+lin plenty_gamma_CN = UseN plenty_N ; -- Eng
+lin plenty_gamma_CN = UseN gamma_N ; -- Ita
+
+fun police_the_polizia_CN : CN ; -- NP -- Abstr
+lin police_the_polizia_CN = UseN police_N ; -- Eng
+--- lin police_the_polizia_CN = DetCN the_Det (UseN polizia_N) ; -- Ita
+
+fun police_di_the_polizia_CN : CN ; -- PP -- Abstr
+lin police_di_the_polizia_CN = UseN police_N ; -- Eng
+--- lin police_di_the_polizia_CN = PrepNP di_Prep (DetCN the_Det (UseN polizia_N)) ; -- Ita
+
+fun police_polizia_CN : CN ; --  -- Abstr
+lin police_polizia_CN = UseN police_N ; -- Eng
+lin police_polizia_CN = UseN polizia_N ; -- Ita
+
+fun popularity_popolarità_CN : CN ; --  -- Abstr
+lin popularity_popolarità_CN = UseN popularity_N ; -- Eng
+lin popularity_popolarità_CN = UseN popolarità_N ; -- Ita
+oper popolarità_N = mkN "popolarità" ; -- Ita
+
+fun potential_possibilità_CN : CN ; --  -- Abstr
+lin potential_possibilità_CN = UseN potential_N ; -- Eng
+lin potential_possibilità_CN = UseN possibilità_N ; -- Ita
+oper possibilità_N = mkN "possibilità" ; -- Ita
+
+fun power_di_alimentazione_CN : CN ; -- PP -- Abstr
+lin power_di_alimentazione_CN = UseN power_N ; -- Eng
+--- lin power_di_alimentazione_CN = PrepNP di_Prep (MassNP (UseN alimentazione_N)) ; -- Ita
+
+fun power_potere_CN : CN ; --  -- Abstr
+lin power_potere_CN = UseN power_N ; -- Eng
+lin power_potere_CN = UseN potere_N ; -- Ita
+
+fun president_presidente_CN : CN ; --  -- Abstr
+lin president_presidente_CN = UseN president_N ; -- Eng
+lin president_presidente_CN = UseN presidente_N ; -- Ita
+oper presidente_N = mkN "presidente" ; -- Ita
+
+fun president_qualità_CN : CN ; --  -- Abstr
+lin president_qualità_CN = UseN president_N ; -- Eng
+lin president_qualità_CN = UseN qualità_N ; -- Ita
+oper qualità_N = mkN "qualità" ; -- Ita
+
+fun promise_promessa_CN : CN ; --  -- Abstr
+lin promise_promessa_CN = UseN promise_N ; -- Eng
+lin promise_promessa_CN = UseN promessa_N ; -- Ita
+
+fun question_interrogativo_CN : CN ; --  -- Abstr
+lin question_interrogativo_CN = UseN question_N ; -- Eng
+lin question_interrogativo_CN = UseN interrogativo_N ; -- Ita
+
+fun release_distribuzione_CN : CN ; --  -- Abstr
+lin release_distribuzione_CN = UseN release_N ; -- Eng
+lin release_distribuzione_CN = UseN distribuzione_N ; -- Ita
+
+fun republic_repubblica_CN : CN ; --  -- Abstr
+lin republic_repubblica_CN = UseN republic_N ; -- Eng
+lin republic_repubblica_CN = UseN repubblica_N ; -- Ita
+
+fun researcher_the_ricercatore_CN : CN ; -- NP -- Abstr
+lin researcher_the_ricercatore_CN = UseN researcher_N ; -- Eng
+--- lin researcher_the_ricercatore_CN = DetCN the_Det (UseN ricercatore_N) ; -- Ita
+
+fun responsibility_responsabilità_CN : CN ; --  -- Abstr
+lin responsibility_responsabilità_CN = UseN responsibility_N ; -- Eng
+lin responsibility_responsabilità_CN = UseN responsabilità_N ; -- Ita
+oper responsabilità_N = mkN "responsabilità" ; -- Ita
+
+fun result_risultato_CN : CN ; --  -- Abstr
+lin result_risultato_CN = UseN result_N ; -- Eng
+lin result_risultato_CN = UseN risultato_N ; -- Ita
+
+fun scan_ecografia_CN : CN ; --  -- Abstr
+lin scan_ecografia_CN = UseN scan_N ; -- Eng
+lin scan_ecografia_CN = UseN ecografia_N ; -- Ita
+
+fun schoolchildren_studente_CN : CN ; --  -- Abstr
+lin schoolchildren_studente_CN = UseN schoolchildren_N ; -- Eng
+lin schoolchildren_studente_CN = UseN studente_N ; -- Ita
+oper schoolchildren_N = mkN "schoolchildren" ; -- Eng
+
+fun scientist_scienziato_CN : CN ; --  -- Abstr
+lin scientist_scienziato_CN = UseN scientist_N ; -- Eng
+lin scientist_scienziato_CN = UseN scienziato_N ; -- Ita
+
+fun security_in_sicurezza_CN : CN ; -- PP -- Abstr
+lin security_in_sicurezza_CN = UseN security_N ; -- Eng
+--- lin security_in_sicurezza_CN = PrepNP in_Prep (MassNP (UseN sicurezza_N)) ; -- Ita
+
+fun set_riferire_CN : CN ; -- Utt -- Abstr
+lin set_riferire_CN = UseN set_N ; -- Eng
+--- lin set_riferire_CN = UttVP (UseV riferire_V) ; -- Ita
+
+fun share_crescita_CN : CN ; --  -- Abstr
+lin share_crescita_CN = UseN share_N ; -- Eng
+lin share_crescita_CN = UseN crescita_N ; -- Ita
+
+fun show_show_CN : CN ; --  -- Abstr
+lin show_show_CN = UseN show_N ; -- Eng
+lin show_show_CN = UseN show_N ; -- Ita
+oper show_N = mkN "show" ; -- Ita
+
+fun side_parte_CN : CN ; --  -- Abstr
+lin side_parte_CN = UseN side_N ; -- Eng
+lin side_parte_CN = UseN parte_N ; -- Ita
+
+fun someone_qualcuno_CN : CN ; --  -- Abstr
+lin someone_qualcuno_CN = UseN someone_N ; -- Eng
+lin someone_qualcuno_CN = UseN qualcuno_N ; -- Ita
+oper someone_N = mkN "someone" ; -- Eng
+oper qualcuno_N = mkN "qualcuno" ; -- Ita
+
+fun speaker_di_oratore_CN : CN ; -- PP -- Abstr
+lin speaker_di_oratore_CN = UseN speaker_N ; -- Eng
+--- lin speaker_di_oratore_CN = PrepNP di_Prep (PluralNP (UseN oratore_N)) ; -- Ita
+
+fun spending_spesa_CN : CN ; --  -- Abstr
+lin spending_spesa_CN = UseN spending_N ; -- Eng
+lin spending_spesa_CN = UseN spesa_N ; -- Ita
+
+fun sponsorship_strategia_CN : CN ; --  -- Abstr
+lin sponsorship_strategia_CN = UseN sponsorship_N ; -- Eng
+lin sponsorship_strategia_CN = UseN strategia_N ; -- Ita
+
+fun spotlight_riflettore_CN : CN ; --  -- Abstr
+lin spotlight_riflettore_CN = UseN spotlight_N ; -- Eng
+lin spotlight_riflettore_CN = UseN riflettore_N ; -- Ita
+
+fun state_Stati_CN : CN ; -- NP -- Abstr
+lin state_Stati_CN = UseN state_N ; -- Eng
+--- lin state_Stati_CN = UsePN Stati_PN ; -- Ita
+oper Stati_PN = mkPN "Stati" ; -- Ita
+
+fun student_the_studente_CN : CN ; -- NP -- Abstr
+lin student_the_studente_CN = UseN student_N ; -- Eng
+--- lin student_the_studente_CN = DetCN the_Det (UseN studente_N) ; -- Ita
+
+fun student_studente_CN : CN ; --  -- Abstr
+lin student_studente_CN = UseN student_N ; -- Eng
+lin student_studente_CN = UseN studente_N ; -- Ita
+
+fun suspect_sospettare_CN : CN ; --  -- Abstr
+lin suspect_sospettare_CN = UseN suspect_N ; -- Eng
+lin suspect_sospettare_CN = UseN sospettare_N ; -- Ita
+oper sospettare_N = mkN "sospettare" ; -- Ita
+
+fun suspect_sospetto_CN : CN ; --  -- Abstr
+lin suspect_sospetto_CN = UseN suspect_N ; -- Eng
+lin suspect_sospetto_CN = UseN sospetto_N ; -- Ita
+
+fun teacher_insegnante_CN : CN ; --  -- Abstr
+lin teacher_insegnante_CN = UseN teacher_N ; -- Eng
+lin teacher_insegnante_CN = UseN insegnante_N ; -- Ita
+oper insegnante_N = mkN "insegnante" ; -- Ita
+
+fun technology_tecnologia_CN : CN ; --  -- Abstr
+lin technology_tecnologia_CN = UseN technology_N ; -- Eng
+lin technology_tecnologia_CN = UseN tecnologia_N ; -- Ita
+
+fun telltale_segnale_CN : CN ; --  -- Abstr
+lin telltale_segnale_CN = UseN telltale_N ; -- Eng
+lin telltale_segnale_CN = UseN segnale_N ; -- Ita
+
+fun term_mandato_CN : CN ; --  -- Abstr
+lin term_mandato_CN = UseN term_N ; -- Eng
+lin term_mandato_CN = UseN mandato_N ; -- Ita
+
+fun tissue_tessuto_CN : CN ; --  -- Abstr
+lin tissue_tessuto_CN = UseN tissue_N ; -- Eng
+lin tissue_tessuto_CN = UseN tessuto_N ; -- Ita
+
+fun tonight_by8means_the_punizione_CN : CN ; -- PP -- Abstr
+lin tonight_by8means_the_punizione_CN = UseN tonight_N ; -- Eng
+--- lin tonight_by8means_the_punizione_CN = PrepNP by8means_Prep (DetCN the_Det (UseN punizione_N)) ; -- Ita
+
+fun transit_the_transizione_CN : CN ; -- NP -- Abstr
+lin transit_the_transizione_CN = UseN transit_N ; -- Eng
+--- lin transit_the_transizione_CN = DetCN the_Det (UseN transizione_N) ; -- Ita
+
+fun transition_di_transizione_CN : CN ; -- PP -- Abstr
+lin transition_di_transizione_CN = UseN transition_N ; -- Eng
+--- lin transition_di_transizione_CN = PrepNP di_Prep (MassNP (UseN transizione_N)) ; -- Ita
+
+fun transition_transizione_CN : CN ; --  -- Abstr
+lin transition_transizione_CN = UseN transition_N ; -- Eng
+lin transition_transizione_CN = UseN transizione_N ; -- Ita
+
+fun travel_di_viaggio_CN : CN ; -- PP -- Abstr
+lin travel_di_viaggio_CN = UseN travel_N ; -- Eng
+--- lin travel_di_viaggio_CN = PrepNP di_Prep (PluralNP (UseN viaggio_N)) ; -- Ita
+
+fun treatment_cura_CN : CN ; --  -- Abstr
+lin treatment_cura_CN = UseN treatment_N ; -- Eng
+lin treatment_cura_CN = UseN cura_N ; -- Ita
+
+fun trip_viaggio_CN : CN ; --  -- Abstr
+lin trip_viaggio_CN = UseN trip_N ; -- Eng
+lin trip_viaggio_CN = UseN viaggio_N ; -- Ita
+
+fun tumour_tumore_CN : CN ; --  -- Abstr
+lin tumour_tumore_CN = UseN tumour_N ; -- Eng
+lin tumour_tumore_CN = UseN tumore_N ; -- Ita
+
+fun victim_vittima_CN : CN ; --  -- Abstr
+lin victim_vittima_CN = UseN victim_N ; -- Eng
+lin victim_vittima_CN = UseN vittima_N ; -- Ita
+
+fun vote_voto_CN : CN ; --  -- Abstr
+lin vote_voto_CN = UseN vote_N ; -- Eng
+lin vote_voto_CN = UseN voto_N ; -- Ita
+
+fun way_caso_CN : CN ; --  -- Abstr
+lin way_caso_CN = UseN way_N ; -- Eng
+lin way_caso_CN = UseN caso_N ; -- Ita
+
+fun way_ragazzo_CN : CN ; --  -- Abstr
+lin way_ragazzo_CN = UseN way_N ; -- Eng
+lin way_ragazzo_CN = UseN ragazzo_N ; -- Ita
+
+fun wife_moglie_CN : CN ; --  -- Abstr
+lin wife_moglie_CN = UseN wife_N ; -- Eng
+lin wife_moglie_CN = UseN moglie_N ; -- Ita
+
+fun witness_testimone_CN : CN ; --  -- Abstr
+lin witness_testimone_CN = UseN witness_N ; -- Eng
+lin witness_testimone_CN = UseN testimone_N ; -- Ita
+oper testimone_N = mkN "testimone" ; -- Ita
+
+fun word_opinione_CN : CN ; --  -- Abstr
+lin word_opinione_CN = UseN word_N ; -- Eng
+lin word_opinione_CN = UseN opinione_N ; -- Ita
+
+fun year_anno_CN : CN ; --  -- Abstr
+lin year_anno_CN = UseN year_N ; -- Eng
+lin year_anno_CN = UseN anno_N ; -- Ita
+
+fun yuk_disgusto_CN : CN ; --  -- Abstr
+lin yuk_disgusto_CN = UseN yuk_N ; -- Eng
+lin yuk_disgusto_CN = UseN disgusto_N ; -- Ita
+oper yuk_N = mkN "yuk" ; -- Eng
+
+fun Melania_Trump_Melania_Trump_NP : NP ; --  -- Abstr
+lin Melania_Trump_Melania_Trump_NP = UsePN (FlatPN Melania_PN Trump_PN) ; -- Eng
+lin Melania_Trump_Melania_Trump_NP = UsePN (FlatPN Melania_PN Trump_PN) ; -- Ita
+oper Melania_PN = mkPN "Melania" ; -- Eng
+oper Trump_PN = mkPN "Trump" ; -- Eng
+oper Melania_PN = mkPN "Melania" ; -- Ita
+oper Trump_PN = mkPN "Trump" ; -- Ita
+
+fun Michael_Fallon_Michael_Fallon_NP : NP ; --  -- Abstr
+lin Michael_Fallon_Michael_Fallon_NP = UsePN (FlatPN Michael_PN Fallon_PN) ; -- Eng
+lin Michael_Fallon_Michael_Fallon_NP = UsePN (FlatPN Michael_PN Fallon_PN) ; -- Ita
+oper Michael_PN = mkPN "Michael" ; -- Eng
+oper Fallon_PN = mkPN "Fallon" ; -- Eng
+oper Michael_PN = mkPN "Michael" ; -- Ita
+oper Fallon_PN = mkPN "Fallon" ; -- Ita
+
+fun Ms_Pugh_ms_Pugh_NP : NP ; --  -- Abstr
+lin Ms_Pugh_ms_Pugh_NP = UsePN (FlatPN Ms_PN Pugh_PN) ; -- Eng
+lin Ms_Pugh_ms_Pugh_NP = UsePN (FlatPN ms_PN Pugh_PN) ; -- Ita
+oper Ms_PN = mkPN "Ms" ; -- Eng
+oper Pugh_PN = mkPN "Pugh" ; -- Eng
+oper ms_PN = mkPN "ms" ; -- Ita
+oper Pugh_PN = mkPN "Pugh" ; -- Ita
+
+fun mr_Osborne_mr_Osborne_NP : NP ; --  -- Abstr
+lin mr_Osborne_mr_Osborne_NP = UsePN (FlatPN mr_PN Osborne_PN) ; -- Eng
+lin mr_Osborne_mr_Osborne_NP = UsePN (FlatPN mr_PN Osborne_PN) ; -- Ita
+oper mr_PN = mkPN "mr" ; -- Eng
+oper Osborne_PN = mkPN "Osborne" ; -- Eng
+oper mr_PN = mkPN "mr" ; -- Ita
+oper Osborne_PN = mkPN "Osborne" ; -- Ita
+
+fun mr_Panvalkar_Mr_Panvalkar_NP : NP ; --  -- Abstr
+lin mr_Panvalkar_Mr_Panvalkar_NP = UsePN (FlatPN mr_PN Panvalkar_PN) ; -- Eng
+lin mr_Panvalkar_Mr_Panvalkar_NP = UsePN (FlatPN Mr_PN Panvalkar_PN) ; -- Ita
+oper mr_PN = mkPN "mr" ; -- Eng
+oper Panvalkar_PN = mkPN "Panvalkar" ; -- Eng
+oper Mr_PN = mkPN "Mr" ; -- Ita
+oper Panvalkar_PN = mkPN "Panvalkar" ; -- Ita
+
+fun Addenbrooke_Addenbrooke_NP : NP ; --  -- Abstr
+lin Addenbrooke_Addenbrooke_NP = UsePN Addenbrooke_PN ; -- Eng
+lin Addenbrooke_Addenbrooke_NP = UsePN Addenbrooke_PN ; -- Ita
+oper Addenbrooke_PN = mkPN "Addenbrooke" ; -- Eng
+oper Addenbrooke_PN = mkPN "Addenbrooke" ; -- Ita
+
+fun Andre_Andre_NP : NP ; --  -- Abstr
+lin Andre_Andre_NP = UsePN Andre_PN ; -- Eng
+lin Andre_Andre_NP = UsePN Andre_PN ; -- Ita
+oper Andre_PN = mkPN "Andre" ; -- Eng
+oper Andre_PN = mkPN "Andre" ; -- Ita
+
+fun Apple_Apple_NP : NP ; --  -- Abstr
+lin Apple_Apple_NP = UsePN Apple_PN ; -- Eng
+lin Apple_Apple_NP = UsePN Apple_PN ; -- Ita
+oper Apple_PN = mkPN "Apple" ; -- Eng
+oper Apple_PN = mkPN "Apple" ; -- Ita
+
+fun April_aprile_NP : NP ; -- CN -- Abstr
+lin April_aprile_NP = UsePN April_PN ; -- Eng
+--- lin April_aprile_NP = UseN aprile_N ; -- Ita
+oper April_PN = mkPN "April" ; -- Eng
+
+fun April_giugno_NP : NP ; -- CN -- Abstr
+lin April_giugno_NP = UsePN April_PN ; -- Eng
+--- lin April_giugno_NP = UseN giugno_N ; -- Ita
+oper April_PN = mkPN "April" ; -- Eng
+
+fun Associated_Press_NP : NP ; --  -- Abstr
+lin Associated_Press_NP = UsePN Associated_PN ; -- Eng
+lin Associated_Press_NP = UsePN Press_PN ; -- Ita
+oper Associated_PN = mkPN "Associated" ; -- Eng
+oper Press_PN = mkPN "Press" ; -- Ita
+
+fun BBC_BBC_NP : NP ; --  -- Abstr
+lin BBC_BBC_NP = UsePN BBC_PN ; -- Eng
+lin BBC_BBC_NP = UsePN BBC_PN ; -- Ita
+oper BBC_PN = mkPN "BBC" ; -- Eng
+oper BBC_PN = mkPN "BBC" ; -- Ita
+
+fun Beijing_Pechino_NP : NP ; --  -- Abstr
+lin Beijing_Pechino_NP = UsePN Beijing_PN ; -- Eng
+lin Beijing_Pechino_NP = UsePN Pechino_PN ; -- Ita
+oper Beijing_PN = mkPN "Beijing" ; -- Eng
+oper Pechino_PN = mkPN "Pechino" ; -- Ita
+
+fun CBC_News_NP : NP ; --  -- Abstr
+lin CBC_News_NP = UsePN CBC_PN ; -- Eng
+lin CBC_News_NP = UsePN News_PN ; -- Ita
+oper CBC_PN = mkPN "CBC" ; -- Eng
+oper News_PN = mkPN "News" ; -- Ita
+
+fun Clinton_Clinton_NP : NP ; --  -- Abstr
+lin Clinton_Clinton_NP = UsePN Clinton_PN ; -- Eng
+lin Clinton_Clinton_NP = UsePN Clinton_PN ; -- Ita
+oper Clinton_PN = mkPN "Clinton" ; -- Eng
+oper Clinton_PN = mkPN "Clinton" ; -- Ita
+
+fun Crimea_Crimea_NP : NP ; --  -- Abstr
+lin Crimea_Crimea_NP = UsePN Crimea_PN ; -- Eng
+lin Crimea_Crimea_NP = UsePN Crimea_PN ; -- Ita
+oper Crimea_PN = mkPN "Crimea" ; -- Eng
+oper Crimea_PN = mkPN "Crimea" ; -- Ita
+
+fun Erik_Accordo_NP : NP ; --  -- Abstr
+lin Erik_Accordo_NP = UsePN Erik_PN ; -- Eng
+lin Erik_Accordo_NP = UsePN Accordo_PN ; -- Ita
+oper Erik_PN = mkPN "Erik" ; -- Eng
+oper Accordo_PN = mkPN "Accordo" ; -- Ita
+
+fun Fallon_Fallon_NP : NP ; --  -- Abstr
+lin Fallon_Fallon_NP = UsePN Fallon_PN ; -- Eng
+lin Fallon_Fallon_NP = UsePN Fallon_PN ; -- Ita
+oper Fallon_PN = mkPN "Fallon" ; -- Eng
+oper Fallon_PN = mkPN "Fallon" ; -- Ita
+
+fun Georgetown_di_Georgetown_NP : NP ; -- PP -- Abstr
+lin Georgetown_di_Georgetown_NP = UsePN Georgetown_PN ; -- Eng
+--- lin Georgetown_di_Georgetown_NP = PrepNP di_Prep (UsePN Georgetown_PN) ; -- Ita
+oper Georgetown_PN = mkPN "Georgetown" ; -- Eng
+oper Georgetown_PN = mkPN "Georgetown" ; -- Ita
+
+fun Google_Assistant_NP : NP ; --  -- Abstr
+lin Google_Assistant_NP = UsePN Google_PN ; -- Eng
+lin Google_Assistant_NP = UsePN Assistant_PN ; -- Ita
+oper Google_PN = mkPN "Google" ; -- Eng
+oper Assistant_PN = mkPN "Assistant" ; -- Ita
+
+fun Guilbeault_Guilbeault_NP : NP ; --  -- Abstr
+lin Guilbeault_Guilbeault_NP = UsePN Guilbeault_PN ; -- Eng
+lin Guilbeault_Guilbeault_NP = UsePN Guilbeault_PN ; -- Ita
+oper Guilbeault_PN = mkPN "Guilbeault" ; -- Eng
+oper Guilbeault_PN = mkPN "Guilbeault" ; -- Ita
+
+fun Huawei_Huawei_NP : NP ; --  -- Abstr
+lin Huawei_Huawei_NP = UsePN Huawei_PN ; -- Eng
+lin Huawei_Huawei_NP = UsePN Huawei_PN ; -- Ita
+oper Huawei_PN = mkPN "Huawei" ; -- Eng
+oper Huawei_PN = mkPN "Huawei" ; -- Ita
+
+fun Jesse_Jesse_NP : NP ; --  -- Abstr
+lin Jesse_Jesse_NP = UsePN Jesse_PN ; -- Eng
+lin Jesse_Jesse_NP = UsePN Jesse_PN ; -- Ita
+oper Jesse_PN = mkPN "Jesse" ; -- Eng
+oper Jesse_PN = mkPN "Jesse" ; -- Ita
+
+fun Joe_Joe_NP : NP ; --  -- Abstr
+lin Joe_Joe_NP = UsePN Joe_PN ; -- Eng
+lin Joe_Joe_NP = UsePN Joe_PN ; -- Ita
+oper Joe_PN = mkPN "Joe" ; -- Eng
+oper Joe_PN = mkPN "Joe" ; -- Ita
+
+fun July_luglio_NP : NP ; -- CN -- Abstr
+lin July_luglio_NP = UsePN July_PN ; -- Eng
+--- lin July_luglio_NP = UseN luglio_N ; -- Ita
+oper July_PN = mkPN "July" ; -- Eng
+
+fun June_costa_NP : NP ; -- CN -- Abstr
+lin June_costa_NP = UsePN June_PN ; -- Eng
+--- lin June_costa_NP = UseN costa_N ; -- Ita
+oper June_PN = mkPN "June" ; -- Eng
+
+fun Kamchatka_Kamchatka_NP : NP ; --  -- Abstr
+lin Kamchatka_Kamchatka_NP = UsePN Kamchatka_PN ; -- Eng
+lin Kamchatka_Kamchatka_NP = UsePN Kamchatka_PN ; -- Ita
+oper Kamchatka_PN = mkPN "Kamchatka" ; -- Eng
+oper Kamchatka_PN = mkPN "Kamchatka" ; -- Ita
+
+fun Khanzir_Khanzir_NP : NP ; --  -- Abstr
+lin Khanzir_Khanzir_NP = UsePN Khanzir_PN ; -- Eng
+lin Khanzir_Khanzir_NP = UsePN Khanzir_PN ; -- Ita
+oper Khanzir_PN = mkPN "Khanzir" ; -- Eng
+oper Khanzir_PN = mkPN "Khanzir" ; -- Ita
+
+fun Klein_Klein_NP : NP ; --  -- Abstr
+lin Klein_Klein_NP = UsePN Klein_PN ; -- Eng
+lin Klein_Klein_NP = UsePN Klein_PN ; -- Ita
+oper Klein_PN = mkPN "Klein" ; -- Eng
+oper Klein_PN = mkPN "Klein" ; -- Ita
+
+fun Kori_Schulman_NP : NP ; --  -- Abstr
+lin Kori_Schulman_NP = UsePN Kori_PN ; -- Eng
+lin Kori_Schulman_NP = UsePN Schulman_PN ; -- Ita
+oper Kori_PN = mkPN "Kori" ; -- Eng
+oper Schulman_PN = mkPN "Schulman" ; -- Ita
+
+fun LaBrocca_LaBrocca_NP : NP ; --  -- Abstr
+lin LaBrocca_LaBrocca_NP = UsePN LaBrocca_PN ; -- Eng
+lin LaBrocca_LaBrocca_NP = UsePN LaBrocca_PN ; -- Ita
+oper LaBrocca_PN = mkPN "LaBrocca" ; -- Eng
+oper LaBrocca_PN = mkPN "LaBrocca" ; -- Ita
+
+fun Mailis_Mailis_NP : NP ; --  -- Abstr
+lin Mailis_Mailis_NP = UsePN Mailis_PN ; -- Eng
+lin Mailis_Mailis_NP = UsePN Mailis_PN ; -- Ita
+oper Mailis_PN = mkPN "Mailis" ; -- Eng
+oper Mailis_PN = mkPN "Mailis" ; -- Ita
+
+fun Melania_Melania_NP : NP ; --  -- Abstr
+lin Melania_Melania_NP = UsePN Melania_PN ; -- Eng
+lin Melania_Melania_NP = UsePN Melania_PN ; -- Ita
+oper Melania_PN = mkPN "Melania" ; -- Eng
+oper Melania_PN = mkPN "Melania" ; -- Ita
+
+fun Michael_Michael_NP : NP ; --  -- Abstr
+lin Michael_Michael_NP = UsePN Michael_PN ; -- Eng
+lin Michael_Michael_NP = UsePN Michael_PN ; -- Ita
+oper Michael_PN = mkPN "Michael" ; -- Eng
+oper Michael_PN = mkPN "Michael" ; -- Ita
+
+fun Ms_ms_NP : NP ; --  -- Abstr
+lin Ms_ms_NP = UsePN Ms_PN ; -- Eng
+lin Ms_ms_NP = UsePN ms_PN ; -- Ita
+oper Ms_PN = mkPN "Ms" ; -- Eng
+oper ms_PN = mkPN "ms" ; -- Ita
+
+fun October_inizio_NP : NP ; -- CN -- Abstr
+lin October_inizio_NP = UsePN October_PN ; -- Eng
+--- lin October_inizio_NP = UseN inizio_N ; -- Ita
+oper October_PN = mkPN "October" ; -- Eng
+
+fun Ontario_Ontario_NP : NP ; --  -- Abstr
+lin Ontario_Ontario_NP = UsePN Ontario_PN ; -- Eng
+lin Ontario_Ontario_NP = UsePN Ontario_PN ; -- Ita
+oper Ontario_PN = mkPN "Ontario" ; -- Eng
+oper Ontario_PN = mkPN "Ontario" ; -- Ita
+
+fun Osborne_Osborne_NP : NP ; --  -- Abstr
+lin Osborne_Osborne_NP = UsePN Osborne_PN ; -- Eng
+lin Osborne_Osborne_NP = UsePN Osborne_PN ; -- Ita
+oper Osborne_PN = mkPN "Osborne" ; -- Eng
+oper Osborne_PN = mkPN "Osborne" ; -- Ita
+
+fun Pall_Pall_NP : NP ; --  -- Abstr
+lin Pall_Pall_NP = UsePN Pall_PN ; -- Eng
+lin Pall_Pall_NP = UsePN Pall_PN ; -- Ita
+oper Pall_PN = mkPN "Pall" ; -- Eng
+oper Pall_PN = mkPN "Pall" ; -- Ita
+
+fun Panvalkar_Panvalkar_NP : NP ; --  -- Abstr
+lin Panvalkar_Panvalkar_NP = UsePN Panvalkar_PN ; -- Eng
+lin Panvalkar_Panvalkar_NP = UsePN Panvalkar_PN ; -- Ita
+oper Panvalkar_PN = mkPN "Panvalkar" ; -- Eng
+oper Panvalkar_PN = mkPN "Panvalkar" ; -- Ita
+
+fun Papworth_Papworth_NP : NP ; --  -- Abstr
+lin Papworth_Papworth_NP = UsePN Papworth_PN ; -- Eng
+lin Papworth_Papworth_NP = UsePN Papworth_PN ; -- Ita
+oper Papworth_PN = mkPN "Papworth" ; -- Eng
+oper Papworth_PN = mkPN "Papworth" ; -- Ita
+
+fun Paris_di_Parigi_NP : NP ; -- PP -- Abstr
+lin Paris_di_Parigi_NP = UsePN Paris_PN ; -- Eng
+--- lin Paris_di_Parigi_NP = PrepNP di_Prep (UsePN Parigi_PN) ; -- Ita
+oper Paris_PN = mkPN "Paris" ; -- Eng
+oper Parigi_PN = mkPN "Parigi" ; -- Ita
+
+fun Price_Price_NP : NP ; --  -- Abstr
+lin Price_Price_NP = UsePN Price_PN ; -- Eng
+lin Price_Price_NP = UsePN Price_PN ; -- Ita
+oper Price_PN = mkPN "Price" ; -- Eng
+oper Price_PN = mkPN "Price" ; -- Ita
+
+fun Pugh_Pugh_NP : NP ; --  -- Abstr
+lin Pugh_Pugh_NP = UsePN Pugh_PN ; -- Eng
+lin Pugh_Pugh_NP = UsePN Pugh_PN ; -- Ita
+oper Pugh_PN = mkPN "Pugh" ; -- Eng
+oper Pugh_PN = mkPN "Pugh" ; -- Ita
+
+fun RHS_RHS_NP : NP ; --  -- Abstr
+lin RHS_RHS_NP = UsePN RHS_PN ; -- Eng
+lin RHS_RHS_NP = UsePN RHS_PN ; -- Ita
+oper RHS_PN = mkPN "RHS" ; -- Eng
+oper RHS_PN = mkPN "RHS" ; -- Ita
+
+fun Rai_Rai_NP : NP ; --  -- Abstr
+lin Rai_Rai_NP = UsePN Rai_PN ; -- Eng
+lin Rai_Rai_NP = UsePN Rai_PN ; -- Ita
+oper Rai_PN = mkPN "Rai" ; -- Eng
+oper Rai_PN = mkPN "Rai" ; -- Ita
+
+fun Russia_Russia_NP : NP ; --  -- Abstr
+lin Russia_Russia_NP = UsePN Russia_PN ; -- Eng
+lin Russia_Russia_NP = UsePN Russia_PN ; -- Ita
+oper Russia_PN = mkPN "Russia" ; -- Eng
+oper Russia_PN = mkPN "Russia" ; -- Ita
+
+fun Sakhalin_Sakhalin_NP : NP ; --  -- Abstr
+lin Sakhalin_Sakhalin_NP = UsePN Sakhalin_PN ; -- Eng
+lin Sakhalin_Sakhalin_NP = UsePN Sakhalin_PN ; -- Ita
+oper Sakhalin_PN = mkPN "Sakhalin" ; -- Eng
+oper Sakhalin_PN = mkPN "Sakhalin" ; -- Ita
+
+fun Saqib_Saqib_NP : NP ; --  -- Abstr
+lin Saqib_Saqib_NP = UsePN Saqib_PN ; -- Eng
+lin Saqib_Saqib_NP = UsePN Saqib_PN ; -- Ita
+oper Saqib_PN = mkPN "Saqib" ; -- Eng
+oper Saqib_PN = mkPN "Saqib" ; -- Ita
+
+fun Seagal_Seagal_NP : NP ; --  -- Abstr
+lin Seagal_Seagal_NP = UsePN Seagal_PN ; -- Eng
+lin Seagal_Seagal_NP = UsePN Seagal_PN ; -- Ita
+oper Seagal_PN = mkPN "Seagal" ; -- Eng
+oper Seagal_PN = mkPN "Seagal" ; -- Ita
+
+fun September_settembre_NP : NP ; -- CN -- Abstr
+lin September_settembre_NP = UsePN September_PN ; -- Eng
+--- lin September_settembre_NP = UseN settembre_N ; -- Ita
+oper September_PN = mkPN "September" ; -- Eng
+
+fun Shenzhen_Shenzen_NP : NP ; --  -- Abstr
+lin Shenzhen_Shenzen_NP = UsePN Shenzhen_PN ; -- Eng
+lin Shenzhen_Shenzen_NP = UsePN Shenzen_PN ; -- Ita
+oper Shenzhen_PN = mkPN "Shenzhen" ; -- Eng
+oper Shenzen_PN = mkPN "Shenzen" ; -- Ita
+
+fun Siri_Siri_NP : NP ; --  -- Abstr
+lin Siri_Siri_NP = UsePN Siri_PN ; -- Eng
+lin Siri_Siri_NP = UsePN Siri_PN ; -- Ita
+oper Siri_PN = mkPN "Siri" ; -- Eng
+oper Siri_PN = mkPN "Siri" ; -- Ita
+
+fun Sony_di_Sony_NP : NP ; -- PP -- Abstr
+lin Sony_di_Sony_NP = UsePN Sony_PN ; -- Eng
+--- lin Sony_di_Sony_NP = PrepNP di_Prep (UsePN Sony_PN) ; -- Ita
+oper Sony_PN = mkPN "Sony" ; -- Eng
+oper Sony_PN = mkPN "Sony" ; -- Ita
+
+fun Sternlieb_Sternlieb_NP : NP ; --  -- Abstr
+lin Sternlieb_Sternlieb_NP = UsePN Sternlieb_PN ; -- Eng
+lin Sternlieb_Sternlieb_NP = UsePN Sternlieb_PN ; -- Ita
+oper Sternlieb_PN = mkPN "Sternlieb" ; -- Eng
+oper Sternlieb_PN = mkPN "Sternlieb" ; -- Ita
+
+fun Tarlo_Tarlo_NP : NP ; --  -- Abstr
+lin Tarlo_Tarlo_NP = UsePN Tarlo_PN ; -- Eng
+lin Tarlo_Tarlo_NP = UsePN Tarlo_PN ; -- Ita
+oper Tarlo_PN = mkPN "Tarlo" ; -- Eng
+oper Tarlo_PN = mkPN "Tarlo" ; -- Ita
+
+fun Thursday_scorso_NP : NP ; -- A -- Abstr
+lin Thursday_scorso_NP = UsePN Thursday_PN ; -- Eng
+--- lin Thursday_scorso_NP = scorso_A ; -- Ita
+oper Thursday_PN = mkPN "Thursday" ; -- Eng
+
+fun Trudeau_Trudeau_NP : NP ; --  -- Abstr
+lin Trudeau_Trudeau_NP = UsePN Trudeau_PN ; -- Eng
+lin Trudeau_Trudeau_NP = UsePN Trudeau_PN ; -- Ita
+oper Trudeau_PN = mkPN "Trudeau" ; -- Eng
+oper Trudeau_PN = mkPN "Trudeau" ; -- Ita
+
+fun Trump_Trump_NP : NP ; --  -- Abstr
+lin Trump_Trump_NP = UsePN Trump_PN ; -- Eng
+lin Trump_Trump_NP = UsePN Trump_PN ; -- Ita
+oper Trump_PN = mkPN "Trump" ; -- Eng
+oper Trump_PN = mkPN "Trump" ; -- Ita
+
+fun United_Uniti_NP : NP ; --  -- Abstr
+lin United_Uniti_NP = UsePN United_PN ; -- Eng
+lin United_Uniti_NP = UsePN Uniti_PN ; -- Ita
+oper United_PN = mkPN "United" ; -- Eng
+oper Uniti_PN = mkPN "Uniti" ; -- Ita
+
+fun Vladivostok_originario_NP : NP ; -- A -- Abstr
+lin Vladivostok_originario_NP = UsePN Vladivostok_PN ; -- Eng
+--- lin Vladivostok_originario_NP = originario_A ; -- Ita
+oper Vladivostok_PN = mkPN "Vladivostok" ; -- Eng
+
+fun capitol_Hill_NP : NP ; --  -- Abstr
+lin capitol_Hill_NP = UsePN capitol_PN ; -- Eng
+lin capitol_Hill_NP = UsePN Hill_PN ; -- Ita
+oper capitol_PN = mkPN "capitol" ; -- Eng
+oper Hill_PN = mkPN "Hill" ; -- Ita
+
+fun mate_Mate_NP : NP ; --  -- Abstr
+lin mate_Mate_NP = UsePN mate_PN ; -- Eng
+lin mate_Mate_NP = UsePN Mate_PN ; -- Ita
+oper mate_PN = mkPN "mate" ; -- Eng
+oper Mate_PN = mkPN "Mate" ; -- Ita
+
+fun mr_Mr_NP : NP ; --  -- Abstr
+lin mr_Mr_NP = UsePN mr_PN ; -- Eng
+lin mr_Mr_NP = UsePN Mr_PN ; -- Ita
+oper mr_PN = mkPN "mr" ; -- Eng
+oper Mr_PN = mkPN "Mr" ; -- Ita
+
+fun it_affermazione_NP : NP ; -- CN -- Abstr
+lin it_affermazione_NP = UsePron it_Pron ; -- Eng
+--- lin it_affermazione_NP = UseN affermazione_N ; -- Ita
+
+fun youSg_cosa_NP : NP ; -- CN -- Abstr
+lin youSg_cosa_NP = UsePron youSg_Pron ; -- Eng
+--- lin youSg_cosa_NP = UseN cosa_N ; -- Ita
+
+fun youSg_pressione_NP : NP ; -- CN -- Abstr
+lin youSg_pressione_NP = UsePron youSg_Pron ; -- Eng
+--- lin youSg_pressione_NP = UseN pressione_N ; -- Ita
+
+fun again_once_a_volta_ancora_Utt : Utt ; -- NP -- Abstr
+lin again_once_a_volta_ancora_Utt = UttVP (AdvVP (UseAdv again_Adv) once_Adv) ; -- Eng
+--- lin again_once_a_volta_ancora_Utt = DetCN a_Det (AdvCN (UseN volta_N) ancora_Adv) ; -- Ita
+
+fun accord_a_Utt : Utt ; -- Prep -- Abstr
+lin accord_a_Utt = UttVP (UseV accord_V) ; -- Eng
+--- lin accord_a_Utt = a_Prep ; -- Ita
+
+fun accord_prima_Utt : Utt ; -- Adv -- Abstr
+lin accord_prima_Utt = UttVP (UseV accord_V) ; -- Eng
+--- lin accord_prima_Utt = prima_Adv ; -- Ita
+
+fun attack_attaccare_Utt : Utt ; --  -- Abstr
+lin attack_attaccare_Utt = UttVP (UseV attack_V) ; -- Eng
+lin attack_attaccare_Utt = UttVP (UseV attaccare_V) ; -- Ita
+
+fun be_avere_Utt : Utt ; --  -- Abstr
+lin be_avere_Utt = UttVP (UseV be_V) ; -- Eng
+lin be_avere_Utt = UttVP (UseV avere_V) ; -- Ita
+oper be_V = mkV "be" ; -- Eng
+
+fun be_essere_Utt : Utt ; --  -- Abstr
+lin be_essere_Utt = UttVP (UseV be_V) ; -- Eng
+lin be_essere_Utt = UttVP (UseV essere_V) ; -- Ita
+oper be_V = mkV "be" ; -- Eng
+
+fun become_portare_Utt : Utt ; --  -- Abstr
+lin become_portare_Utt = UttVP (UseV become_V) ; -- Eng
+lin become_portare_Utt = UttVP (UseV portare_V) ; -- Ita
+
+fun cast_esprimere_Utt : Utt ; --  -- Abstr
+lin cast_esprimere_Utt = UttVP (UseV cast_V) ; -- Eng
+lin cast_esprimere_Utt = UttVP (UseV esprimere_V) ; -- Ita
+oper cast_V = mkV "cast" ; -- Eng
+
+fun cause_provocare_Utt : Utt ; --  -- Abstr
+lin cause_provocare_Utt = UttVP (UseV cause_V) ; -- Eng
+lin cause_provocare_Utt = UttVP (UseV provocare_V) ; -- Ita
+
+fun certify_certificare_Utt : Utt ; --  -- Abstr
+lin certify_certificare_Utt = UttVP (UseV certify_V) ; -- Eng
+lin certify_certificare_Utt = UttVP (UseV certificare_V) ; -- Ita
+
+fun charge_accusare_Utt : Utt ; --  -- Abstr
+lin charge_accusare_Utt = UttVP (UseV charge_V) ; -- Eng
+lin charge_accusare_Utt = UttVP (UseV accusare_V) ; -- Ita
+
+fun charge_addebitare_Utt : Utt ; --  -- Abstr
+lin charge_addebitare_Utt = UttVP (UseV charge_V) ; -- Eng
+lin charge_addebitare_Utt = UttVP (UseV addebitare_V) ; -- Ita
+
+fun come_consolazione_Utt : Utt ; -- CN -- Abstr
+lin come_consolazione_Utt = UttVP (UseV come_V) ; -- Eng
+--- lin come_consolazione_Utt = UseN consolazione_N ; -- Ita
+oper come_V = mkV "come" ; -- Eng
+
+fun conduct_condurre_Utt : Utt ; --  -- Abstr
+lin conduct_condurre_Utt = UttVP (UseV conduct_V) ; -- Eng
+lin conduct_condurre_Utt = UttVP (UseV condurre_V) ; -- Ita
+
+fun cost_milione_Utt : Utt ; -- Adv -- Abstr
+lin cost_milione_Utt = UttVP (UseV cost_V) ; -- Eng
+--- lin cost_milione_Utt = milione_Adv ; -- Ita
+oper cost_V = mkV "cost" ; -- Eng
+oper milione_Adv = mkAdv "milione" ; -- Ita
+
+fun decide_decidere_Utt : Utt ; --  -- Abstr
+lin decide_decidere_Utt = UttVP (UseV decide_V) ; -- Eng
+lin decide_decidere_Utt = UttVP (UseV decidere_V) ; -- Ita
+
+fun do_riservare_Utt : Utt ; --  -- Abstr
+lin do_riservare_Utt = UttVP (UseV do_V) ; -- Eng
+lin do_riservare_Utt = UttVP (UseV riservare_V) ; -- Ita
+
+fun estimate_stimare_Utt : Utt ; --  -- Abstr
+lin estimate_stimare_Utt = UttVP (UseV estimate_V) ; -- Eng
+lin estimate_stimare_Utt = UttVP (UseV stimare_V) ; -- Ita
+
+fun explain_volgere_Utt : Utt ; --  -- Abstr
+lin explain_volgere_Utt = UttVP (UseV explain_V) ; -- Eng
+lin explain_volgere_Utt = UttVP (UseV volgere_V) ; -- Ita
+
+fun expose_esporre_Utt : Utt ; --  -- Abstr
+lin expose_esporre_Utt = UttVP (UseV expose_V) ; -- Eng
+lin expose_esporre_Utt = UttVP (UseV esporre_V) ; -- Ita
+
+fun find_riscontrare_Utt : Utt ; --  -- Abstr
+lin find_riscontrare_Utt = UttVP (UseV find_V) ; -- Eng
+lin find_riscontrare_Utt = UttVP (UseV riscontrare_V) ; -- Ita
+
+fun follow_seguire_Utt : Utt ; --  -- Abstr
+lin follow_seguire_Utt = UttVP (UseV follow_V) ; -- Eng
+lin follow_seguire_Utt = UttVP (UseV seguire_V) ; -- Ita
+
+fun fuel_alimentare_Utt : Utt ; --  -- Abstr
+lin fuel_alimentare_Utt = UttVP (UseV fuel_V) ; -- Eng
+lin fuel_alimentare_Utt = UttVP (UseV alimentare_V) ; -- Ita
+oper fuel_V = mkV "fuel" ; -- Eng
+
+fun give_ottenere_Utt : Utt ; --  -- Abstr
+lin give_ottenere_Utt = UttVP (UseV give_V) ; -- Eng
+lin give_ottenere_Utt = UttVP (UseV ottenere_V) ; -- Ita
+oper give_V = mkV "give" ; -- Eng
+
+fun grow_crescere_Utt : Utt ; --  -- Abstr
+lin grow_crescere_Utt = UttVP (UseV grow_V) ; -- Eng
+lin grow_crescere_Utt = UttVP (UseV crescere_V) ; -- Ita
+
+fun grow_cinese_Utt : Utt ; -- A -- Abstr
+lin grow_cinese_Utt = UttVP (UseV grow_V) ; -- Eng
+--- lin grow_cinese_Utt = cinese_A ; -- Ita
+
+fun hate_odiare_Utt : Utt ; --  -- Abstr
+lin hate_odiare_Utt = UttVP (UseV hate_V) ; -- Eng
+lin hate_odiare_Utt = UttVP (UseV odiare_V) ; -- Ita
+
+fun have_legame_Utt : Utt ; -- CN -- Abstr
+lin have_legame_Utt = UttVP (UseV have_V) ; -- Eng
+--- lin have_legame_Utt = UseN legame_N ; -- Ita
+
+fun have_avere_Utt : Utt ; --  -- Abstr
+lin have_avere_Utt = UttVP (UseV have_V) ; -- Eng
+lin have_avere_Utt = UttVP (UseV avere_V) ; -- Ita
+
+fun have_caratterizzare_Utt : Utt ; --  -- Abstr
+lin have_caratterizzare_Utt = UttVP (UseV have_V) ; -- Eng
+lin have_caratterizzare_Utt = UttVP (UseV caratterizzare_V) ; -- Ita
+
+fun have_lavorare_Utt : Utt ; --  -- Abstr
+lin have_lavorare_Utt = UttVP (UseV have_V) ; -- Eng
+lin have_lavorare_Utt = UttVP (UseV lavorare_V) ; -- Ita
+
+fun help_aiuto_Utt : Utt ; -- CN -- Abstr
+lin help_aiuto_Utt = UttVP (UseV help_V) ; -- Eng
+--- lin help_aiuto_Utt = UseN aiuto_N ; -- Ita
+
+fun help_contribuire_Utt : Utt ; --  -- Abstr
+lin help_contribuire_Utt = UttVP (UseV help_V) ; -- Eng
+lin help_contribuire_Utt = UttVP (UseV contribuire_V) ; -- Ita
+
+fun investigate_indagare_Utt : Utt ; --  -- Abstr
+lin investigate_indagare_Utt = UttVP (UseV investigate_V) ; -- Eng
+lin investigate_indagare_Utt = UttVP (UseV indagare_V) ; -- Ita
+
+fun involve_coinvolgere_Utt : Utt ; --  -- Abstr
+lin involve_coinvolgere_Utt = UttVP (UseV involve_V) ; -- Eng
+lin involve_coinvolgere_Utt = UttVP (UseV coinvolgere_V) ; -- Ita
+
+fun keep_mantenere_Utt : Utt ; --  -- Abstr
+lin keep_mantenere_Utt = UttVP (UseV keep_V) ; -- Eng
+lin keep_mantenere_Utt = UttVP (UseV mantenere_V) ; -- Ita
+oper keep_V = mkV "keep" ; -- Eng
+
+fun lack_mancare_Utt : Utt ; --  -- Abstr
+lin lack_mancare_Utt = UttVP (UseV lack_V) ; -- Eng
+lin lack_mancare_Utt = UttVP (UseV mancare_V) ; -- Ita
+
+fun learn_imparare_Utt : Utt ; --  -- Abstr
+lin learn_imparare_Utt = UttVP (UseV learn_V) ; -- Eng
+lin learn_imparare_Utt = UttVP (UseV imparare_V) ; -- Ita
+
+fun levy_imporre_Utt : Utt ; --  -- Abstr
+lin levy_imporre_Utt = UttVP (UseV levy_V) ; -- Eng
+lin levy_imporre_Utt = UttVP (UseV imporre_V) ; -- Ita
+
+fun make_fare_Utt : Utt ; --  -- Abstr
+lin make_fare_Utt = UttVP (UseV make_V) ; -- Eng
+lin make_fare_Utt = UttVP (UseV fare_V) ; -- Ita
+
+fun make_trattare_Utt : Utt ; --  -- Abstr
+lin make_trattare_Utt = UttVP (UseV make_V) ; -- Eng
+lin make_trattare_Utt = UttVP (UseV trattare_V) ; -- Ita
+
+fun make_precedente_Utt : Utt ; -- A -- Abstr
+lin make_precedente_Utt = UttVP (UseV make_V) ; -- Eng
+--- lin make_precedente_Utt = precedente_A ; -- Ita
+
+fun meet_incontrare_Utt : Utt ; --  -- Abstr
+lin meet_incontrare_Utt = UttVP (UseV meet_V) ; -- Eng
+lin meet_incontrare_Utt = UttVP (UseV incontrare_V) ; -- Ita
+oper meet_V = mkV "meet" ; -- Eng
+
+fun meet_riunire_Utt : Utt ; --  -- Abstr
+lin meet_riunire_Utt = UttVP (UseV meet_V) ; -- Eng
+lin meet_riunire_Utt = UttVP (UseV riunire_V) ; -- Ita
+oper meet_V = mkV "meet" ; -- Eng
+
+fun move_muovere_Utt : Utt ; --  -- Abstr
+lin move_muovere_Utt = UttVP (UseV move_V) ; -- Eng
+lin move_muovere_Utt = UttVP (UseV muovere_V) ; -- Ita
+
+fun need_necessario_Utt : Utt ; -- A -- Abstr
+lin need_necessario_Utt = UttVP (UseV need_V) ; -- Eng
+--- lin need_necessario_Utt = necessario_A ; -- Ita
+
+fun notice_notare_Utt : Utt ; --  -- Abstr
+lin notice_notare_Utt = UttVP (UseV notice_V) ; -- Eng
+lin notice_notare_Utt = UttVP (UseV notare_V) ; -- Ita
+
+fun oppose_portare_Utt : Utt ; --  -- Abstr
+lin oppose_portare_Utt = UttVP (UseV oppose_V) ; -- Eng
+lin oppose_portare_Utt = UttVP (UseV portare_V) ; -- Ita
+
+fun opt_optare_Utt : Utt ; --  -- Abstr
+lin opt_optare_Utt = UttVP (UseV opt_V) ; -- Eng
+lin opt_optare_Utt = UttVP (UseV optare_V) ; -- Ita
+
+fun press_soffocare_Utt : Utt ; --  -- Abstr
+lin press_soffocare_Utt = UttVP (UseV press_V) ; -- Eng
+lin press_soffocare_Utt = UttVP (UseV soffocare_V) ; -- Ita
+
+fun provide_rappresentare_Utt : Utt ; --  -- Abstr
+lin provide_rappresentare_Utt = UttVP (UseV provide_V) ; -- Eng
+lin provide_rappresentare_Utt = UttVP (UseV rappresentare_V) ; -- Ita
+
+fun put_mettere_Utt : Utt ; --  -- Abstr
+lin put_mettere_Utt = UttVP (UseV put_V) ; -- Eng
+lin put_mettere_Utt = UttVP (UseV mettere_V) ; -- Ita
+
+fun read_leggere_Utt : Utt ; --  -- Abstr
+lin read_leggere_Utt = UttVP (UseV read_V) ; -- Eng
+lin read_leggere_Utt = UttVP (UseV leggere_V) ; -- Ita
+
+fun receive_ricevere_Utt : Utt ; --  -- Abstr
+lin receive_ricevere_Utt = UttVP (UseV receive_V) ; -- Eng
+lin receive_ricevere_Utt = UttVP (UseV ricevere_V) ; -- Ita
+
+fun report_riportare_Utt : Utt ; --  -- Abstr
+lin report_riportare_Utt = UttVP (UseV report_V) ; -- Eng
+lin report_riportare_Utt = UttVP (UseV riportare_V) ; -- Ita
+
+fun represent_rappresentare_Utt : Utt ; --  -- Abstr
+lin represent_rappresentare_Utt = UttVP (UseV represent_V) ; -- Eng
+lin represent_rappresentare_Utt = UttVP (UseV rappresentare_V) ; -- Ita
+
+fun request_chiedere_Utt : Utt ; --  -- Abstr
+lin request_chiedere_Utt = UttVP (UseV request_V) ; -- Eng
+lin request_chiedere_Utt = UttVP (UseV chiedere_V) ; -- Ita
+
+fun rest_dipendere_Utt : Utt ; --  -- Abstr
+lin rest_dipendere_Utt = UttVP (UseV rest_V) ; -- Eng
+lin rest_dipendere_Utt = UttVP (UseV dipendere_V) ; -- Ita
+
+fun rise_registrare_Utt : Utt ; --  -- Abstr
+lin rise_registrare_Utt = UttVP (UseV rise_V) ; -- Eng
+lin rise_registrare_Utt = UttVP (UseV registrare_V) ; -- Ita
+
+fun ruin_rimettere_Utt : Utt ; --  -- Abstr
+lin ruin_rimettere_Utt = UttVP (UseV ruin_V) ; -- Eng
+lin ruin_rimettere_Utt = UttVP (UseV rimettere_V) ; -- Ita
+
+fun sack_licenziare_Utt : Utt ; --  -- Abstr
+lin sack_licenziare_Utt = UttVP (UseV sack_V) ; -- Eng
+lin sack_licenziare_Utt = UttVP (UseV licenziare_V) ; -- Ita
+
+fun say_affermare_Utt : Utt ; --  -- Abstr
+lin say_affermare_Utt = UttVP (UseV say_V) ; -- Eng
+lin say_affermare_Utt = UttVP (UseV affermare_V) ; -- Ita
+
+fun see_fare_Utt : Utt ; --  -- Abstr
+lin see_fare_Utt = UttVP (UseV see_V) ; -- Eng
+lin see_fare_Utt = UttVP (UseV fare_V) ; -- Ita
+
+fun see_vedere_Utt : Utt ; --  -- Abstr
+lin see_vedere_Utt = UttVP (UseV see_V) ; -- Eng
+lin see_vedere_Utt = UttVP (UseV vedere_V) ; -- Ita
+
+fun seem_sembrare_Utt : Utt ; --  -- Abstr
+lin seem_sembrare_Utt = UttVP (UseV seem_V) ; -- Eng
+lin seem_sembrare_Utt = UttVP (UseV sembrare_V) ; -- Ita
+
+fun set_considerare_Utt : Utt ; --  -- Abstr
+lin set_considerare_Utt = UttVP (UseV set_V) ; -- Eng
+lin set_considerare_Utt = UttVP (UseV considerare_V) ; -- Ita
+oper set_V = mkV "set" ; -- Eng
+
+fun show_mostrare_Utt : Utt ; --  -- Abstr
+lin show_mostrare_Utt = UttVP (UseV show_V) ; -- Eng
+lin show_mostrare_Utt = UttVP (UseV mostrare_V) ; -- Ita
+oper show_V = mkV "show" ; -- Eng
+
+fun slate_organizzare_Utt : Utt ; --  -- Abstr
+lin slate_organizzare_Utt = UttVP (UseV slate_V) ; -- Eng
+lin slate_organizzare_Utt = UttVP (UseV organizzare_V) ; -- Ita
+
+fun slow_affermare_Utt : Utt ; --  -- Abstr
+lin slow_affermare_Utt = UttVP (UseV slow_V) ; -- Eng
+lin slow_affermare_Utt = UttVP (UseV affermare_V) ; -- Ita
+
+fun smoke_fumare_Utt : Utt ; --  -- Abstr
+lin smoke_fumare_Utt = UttVP (UseV smoke_V) ; -- Eng
+lin smoke_fumare_Utt = UttVP (UseV fumare_V) ; -- Ita
+
+fun talk_discutere_Utt : Utt ; --  -- Abstr
+lin talk_discutere_Utt = UttVP (UseV talk_V) ; -- Eng
+lin talk_discutere_Utt = UttVP (UseV discutere_V) ; -- Ita
+
+fun teach_insegnare_Utt : Utt ; --  -- Abstr
+lin teach_insegnare_Utt = UttVP (UseV teach_V) ; -- Eng
+lin teach_insegnare_Utt = UttVP (UseV insegnare_V) ; -- Ita
+
+fun tell_dichiarare_Utt : Utt ; --  -- Abstr
+lin tell_dichiarare_Utt = UttVP (UseV tell_V) ; -- Eng
+lin tell_dichiarare_Utt = UttVP (UseV dichiarare_V) ; -- Ita
+
+fun think_credere_Utt : Utt ; --  -- Abstr
+lin think_credere_Utt = UttVP (UseV think_V) ; -- Eng
+lin think_credere_Utt = UttVP (UseV credere_V) ; -- Ita
+
+fun try_tentare_Utt : Utt ; --  -- Abstr
+lin try_tentare_Utt = UttVP (UseV try_V) ; -- Eng
+lin try_tentare_Utt = UttVP (UseV tentare_V) ; -- Ita
+
+fun use_usare_Utt : Utt ; --  -- Abstr
+lin use_usare_Utt = UttVP (UseV use_V) ; -- Eng
+lin use_usare_Utt = UttVP (UseV usare_V) ; -- Ita
+
+fun wait_attendere_Utt : Utt ; --  -- Abstr
+lin wait_attendere_Utt = UttVP (UseV wait_V) ; -- Eng
+lin wait_attendere_Utt = UttVP (UseV attendere_V) ; -- Ita
+
+fun a_a_Det : Det ; --  -- Abstr
+lin a_a_Det = a_Det ; -- Eng
+lin a_a_Det = a_Det ; -- Ita
+
+fun a_the_Det : Det ; --  -- Abstr
+lin a_the_Det = a_Det ; -- Eng
+lin a_the_Det = the_Det ; -- Ita
+
+fun about_contro_Prep : Prep ; --  -- Abstr
+lin about_contro_Prep = about_Prep ; -- Eng
+lin about_contro_Prep = contro_Prep ; -- Ita
+
+fun about_su_Prep : Prep ; --  -- Abstr
+lin about_su_Prep = about_Prep ; -- Eng
+lin about_su_Prep = su_Prep ; -- Ita
+
+fun after_dopo_Adv : Adv ; -- Prep -- Abstr
+lin after_dopo_Adv = after_Adv ; -- Eng
+--- lin after_dopo_Adv = dopo_Prep ; -- Ita
+
+fun afterwards_dopo_Adv : Adv ; --  -- Abstr
+lin afterwards_dopo_Adv = afterwards_Adv ; -- Eng
+lin afterwards_dopo_Adv = dopo_Adv ; -- Ita
+
+fun against_a_Prep : Prep ; --  -- Abstr
+lin against_a_Prep = against_Prep ; -- Eng
+lin against_a_Prep = a_Prep ; -- Ita
+
+fun alive_vivo_A : A ; --  -- Abstr
+lin alive_vivo_A = alive_A ; -- Eng
+lin alive_vivo_A = vivo_A ; -- Ita
+
+fun alone_solo_A : A ; --  -- Abstr
+lin alone_solo_A = alone_A ; -- Eng
+lin alone_solo_A = solo_A ; -- Ita
+
+fun also_anche_Adv : Adv ; --  -- Abstr
+lin also_anche_Adv = also_Adv ; -- Eng
+lin also_anche_Adv = anche_Adv ; -- Ita
+
+fun also_inoltre_Adv : Adv ; --  -- Abstr
+lin also_inoltre_Adv = also_Adv ; -- Eng
+lin also_inoltre_Adv = inoltre_Adv ; -- Ita
+
+fun always_sempre_Adv : Adv ; --  -- Abstr
+lin always_sempre_Adv = always_Adv ; -- Eng
+lin always_sempre_Adv = sempre_Adv ; -- Ita
+oper always_Adv = mkAdv "always" ; -- Eng
+
+fun and_e_Adv : Adv ; --  -- Abstr
+lin and_e_Adv = and_Adv ; -- Eng
+lin and_e_Adv = e_Adv ; -- Ita
+oper and_Adv = mkAdv "and" ; -- Eng
+oper e_Adv = mkAdv "e" ; -- Ita
+
+fun and_mentre_Adv : Adv ; --  -- Abstr
+lin and_mentre_Adv = and_Adv ; -- Eng
+lin and_mentre_Adv = mentre_Adv ; -- Ita
+oper and_Adv = mkAdv "and" ; -- Eng
+oper mentre_Adv = mkAdv "mentre" ; -- Ita
+
+fun artificial_artificiale_A : A ; --  -- Abstr
+lin artificial_artificiale_A = artificial_A ; -- Eng
+lin artificial_artificiale_A = artificiale_A ; -- Ita
+
+fun as_in_Prep : Prep ; --  -- Abstr
+lin as_in_Prep = as_Prep ; -- Eng
+lin as_in_Prep = in_Prep ; -- Ita
+
+fun at_a_Prep : Prep ; --  -- Abstr
+lin at_a_Prep = at_Prep ; -- Eng
+lin at_a_Prep = a_Prep ; -- Ita
+
+fun at_presso_Prep : Prep ; --  -- Abstr
+lin at_presso_Prep = at_Prep ; -- Eng
+lin at_presso_Prep = presso_Prep ; -- Ita
+
+fun before_già_Adv : Adv ; --  -- Abstr
+lin before_già_Adv = before_Adv ; -- Eng
+lin before_già_Adv = già_Adv ; -- Ita
+
+fun before_a_Prep : Prep ; --  -- Abstr
+lin before_a_Prep = before_Prep ; -- Eng
+lin before_a_Prep = a_Prep ; -- Ita
+
+fun before_in_Prep : Prep ; --  -- Abstr
+lin before_in_Prep = before_Prep ; -- Eng
+lin before_in_Prep = in_Prep ; -- Ita
+
+fun better_superare_A : A ; -- Utt -- Abstr
+lin better_superare_A = better_A ; -- Eng
+--- lin better_superare_A = UttVP (UseV superare_V) ; -- Ita
+
+fun between_tra_Prep : Prep ; --  -- Abstr
+lin between_tra_Prep = between_Prep ; -- Eng
+lin between_tra_Prep = tra_Prep ; -- Ita
+
+fun but_ma_Adv : Adv ; --  -- Abstr
+lin but_ma_Adv = but_Adv ; -- Eng
+lin but_ma_Adv = ma_Adv ; -- Ita
+oper ma_Adv = mkAdv "ma" ; -- Ita
+
+fun but_però_Adv : Adv ; --  -- Abstr
+lin but_però_Adv = but_Adv ; -- Eng
+lin but_però_Adv = però_Adv ; -- Ita
+
+fun by8means_da_Prep : Prep ; --  -- Abstr
+lin by8means_da_Prep = by8means_Prep ; -- Eng
+lin by8means_da_Prep = da_Prep ; -- Ita
+
+fun by8means_di_Prep : Prep ; --  -- Abstr
+lin by8means_di_Prep = by8means_Prep ; -- Eng
+lin by8means_di_Prep = di_Prep ; -- Ita
+
+fun by8means_in_Prep : Prep ; --  -- Abstr
+lin by8means_in_Prep = by8means_Prep ; -- Eng
+lin by8means_in_Prep = in_Prep ; -- Ita
+
+fun can_potere_Adv : Adv ; --  -- Abstr
+lin can_potere_Adv = can_Adv ; -- Eng
+lin can_potere_Adv = potere_Adv ; -- Ita
+oper can_Adv = mkAdv "can" ; -- Eng
+oper potere_Adv = mkAdv "potere" ; -- Ita
+
+fun could_avere_Adv : Adv ; --  -- Abstr
+lin could_avere_Adv = could_Adv ; -- Eng
+lin could_avere_Adv = avere_Adv ; -- Ita
+oper could_Adv = mkAdv "could" ; -- Eng
+oper avere_Adv = mkAdv "avere" ; -- Ita
+
+fun could_potere_Adv : Adv ; --  -- Abstr
+lin could_potere_Adv = could_Adv ; -- Eng
+lin could_potere_Adv = potere_Adv ; -- Ita
+oper could_Adv = mkAdv "could" ; -- Eng
+oper potere_Adv = mkAdv "potere" ; -- Ita
+
+fun criminal_penale_A : A ; --  -- Abstr
+lin criminal_penale_A = criminal_A ; -- Eng
+lin criminal_penale_A = penale_A ; -- Ita
+
+fun despite_nonostante_Prep : Prep ; -- Adv -- Abstr
+lin despite_nonostante_Prep = despite_Prep ; -- Eng
+--- lin despite_nonostante_Prep = nonostante_Adv ; -- Ita
+oper nonostante_Adv = mkAdv "nonostante" ; -- Ita
+
+fun different_diverso_A : A ; --  -- Abstr
+lin different_diverso_A = different_A ; -- Eng
+lin different_diverso_A = diverso_A ; -- Ita
+
+fun digital_digitale_A : A ; --  -- Abstr
+lin digital_digitale_A = digital_A ; -- Eng
+lin digital_digitale_A = digitale_A ; -- Ita
+
+fun direct_diretto_A : A ; --  -- Abstr
+lin direct_diretto_A = direct_A ; -- Eng
+lin direct_diretto_A = diretto_A ; -- Ita
+
+fun directly_non_Adv : Adv ; --  -- Abstr
+lin directly_non_Adv = directly_Adv ; -- Eng
+lin directly_non_Adv = non_Adv ; -- Ita
+oper directly_Adv = mkAdv "directly" ; -- Eng
+
+fun do_avere_Adv : Adv ; --  -- Abstr
+lin do_avere_Adv = do_Adv ; -- Eng
+lin do_avere_Adv = avere_Adv ; -- Ita
+oper do_Adv = mkAdv "do" ; -- Eng
+oper avere_Adv = mkAdv "avere" ; -- Ita
+
+fun earlier_precedentemente_Adv : Adv ; --  -- Abstr
+lin earlier_precedentemente_Adv = earlier_Adv ; -- Eng
+lin earlier_precedentemente_Adv = precedentemente_Adv ; -- Ita
+
+fun early_di_ottobre_A : A ; -- PP -- Abstr
+lin early_di_ottobre_A = early_A ; -- Eng
+--- lin early_di_ottobre_A = PrepNP di_Prep (MassNP (UseN ottobre_N)) ; -- Ita
+
+fun everyday_quotidiano_A : A ; --  -- Abstr
+lin everyday_quotidiano_A = everyday_A ; -- Eng
+lin everyday_quotidiano_A = quotidiano_A ; -- Ita
+
+fun fantastic_fantastico_A : A ; --  -- Abstr
+lin fantastic_fantastico_A = fantastic_A ; -- Eng
+lin fantastic_fantastico_A = fantastico_A ; -- Ita
+
+fun first_primo_A : A ; --  -- Abstr
+lin first_primo_A = first_A ; -- Eng
+lin first_primo_A = primo_A ; -- Ita
+oper first_A = mkA "first" ; -- Eng
+
+fun first_prima_Adv : Adv ; --  -- Abstr
+lin first_prima_Adv = first_Adv ; -- Eng
+lin first_prima_Adv = prima_Adv ; -- Ita
+oper first_Adv = mkAdv "first" ; -- Eng
+
+fun for_by8means_Prep : Prep ; --  -- Abstr
+lin for_by8means_Prep = for_Prep ; -- Eng
+lin for_by8means_Prep = by8means_Prep ; -- Ita
+
+fun for_di_Prep : Prep ; --  -- Abstr
+lin for_di_Prep = for_Prep ; -- Eng
+lin for_di_Prep = di_Prep ; -- Ita
+
+fun for_in_Prep : Prep ; --  -- Abstr
+lin for_in_Prep = for_Prep ; -- Eng
+lin for_in_Prep = in_Prep ; -- Ita
+
+fun from_a_Prep : Prep ; --  -- Abstr
+lin from_a_Prep = from_Prep ; -- Eng
+lin from_a_Prep = a_Prep ; -- Ita
+
+fun from_da_Prep : Prep ; --  -- Abstr
+lin from_da_Prep = from_Prep ; -- Eng
+lin from_da_Prep = da_Prep ; -- Ita
+
+fun from_di_Prep : Prep ; --  -- Abstr
+lin from_di_Prep = from_Prep ; -- Eng
+lin from_di_Prep = di_Prep ; -- Ita
+
+fun have_avere_Adv : Adv ; --  -- Abstr
+lin have_avere_Adv = have_Adv ; -- Eng
+lin have_avere_Adv = avere_Adv ; -- Ita
+oper have_Adv = mkAdv "have" ; -- Eng
+oper avere_Adv = mkAdv "avere" ; -- Ita
+
+fun have_essere_Adv : Adv ; --  -- Abstr
+lin have_essere_Adv = have_Adv ; -- Eng
+lin have_essere_Adv = essere_Adv ; -- Ita
+oper have_Adv = mkAdv "have" ; -- Eng
+oper essere_Adv = mkAdv "essere" ; -- Ita
+
+fun high_alto_A : A ; --  -- Abstr
+lin high_alto_A = high_A ; -- Eng
+lin high_alto_A = alto_A ; -- Ita
+
+fun historic_grande_A : A ; --  -- Abstr
+lin historic_grande_A = historic_A ; -- Eng
+lin historic_grande_A = grande_A ; -- Ita
+
+fun hormonal_maschile_A : A ; --  -- Abstr
+lin hormonal_maschile_A = hormonal_A ; -- Eng
+lin hormonal_maschile_A = maschile_A ; -- Ita
+
+fun if_by8means_Adv : Adv ; -- Prep -- Abstr
+lin if_by8means_Adv = if_Adv ; -- Eng
+--- lin if_by8means_Adv = by8means_Prep ; -- Ita
+oper if_Adv = mkAdv "if" ; -- Eng
+
+fun in_a_Prep : Prep ; --  -- Abstr
+lin in_a_Prep = in_Prep ; -- Eng
+lin in_a_Prep = a_Prep ; -- Ita
+
+fun in_da_Prep : Prep ; --  -- Abstr
+lin in_da_Prep = in_Prep ; -- Eng
+lin in_da_Prep = da_Prep ; -- Ita
+
+fun in_di_Prep : Prep ; --  -- Abstr
+lin in_di_Prep = in_Prep ; -- Eng
+lin in_di_Prep = di_Prep ; -- Ita
+
+fun in_in_Prep : Prep ; --  -- Abstr
+lin in_in_Prep = in_Prep ; -- Eng
+lin in_in_Prep = in_Prep ; -- Ita
+
+fun in_presso_Prep : Prep ; --  -- Abstr
+lin in_presso_Prep = in_Prep ; -- Eng
+lin in_presso_Prep = presso_Prep ; -- Ita
+
+fun in_su_Prep : Prep ; --  -- Abstr
+lin in_su_Prep = in_Prep ; -- Eng
+lin in_su_Prep = su_Prep ; -- Ita
+
+fun initially_abbastanza_Adv : Adv ; --  -- Abstr
+lin initially_abbastanza_Adv = initially_Adv ; -- Eng
+lin initially_abbastanza_Adv = abbastanza_Adv ; -- Ita
+oper initially_Adv = mkAdv "initially" ; -- Eng
+
+fun initially_inizialmente_Adv : Adv ; --  -- Abstr
+lin initially_inizialmente_Adv = initially_Adv ; -- Eng
+lin initially_inizialmente_Adv = inizialmente_Adv ; -- Ita
+oper initially_Adv = mkAdv "initially" ; -- Eng
+
+fun international_internazionale_A : A ; --  -- Abstr
+lin international_internazionale_A = international_A ; -- Eng
+lin international_internazionale_A = internazionale_A ; -- Ita
+
+fun into_con_Prep : Prep ; --  -- Abstr
+lin into_con_Prep = into_Prep ; -- Eng
+lin into_con_Prep = con_Prep ; -- Ita
+
+fun keen_appassionato_A : A ; --  -- Abstr
+lin keen_appassionato_A = keen_A ; -- Eng
+lin keen_appassionato_A = appassionato_A ; -- Ita
+
+fun large_considerevole_A : A ; --  -- Abstr
+lin large_considerevole_A = large_A ; -- Eng
+lin large_considerevole_A = considerevole_A ; -- Ita
+
+fun legal_legale_A : A ; --  -- Abstr
+lin legal_legale_A = legal_A ; -- Eng
+lin legal_legale_A = legale_A ; -- Ita
+
+fun like_chiedere_Prep : Prep ; -- Utt -- Abstr
+lin like_chiedere_Prep = like_Prep ; -- Eng
+--- lin like_chiedere_Prep = UttVP (UseV chiedere_V) ; -- Ita
+
+fun like_come_Prep : Prep ; --  -- Abstr
+lin like_come_Prep = like_Prep ; -- Eng
+lin like_come_Prep = come_Prep ; -- Ita
+oper come_Prep = mkPrep "come" ; -- Ita
+
+fun like_di_Prep : Prep ; --  -- Abstr
+lin like_di_Prep = like_Prep ; -- Eng
+lin like_di_Prep = di_Prep ; -- Ita
+
+fun likely_probabile_A : A ; --  -- Abstr
+lin likely_probabile_A = likely_A ; -- Eng
+lin likely_probabile_A = probabile_A ; -- Ita
+
+fun luckily_by8means_fortuna_Adv : Adv ; -- PP -- Abstr
+lin luckily_by8means_fortuna_Adv = luckily_Adv ; -- Eng
+--- lin luckily_by8means_fortuna_Adv = PrepNP by8means_Prep (MassNP (UseN fortuna_N)) ; -- Ita
+oper luckily_Adv = mkAdv "luckily" ; -- Eng
+
+fun male_ormonale_A : A ; --  -- Abstr
+lin male_ormonale_A = male_A ; -- Eng
+lin male_ormonale_A = ormonale_A ; -- Ita
+
+fun many_volta_A : A ; -- CN -- Abstr
+lin many_volta_A = many_A ; -- Eng
+--- lin many_volta_A = UseN volta_N ; -- Ita
+
+fun many_avanti_A : A ; -- Adv -- Abstr
+lin many_avanti_A = many_A ; -- Eng
+--- lin many_avanti_A = avanti_Adv ; -- Ita
+
+fun martial_marziale_A : A ; --  -- Abstr
+lin martial_marziale_A = martial_A ; -- Eng
+lin martial_marziale_A = marziale_A ; -- Ita
+
+fun maximum_massimo_A : A ; --  -- Abstr
+lin maximum_massimo_A = maximum_A ; -- Eng
+lin maximum_massimo_A = massimo_A ; -- Ita
+
+fun may_potere_Adv : Adv ; --  -- Abstr
+lin may_potere_Adv = may_Adv ; -- Eng
+lin may_potere_Adv = potere_Adv ; -- Ita
+oper may_Adv = mkAdv "may" ; -- Eng
+oper potere_Adv = mkAdv "potere" ; -- Ita
+
+fun maybe_forse_Adv : Adv ; --  -- Abstr
+lin maybe_forse_Adv = maybe_Adv ; -- Eng
+lin maybe_forse_Adv = forse_Adv ; -- Ita
+
+fun meteoritic_meteoritico_A : A ; --  -- Abstr
+lin meteoritic_meteoritico_A = meteoritic_A ; -- Eng
+lin meteoritic_meteoritico_A = meteoritico_A ; -- Ita
+oper meteoritico_A = mkA "meteoritico" ; -- Ita
+
+fun middle_crescente_A : A ; --  -- Abstr
+lin middle_crescente_A = middle_A ; -- Eng
+lin middle_crescente_A = crescente_A ; -- Ita
+
+fun most_maggiore_A : A ; --  -- Abstr
+lin most_maggiore_A = most_A ; -- Eng
+lin most_maggiore_A = maggiore_A ; -- Ita
+oper most_A = mkA "most" ; -- Eng
+oper maggiore_A = mkA "maggiore" ; -- Ita
+
+fun most_più_Adv : Adv ; --  -- Abstr
+lin most_più_Adv = most_Adv ; -- Eng
+lin most_più_Adv = più_Adv ; -- Ita
+
+fun much_parte_A : A ; -- CN -- Abstr
+lin much_parte_A = much_A ; -- Eng
+--- lin much_parte_A = UseN parte_N ; -- Ita
+oper much_A = mkA "much" ; -- Eng
+
+fun national_Unite_A : A ; --  -- Abstr
+lin national_Unite_A = national_A ; -- Eng
+lin national_Unite_A = Unite_A ; -- Ita
+oper Unite_A = mkA "Unite" ; -- Ita
+
+fun naturally_ovviamente_Adv : Adv ; --  -- Abstr
+lin naturally_ovviamente_Adv = naturally_Adv ; -- Eng
+lin naturally_ovviamente_Adv = ovviamente_Adv ; -- Ita
+oper naturally_Adv = mkAdv "naturally" ; -- Eng
+
+fun new_nuovo_A : A ; --  -- Abstr
+lin new_nuovo_A = new_A ; -- Eng
+lin new_nuovo_A = nuovo_A ; -- Ita
+
+fun not_diretto_Adv : Adv ; --  -- Abstr
+lin not_diretto_Adv = not_Adv ; -- Eng
+lin not_diretto_Adv = diretto_Adv ; -- Ita
+oper not_Adv = mkAdv "not" ; -- Eng
+oper diretto_Adv = mkAdv "diretto" ; -- Ita
+
+fun not_non_Adv : Adv ; --  -- Abstr
+lin not_non_Adv = not_Adv ; -- Eng
+lin not_non_Adv = non_Adv ; -- Ita
+oper not_Adv = mkAdv "not" ; -- Eng
+
+fun obvious_evidente_A : A ; --  -- Abstr
+lin obvious_evidente_A = obvious_A ; -- Eng
+lin obvious_evidente_A = evidente_A ; -- Ita
+
+fun off_da_Prep : Prep ; --  -- Abstr
+lin off_da_Prep = off_Prep ; -- Eng
+lin off_da_Prep = da_Prep ; -- Ita
+
+fun often_spesso_Adv : Adv ; --  -- Abstr
+lin often_spesso_Adv = often_Adv ; -- Eng
+lin often_spesso_Adv = spesso_Adv ; -- Ita
+
+fun on_da_Prep : Prep ; --  -- Abstr
+lin on_da_Prep = on_Prep ; -- Eng
+lin on_da_Prep = da_Prep ; -- Ita
+
+fun on_di_Prep : Prep ; --  -- Abstr
+lin on_di_Prep = on_Prep ; -- Eng
+lin on_di_Prep = di_Prep ; -- Ita
+
+fun on_sotto_Prep : Prep ; --  -- Abstr
+lin on_sotto_Prep = on_Prep ; -- Eng
+lin on_sotto_Prep = sotto_Prep ; -- Ita
+
+fun once_ancora_Adv : Adv ; --  -- Abstr
+lin once_ancora_Adv = once_Adv ; -- Eng
+lin once_ancora_Adv = ancora_Adv ; -- Ita
+
+fun or_o_Adv : Adv ; --  -- Abstr
+lin or_o_Adv = or_Adv ; -- Eng
+lin or_o_Adv = o_Adv ; -- Ita
+oper or_Adv = mkAdv "or" ; -- Eng
+oper o_Adv = mkAdv "o" ; -- Ita
+
+fun originally_inizialmente_Adv : Adv ; --  -- Abstr
+lin originally_inizialmente_Adv = originally_Adv ; -- Eng
+lin originally_inizialmente_Adv = inizialmente_Adv ; -- Ita
+oper originally_Adv = mkAdv "originally" ; -- Eng
+
+fun other_militare_A : A ; --  -- Abstr
+lin other_militare_A = other_A ; -- Eng
+lin other_militare_A = militare_A ; -- Ita
+
+fun over_in_Prep : Prep ; --  -- Abstr
+lin over_in_Prep = over_Prep ; -- Eng
+lin over_in_Prep = in_Prep ; -- Ita
+
+fun peaceful_pacifico_A : A ; --  -- Abstr
+lin peaceful_pacifico_A = peaceful_A ; -- Eng
+lin peaceful_pacifico_A = pacifico_A ; -- Ita
+
+fun per_a_Prep : Prep ; --  -- Abstr
+lin per_a_Prep = per_Prep ; -- Eng
+lin per_a_Prep = a_Prep ; -- Ita
+
+fun perhaps_forse_Adv : Adv ; --  -- Abstr
+lin perhaps_forse_Adv = perhaps_Adv ; -- Eng
+lin perhaps_forse_Adv = forse_Adv ; -- Ita
+
+fun political_politico_A : A ; --  -- Abstr
+lin political_politico_A = political_A ; -- Eng
+lin political_politico_A = politico_A ; -- Ita
+
+fun possess_di_Prep : Prep ; --  -- Abstr
+lin possess_di_Prep = possess_Prep ; -- Eng
+lin possess_di_Prep = di_Prep ; -- Ita
+
+fun rare_raro_A : A ; --  -- Abstr
+lin rare_raro_A = rare_A ; -- Eng
+lin rare_raro_A = raro_A ; -- Ita
+
+fun rather_invece_Adv : Adv ; --  -- Abstr
+lin rather_invece_Adv = rather_Adv ; -- Eng
+lin rather_invece_Adv = invece_Adv ; -- Ita
+
+fun reasonable_ragionevole_A : A ; --  -- Abstr
+lin reasonable_ragionevole_A = reasonable_A ; -- Eng
+lin reasonable_ragionevole_A = ragionevole_A ; -- Ita
+
+fun recent_ultimi_A : A ; --  -- Abstr
+lin recent_ultimi_A = recent_A ; -- Eng
+lin recent_ultimi_A = ultimi_A ; -- Ita
+oper ultimi_A = mkA "ultimi" ; -- Ita
+
+fun religious_legislativo_A : A ; --  -- Abstr
+lin religious_legislativo_A = religious_A ; -- Eng
+lin religious_legislativo_A = legislativo_A ; -- Ita
+
+fun right_destro_A : A ; --  -- Abstr
+lin right_destro_A = right_A ; -- Eng
+lin right_destro_A = destro_A ; -- Ita
+
+fun right_giusto_A : A ; --  -- Abstr
+lin right_giusto_A = right_A ; -- Eng
+lin right_giusto_A = giusto_A ; -- Ita
+
+fun same_trattamento_A : A ; -- CN -- Abstr
+lin same_trattamento_A = same_A ; -- Eng
+--- lin same_trattamento_A = UseN trattamento_N ; -- Ita
+
+fun same_stesso_A : A ; --  -- Abstr
+lin same_stesso_A = same_A ; -- Eng
+lin same_stesso_A = stesso_A ; -- Ita
+
+fun scientific_scientifico_A : A ; --  -- Abstr
+lin scientific_scientifico_A = scientific_A ; -- Eng
+lin scientific_scientifico_A = scientifico_A ; -- Ita
+
+fun serbian_serbo_A : A ; --  -- Abstr
+lin serbian_serbo_A = serbian_A ; -- Eng
+lin serbian_serbo_A = serbo_A ; -- Ita
+oper serbian_A = mkA "serbian" ; -- Eng
+oper serbo_A = mkA "serbo" ; -- Ita
+
+fun short_abbastanza_A : A ; -- Adv -- Abstr
+lin short_abbastanza_A = short_A ; -- Eng
+--- lin short_abbastanza_A = abbastanza_Adv ; -- Ita
+
+fun sometimes_talvolta_Adv : Adv ; --  -- Abstr
+lin sometimes_talvolta_Adv = sometimes_Adv ; -- Eng
+lin sometimes_talvolta_Adv = talvolta_Adv ; -- Ita
+
+fun still_ancora_Adv : Adv ; --  -- Abstr
+lin still_ancora_Adv = still_Adv ; -- Eng
+lin still_ancora_Adv = ancora_Adv ; -- Ita
+
+fun still_qui_Adv : Adv ; --  -- Abstr
+lin still_qui_Adv = still_Adv ; -- Eng
+lin still_qui_Adv = qui_Adv ; -- Ita
+
+fun stuffy_antico_A : A ; -- CN -- Abstr
+lin stuffy_antico_A = stuffy_A ; -- Eng
+--- lin stuffy_antico_A = UseN antico_N ; -- Ita
+
+fun super_super_A : A ; --  -- Abstr
+lin super_super_A = super_A ; -- Eng
+lin super_super_A = super_A ; -- Ita
+
+fun than_di_Prep : Prep ; --  -- Abstr
+lin than_di_Prep = than_Prep ; -- Eng
+lin than_di_Prep = di_Prep ; -- Ita
+
+fun that_che_Adv : Adv ; --  -- Abstr
+lin that_che_Adv = that_Adv ; -- Eng
+lin that_che_Adv = che_Adv ; -- Ita
+oper that_Adv = mkAdv "that" ; -- Eng
+oper che_Adv = mkAdv "che" ; -- Ita
+
+fun there_lì_Adv : Adv ; --  -- Abstr
+lin there_lì_Adv = there_Adv ; -- Eng
+lin there_lì_Adv = lì_Adv ; -- Ita
+
+fun this_the_Det : Det ; --  -- Abstr
+lin this_the_Det = this_Det ; -- Eng
+lin this_the_Det = the_Det ; -- Ita
+
+fun this_this_Det : Det ; --  -- Abstr
+lin this_this_Det = this_Det ; -- Eng
+lin this_this_Det = this_Det ; -- Ita
+
+fun through_di_Prep : Prep ; --  -- Abstr
+lin through_di_Prep = through_Prep ; -- Eng
+lin through_di_Prep = di_Prep ; -- Ita
+
+fun throughout_in_Prep : Prep ; --  -- Abstr
+lin throughout_in_Prep = throughout_Prep ; -- Eng
+lin throughout_in_Prep = in_Prep ; -- Ita
+
+fun to_by8means_Adv : Adv ; -- Prep -- Abstr
+lin to_by8means_Adv = to_Adv ; -- Eng
+--- lin to_by8means_Adv = by8means_Prep ; -- Ita
+
+fun to_di_Adv : Adv ; -- Prep -- Abstr
+lin to_di_Adv = to_Adv ; -- Eng
+--- lin to_di_Adv = di_Prep ; -- Ita
+
+fun to_seguito_Prep : Prep ; -- CN -- Abstr
+lin to_seguito_Prep = to_Prep ; -- Eng
+--- lin to_seguito_Prep = UseN seguito_N ; -- Ita
+
+fun to_a_Prep : Prep ; --  -- Abstr
+lin to_a_Prep = to_Prep ; -- Eng
+lin to_a_Prep = a_Prep ; -- Ita
+
+fun to_di_Prep : Prep ; --  -- Abstr
+lin to_di_Prep = to_Prep ; -- Eng
+lin to_di_Prep = di_Prep ; -- Ita
+
+fun to_in_Prep : Prep ; --  -- Abstr
+lin to_in_Prep = to_Prep ; -- Eng
+lin to_in_Prep = in_Prep ; -- Ita
+
+fun total_totale_A : A ; --  -- Abstr
+lin total_totale_A = total_A ; -- Eng
+lin total_totale_A = totale_A ; -- Ita
+
+fun toxic_di_the_aria_A : A ; -- PP -- Abstr
+lin toxic_di_the_aria_A = toxic_A ; -- Eng
+--- lin toxic_di_the_aria_A = PrepNP di_Prep (DetCN the_Det (UseN aria_N)) ; -- Ita
+
+fun tremendous_enorme_A : A ; --  -- Abstr
+lin tremendous_enorme_A = tremendous_A ; -- Eng
+lin tremendous_enorme_A = enorme_A ; -- Ita
+
+fun unbelievable_incredibile_A : A ; --  -- Abstr
+lin unbelievable_incredibile_A = unbelievable_A ; -- Eng
+lin unbelievable_incredibile_A = incredibile_A ; -- Ita
+
+fun unconventional_insolito_A : A ; --  -- Abstr
+lin unconventional_insolito_A = unconventional_A ; -- Eng
+lin unconventional_insolito_A = insolito_A ; -- Ita
+
+fun unfortunately_sfortunatamente_Adv : Adv ; --  -- Abstr
+lin unfortunately_sfortunatamente_Adv = unfortunately_Adv ; -- Eng
+lin unfortunately_sfortunatamente_Adv = sfortunatamente_Adv ; -- Ita
+oper unfortunately_Adv = mkAdv "unfortunately" ; -- Eng
+
+fun unlikely_probabile_A : A ; --  -- Abstr
+lin unlikely_probabile_A = unlikely_A ; -- Eng
+lin unlikely_probabile_A = probabile_A ; -- Ita
+
+fun unprecedented_precedente_A : A ; -- CN -- Abstr
+lin unprecedented_precedente_A = unprecedented_A ; -- Eng
+--- lin unprecedented_precedente_A = UseN precedente_N ; -- Ita
+oper precedente_N = mkN "precedente" ; -- Ita
+
+fun unreliable_inaffidabile_A : A ; --  -- Abstr
+lin unreliable_inaffidabile_A = unreliable_A ; -- Eng
+lin unreliable_inaffidabile_A = inaffidabile_A ; -- Ita
+
+fun unusually_strano_Adv : Adv ; --  -- Abstr
+lin unusually_strano_Adv = unusually_Adv ; -- Eng
+lin unusually_strano_Adv = strano_Adv ; -- Ita
+oper unusually_Adv = mkAdv "unusually" ; -- Eng
+oper strano_Adv = mkAdv "strano" ; -- Ita
+
+fun up_crescere_Adv : Adv ; -- Utt -- Abstr
+lin up_crescere_Adv = up_Adv ; -- Eng
+--- lin up_crescere_Adv = UttVP (UseV crescere_V) ; -- Ita
+
+fun vague_vago_A : A ; --  -- Abstr
+lin vague_vago_A = vague_A ; -- Eng
+lin vague_vago_A = vago_A ; -- Ita
+
+fun very_deciso_Adv : Adv ; --  -- Abstr
+lin very_deciso_Adv = very_Adv ; -- Eng
+lin very_deciso_Adv = deciso_Adv ; -- Ita
+oper very_Adv = mkAdv "very" ; -- Eng
+oper deciso_Adv = mkAdv "deciso" ; -- Ita
+
+fun vocal_esplicito_A : A ; --  -- Abstr
+lin vocal_esplicito_A = vocal_A ; -- Eng
+lin vocal_esplicito_A = esplicito_A ; -- Ita
+
+fun well_non_Adv : Adv ; --  -- Abstr
+lin well_non_Adv = well_Adv ; -- Eng
+lin well_non_Adv = non_Adv ; -- Ita
+oper well_Adv = mkAdv "well" ; -- Eng
+
+fun when_inizialmente_Adv : Adv ; --  -- Abstr
+lin when_inizialmente_Adv = when_Adv ; -- Eng
+lin when_inizialmente_Adv = inizialmente_Adv ; -- Ita
+oper when_Adv = mkAdv "when" ; -- Eng
+
+fun whether_se_Adv : Adv ; -- Prep -- Abstr
+lin whether_se_Adv = whether_Adv ; -- Eng
+--- lin whether_se_Adv = se_Prep ; -- Ita
+oper whether_Adv = mkAdv "whether" ; -- Eng
+oper se_Prep = mkPrep "se" ; -- Ita
+
+fun while_mentre_Adv : Adv ; --  -- Abstr
+lin while_mentre_Adv = while_Adv ; -- Eng
+lin while_mentre_Adv = mentre_Adv ; -- Ita
+oper while_Adv = mkAdv "while" ; -- Eng
+oper mentre_Adv = mkAdv "mentre" ; -- Ita
+
+fun will_avere_Adv : Adv ; --  -- Abstr
+lin will_avere_Adv = will_Adv ; -- Eng
+lin will_avere_Adv = avere_Adv ; -- Ita
+oper will_Adv = mkAdv "will" ; -- Eng
+oper avere_Adv = mkAdv "avere" ; -- Ita
+
+fun will_dovere_Adv : Adv ; --  -- Abstr
+lin will_dovere_Adv = will_Adv ; -- Eng
+lin will_dovere_Adv = dovere_Adv ; -- Ita
+oper will_Adv = mkAdv "will" ; -- Eng
+oper dovere_Adv = mkAdv "dovere" ; -- Ita
+
+fun with_a_Prep : Prep ; --  -- Abstr
+lin with_a_Prep = with_Prep ; -- Eng
+lin with_a_Prep = a_Prep ; -- Ita
+
+fun with_con_Prep : Prep ; --  -- Abstr
+lin with_con_Prep = with_Prep ; -- Eng
+lin with_con_Prep = con_Prep ; -- Ita
+
+fun with_di_Prep : Prep ; --  -- Abstr
+lin with_di_Prep = with_Prep ; -- Eng
+lin with_di_Prep = di_Prep ; -- Ita
+
+fun with_presso_Prep : Prep ; --  -- Abstr
+lin with_presso_Prep = with_Prep ; -- Eng
+lin with_presso_Prep = presso_Prep ; -- Ita
+
+} -- Abstr
+} -- Eng
+} -- Ita
