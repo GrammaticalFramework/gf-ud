@@ -21,6 +21,11 @@ testBuildGrammar =
 -- $ gf -make Extract*.gf (*= nothing, Eng, Ita...)
 
 -- Then just evaluate testBuildGrammar in ghci.
+-- After this, do
+--
+-- $ grep Abstr out/Extracted.tmp >Extracted.gf
+-- $ grep Eng out/Extracted.tmp >ExtractedEng.gf
+-- $ grep Ita out/Extracted.tmp >ExtractedIta.gf
 --
 -- Make sure Extract*.gf and MorphoDict*.gf are on your path in GF.
 -- Then, in GF,
