@@ -29,6 +29,10 @@ module RTree where
     sizeRTree :: RTree a -> Int
     sizeRTree = length . allNodesRTree
 
+    depthRTree :: RTree a -> Int
+    depthRTree (RTree _ []) = 1  
+    depthRTree (RTree _ ts) = 1 + maximum (map depthRTree ts)  
+
     leavesRTree :: RTree a -> [a]
     leavesRTree t = case t of
       RTree a [] -> [a]
@@ -37,5 +41,5 @@ module RTree where
     childrenRTree :: RTree a -> [RTree a]
     childrenRTree (RTree _ ts) = ts
 
-    subRTrees :: RTree a -> [RTree a]
-    subRTrees t = t : concatMap subRTrees (childrenRTree t)
+    allSubRTrees :: RTree a -> [RTree a]
+    allSubRTrees t = t : concatMap allSubRTrees (childrenRTree t)
