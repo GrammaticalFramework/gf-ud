@@ -137,7 +137,7 @@ prUDSentence i = prt . addMeta i
  where
    addMeta i u = u {
      udCommentLines = [
-       "# sent_id = gfud" ++ show (1000000 + i),
+       "# sent_id =" ++ show i,
        "# text = " ++ unwords (map udFORM (udWordLines u))
        ]
      }
@@ -371,4 +371,11 @@ udCorpusScore isMicro agree golds tests = UDScore {
     testgroups  = groupBy (\t u -> sent t == sent u) tests
     sent t = unwords $ map udFORM $ udWordLines t
 
+---------------------------
+-- transforming UD trees --
+---------------------------
+
+rewriteUDTree :: UDTree -> UDTree
+rewriteUDTree udt = udt
+---- TODO
 
