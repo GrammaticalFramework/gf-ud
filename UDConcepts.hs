@@ -401,6 +401,13 @@ udCorpusScore isMicro agree golds tests = UDScore {
 ---------------------------
 -- transforming UD trees --
 ---------------------------
+<<<<<<< HEAD
+=======
+
+rewriteUDTree :: UDTree -> UDTree
+rewriteUDTree udt = udt
+---- TODO
+>>>>>>> 6e25849 (modified prUdSentence so that the output is less weird)
 
 rewriteUDTree :: UDTree -> UDTree
 rewriteUDTree udt = udt
