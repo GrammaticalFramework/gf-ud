@@ -98,6 +98,7 @@ class UDObject a where
   prss :: [String] -> a -- parse from separate lines
   errors :: a -> [String]  -- error messages
   check  :: a -> Either a [String]  -- return a or the error messages 
+  (~=) :: a -> a -> Bool
   prss ss = prs (unlines ss)
   prs s = prss [s]
   errors _ = []
@@ -108,6 +109,7 @@ instance UDObject UDSentence where
   prss ss = case span ((=="#") . take 1) ss of
     (cs,ws) -> UDSentence cs (map (prs . strip) ws)
   errors s = checkUDWords (udWordLines s)
+  (~=) = undefined 
 
 instance UDObject UDWord where
   prt w@(UDWord id fo le up xp fe he de ds mi) =
@@ -123,6 +125,16 @@ instance UDObject UDWord where
              && (udHEAD w == UDIdRoot || udDEPREL w /= "root"))         -- head 0 iff label root
           -> ["root iff 0 does not hold in:",prt w]
       _ -> []
+<<<<<<< HEAD
+=======
+  -- "equality" ignoring IDs and optional fields. Used for propagation
+  -- (for the moment, the lemma is also ignored as the same word is often
+  -- lemmatized differently, especially if the tree is obtained automatically)
+  (~=) w x = and [udFORM w == udFORM x,
+                  --udLEMMA w == udLEMMA x,
+                  udUPOS w == udUPOS x,
+                  udDEPREL w == udDEPREL x]
+>>>>>>> d4a9ac6 (added kinda-equality and subtree ops for CP)
 
 instance UDObject UDId where
   prt i = case i of
@@ -139,12 +151,14 @@ instance UDObject UDId where
       (a,'-':b@(_:_)) | all isDigit (a++b) -> UDIdRange (read a) (read b)
       (a,'.':b@(_:_)) | all isDigit (a++b) -> UDIdEmpty (read s)
       _ -> error ("ERROR:" ++ s ++ " invalid UDId")
+  (~=) = undefined 
 
 instance UDObject UDData where
   prt d = udArg d ++ "=" ++ concat (intersperse "," (udVals d))
   prs s = case break (=='=') (strip s) of
     (a,_:vs@(_:_)) -> UDData a (getSeps ',' vs)
     _ -> error ("ERROR:" ++ s ++ " invalid UDData")
+  (~=) = undefined 
 
 --- this works only for | separated lists...
 instance UDObject d => UDObject [d] where
@@ -155,6 +169,7 @@ instance UDObject d => UDObject [d] where
     "_" -> []
     _ -> map (prs . strip) (getSeps '|' s)
   errors ds = concatMap errors ds
+  (~=) = undefined 
 
 -- printing for Malt parser requires the metadata
 -- # sent_id = gfud1000001
