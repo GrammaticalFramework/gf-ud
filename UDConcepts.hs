@@ -125,16 +125,6 @@ instance UDObject UDWord where
              && (udHEAD w == UDIdRoot || udDEPREL w /= "root"))         -- head 0 iff label root
           -> ["root iff 0 does not hold in:",prt w]
       _ -> []
-<<<<<<< HEAD
-=======
-  -- "equality" ignoring IDs and optional fields. Used for propagation
-  -- (for the moment, the lemma is also ignored as the same word is often
-  -- lemmatized differently, especially if the tree is obtained automatically)
-  (~=) w x = and [udFORM w == udFORM x,
-                  --udLEMMA w == udLEMMA x,
-                  udUPOS w == udUPOS x,
-                  udDEPREL w == udDEPREL x]
->>>>>>> d4a9ac6 (added kinda-equality and subtree ops for CP)
 
 instance UDObject UDId where
   prt i = case i of
@@ -416,13 +406,6 @@ udCorpusScore isMicro agree golds tests = UDScore {
 ---------------------------
 -- transforming UD trees --
 ---------------------------
-<<<<<<< HEAD
-=======
-
-rewriteUDTree :: UDTree -> UDTree
-rewriteUDTree udt = udt
----- TODO
->>>>>>> 6e25849 (modified prUdSentence so that the output is less weird)
 
 rewriteUDTree :: UDTree -> UDTree
 rewriteUDTree udt = udt
