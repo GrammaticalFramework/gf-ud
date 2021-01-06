@@ -5,8 +5,8 @@ module UDConcepts where
 -- AR 2019-11-14 implementing
 -- https://universaldependencies.org/format.html
 
-import RTree
-import UDStandard
+import Gfud.RTree
+import Gfud.UDStandard
 
 import qualified Data.Set as S
 import qualified Data.Map as M
