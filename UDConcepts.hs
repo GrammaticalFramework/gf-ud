@@ -1,4 +1,4 @@
-module UDConcepts where
+module Gfud.UDConcepts where
 
 -- AR 2019-11-14 implementing
 -- https://universaldependencies.org/format.html
@@ -42,7 +42,7 @@ data UDWord = UDWord {
 type POS = String
 type Label = String
 
--- uselesss because one could just use isSubRTree, but...
+-- useless because one could just use isSubRTree, but...
 isSubUDTree :: UDTree -> UDTree -> Bool
 isSubUDTree t u = t == u || any (isSubUDTree t) (subtrees u)
 
@@ -52,7 +52,9 @@ isSubUDTree' :: UDTree -> UDTree -> Bool
 isSubUDTree' t u = t =~ u || any (isSubUDTree' t) (subtrees u)
 
 (=~) :: UDTree -> UDTree -> Bool
-(=~) (RTree n ts) (RTree m us) = n ~= m && and [t =~ u | t <- ts, u <- us]
+-- TODO: problem - zip does not pad, it cuts
+-- and [t == u | (t,u) <- [0,1,2] `zip` [0,1]]
+(=~) (RTree n ts) (RTree m us) = n ~= m && length ts == length us && and [t =~ u | (t,u) <- ts `zip` us]
 
 data UDData = UDData {
   udArg  :: String,
