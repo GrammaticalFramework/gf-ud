@@ -1,7 +1,7 @@
-module GFConcepts where
+module Gfud.GFConcepts where
 
 import PGF
-import RTree
+import Gfud.RTree
 import Data.List
 
 

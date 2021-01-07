@@ -1,8 +1,8 @@
-module BuildGFGrammar where
+module Gfud.BuildGFGrammar where
 
-import GFConcepts
-import UDConcepts
-import RTree
+import Gfud.GFConcepts
+import Gfud.UDConcepts
+import Gfud.RTree
 
 import PGF
 
@@ -15,9 +15,9 @@ testBuildGrammar =
   buildGFGrammar "grammars/Extract.pgf" ["grammars/MorphoDictEng.pgf", "grammars/MorphoDictIta.pgf"]
 -- before running the test, do
 --
--- $ gf --make MorphodictLang.gf (then remove Abs from the .pgf files obtaines, -o does not work)
--- $ gf --make Extract*.gf (*= nothing, Eng, Ita...)
--- manually create an out folder in  gf-ud
+-- $ gf -make Morphodict*.gf
+-- $ gf -make Extract*.gf (*= nothing, Eng, Ita...)
+-- create an out folder in  gf-ud
 -- Then just evaluate testBuildGrammar in ghci.
 -- After this, do
 --
