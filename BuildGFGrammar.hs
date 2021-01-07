@@ -10,20 +10,16 @@ import qualified Data.Map as M
 import System.Environment (getArgs)
 import Data.List
 
+import System.FilePath.Posix
+
 testBuildGrammar =
   readFile "data/example-eng-ita-aligns.txt" >>=
   buildGFGrammar "grammars/Extract.pgf" ["grammars/MorphoDictEng.pgf", "grammars/MorphoDictIta.pgf"]
 -- before running the test, do
 --
--- $ gf -make Morphodict*.gf
+-- $ gf -make Morphodict*.gf and rename pgf files to without Abs
 -- $ gf -make Extract*.gf (*= nothing, Eng, Ita...)
--- create an out folder in  gf-ud
 -- Then just evaluate testBuildGrammar in ghci.
--- After this, do
---
--- $ grep Abstr out/Extracted.tmp >Extracted.gf
--- $ grep Eng out/Extracted.tmp >ExtractedEng.gf
--- $ grep Ita out/Extracted.tmp >ExtractedIta.gf
 --
 -- Make sure Extract*.gf and MorphoDict*.gf are on your path in GF.
 -- Then, in GF,
@@ -40,8 +36,14 @@ buildGFGrammar abstr dicts als = do
   env <- getGrammarEnv abstr dicts
   let aligns = readAlignments als
   let ruless = map (tree2rules env) aligns
-  writeFile "out/Extracted.tmp" $ prBuiltGrammar env ruless
-
+  let allGrLines = lines $ prBuiltGrammar env ruless
+  let absGrLines = filter (" -- Abstr" `isSuffixOf`) allGrLines -- lines of (abstract) Extracted.gf
+  let langs = map fst (M.toList $ langenvs env)
+  let langGrLines = map (\l -> filter ((" -- " ++ l) `isSuffixOf`) allGrLines) langs -- lines of (concrete) ExtractedLang.gf
+  mapM_ 
+    (\(l,g) -> writeFile (grammarDir ++ "Extracted" ++ l ++ ".gf") g) 
+    (("":langs) `zip` map unlines (absGrLines:langGrLines))
+    where grammarDir = dropFileName abstr
 
 getGrammarEnv :: FilePath -> [FilePath] -> IO GrammarEnv
 getGrammarEnv abstr dicts = do
@@ -134,11 +136,11 @@ prBuiltRules br = unlines $ [
 
 prBuiltGrammar env ruless = unlines $ [
    unwords ["abstract", absn, "=",
-            concat (intersperse "," (absbasemodules env)), "**","{","-- Abstr"] 
+            concat (intersperse "," (depath (absbasemodules env))), "**","{","-- Abstr"] 
    ] ++ [
    unwords ["concrete", showCId (cncname lenv), "of", absn, "=",
-            concat (intersperse ", " (basemodules lenv)), "**",
-            "open", concat (intersperse ", " (resourcemodules lenv)), "in","{","--", lang]
+            concat (intersperse ", " (depath (basemodules lenv))), "**",
+            "open", concat (intersperse ", " (depath (resourcemodules lenv))), "in","{","--", lang]
      | (lang,lenv) <- M.assocs (langenvs env) 
    ] ++
    map prBuiltRules ruless ++ [
@@ -147,6 +149,7 @@ prBuiltGrammar env ruless = unlines $ [
  where
    absn = showCId (absname env)
    langs = M.keys (langenvs env)
+   depath modules = map takeFileName modules
 
 
 -- format:
