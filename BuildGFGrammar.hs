@@ -1,8 +1,8 @@
-module BuildGFGrammar where
+module Gfud.BuildGFGrammar where
 
-import GFConcepts
-import UDConcepts
-import RTree
+import Gfud.GFConcepts
+import Gfud.UDConcepts
+import Gfud.RTree
 
 import PGF
 
@@ -19,7 +19,7 @@ testBuildGrammar =
 --
 -- $ gf -make Morphodict*.gf and rename pgf files to without Abs
 -- $ gf -make Extract*.gf (*= nothing, Eng, Ita...)
-
+-- create an out folder in  gf-ud
 -- Then just evaluate testBuildGrammar in ghci.
 -- After this, do
 --
