@@ -75,6 +75,10 @@ parseUDFile f = readFile f >>= return . parseUDText
 parseUDText :: String -> [UDSentence]
 parseUDText = map prss . stanzas . lines
 
+-- shorthand
+conlluFile2UDTrees :: FilePath -> IO [UDTree]
+conlluFile2UDTrees p = parseUDFile p >>= return . map udSentence2tree
+
 errorsInUDSentences :: [UDSentence] -> [String]
 errorsInUDSentences = concatMap errors
 
@@ -403,4 +407,3 @@ udCorpusScore isMicro agree golds tests = UDScore {
 rewriteUDTree :: UDTree -> UDTree
 rewriteUDTree udt = udt
 ---- TODO
-
