@@ -1,8 +1,8 @@
-module Gfud.BuildGFGrammar where
+module BuildGFGrammar where
 
-import Gfud.GFConcepts
-import Gfud.UDConcepts
-import Gfud.RTree
+import GFConcepts
+import UDConcepts
+import RTree
 
 import PGF
 
