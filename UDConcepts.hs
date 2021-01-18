@@ -1,10 +1,10 @@
-module Gfud.UDConcepts where
+module UDConcepts where
 
 -- AR 2019-11-14 implementing
 -- https://universaldependencies.org/format.html
 
-import Gfud.RTree
-import Gfud.UDStandard
+import RTree
+import UDStandard
 
 import qualified Data.Set as S
 import qualified Data.Map as M

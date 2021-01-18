@@ -1,4 +1,4 @@
-module Gfud.UDStandard where
+module UDStandard where
 
 ------------------------------
 -- for checking with UD2 standard
