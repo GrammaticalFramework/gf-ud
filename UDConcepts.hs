@@ -1,3 +1,5 @@
+{-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
+
 module UDConcepts where
 
 -- AR 2019-11-14 implementing
@@ -51,22 +53,6 @@ isSubUDTree t u = t == u || any (isSubUDTree t) (subtrees u)
 isSubUDTree' :: UDTree -> UDTree -> Bool
 isSubUDTree' t u = t =~ u || any (isSubUDTree' t) (subtrees u)
 
-(=~) :: UDTree -> UDTree -> Bool
--- and [t == u | (t,u) <- [0,1,2] `zip` [0,1]]
-(=~) (RTree n ts) (RTree m us) = 
-  n ~= m 
-  && length ts == length us 
-  && and [t =~ u | (t,u) <- ts `zip` us]
-
--- "equality" ignoring IDs and optional fields. Used for propagation
--- (for the moment, the lemma is also ignored as the same word is often
--- lemmatized differently, especially if the tree is obtained automatically)
-(~=) ::UDWord -> UDWord -> Bool  
-(~=) w x = and [udFORM w == udFORM x,
-                --udLEMMA w == udLEMMA x,
-                udUPOS w == udUPOS x,
-                udDEPREL w == udDEPREL x]
-
 data UDData = UDData {
   udArg  :: String,
   udVals ::[String]
@@ -92,6 +78,19 @@ conlluFile2UDTrees p = parseUDFile p >>= return . map udSentence2tree
 
 errorsInUDSentences :: [UDSentence] -> [String]
 errorsInUDSentences = concatMap errors
+
+class Comparable a where
+  (=~) :: a -> a -> Bool
+
+instance Comparable UDWord where
+  (=~) w x = 
+    udFORM w == udFORM x && udUPOS w == udUPOS x && udDEPREL w == udDEPREL x
+
+instance Comparable UDTree where
+  (=~) (RTree n ts) (RTree m us) = 
+    n =~ m 
+    && length ts == length us 
+    && and [t =~ u | (t,u) <- ts `zip` us]
 
 class UDObject a where
   prt  :: a -> String  -- print
