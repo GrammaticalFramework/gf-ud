@@ -1,4 +1,4 @@
-module Gfud.RTree where
+module RTree where
     
 -- rose tree
 data RTree a = RTree {
