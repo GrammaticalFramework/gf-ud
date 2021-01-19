@@ -37,7 +37,8 @@ buildGFGrammar abstr dicts als = do
   let aligns = readAlignments als
   let ruless = map (tree2rules env) aligns
   let allGrLines = lines $ prBuiltGrammar env ruless
-  let absGrLines = filter (" -- Abstr" `isSuffixOf`) allGrLines -- lines of (abstract) Extracted.gf
+  let (a:as) = filter (" -- Abstr" `isSuffixOf`) allGrLines 
+  let absGrLines = a:"flags startcat = Utt ;":as -- lines of (abstract) Extracted.gf
   let langs = map fst (M.toList $ langenvs env)
   let langGrLines = map (\l -> filter ((" -- " ++ l) `isSuffixOf`) allGrLines) langs -- lines of (concrete) ExtractedLang.gf
   mapM_ 
