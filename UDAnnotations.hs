@@ -47,7 +47,7 @@ checkAnnotations pref eng cat = do
   putStrLn $ unlines $ checkAbsLabels env (absLabels env)
   putStrLn $ unlines $ checkCncLabels env (cncLabels env)
 
-stdLanguage pref eng = mkLanguage $ tail (dropWhile (/='/') pref ++ eng)
+stdLanguage pref eng = mkLanguage $ if elem '/' pref then (tail (dropWhile (/='/') pref ++ eng)) else (pref ++ eng)
 stdGrammarFile pref = pref ++ ".pgf"
 stdAbsLabelsFile pref = pref ++ ".labels"
 stdCncLabelsFile pref eng = pref ++ eng ++ ".labels"
