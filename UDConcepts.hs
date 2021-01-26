@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
+
 module UDConcepts where
 
 -- AR 2019-11-14 implementing
