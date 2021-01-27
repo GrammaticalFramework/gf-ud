@@ -9,7 +9,7 @@ import qualified Data.Set as S
 import Data.List
 import Data.Char
 import Data.Maybe
-
+import System.FilePath.Posix (takeBaseName)
 --------
 
 data UDEnv = UDEnv {
@@ -47,7 +47,7 @@ checkAnnotations pref eng cat = do
   putStrLn $ unlines $ checkAbsLabels env (absLabels env)
   putStrLn $ unlines $ checkCncLabels env (cncLabels env)
 
-stdLanguage pref eng = mkLanguage $ if elem '/' pref then (tail (dropWhile (/='/') pref ++ eng)) else (pref ++ eng)
+stdLanguage pref eng = mkLanguage (takeBaseName pref ++ eng)
 stdGrammarFile pref = pref ++ ".pgf"
 stdAbsLabelsFile pref = pref ++ ".labels"
 stdCncLabelsFile pref eng = pref ++ eng ++ ".labels"
