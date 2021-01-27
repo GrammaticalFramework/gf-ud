@@ -46,7 +46,7 @@ buildGFGrammar abstr dicts als = do
     (("":langs) `zip` map unlines (absGrLines:langGrLines))
     where 
       grammarDir = dropFileName abstr
-      isPron r = "mkPron" `isInfixOf` r
+      isPron r = "Pron" `isInfixOf` r
 
 getGrammarEnv :: FilePath -> [FilePath] -> IO GrammarEnv
 getGrammarEnv abstr dicts = do
