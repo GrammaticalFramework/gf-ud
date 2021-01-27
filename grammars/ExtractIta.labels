@@ -1,0 +1,5 @@
+#auxfun DetCN_thePl det cn : The -> CN -> NP = DetCN thePl_Det cn ; det head[Number=Plur]
+#auxfun DetCN_theSg det cn : The -> CN -> NP = DetCN the_Det cn ; det head[Number=Sing]
+#auxfun DetCN_aPl cn : CN -> NP = PluralNP cn ; head[Number=Plur]
+
+#disable the_Det thePl_Det
