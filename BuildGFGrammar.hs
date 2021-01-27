@@ -63,7 +63,7 @@ getGrammarEnv abstr dicts = do
          cncname = mkCId ("Extracted" ++ lang),
          dictpgf = pgf,
          basemodules = [synt++la++lang], --- extending the syntax module
-         resourcemodules = [morphodict ++ lang, "Paradigms" ++ lang]
+         resourcemodules = [morphodict ++ lang, "Paradigms" ++ lang, "MakeStructural" ++ lang]
          }) |
               (dict,pgf) <- zip dicts dictpgfs,
               let (_,morphodict,lang,_) = partsOfFileName dict
