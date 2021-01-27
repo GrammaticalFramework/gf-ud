@@ -36,7 +36,7 @@ buildGFGrammar abstr dicts als = do
   env <- getGrammarEnv abstr dicts
   let aligns = readAlignments als
   let ruless = map (tree2rules env) aligns
-  let allGrLines = lines $ prBuiltGrammar env ruless
+  let allGrLines = filter (not . isPron) (lines $ prBuiltGrammar env ruless)
   let (a:as) = filter (" -- Abstr" `isSuffixOf`) allGrLines 
   let absGrLines = a:"flags startcat = Utt ;":as -- lines of (abstract) Extracted.gf
   let langs = map fst (M.toList $ langenvs env)
@@ -44,7 +44,9 @@ buildGFGrammar abstr dicts als = do
   mapM_ 
     (\(l,g) -> writeFile (grammarDir ++ "Extracted" ++ l ++ ".gf") g) 
     (("":langs) `zip` map unlines (absGrLines:langGrLines))
-    where grammarDir = dropFileName abstr
+    where 
+      grammarDir = dropFileName abstr
+      isPron r = "mkPron" `isInfixOf` r
 
 getGrammarEnv :: FilePath -> [FilePath] -> IO GrammarEnv
 getGrammarEnv abstr dicts = do
