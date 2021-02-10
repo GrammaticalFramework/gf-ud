@@ -10,14 +10,15 @@ cat
   PP ;
   NNP ; -- single-N NP, sg or pl
   AdvP ; -- adverbial phrase
+  AdvCl ; -- clausal adv phrase
   Poss ; -- possessive determiner
   VPP ;  -- infinitival VP
   Punct ; -- punctuation mark
 
 -- not seen in UD explicitly
 fun
-  SgNNP : N -> NP ;
-  PlNNP : N -> NP ;
+  SgNNP : N -> NNP ;
+  PlNNP : N -> NNP ;
   UsePN : PN -> NP ;
   PositA : A -> AP ;
   ComparA : A -> AP ;
@@ -26,6 +27,9 @@ fun
 fun
 DetN : Det -> N -> NP ; -- det head 1248 ; obj ; a flat
 -- Det -> CN -> NP ; -- det head 956 ; nsubj ; no one
+-- Det -> CN -> CN ; -- det head 126 ; nsubj:pass ; the fence
+-- Det -> CN -> CN ; -- det head 97 ; obl:npmod ; a lot
+-- Det -> CN -> CN ; -- det head 91 ; obl:tmod ; this evening
 PrepDetN : Prep -> Det -> N -> PP ; -- case det head 1130 ; obl ; in the car
 -- Prep -> Det -> CN -> PP ; -- case det head 706 ; nmod ; around this city
 PrepNNP : Prep -> NNP -> PP ; -- case head 785 ; nmod ; of TIME
@@ -33,6 +37,7 @@ PrepNNP : Prep -> NNP -> PP ; -- case head 785 ; nmod ; of TIME
 Conj2NP : NP -> Conj -> NP -> NP ;
 -- Conj -> CN -> CN ; -- cc head 648 ; conj ; and dress
 -- Conj -> PN -> PN ; -- cc head 283 ; conj ; and 15th
+-- CN -> CN -> NP ; -- head conj 51 ; obj ; receipt record
 PrepPN : Prep -> PN -> PP ; -- case head 636 ; nmod ; like Zahav
 -- Prep -> PN -> PP ; -- case head 567 ; obl ; On Monday
 PrepPron : Prep -> Pron -> PP ; -- case head 621 ; obl ; for me
@@ -62,7 +67,9 @@ PlAdjNNP : AP -> N -> NNP ;
 -- AP -> CN -> NP ; -- amod head 135 ; nsubj ; other brides
 ---- GenPN : PN -> Poss ; -- head case 280 ; nmod:poss ; Stuart 's ; PART
 CompPN : PN -> PN -> NP ; -- compound head 276 ; compound ; RADISON WARWICK
+-- PN -> PN -> NP ; -- compound head 66 ; nsubj ; Wedding Gallery
 FlatPN : PN -> PN -> NP ; -- head flat 103 ; root ; Alan Grissom
+-- PN -> PN -> NP ; -- head flat 153 ; nsubj ; Michael Chestney
 InfComplV2 : V2 -> NP -> VPP ; -- mark head obj 275 ; xcomp ; to take approach ; PART
 -- PART -> V2 -> NP -> VP ; -- mark head obj 181 ; advcl ; to replace tire
 -- PART -> V2 -> NP -> VP ; -- mark head obj 88 ; acl ; to fix fence
@@ -74,6 +81,8 @@ PlPrepAdjN : Prep -> AP -> N -> PP ;
 -- Prep -> AP -> N -> PP ; -- case amod head 257 ; nmod ; of chewy fat 
 -- Prep -> AP -> N -> PP ; -- case amod head 208 ; obl ; at other establishments
 CompoundN : N -> N -> N ; -- compound head 250 ; compound ; dining room
+-- CN -> CN -> NP ; -- compound head 128 ; obj ; mildew problems
+-- CN -> CN -> NP ; -- compound head 74 ; nsubj ; minute price
 --- CN -> CN -> CN ; -- head conj 68 ; compound ; designer dress
 DetCompoundN : Det -> N -> N -> NP ; -- det compound head 236 ; obj ; the service quote
 -- Det -> CN -> CN -> NP ; -- det compound head 136 ; nsubj ; the chocolate semifreddo
@@ -84,56 +93,50 @@ PrepDetCompoundN : Prep -> Det -> N -> N -> PP ; -- case det compound head 233 ;
 ---- Conj -> VP -> NP -> VP ; -- cc head obj 184 ; conj ; and replace tires
 Conj3NP : NP -> NP -> Conj -> NP -> NP ; ---- PUNCT
 -- Punct -> CN -> CN ; -- punct head 176 ; conj ; , decor
+-- Punct -> PN -> PN ; -- punct head 118 ; conj ; , Boyles
 DetNinfVP : Det -> N -> VP -> NP ; -- det head acl 173 ; obj ; another attempt get
 DetNppartVP : Det -> N -> V2 -> NP ; -- det head acl:relcl 110 ; obj ; the fence installed
 -- Det -> CN -> VP -> NP ; -- det head acl:relcl 63 ; nsubj ; another dress loved
 ----DetCNingVP : Det -> CN -> VP -> NP ; -- det head acl 59 ; nsubj ; the girl helping
 ComplPrepVP : VP -> PP -> VP ; -- head obl 171 ; acl ; received location
 -- VP -> PP -> VP ; -- head obl 61 ; acl ; run Tina
--- Card -> CN -> CN ; -- nummod head 153 ; nmod:tmod ; 610 AD
--- Card -> CN -> CN ; -- nummod head 85 ; obl:npmod ; ten minutes
--- Card -> CN -> CN ; -- nummod head 58 ; compound ; 20 hour
+
+CardTimePP : Card -> N -> PP ; -- nummod head 153 ; nmod:tmod ; 610 AD
+---- Card -> CN -> CN ; -- nummod head 85 ; obl:npmod ; ten minutes
+---- Card -> CN -> CN ; -- nummod head 58 ; compound ; 20 hour
 -- Card -> CN -> CN ; -- nummod head 40 ; obl:tmod ; 3 times
--- PN -> PN -> NP ; -- head flat 153 ; nsubj ; Michael Chestney
--- PN -> PN -> NP ; -- compound head 66 ; nsubj ; Wedding Gallery
--- Prep -> CN -> CN -> PP ; -- case compound head 150 ; nmod ; of dog introductions
+PrepCompN : Prep -> N -> N -> PP ; -- case compound head 150 ; nmod ; of dog introductions
 -- Prep -> CN -> CN -> PP ; -- case compound head 118 ; obl ; about minute rates
 -- Prep -> CN -> CN -> PP ; -- case head conj 88 ; nmod ; of designers dresses
 -- Prep -> CN -> CN -> PP ; -- case head conj 53 ; obl ; in service quality
--- Prep -> PN -> PN -> PP ; -- case compound head 148 ; nmod ; in Rittenhouse Square
+PrepCompPN : Prep -> PN -> PN -> PP ; -- case compound head 148 ; nmod ; in Rittenhouse Square
 -- Prep -> PN -> PN -> PP ; -- case compound head 94 ; obl ; from Second Home
 -- Prep -> PN -> PN -> PP ; -- case head conj 54 ; nmod ; of will grace
 -- Prep -> PN -> PN -> PP ; -- case head flat 52 ; obl ; to San Antonio
 -- Prep -> PN -> PN -> PP ; -- case head flat 48 ; nmod ; of San Antonio
--- Prep -> Card -> CN -> PP ; -- case nummod head 147 ; obl ; for 3 days
+PrepCardN : Prep -> Card -> N -> PP ; -- case nummod head 147 ; obl ; for 3 days
 -- Prep -> Card -> CN -> PP ; -- case nummod head 50 ; nmod ; to 10 AM
--- Conj -> VP -> VP ; -- cc head 145 ; conj ; and try
--- NP -> VP -> VP ; -- nsubj head 140 ; acl:relcl ; she is
--- CN -> Punct -> CN ; -- head punct 134 ; root ; Help ?
--- Card -> CN -> Card ; -- head nmod:tmod 133 ; root ; 11/29/2000 AM
--- NP -> VP -> VP -> Punct -> VP ; -- nsubj head ccomp punct 132 ; root ; I guess tells .
--- NP -> VP -> VP -> Punct -> VP ; -- nsubj head ccomp punct 90 ; root ; thing is have .
--- NP -> VP -> VP -> Punct -> VP ; -- nsubj head xcomp punct 71 ; root ; They need update .
--- Card -> Punct -> CN -> Punct -> Card ; -- head punct appos punct 129 ; root ; 5 - Number .
--- CN -> CN -> NP ; -- compound head 128 ; obj ; mildew problems
--- CN -> CN -> NP ; -- compound head 74 ; nsubj ; minute price
--- CN -> CN -> NP ; -- head conj 51 ; obj ; receipt record
--- Det -> PN -> NP ; -- det head 127 ; nsubj ; that Warwick
+---- Conj -> VP -> VP ; -- cc head 145 ; conj ; and try
+---- NoPronRelV2 : NP -> V -> VP ; -- nsubj head 140 ; acl:relcl ; she is
+UttN : N -> Punct -> Utt ; -- head punct 134 ; root ; Help ?
+DateUtt : Card -> N -> Utt ; -- head nmod:tmod 133 ; root ; 11/29/2000 AM
+UttPredVS : NP -> V -> S -> Punct -> Utt ; -- nsubj head ccomp punct 132 ; root ; I guess tells .
+---- NP -> VP -> VP -> Punct -> VP ; -- nsubj head ccomp punct 90 ; root ; thing is have .
+UttPredVV : NP -> V -> VP -> Punct -> Utt ; -- nsubj head xcomp punct 71 ; root ; They need update .
+UttCardN : Card -> Punct -> N -> Punct -> Utt ; -- head punct appos punct 129 ; root ; 5 - Number .
+DetPN : Det -> PN -> NP ; -- det head 127 ; nsubj ; that Warwick
 -- Det -> PN -> NP ; -- det head 49 ; obj ; a nissan
--- Det -> CN -> CN ; -- det head 126 ; nsubj:pass ; the fence
--- Det -> CN -> CN ; -- det head 97 ; obl:npmod ; a lot
--- Det -> CN -> CN ; -- det head 91 ; obl:tmod ; this evening
--- CN -> PP -> NP ; -- head nmod 126 ; obj ; grease wheel
+NNPPrep : NNP -> PP -> NP ; -- head nmod 126 ; obj ; grease wheel
 -- CN -> PP -> NP ; -- head nmod 43 ; nsubj ; Security hotel
--- PN -> Punct -> PN ; -- head punct 126 ; root ; Manson ?
--- Prep -> CN -> PP -> PP ; -- case head nmod 125 ; obl ; with crap hair
--- Prep -> CN -> PP -> PP ; -- case head nmod 89 ; nmod ; with directions room
--- Prep -> Card -> PP ; -- case head 124 ; obl ; circa 7
+UttPN : PN -> Punct -> Utt ; -- head punct 126 ; root ; Manson ?
+PrepNNPPrep : Prep -> NNP -> PP -> PP ; -- case head nmod 125 ; obl ; with crap hair
+-- PrepNNP : Prep -> CN -> PP -> PP ; -- case head nmod 89 ; nmod ; with directions room
+PrepCard : Prep -> Card -> PP ; -- case head 124 ; obl ; circa 7
 -- Prep -> Card -> PP ; -- case head 120 ; nmod ; o 1998
--- Subj -> NP -> VP -> NP -> VP ; -- mark nsubj head obj 123 ; advcl ; until they ordered dress
+SubjPredObj : Subj -> NP -> V -> NP -> AdvCl ; -- mark nsubj head obj 123 ; advcl ; until they ordered dress
 UttPredObj : NP -> V -> NP -> Punct -> Utt ; -- nsubj head obj punct 119 ; root ; They had room .
 -- NP -> VP -> NP -> Punct -> VP ; -- nsubj head obj punct 54 ; root ; shops have owners .
--- Punct -> PN -> PN ; -- punct head 118 ; conj ; , Boyles
+
 -- Prep -> Prep -> Prep ; -- head fixed 116 ; case ; due to
 -- Subj -> VP -> NP -> VP ; -- mark head obj 113 ; advcl ; after checking tire
 -- Subj -> VP -> NP -> VP ; -- mark head obj 58 ; acl ; of canceling membership

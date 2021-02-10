@@ -13,6 +13,7 @@ lincat
   PP = Adv ;
   NNP = NP ; -- single-N NP, sg or pl
   AdvP = Adv ; -- adverbial phrase
+  AdvCl = Adv ;
   Poss = Det ; -- possessive determiner
   VPP = Adv ; ----
   Punct = {s : Str} ;
@@ -26,6 +27,7 @@ lin
   periodPunct = {s = "."} ;
 
 oper punctUtt : Utt -> {s : Str} -> Utt = \u,p -> lin Utt {s = u.s ++ p.s} ;
+oper ccUtt : Utt -> Utt -> Utt = \u,v -> lin Utt {s = u.s ++ v.s} ;
 
 
 lin
@@ -92,49 +94,42 @@ DetNppartVP det n v2 = mkNP (mkNP det n) v2 ;
 ----DetCNingVP : Det -> CN -> VP -> NP ; -- det head acl 59 ; nsubj ; the girl helping
 ComplPrepVP vp pp = mkVP vp pp ;
 
--- VP -> PP -> VP ; -- head obl 61 ; acl ; run Tina
--- Card -> CN -> CN ; -- nummod head 153 ; nmod:tmod ; 610 AD
--- Card -> CN -> CN ; -- nummod head 85 ; obl:npmod ; ten minutes
--- Card -> CN -> CN ; -- nummod head 58 ; compound ; 20 hour
--- Card -> CN -> CN ; -- nummod head 40 ; obl:tmod ; 3 times
--- PN -> PN -> NP ; -- head flat 153 ; nsubj ; Michael Chestney
--- PN -> PN -> NP ; -- compound head 66 ; nsubj ; Wedding Gallery
--- Prep -> CN -> CN -> PP ; -- case compound head 150 ; nmod ; of dog introductions
--- Prep -> CN -> CN -> PP ; -- case compound head 118 ; obl ; about minute rates
--- Prep -> CN -> CN -> PP ; -- case head conj 88 ; nmod ; of designers dresses
--- Prep -> CN -> CN -> PP ; -- case head conj 53 ; obl ; in service quality
--- Prep -> PN -> PN -> PP ; -- case compound head 148 ; nmod ; in Rittenhouse Square
--- Prep -> PN -> PN -> PP ; -- case compound head 94 ; obl ; from Second Home
--- Prep -> PN -> PN -> PP ; -- case head conj 54 ; nmod ; of will grace
--- Prep -> PN -> PN -> PP ; -- case head flat 52 ; obl ; to San Antonio
--- Prep -> PN -> PN -> PP ; -- case head flat 48 ; nmod ; of San Antonio
--- Prep -> Card -> CN -> PP ; -- case nummod head 147 ; obl ; for 3 days
--- Prep -> Card -> CN -> PP ; -- case nummod head 50 ; nmod ; to 10 AM
--- Conj -> VP -> VP ; -- cc head 145 ; conj ; and try
--- NP -> VP -> VP ; -- nsubj head 140 ; acl:relcl ; she is
--- CN -> Punct -> CN ; -- head punct 134 ; root ; Help ?
--- Card -> CN -> Card ; -- head nmod:tmod 133 ; root ; 11/29/2000 AM
--- NP -> VP -> VP -> Punct -> VP ; -- nsubj head ccomp punct 132 ; root ; I guess tells .
--- NP -> VP -> VP -> Punct -> VP ; -- nsubj head ccomp punct 90 ; root ; thing is have .
--- NP -> VP -> VP -> Punct -> VP ; -- nsubj head xcomp punct 71 ; root ; They need update .
--- Card -> Punct -> CN -> Punct -> Card ; -- head punct appos punct 129 ; root ; 5 - Number .
--- CN -> CN -> NP ; -- compound head 128 ; obj ; mildew problems
--- CN -> CN -> NP ; -- compound head 74 ; nsubj ; minute price
--- CN -> CN -> NP ; -- head conj 51 ; obj ; receipt record
--- Det -> PN -> NP ; -- det head 127 ; nsubj ; that Warwick
--- Det -> PN -> NP ; -- det head 49 ; obj ; a nissan
--- Det -> CN -> CN ; -- det head 126 ; nsubj:pass ; the fence
--- Det -> CN -> CN ; -- det head 97 ; obl:npmod ; a lot
--- Det -> CN -> CN ; -- det head 91 ; obl:tmod ; this evening
--- CN -> PP -> NP ; -- head nmod 126 ; obj ; grease wheel
--- CN -> PP -> NP ; -- head nmod 43 ; nsubj ; Security hotel
--- PN -> Punct -> PN ; -- head punct 126 ; root ; Manson ?
--- Prep -> CN -> PP -> PP ; -- case head nmod 125 ; obl ; with crap hair
--- Prep -> CN -> PP -> PP ; -- case head nmod 89 ; nmod ; with directions room
--- Prep -> Card -> PP ; -- case head 124 ; obl ; circa 7
--- Prep -> Card -> PP ; -- case head 120 ; nmod ; o 1998
--- Subj -> NP -> VP -> NP -> VP ; -- mark nsubj head obj 123 ; advcl ; until they ordered dress
+CardTimePP card n = mkAdv P.noPrep (mkNP card n) ;
+---- Card -> CN -> CN ; -- nummod head 85 ; obl:npmod ; ten minutes
+---- Card -> CN -> CN ; -- nummod head 58 ; compound ; 20 hour
+
+PrepCompN prep x y = mkAdv prep (mkNP (ExtendEng.CompoundN x y)) ;
+
+
+
+PrepCompPN prep x y = mkAdv prep (mkNP (mkNP x) (lin Adv (mkUtt (mkNP y)))) ;
+
+
+
+
+PrepCardN prep card n = mkAdv prep (mkNP card n) ;
+
+---- Conj -> VP -> VP ; -- cc head 145 ; conj ; and try
+---- NoPronRelV2 : NP -> V -> VP ; -- nsubj head 140 ; acl:relcl ; she is
+UttN n punct = punctUtt (mkUtt (mkCN n)) punct ;
+DateUtt card n = ccUtt (mkUtt card) (mkUtt (mkCN n)) ;
+UttPredVS np v s punct = punctUtt (mkUtt (mkS (mkCl np (P.mkVS v) s))) punct ;
+---- NP -> VP -> VP -> Punct -> VP ; -- nsubj head ccomp punct 90 ; root ; thing is have .
+UttPredVV np v vp punct = punctUtt (mkUtt (mkS (mkCl np (P.mkVV v) vp))) punct ;
+UttCardN card p n q = ccUtt (punctUtt (mkUtt card) p) (punctUtt (mkUtt (mkCN n)) q) ; 
+----DetPN : Det -> PN -> NP ; -- det head 127 ; nsubj ; that Warwick
+
+NNPPrep nnp pp = mkNP nnp pp ;
+
+UttPN pn punct = punctUtt (mkUtt (mkNP pn)) punct ;
+PrepNNPPrep prep nnp pp = mkAdv prep (mkNP nnp pp) ;
+
+PrepCard prep card = mkAdv prep (mkNP (mkDet card)) ;
+
+SubjPredObj sub subj v obj = mkAdv sub (mkS (mkCl subj (P.mkV2 v) obj)) ;
 UttPredObj subj v obj punct = punctUtt (mkUtt (mkS (mkCl subj (P.mkV2 v) obj))) punct ;
+
+
 
 -- Punct -> PN -> PN ; -- punct head 118 ; conj ; , Boyles
 -- Prep -> Prep -> Prep ; -- head fixed 116 ; case ; due to
