@@ -109,6 +109,7 @@
 #cat Predet DET
 #cat Prep ADP primary
 #cat Pron PRON
+#cat Punct PUNCT
 #cat QCl X
 #cat QS X
 #cat QVP X

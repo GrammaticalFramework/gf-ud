@@ -8,6 +8,7 @@ import UDOptions
 import PGF
 
 import Data.List
+import Data.Char
 import qualified Data.Map as M
 
 
@@ -210,4 +211,33 @@ suggestAbsType ((val,args),(hlabel,labels)) = (suggestCat val hlabel, map (uncur
        "NUM" -> mkCId "Card"
        _ -> v
    npLabels = ["nsubj","obj","iobj"]
+
+-- to produce configs from post-edited GF file:
+
+mkConfigs file = do
+  fs <- readFile file >>= return . map words . lines
+  let fls ws = [
+        w:ls | w:ww <- [ws],
+        head w /= '-', elem "--" ww,
+        let _:ls = takeWhile (not . Data.Char.isDigit . head) (dropWhile (/="--") ww)
+        ]
+  putStrLn $ unlines $ map (unwords . ("#fun" :)) $ filter (not . null) $ concatMap fls fs
+
+mkProbs file = do
+  fs <- readFile file >>= return . map words . lines
+  let fls ws = [
+        fun ++ [n] |
+          (mfun,_:ww) <- [break (==";") ws],
+          n:_ <- [[v | v <- ww, all isDigit v]],
+          not (isPrefixOf "---" (head mfun)),
+          let fun = if head mfun == "--" then [] else mfun
+        ]
+  let pfs = concatMap fls fs
+  let collect xs = case xs of
+        x:xs -> case span ((==1) . length) xs of
+           ([],[]) -> []
+           (xx,xxx) -> (concat (x:xx)) : collect xxx
+        _ -> []
+  let mkSum ws = let (f,ns) = break (all isDigit) ws in take 1 f ++ ["0." ++ show (sum [(read n) :: Int | n <- ns])]
+  putStrLn $ unlines $ map unwords $ map mkSum (collect pfs)
 
