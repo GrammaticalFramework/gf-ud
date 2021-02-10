@@ -31,25 +31,33 @@ udFrequencies opts = frequencyList . map f . concatMap udWordLines
 -------------------
 
 -- frequency list of UD types in a treebank
-udTypeFrequencies :: [UDSentence] -> [(UDType,Int)]
-udTypeFrequencies =
-    frequencyList
-  . map normalizeUDType
-  . concatMap typesInUDTree
-  . map udSentence2tree
+udTypeFrequencies :: [UDSentence] -> [(UDType,(Int,String))]
+udTypeFrequencies ss =
+    frequencyExampleList nexx
+  where
+    nexx = [(normalizeUDType ty, ex)  | (ty,ex) <- exx]
+    exx = concatMap (typesInUDTree . udSentence2tree) ss
 
 data UDType = UDType {
   udVal  :: (POS,(Label,[UDData])),
-  udArgs :: [(POS,(Label,[UDData]))]
+  udArgs :: [(POS,(Label,[UDData]))] -- including the val, to keep its position
   }
  deriving (Eq,Ord,Show)
 
 prUDType ut = unwords $ show (udVal ut) : "<-" : map show (udArgs ut)
 
-typesInUDTree :: UDTree -> [UDType]
-typesInUDTree tr@(RTree un uts) =
-  UDType (udUPOS un,(udDEPREL un, udFEATS un)) [(udUPOS n,(udDEPREL n, udFEATS n)) | RTree n _ <- uts] :
-  concatMap typesInUDTree uts
+typeOfUDTree :: UDTree -> UDType
+typeOfUDTree tr@(RTree un uts) =
+  UDType tun
+         (map snd (sort (ptun:[(udID n, (udUPOS n,(udDEPREL n, udFEATS n))) | RTree n _ <- uts])))
+ where
+   (position,tun) = (udID un, (udUPOS un,(udDEPREL un, udFEATS un)))
+   ptun = (udID un, (udUPOS un,(head_Label, udFEATS un)))
+
+typesInUDTree :: UDTree -> [(UDType,String)] -- type and example
+typesInUDTree tr =
+  (typeOfUDTree tr, topStringOfUDTree tr) :
+  concatMap typesInUDTree (subtrees tr)
 
 -- ignore argument order - and morphological tags with [] instead of m
 normalizeUDType :: UDType -> UDType
@@ -58,6 +66,18 @@ normalizeUDType ut = ut {
   udArgs = {-sort-} [(p,(l,[])) | (p,(l,m)) <- udArgs ut]
   }
 
+matchUDType :: UDType -> UDType -> Bool
+matchUDType sought tried = normalizeUDType sought == normalizeUDType tried ---- TODO: more precision
+
+findUDTypeInTree :: UDType -> UDTree -> [UDTree]
+findUDTypeInTree ty tr@(RTree un uts) =
+  [tr | matchUDType ty (typeOfUDTree tr) ] ++
+  concatMap (findUDTypeInTree ty) uts
+
+topStringOfUDTree :: UDTree -> String
+topStringOfUDTree (RTree n ts) = unwords $ map udFORM $ sortOn udID $ n : map root ts
+
+{- --- not used, no longer valid
 -- a type with many arguments can subsume a type with few arguments; returns the remaining ones of the many
 subsumeUDType :: UDType -> UDType -> Maybe [(POS,(Label,[UDData]))]
 subsumeUDType many few =
@@ -83,10 +103,12 @@ coverUDType many fews = case fews of
     Just ms -> coverUDType many{udArgs = ms} fs
     _ -> Nothing
   _ -> Just (udArgs many)
+-}
 
 -------------------------------------
 -- matching with GF types
 
+{- --- not used, no longer valid
 labelled2udTypes :: UDEnv -> LabelledType -> [UDType]
 labelled2udTypes env (val,args) = [
   UDType (pos,(root_Label,fs)) udargs |  --- rootLabel?
@@ -95,6 +117,7 @@ labelled2udTypes env (val,args) = [
      elem pos (allPosOfCat env val),
      let udargs = [arg | arg@(_,(l,_)) <- udargs0, l /= head_Label]
     ]
+-}
 
 -- POS tags of lexical categories reachable by unary functions
 allPosOfCat :: UDEnv -> Cat -> [POS]
@@ -115,6 +138,10 @@ allPosOfCat env cat0 = nub [
 frequencyList :: Ord a => [a] -> [(a,Int)]
 frequencyList xs = sortOn ((0-) . snd) $ M.assocs $ M.fromListWith (+) [(x,1) | x <- xs]
 
+frequencyExampleList :: Ord a => [(a,b)] -> [(a,(Int,b))]
+frequencyExampleList xs = sortOn ((0-) . fst . snd) $ M.assocs $ M.fromListWith add [(x,(1,e)) | (x,e) <- xs]
+  where
+    add (n,e) (m,_) = (n+m,e)
 
 -----------------------------------------------------
 -- lexical entries obtained from lemma + primary cat
@@ -137,19 +164,21 @@ testUDTypes n file = do
   uds <- parseUDFile file
   let typs = udTypeFrequencies uds
   print $  length typs
-  let gftyps = [(suggestAbsType gft, (gft, i)) | (t,i) <- typs, i >= n, let gft = ud2gfType t]
+  let gftyps = [(suggestAbsType gft, (gft, (i,e))) | (t,(i,e)) <- typs, i >= n, length (udArgs t) > 1, let gft = ud2gfType t]
   print $ length gftyps
-  let sgftyps = sortOn (\ ((val,_),(_,i)) -> (val, 0-i)) gftyps
-  putStrLn $ unlines $ map (\ (gft, ((t,(l,ls)),i)) ->
-    prAbsType gft ++ "\t" ++ unwords (ls ++ ["--",show i]) ++ "\t;\t" ++ l ++ " " ++ prAbsType t) $ sgftyps
---  putStrLn $ unlines $ map (\ (t,i) -> prUDType t ++ " ; " ++ show i) $ take n typs
+  let sgftyps = sortOn (\ (ty,(_,(i,_))) -> ty) gftyps
+  let gsgftyps = groupBy (\ (xty,_) (yty,_) -> xty == yty) sgftyps
+  let sgsgftyps = concat $ sortOn (\ ((_,(_,(i,_))):_) -> 0-i) gsgftyps
+--  let ssgftyps = 
+  putStrLn $ unlines $ map (\ (gft, ((t,(l,ls)),(i,e))) ->
+    "-- " ++ prAbsType gft ++ " ; -- " ++ unwords (ls ++ [show i]) ++ " ; " ++ l ++ {- " " ++ prAbsType t ++ -} " ; " ++ e) $ sgsgftyps
 
 ud2gfType :: UDType -> (AbsType,(Label,[Label]))
 ud2gfType udt@(UDType uval uargs) = ((val,args),labels)
   where
     val  = pos2catVal uval
-    args = map pos2cat (uargs ++ [uval])
-    labels = (fst (snd (uval)), map (fst . snd) uargs ++ [head_Label])
+    args = map pos2cat (uargs)
+    labels = (fst (snd (uval)), map (fst . snd) uargs)
 
     pos2cat (pos,(lab,_)) = mkCId pos
     pos2catVal (pos,(lab,_)) = mkCId pos
@@ -164,7 +193,7 @@ suggestAbsType ((val,args),(hlabel,labels)) = (suggestCat val hlabel, map (uncur
      _ | elem hl npLabels -> mkCId "NP"
      _ | elem hl ["nmod","obl"] -> mkCId "PP"
      _ | elem hl ["advmod"] -> mkCId "Adv"
-     _ | elem hl ["nummod"] -> mkCId "Numeral"
+     _ | elem hl ["nummod"] -> mkCId "Card"
      _ -> case showCId v of
        "NOUN" -> mkCId "CN"
        "ADJ"  -> mkCId "AP"
@@ -178,7 +207,7 @@ suggestAbsType ((val,args),(hlabel,labels)) = (suggestCat val hlabel, map (uncur
        "CCONJ" -> mkCId "Conj"
        "PUNCT" -> mkCId "Punct"
        "INTJ" -> mkCId "Interj"
-       "NUM" -> mkCId "Numeral"
+       "NUM" -> mkCId "Card"
        _ -> v
    npLabels = ["nsubj","obj","iobj"]
 

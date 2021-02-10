@@ -18,10 +18,10 @@ data UDSentence = UDSentence {
   }
 
 data UDId =
-    UDIdInt Int
+    UDIdRoot  -- 0
+  | UDIdInt Int
   | UDIdRange Int Int
   | UDIdEmpty Float -- "may be a decimal number for empty nodes (lower than 1 but greater than 0)"
-  | UDIdRoot  -- 0
   | UDIdNone -- _
    deriving (Eq,Ord,Show)
 
