@@ -7,4 +7,12 @@ cat out/2-inferred-test.gft | gfud -gf2ud grammars/Inferred Eng Utt ud >out/2-in
 echo "created out/2-inferred-test.conllu"
 cat out/2-inferred-test.conllu | gfud conll2pdf
 cat out/2-inferred-test.conllu | gfud statistics DEPREL
+echo "POS not covered:"
+gfud not-covered ud/UD_English-EWT/en_ewt-ud-test.conllu out/2-inferred-test.conllu POS
+echo "DEPREL not covered:"
+gfud not-covered ud/UD_English-EWT/en_ewt-ud-test.conllu out/2-inferred-test.conllu DEPREL
+echo "DEPREL similarity:"
+gfud cosine-similarity ud/UD_English-EWT/en_ewt-ud-test.conllu out/2-inferred-test.conllu DEPREL
+echo "SUBTREETYPE similarity:"
+gfud cosine-similarity ud/UD_English-EWT/en_ewt-ud-test.conllu out/2-inferred-test.conllu SUBTREETYPE
 

@@ -48,6 +48,13 @@ udCosineSimilarity opts xs ys = cosineSimilarityOfMaps fxs fys
     fxs = udFrequencyMap opts xs
     fys = udFrequencyMap opts ys
 
+-- features of xs not found in ys
+notCoveredFeatures :: Opts -> [UDSentence] -> [UDSentence] -> [[String]]
+notCoveredFeatures opts xs ys = [k | k <- M.keys fxs, M.notMember k fys]
+  where
+    fxs = udFrequencyMap opts xs
+    fys = udFrequencyMap opts ys
+
 -------------------
 -- another look at the UD2GF task: analyse what shapes of UD trees there are in a treebank
 -- and which of them can be covered by a given grammar and annotations

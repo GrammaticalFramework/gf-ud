@@ -41,6 +41,11 @@ main = do
       ud2 <- parseUDFile file2
       print $ udCosineSimilarity (selectOpts opts) ud1 ud2
   
+    "not-covered":file1:file2:opts -> do
+      ud1 <- parseUDFile file1
+      ud2 <- parseUDFile file2
+      putStrLn $ unwords $ map show $ notCoveredFeatures (selectOpts opts) ud1 ud2
+  
     "parse2latex":file:_ -> getContents >>= absTrees2latex initUDEnv file . map pAbsTree . selectParseTrees . lines
     
     "parse2pdf":_ -> getContents >>= visualizeAbsTrees initUDEnv . map pAbsTree . selectParseTrees . lines
@@ -81,6 +86,7 @@ helpMsg = unlines $ [
     " | gfud check-annotations <path> <language> <startcat>",
     " | gfud statistics <option>*",
     " | gfud cosine-similarity <file> <file> <option>*",
+    " | gfud not-covered <standardfile> <testedfile> <option>*",
     " | gfud extract-pos-words",
     " | gfud extract-pos-feats-words",
     " | gfud lexical-entries <abslabels-file>",
