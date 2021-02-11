@@ -14,7 +14,10 @@ import qualified Data.Map as M
 
 -- get statistics from a tree collection: a frequency list in descending order
 udFrequencies :: Opts -> [UDSentence] -> [([String],Int)]
-udFrequencies opts sents = addTotal $ sortOn ((0-) . snd) $ M.assocs $ udFrequencyMap opts sents
+udFrequencies opts sents =
+   if isOpt opts "SUBTREETYPE"
+   then [([prUDType ut],n) | (ut,(n,_)) <- udTypeFrequencies sents, length (udArgs ut) > 1]
+   else addTotal $ sortOn ((0-) . snd) $ M.assocs $ udFrequencyMap opts sents
   where
     allWords = concatMap udWordLines sents
     total = length allWords
@@ -22,7 +25,10 @@ udFrequencies opts sents = addTotal $ sortOn ((0-) . snd) $ M.assocs $ udFrequen
     addTotal = ([(["TOTAL SENTENCES"],length sents),(["TOTAL WORDS"],total)]++)
 
 udFrequencyMap :: Opts -> [UDSentence] -> M.Map [String] Int
-udFrequencyMap opts sents = frequencyMap $ map f $ allWords
+udFrequencyMap opts sents =
+   if isOpt opts "SUBTREETYPE"
+   then M.fromList [([prUDType ut],n) | (ut,n) <- M.assocs (udTypeFrequencyMap sents)]
+   else frequencyMap $ map f $ allWords
   where
     f = \w -> [fun w | (opt,fun) <- optfuns, isOpt opts opt]
     optfuns = [
@@ -48,6 +54,13 @@ udCosineSimilarity opts xs ys = cosineSimilarityOfMaps fxs fys
 -------------------
 
 -- frequency list of UD types in a treebank
+udTypeFrequencyMap :: [UDSentence] -> M.Map UDType Int
+udTypeFrequencyMap ss =
+    frequencyMap nexx
+  where
+    nexx = [normalizeUDType ty  | (ty,_) <- exx]
+    exx = concatMap (typesInUDTree . udSentence2tree) ss
+
 udTypeFrequencies :: [UDSentence] -> [(UDType,(Int,String))]
 udTypeFrequencies ss =
     frequencyExampleList nexx
@@ -61,7 +74,9 @@ data UDType = UDType {
   }
  deriving (Eq,Ord,Show)
 
-prUDType ut = unwords $ show (udVal ut) : "<-" : map show (udArgs ut)
+prUDType ut = unwords $ intersperse "->" $ map prOne (udArgs ut ++ [udVal ut])
+  where
+    prOne (pos,(label,_)) = pos ++ "(" ++ label ++ ")"
 
 typeOfUDTree :: UDTree -> UDType
 typeOfUDTree tr@(RTree un uts) =

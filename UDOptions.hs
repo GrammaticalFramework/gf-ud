@@ -55,6 +55,7 @@ fullOpts = [
   ("POS", "(statistics) part of speech tags"),
   ("FEATS", "(statistics) morphological features"),
   ("DISTANCE", "(statistics) distance to head i.e. head_position - own_position"),
-  ("DEPREL", "(statistics) dependency labels")
+  ("DEPREL", "(statistics) dependency labels"),
+  ("SUBTREETYPE", "(statistics) types of subtrees")
   ]
 
