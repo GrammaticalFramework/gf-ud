@@ -1,6 +1,6 @@
 concrete InferredEng of Inferred =
   CatEng,
-  StructuralEng - [both7and_DConj, either7or_DConj, yes_Utt, no_Utt, language_title_Utt],
+  StructuralEng - [both7and_DConj, either7or_DConj, if_then_Conj, yes_Utt, no_Utt, language_title_Utt],
   LexiconEng **
 
 open SyntaxEng, ExtendEng, (P = ParadigmsEng)
@@ -10,6 +10,7 @@ in {
 --
 
 lincat
+  NN = SyntaxEng.N ; -- non-compound nouns
   PP = Adv ;
   NNP = NP ; -- single-N NP, sg or pl
   AdvP = Adv ; -- adverbial phrase
@@ -19,12 +20,15 @@ lincat
   Punct = {s : Str} ;
 
 lin
+  UseN n = n ;
   SgNNP n = mkNP n ;
   PlNNP n = mkNP aPl_Det n ;
   UsePN pn = mkNP pn ;
+  UsePron pron = mkNP pron ;
   PositA a = mkAP a ;
   ComparA a = comparAP a ;
   periodPunct = {s = "."} ;
+  fiveCard = mkCard "5" ;
 
 oper punctUtt : Utt -> {s : Str} -> Utt = \u,p -> lin Utt {s = u.s ++ p.s} ;
 oper ccUtt : Utt -> Utt -> Utt = \u,v -> lin Utt {s = u.s ++ v.s} ;

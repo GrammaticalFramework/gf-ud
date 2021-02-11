@@ -1,6 +1,7 @@
 #fun DetN det head
 #fun PrepDetN case det head
 #fun PrepNNP case head
+#fun Conj2NP head cc conj
 #fun PrepPN case head
 #fun PrepPron case head
 #fun PossN nmod:poss head
@@ -12,12 +13,18 @@
 #fun PrepDetAdjN case det amod head
 #fun AdAP advmod head
 #fun PrepDetNPrep case det head nmod
+#fun SgAdjNNP amod head
+#fun PlAdjNNP amod head
 #fun CompPN compound head
 #fun FlatPN head flat
-#fun InfComplV2 mark head obj
+#fun InfComplV2 head obj
+#fun Conj2AP head cc conj
+#fun SgPrepAdjN case amod head
+#fun PlPrepAdjN case amod head
 #fun CompoundN compound head
 #fun DetCompoundN det compound head
 #fun PrepDetCompoundN case det compound head
+#fun Conj3NP head conj cc conj
 #fun DetNinfVP det head acl
 #fun DetNppartVP det head acl:relcl
 #fun ComplPrepVP head obl

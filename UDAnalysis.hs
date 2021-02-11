@@ -161,9 +161,13 @@ lexicalEntries env uds = M.assocs (M.fromListWith (+) [(wc,1) | Just wc <- map e
 ----------------------------------------------------
 -- an analysis of UD types and their conversion to GF
 
-testUDTypes n file = do
+getUDTypesFromFile file = do
   uds <- parseUDFile file
   let typs = udTypeFrequencies uds
+  return typs
+
+testUDTypes n file = do
+  typs <- getUDTypesFromFile file
   print $  length typs
   let gftyps = [(suggestAbsType gft, (gft, (i,e))) | (t,(i,e)) <- typs, i >= n, length (udArgs t) > 1, let gft = ud2gfType t]
   print $ length gftyps
@@ -223,7 +227,7 @@ mkConfigs file = do
         ]
   putStrLn $ unlines $ map (unwords . ("#fun" :)) $ filter (not . null) $ concatMap fls fs
 
-mkProbs file = do
+mkProbs max_digits file = do -- max_digits = 4 for en_ewt_train, i.e. 1000's of occurrences
   fs <- readFile file >>= return . map words . lines
   let fls ws = [
         fun ++ [n] |
@@ -238,6 +242,10 @@ mkProbs file = do
            ([],[]) -> []
            (xx,xxx) -> (concat (x:xx)) : collect xxx
         _ -> []
-  let mkSum ws = let (f,ns) = break (all isDigit) ws in take 1 f ++ ["0." ++ show (sum [(read n) :: Int | n <- ns])]
+  let mkSum ws =
+        let
+          (f,ns) = break (all isDigit) ws
+          sns = sum [(read n) :: Int | n <- ns]
+        in take 1 f ++ ["0." ++ replicate (max_digits - length (show sns)) '0' ++ show sns]
   putStrLn $ unlines $ map unwords $ map mkSum (collect pfs)
 
