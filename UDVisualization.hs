@@ -15,7 +15,7 @@ visualizeAbsTrees :: UDEnv -> [AbsTree] -> IO ()
 visualizeAbsTrees env ts = do
   let astfile = "_gfud_ast_tmp"
   absTrees2latex env astfile ts
-  system $ "pdflatex " ++ (astfile ++ ".tex")
+  system $ "pdflatex " ++ (astfile ++ ".tex") ++ " >/dev/null"
   system $ "open " ++ (astfile ++ ".pdf") ---- TODO: parameterize open command
   return () 
 
@@ -47,7 +47,7 @@ visualizeUDSentences :: [UDSentence] -> IO ()
 visualizeUDSentences uds = do
   let doc = ud2latex uds
   writeFile "_ud_tmp.tex" doc
-  system $ "pdflatex _ud_tmp.tex"
+  system $ "pdflatex _ud_tmp.tex >/dev/null"
   system $ "open _ud_tmp.pdf" ---- TODO: parameterize open command
   return () 
 
