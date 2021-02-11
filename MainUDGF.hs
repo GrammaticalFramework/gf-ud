@@ -35,6 +35,11 @@ main = do
     "check-annotations":path:lang:cat:_ -> checkAnnotations path lang cat
     
     "statistics":opts -> getContents >>= mapM_ print . udFrequencies (selectOpts opts) . parseUDText
+    
+    "cosine-similarity":file1:file2:opts -> do
+      ud1 <- parseUDFile file1
+      ud2 <- parseUDFile file2
+      print $ udCosineSimilarity (selectOpts opts) ud1 ud2
   
     "parse2latex":file:_ -> getContents >>= absTrees2latex initUDEnv file . map pAbsTree . selectParseTrees . lines
     
@@ -75,6 +80,7 @@ helpMsg = unlines $ [
     " | gfud check-treebank",
     " | gfud check-annotations <path> <language> <startcat>",
     " | gfud statistics <option>*",
+    " | gfud cosine-similarity <file> <file> <option>*",
     " | gfud extract-pos-words",
     " | gfud extract-pos-feats-words",
     " | gfud lexical-entries <abslabels-file>",
@@ -83,7 +89,7 @@ helpMsg = unlines $ [
     " | gfud conll2latex",
     " | gfud parse2latex <file>",
     "where path = grammardir/abstractprefix, language = concretesuffix",
-    "The input comes from stdIO, and the output goes there as well",
+    "Except for file arguments, the input comes from stdIO, and the output goes there as well",
     "The option -gf2udpar should be used with the Haskell runtime flag +RTS -Nx -RTS",
     "where x is the number of cores you want to use in parallel processing.",
     "For more functionalities: open in ghci.",

@@ -14,7 +14,15 @@ import qualified Data.Map as M
 
 -- get statistics from a tree collection: a frequency list in descending order
 udFrequencies :: Opts -> [UDSentence] -> [([String],Int)]
-udFrequencies opts = frequencyList . map f . concatMap udWordLines
+udFrequencies opts sents = addTotal $ sortOn ((0-) . snd) $ M.assocs $ udFrequencyMap opts sents
+  where
+    allWords = concatMap udWordLines sents
+    total = length allWords
+    addRelative (k,n) = (k,(n, fromIntegral n / fromIntegral total)) ----
+    addTotal = ([(["TOTAL SENTENCES"],length sents),(["TOTAL WORDS"],total)]++)
+
+udFrequencyMap :: Opts -> [UDSentence] -> M.Map [String] Int
+udFrequencyMap opts sents = frequencyMap $ map f $ allWords
   where
     f = \w -> [fun w | (opt,fun) <- optfuns, isOpt opts opt]
     optfuns = [
@@ -25,6 +33,14 @@ udFrequencies opts = frequencyList . map f . concatMap udWordLines
       ("DISTANCE", \w -> show (udid2int (udHEAD w) - udid2int (udID w))),
       ("DEPREL", udDEPREL)
       ]
+    allWords = concatMap udWordLines sents
+
+-- cosine similarity of two treebanks
+udCosineSimilarity :: Opts -> [UDSentence] -> [UDSentence] -> Double
+udCosineSimilarity opts xs ys = cosineSimilarityOfMaps fxs fys
+  where
+    fxs = udFrequencyMap opts xs
+    fys = udFrequencyMap opts ys
 
 -------------------
 -- another look at the UD2GF task: analyse what shapes of UD trees there are in a treebank
@@ -137,12 +153,29 @@ allPosOfCat env cat0 = nub [
 -------------------------------------
 -- descending sorted frequency list of anything, e.g. types in UD trees
 frequencyList :: Ord a => [a] -> [(a,Int)]
-frequencyList xs = sortOn ((0-) . snd) $ M.assocs $ M.fromListWith (+) [(x,1) | x <- xs]
+frequencyList xs = sortOn ((0-) . snd) $ M.assocs $ frequencyMap xs
+
+frequencyMap :: Ord a => [a] -> M.Map a Int
+frequencyMap xs = M.fromListWith (+) [(x,1) | x <- xs]
 
 frequencyExampleList :: Ord a => [(a,b)] -> [(a,(Int,b))]
 frequencyExampleList xs = sortOn ((0-) . fst . snd) $ M.assocs $ M.fromListWith add [(x,(1,e)) | (x,e) <- xs]
   where
     add (n,e) (m,_) = (n+m,e)
+
+cosineSimilarityOfMaps :: Ord a => M.Map a Int -> M.Map a Int -> Double
+cosineSimilarityOfMaps fxs fys = fromIntegral (scalarProduct fxs fys) / (size fxs * size fys)
+  where
+    scalarProduct fxs fys = sum [x*y | (w,x) <- M.assocs fxs, let y = maybe 0 id (M.lookup w fys)]
+    size fs = sqrt (fromIntegral (sum [x*x | (_,x) <- M.assocs fs]))
+
+cosineSimilarity :: Ord a => [a] -> [a] -> Double
+cosineSimilarity xs ys = cosineSimilarityOfMaps fxs fys
+  where
+    fxs = M.fromListWith (+) [(x,1) | x <- xs]
+    fys = M.fromListWith (+) [(x,1) | x <- ys]
+    scalarProduct fxs fys = sum [x*y | (w,x) <- M.assocs fxs, let y = maybe 0 id (M.lookup w fys)]
+    size fs = sqrt (fromIntegral (sum [x*x | (_,x) <- M.assocs fs]))
 
 -----------------------------------------------------
 -- lexical entries obtained from lemma + primary cat
