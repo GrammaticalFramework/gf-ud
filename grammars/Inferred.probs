@@ -3,6 +3,7 @@ SgNNP 0.3
 PlNNP 0.1
 UsePN 0.28
 UsePron 0.08
+SPredObj 0.8738
 PositA 0.9
 ComparA 0.0503
 
@@ -52,3 +53,6 @@ PrepNNPPrep 0.0214
 PrepCard 0.0244
 SubjPredObj 0.0123
 UttPredObj 0.8738
+InfVPP 0.1448
+UttAuxPredObj 0.2122
+UttPredAP 0.2832

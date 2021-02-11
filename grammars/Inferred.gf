@@ -24,6 +24,7 @@ fun
   PlNNP : NN -> NNP ;
   UsePN : PN -> NP ;
   UsePron : Pron -> NP ;
+  SPredObj : NP -> V -> NP -> S ;
   PositA : A -> AP ;
   ComparA : A -> AP ;
   periodPunct : Punct ;
@@ -84,7 +85,7 @@ SgPrepAdjN : Prep -> AP -> NN -> PP ; -- case amod head 345 ;
 PlPrepAdjN : Prep -> AP -> NN -> PP ; -- case amod head 115 ;
 -- Prep -> AP -> NN -> PP ; -- case amod head =257 ; nmod ; of chewy fat 
 -- Prep -> AP -> NN -> PP ; -- case amod head =208 ; obl ; at other establishments
-CompoundN : NN -> NN -> NN ; -- compound head 250 ; compound ; dining room
+CompoundN : N -> N -> NN ; -- compound head 250 ; compound ; dining room
 -- NN -> NN -> NP ; -- compound head 128 ; obj ; mildew problems
 -- NN -> NN -> NP ; -- compound head 74 ; nsubj ; minute price
 --- NN -> NN -> NN ; -- head conj 68 ; compound ; designer dress
@@ -98,7 +99,7 @@ PrepDetCompoundN : Prep -> Det -> NN -> NN -> PP ; -- case det compound head 233
 Conj3NP : NP -> NP -> Conj -> NP -> NP ; -- head conj cc conj 294 ; ---- PUNCT
 -- Punct -> NN -> NN ; -- punct head =176 ; conj ; , decor
 -- Punct -> PN -> PN ; -- punct head =118 ; conj ; , Boyles
-DetNinfVP : Det -> NN -> VP -> NP ; -- det head acl 173 ; obj ; another attempt get
+DetNinfVP : Det -> NN -> VPP -> NP ; -- det head acl 173 ; obj ; another attempt get
 DetNppartVP : Det -> NN -> V2 -> NP ; -- det head acl:relcl 110 ; obj ; the fence installed
 -- Det -> NN -> VP -> NP ; -- det head acl:relcl 63 ; nsubj ; another dress loved
 ----DetNNingVP : Det -> NN -> VP -> NP ; -- det head acl 59 ; nsubj ; the girl helping
@@ -126,7 +127,7 @@ UttN : NN -> Punct -> Utt ; -- head punct 134 ; root ; Help ?
 DateUtt : Card -> NN -> Utt ; -- head nmod:tmod 133 ; root ; 11/29/2000 AM
 UttPredVS : NP -> V -> S -> Punct -> Utt ; -- nsubj head ccomp punct 132 ; root ; I guess tells .
 ---- NP -> VP -> VP -> Punct -> VP ; -- nsubj head ccomp punct 90 ; root ; thing is have .
-UttPredVV : NP -> V -> VP -> Punct -> Utt ; -- nsubj head xcomp punct 71 ; root ; They need update .
+UttPredVV : NP -> V -> VPP -> Punct -> Utt ; -- nsubj head xcomp punct 71 ; root ; They need update .
 UttCardN : Card -> Punct -> NN -> Punct -> Utt ; -- head punct appos punct 129 ; root ; 5 - Number .
 DetPN : Det -> PN -> NP ; -- det head 127 ; nsubj ; that Warwick
 -- Det -> PN -> NP ; -- det head 49 ; obj ; a nissan
@@ -168,7 +169,7 @@ UttPredObj : NP -> V -> NP -> Punct -> Utt ; -- nsubj head obj punct 119 ; root 
 -- Pron -> AP -> NN -> NP ; -- nmod:poss amod head 43 ; nsubj ; My first visit
 -- Prep -> Det -> PN -> NN -> PP ; -- case det compound head 78 ; obl ; from the Squirrels stadium
 -- Prep -> Det -> PN -> NN -> PP ; -- case det compound head 62 ; nmod ; in the San area
--- PART -> VP -> PP -> VP ; -- mark head obl 78 ; xcomp ; to get work
+InfVPP : V -> PP -> VPP ; -- head obl 78 ; xcomp ; to get work
 -- Conj -> Pron -> Pron ; -- cc head 77 ; conj ; and I
 -- Prep -> Det -> PN -> PN -> PP ; -- case det compound head 76 ; nmod ; of The Laundry Tub
 -- Prep -> Det -> PN -> PN -> PP ; -- case det compound head 51 ; obl ; for a Mini Cooper
@@ -191,7 +192,7 @@ UttPredObj : NP -> V -> NP -> Punct -> Utt ; -- nsubj head obj punct 119 ; root 
 -- Conj -> VP -> PP -> VP ; -- cc head obl 55 ; conj ; and argue customer
 -- AP -> NN -> Punct -> NN ; -- amod head punct 54 ; root ; AWFUL SERVICE !
 -- PN -> Card -> PN ; -- head nummod 54 ; appos ; November 22
--- NP -> AUX -> VP -> NP -> Punct -> VP ; -- nsubj aux head obj punct 53 ; root ; We were having problem .
+UttAuxPredObj : NP -> V -> NP -> Punct -> Utt ; -- nsubj head obj punct 53 ; root ; We were having problem .
 -- Card -> PP -> Card ; -- head nmod 52 ; nummod ; 5 10
 -- Pron -> VP -> NP ; -- head acl:relcl 52 ; obj ; anyone knew
 -- Prep -> Adv -> PP ; -- case head 52 ; obl ; on here
@@ -241,7 +242,7 @@ UttPredObj : NP -> V -> NP -> Punct -> Utt ; -- nsubj head obj punct 119 ; root 
 -- Adv -> VP -> VP ; -- advmod head 36 ; amod ; privatly owned
 -- CN -> AP -> AP ; -- obl:npmod head 35 ; amod ; year old
 -- PN -> Punct -> PN -> PN ; -- compound punct head 35 ; compound ; Mom / Pop
--- NP -> AUX -> AP -> Punct -> AP ; -- nsubj cop head punct 34 ; root ; service is fast .
+UttPredAP : NP -> AP -> Punct -> Utt ; -- nsubj head punct 34 ; root ; service is fast .
 -- Card -> Punct -> CN -> CN ; -- nummod punct head 34 ; compound ; three - person
 -- Pron -> CN -> PP -> NP ; -- nmod:poss head nmod 34 ; obj ; his lack professionalism
 -- Prep -> CN -> VP -> PP ; -- case head acl:relcl 34 ; nmod ; of work performed

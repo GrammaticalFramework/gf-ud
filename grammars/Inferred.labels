@@ -1,3 +1,5 @@
+#fun SPredObj nsubj head obj
+
 #fun DetN det head
 #fun PrepDetN case det head
 #fun PrepNNP case head
@@ -44,6 +46,13 @@
 #fun PrepCard case head
 #fun SubjPredObj mark nsubj head obj
 #fun UttPredObj nsubj head obj punct
+
+#fun UttAuxPredObj nsubj head obj punct
+
+#fun UttPredAP nsubj head punct
+
+#fun InfVPP head obl
+
 
 #cat A ADJ primary
 #cat A2 ADJ
