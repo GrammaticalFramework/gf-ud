@@ -116,48 +116,6 @@ findUDTypeInTree ty tr@(RTree un uts) =
 topStringOfUDTree :: UDTree -> String
 topStringOfUDTree (RTree n ts) = unwords $ map udFORM $ sortOn udID $ n : map root ts
 
-{- --- not used, no longer valid
--- a type with many arguments can subsume a type with few arguments; returns the remaining ones of the many
-subsumeUDType :: UDType -> UDType -> Maybe [(POS,(Label,[UDData]))]
-subsumeUDType many few =
-  if (match (headArg few) (headArg many))                      -- value types match
-    then findAll (sort (udArgs many)) (sort (udArgs few))  -- argument types are found
-    else Nothing
- where
-   findAll ms fs = case fs of
-     x:xs -> case partition (match x) ms of
-       (m:mm,nn) -> findAll (mm ++ nn) xs
-       _ -> Nothing
-     _ -> Just ms
-   match (pos,(label,feats)) (mpos,(mlabel,mfeats)) =
-     mpos == pos && mlabel == label &&
-     all (flip elem mfeats) feats  -- few has the sought features, many can contain more
-   headArg (UDType (pos,feats) _) = (pos,(head_Label, feats))
-   
--- many subsumed types can together exactly cover a type with many arguments: output Just [] in that case
---- NB starting with wrong fews may result in unwanted residual arguments that could be covered otherwise
-coverUDType :: UDType -> [UDType] -> Maybe [(POS,(Label,[UDData]))]
-coverUDType many fews = case fews of
-  f:fs -> case subsumeUDType many f of
-    Just ms -> coverUDType many{udArgs = ms} fs
-    _ -> Nothing
-  _ -> Just (udArgs many)
--}
-
--------------------------------------
--- matching with GF types
-
-{- --- not used, no longer valid
-labelled2udTypes :: UDEnv -> LabelledType -> [UDType]
-labelled2udTypes env (val,args) = [
-  UDType (pos,(root_Label,fs)) udargs |  --- rootLabel?
-     udargs0  <- sequence [ [(pos,(lab,feats)) |  pos <- allPosOfCat env cat] | (cat,(lab,feats)) <- args],
-     (pos,fs) <- [(pos,fs) | (pos,("head",fs)) <- udargs0], --- NB: there is always exactly one head
-     elem pos (allPosOfCat env val),
-     let udargs = [arg | arg@(_,(l,_)) <- udargs0, l /= head_Label]
-    ]
--}
-
 -- POS tags of lexical categories reachable by unary functions
 allPosOfCat :: UDEnv -> Cat -> [POS]
 allPosOfCat env cat0 = nub [
@@ -303,4 +261,50 @@ mkProbs max_digits file = do -- max_digits = 4 for en_ewt_train, i.e. 1000's of 
           sns = sum [(read n) :: Int | n <- ns]
         in take 1 f ++ ["0." ++ replicate (max_digits - length (show sns)) '0' ++ show sns]
   putStrLn $ unlines $ map unwords $ map mkSum (collect pfs)
+
+
+
+
+
+{- --- not used, no longer valid
+-- a type with many arguments can subsume a type with few arguments; returns the remaining ones of the many
+subsumeUDType :: UDType -> UDType -> Maybe [(POS,(Label,[UDData]))]
+subsumeUDType many few =
+  if (match (headArg few) (headArg many))                      -- value types match
+    then findAll (sort (udArgs many)) (sort (udArgs few))  -- argument types are found
+    else Nothing
+ where
+   findAll ms fs = case fs of
+     x:xs -> case partition (match x) ms of
+       (m:mm,nn) -> findAll (mm ++ nn) xs
+       _ -> Nothing
+     _ -> Just ms
+   match (pos,(label,feats)) (mpos,(mlabel,mfeats)) =
+     mpos == pos && mlabel == label &&
+     all (flip elem mfeats) feats  -- few has the sought features, many can contain more
+   headArg (UDType (pos,feats) _) = (pos,(head_Label, feats))
+   
+-- many subsumed types can together exactly cover a type with many arguments: output Just [] in that case
+--- NB starting with wrong fews may result in unwanted residual arguments that could be covered otherwise
+coverUDType :: UDType -> [UDType] -> Maybe [(POS,(Label,[UDData]))]
+coverUDType many fews = case fews of
+  f:fs -> case subsumeUDType many f of
+    Just ms -> coverUDType many{udArgs = ms} fs
+    _ -> Nothing
+  _ -> Just (udArgs many)
+-}
+
+-------------------------------------
+-- matching with GF types
+
+{- --- not used, no longer valid
+labelled2udTypes :: UDEnv -> LabelledType -> [UDType]
+labelled2udTypes env (val,args) = [
+  UDType (pos,(root_Label,fs)) udargs |  --- rootLabel?
+     udargs0  <- sequence [ [(pos,(lab,feats)) |  pos <- allPosOfCat env cat] | (cat,(lab,feats)) <- args],
+     (pos,fs) <- [(pos,fs) | (pos,("head",fs)) <- udargs0], --- NB: there is always exactly one head
+     elem pos (allPosOfCat env val),
+     let udargs = [arg | arg@(_,(l,_)) <- udargs0, l /= head_Label]
+    ]
+-}
 

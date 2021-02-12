@@ -55,4 +55,10 @@ SubjPredObj 0.0123
 UttPredObj 0.8738
 InfVPP 0.1448
 UttAuxPredObj 0.2122
+UttInterj 0.047
+UttExist 0.047
 UttPredAP 0.2832
+InfComplS 0.033
+InfComplAdvCl 0.032
+InfComplVPP 0.023
+UttPassObl 0.019

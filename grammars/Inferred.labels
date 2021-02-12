@@ -49,10 +49,18 @@
 
 #fun UttAuxPredObj nsubj head obj punct
 
+#fun UttInterj head punct
+#fun UttExist expl head nsubj punct
+
 #fun UttPredAP nsubj head punct
+
+#fun InfComplS head ccomp
+#fun InfComplAdvCl head advcl 
+#fun InfComplVPP head xcomp
 
 #fun InfVPP head obl
 
+#fun UttPassObl nsubj:pass head obl punct
 
 #cat A ADJ primary
 #cat A2 ADJ
@@ -170,3 +178,8 @@
 #cat VV VERB
 #cat Weekday NOUN
 #cat Year NUM
+
+
+#cat Be VERB
+#cat There PRON
+

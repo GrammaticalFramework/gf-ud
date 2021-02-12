@@ -35,7 +35,7 @@
 #lemma DEFAULT_ 's Gen case head
 #lemma DEFAULT_ ' Gen case head
 
-#lemma PassVP be Cop aux:pass head
+#lemma UttPassObl be Cop aux:pass head
 
 #lemma ExistS be V cop head  --- in UD, the copula is the head!
 

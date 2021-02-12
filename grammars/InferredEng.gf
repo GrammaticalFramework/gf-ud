@@ -18,6 +18,9 @@ lincat
   Poss = Det ; -- possessive determiner
   VPP = Adv ; ----
   Punct = {s : Str} ;
+---
+  There = NP ;
+  Be = V ;
 
 lin
   UseN n = n ;
@@ -30,6 +33,9 @@ lin
   ComparA a = comparAP a ;
   periodPunct = {s = "."} ;
   fiveCard = mkCard "5" ;
+---
+  there_There = mkNP (P.mkPN "there") ; ----
+  be_Be = P.mkV "are" "was" "been" ; ----
 
 oper punctUtt : Utt -> {s : Str} -> Utt = \u,p -> lin Utt {s = u.s ++ p.s} ;
 oper ccUtt : Utt -> Utt -> Utt = \u,v -> lin Utt {s = u.s ++ v.s} ;
@@ -72,7 +78,7 @@ PlAdjNNP ap n = mkNP aPl_Det (mkCN ap n) ;
 ---- GenPN pn = GenNP : PN -> Det ; -- head case 280 ; nmod:poss ; Stuart 's ; PART
 CompPN x y = mkNP (mkNP x) (lin Adv (mkUtt (mkNP y))) ; --- y is head
 FlatPN x y = mkNP (mkNP x) (lin Adv (mkUtt (mkNP y))) ;
-InfComplV2 v2 np = lin Adv (mkUtt (mkVP v2 np)) ;
+InfComplV2 v np = lin Adv (mkUtt (mkVP (P.mkV2 v) np)) ;
 
 
 
@@ -197,8 +203,8 @@ UttAuxPredObj subj v obj punct = punctUtt (mkUtt (mkS anteriorAnt (mkCl subj (P.
 -- Prep -> Pron -> CN -> CN -> PP ; -- case nmod:poss compound head 50 ; obl ; with our dining experience
 -- Conj -> Pron -> CN -> CN ; -- cc nmod:poss head 48 ; conj ; and my son
 -- NP -> AUX -> VP -> VP -> Punct -> VP ; -- nsubj aux head xcomp punct 48 ; root ; He was going operate .
--- Interj -> Punct -> Interj ; -- head punct 47 ; root ; YES !
--- Pron -> VP -> NP -> Punct -> VP ; -- expl head nsubj punct 47 ; root ; There are people !!!!!
+UttInterj interj punct = punctUtt (mkUtt interj) punct ;
+UttExist there be np punct = punctUtt (mkUtt (mkS (mkCl there (P.mkV2 be) np))) punct ;
 -- Pron -> CN -> PART -> CN ; -- nmod:poss head case 46 ; nmod:poss ; their employees '
 -- Det -> AP -> CN -> CN -> NP ; -- det amod compound head 46 ; obj ; some serious practice issues
 -- Det -> PN -> PN -> NP ; -- det compound head 46 ; nsubj ; The Laundry Tub
@@ -247,8 +253,9 @@ UttPredAP np ap punct = punctUtt (mkUtt (mkS (mkCl np ap))) punct ;
 -- Conj -> Det -> CN -> PP -> CN ; -- cc det head nmod 33 ; conj ; and a couple accessories
 -- Conj -> NP -> VP -> VP -> VP ; -- cc nsubj head ccomp 33 ; conj ; and she suggested go
 -- Conj -> NP -> VP -> VP -> VP ; -- cc nsubj head xcomp 22 ; conj ; and I have say
--- VP -> VP -> VP ; -- head ccomp 33 ; xcomp ; know overcharged
--- VP -> VP -> VP ; -- head advcl 32 ; xcomp ; know treat
+InfComplS v s = lin Adv (mkUtt (mkVP (P.mkVS v) s)) ;
+InfComplAdvCl v adv = lin Adv (mkUtt (mkVP (mkVP v) adv)) ;
+InfComplVPP v vpp = lin Adv (mkUtt (mkVP (mkVP v) vpp)) ;
 -- VP -> VP -> VP ; -- head xcomp 23 ; acl ; trying get
 -- AP -> Prep -> AP ; -- head fixed 32 ; case ; such as
 -- PN -> CN -> CN ; -- compound head 32 ; compound ; NYC style
@@ -347,4 +354,11 @@ UttPredAP np ap punct = punctUtt (mkUtt (mkS (mkCl np ap))) punct ;
 -- NP -> VP -> AP -> Punct -> VP ; -- nsubj head ccomp punct 20 ; root ; They said unable .
 -- PART -> VP -> NP -> Adv -> VP ; -- mark head obj advmod 20 ; xcomp ; to board dogs here
 -- VP -> AUX -> CN -> Punct -> VP ; -- head aux:pass nsubj:pass punct 20 ; root ; Attached is Shippers .
+-- Prep -> Prep -> Det -> CN -> PP ; -- case case det head 19 ; obl ; out of the hotel
+-- AUX -> NP -> VP -> VP -> Punct -> VP ; -- aux nsubj head xcomp punct 19 ; root ; was I supposed do ,
+-- Adv -> Punct -> VP -> VP ; -- advmod punct head 19 ; amod ; well - funded
+UttPassObl subj v pp punct = punctUtt (mkUtt (mkS (mkCl subj (mkVP (passiveVP (P.mkV2 v)) pp)))) punct ;
+-- NP -> Adv -> VP -> NP -> Punct -> VP ; -- nsubj advmod head obj punct 19 ; root ; We also love Rolls .
+-- Subj -> NP -> AUX -> VP -> VP -> VP ; -- mark nsubj aux head xcomp 19 ; advcl ; like they were going fall
+
 }

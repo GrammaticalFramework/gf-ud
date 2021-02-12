@@ -15,6 +15,9 @@ cat
   Poss ; -- possessive determiner
   VPP ;  -- infinitival VP
   Punct ; -- punctuation mark
+--- for synthesis experiments, Eng specific
+  There ; -- expletive
+  Be ; -- copula of existential
 
 -- not seen in UD explicitly
 fun
@@ -29,6 +32,9 @@ fun
   ComparA : A -> AP ;
   periodPunct : Punct ;
   fiveCard : Card ;
+---
+  be_Be : Be ;
+  there_There : There ;
 
 fun
 DetN : Det -> NN -> NP ; -- det head 1248 ; obj ; a flat
@@ -75,7 +81,7 @@ CompPN : PN -> PN -> NP ; -- compound head 276 ; compound ; RADISON WARWICK
 -- PN -> PN -> NP ; -- compound head 66 ; nsubj ; Wedding Gallery
 FlatPN : PN -> PN -> NP ; -- head flat 103 ; root ; Alan Grissom
 -- PN -> PN -> NP ; -- head flat 153 ; nsubj ; Michael Chestney
-InfComplV2 : V2 -> NP -> VPP ; -- head obj 275 ; xcomp ; to take approach ; PART->mark
+InfComplV2 : V -> NP -> VPP ; -- head obj 275 ; xcomp ; to take approach ; PART->mark
 -- PART -> V2 -> NP -> VP ; -- mark head obj 181 ; advcl ; to replace tire
 -- PART -> V2 -> NP -> VP ; -- mark head obj 88 ; acl ; to fix fence
 -- PART -> V2 -> NP -> VP ; -- mark head obj 67 ; xcomp ; to assist me
@@ -202,8 +208,8 @@ UttAuxPredObj : NP -> V -> NP -> Punct -> Utt ; -- nsubj head obj punct 53 ; roo
 -- Prep -> Pron -> NN -> NN -> PP ; -- case nmod:poss compound head 50 ; obl ; with our dining experience
 -- Conj -> Pron -> NN -> NN ; -- cc nmod:poss head 48 ; conj ; and my son
 -- NP -> AUX -> VP -> VP -> Punct -> VP ; -- nsubj aux head xcomp punct 48 ; root ; He was going operate .
--- Interj -> Punct -> Interj ; -- head punct 47 ; root ; YES !
--- Pron -> VP -> NP -> Punct -> VP ; -- expl head nsubj punct 47 ; root ; There are people !!!!!
+UttInterj : Interj -> Punct -> Utt ; -- head punct 47 ; root ; YES !
+UttExist : There -> Be -> NP -> Punct -> Utt ; -- expl head nsubj punct 47 ; root ; There are people !!!!!
 -- Pron -> NN -> PART -> NN ; -- nmod:poss head case 46 ; nmod:poss ; their employees '
 -- Det -> AP -> NN -> NN -> NP ; -- det amod compound head 46 ; obj ; some serious practice issues
 -- Det -> PN -> PN -> NP ; -- det compound head 46 ; nsubj ; The Laundry Tub
@@ -252,9 +258,9 @@ UttPredAP : NP -> AP -> Punct -> Utt ; -- nsubj head punct 34 ; root ; service i
 -- Conj -> Det -> CN -> PP -> CN ; -- cc det head nmod 33 ; conj ; and a couple accessories
 -- Conj -> NP -> VP -> VP -> VP ; -- cc nsubj head ccomp 33 ; conj ; and she suggested go
 -- Conj -> NP -> VP -> VP -> VP ; -- cc nsubj head xcomp 22 ; conj ; and I have say
--- VP -> VP -> VP ; -- head ccomp 33 ; xcomp ; know overcharged
--- VP -> VP -> VP ; -- head advcl 32 ; xcomp ; know treat
--- VP -> VP -> VP ; -- head xcomp 23 ; acl ; trying get
+InfComplS : V -> S -> VPP ; -- head ccomp 33 ; xcomp ; know overcharged
+InfComplAdvCl : V -> AdvCl -> VPP ; -- head advcl 32 ; xcomp ; know treat
+InfComplVPP : V -> VPP -> VPP ; -- head xcomp 23 ; acl ; trying get
 -- AP -> Prep -> AP ; -- head fixed 32 ; case ; such as
 -- PN -> CN -> CN ; -- compound head 32 ; compound ; NYC style
 -- AP -> CN -> CN -> NP ; -- amod compound head 32 ; obj ; different delivery dates
@@ -352,4 +358,11 @@ UttPredAP : NP -> AP -> Punct -> Utt ; -- nsubj head punct 34 ; root ; service i
 -- NP -> VP -> AP -> Punct -> VP ; -- nsubj head ccomp punct 20 ; root ; They said unable .
 -- PART -> VP -> NP -> Adv -> VP ; -- mark head obj advmod 20 ; xcomp ; to board dogs here
 -- VP -> AUX -> CN -> Punct -> VP ; -- head aux:pass nsubj:pass punct 20 ; root ; Attached is Shippers .
+-- Prep -> Prep -> Det -> CN -> PP ; -- case case det head 19 ; obl ; out of the hotel
+-- AUX -> NP -> VP -> VP -> Punct -> VP ; -- aux nsubj head xcomp punct 19 ; root ; was I supposed do ,
+-- Adv -> Punct -> VP -> VP ; -- advmod punct head 19 ; amod ; well - funded
+UttPassObl : NP -> V -> PP -> Punct -> Utt ; -- nsubj:pass *aux:pass head obl punct 19 ; root ; package were left room .
+-- NP -> Adv -> VP -> NP -> Punct -> VP ; -- nsubj advmod head obj punct 19 ; root ; We also love Rolls .
+-- Subj -> NP -> AUX -> VP -> VP -> VP ; -- mark nsubj aux head xcomp 19 ; advcl ; like they were going fall
+
 }
