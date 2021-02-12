@@ -9,6 +9,7 @@ import UDConcepts
 import GFConcepts (pAbsTree)
 import UDVisualization
 import UDAnalysis
+import UDPatterns
 
 import PGF
 
@@ -35,6 +36,11 @@ main = do
     "check-annotations":path:lang:cat:_ -> checkAnnotations path lang cat
     
     "statistics":opts -> getContents >>= mapM_ print . udFrequencies (selectOpts opts) . parseUDText
+
+    "pattern-match":ws -> do
+       let pattern = (read (unwords ws)) :: UDPattern
+       ss <- getContents >>= return . parseUDText
+       mapM_ putStrLn $ filter (not . null) $ map (showMatchesInUDSentence pattern) ss
     
     "cosine-similarity":file1:file2:opts -> do
       ud1 <- parseUDFile file1
@@ -85,6 +91,7 @@ helpMsg = unlines $ [
     " | gfud check-treebank",
     " | gfud check-annotations <path> <language> <startcat>",
     " | gfud statistics <option>*",
+    " | gfud pattern-match <pattern>",
     " | gfud cosine-similarity <file> <file> <option>*",
     " | gfud not-covered <standardfile> <testedfile> <option>*",
     " | gfud extract-pos-words",
@@ -99,8 +106,15 @@ helpMsg = unlines $ [
     "The option -gf2udpar should be used with the Haskell runtime flag +RTS -Nx -RTS",
     "where x is the number of cores you want to use in parallel processing.",
     "For more functionalities: open in ghci.",
+    "Pattern syntax:" ,
+    "   (FORM | LEMMA | POS | DEPREL | DEPREL_) <string>",
+    " | (FEATS | FEATS_) <features>",
+    " | (AND | OR) <pattern> <pattern>",
+    " | NOT <pattern>",
+    " | (TREE | TREE_) <pattern> <pattern>*",
+    "where the _ variants mean matching a part.",
     "Options:"
-    ] ++ [opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
+    ] ++ ["  " ++ opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 
 convertGFUD :: String -> Opts -> UDEnv -> IO ()
 convertGFUD dir opts env = case dir of
