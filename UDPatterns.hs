@@ -30,6 +30,8 @@ data UDPattern =
   | NOT UDPattern
   | TREE UDPattern [UDPattern] -- subtrees match exactly
   | TREE_ UDPattern [UDPattern] -- some sublist of subtrees matches exactly
+  | TRUE
+  | ARG String String
  deriving (Show,Read)
 
 ifMatchUDPattern :: UDPattern -> UDTree -> Bool
@@ -51,6 +53,8 @@ ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
     && and [ifMatchUDPattern q t | (q,t) <- zip ps subtrees]
   TREE_ p ps ->
     or [ifMatchUDPattern (TREE p ps) (RTree node qs) | qs <- sublists (length ps) subtrees]
+  TRUE -> True
+  ARG pos deprel -> ifMatchUDPattern (AND (POS pos) (DEPREL deprel)) tree
 
 --------------------------------------------------
 --- a hack to read FEATS with their usual syntax

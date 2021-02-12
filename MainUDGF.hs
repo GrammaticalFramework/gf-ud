@@ -108,10 +108,12 @@ helpMsg = unlines $ [
     "For more functionalities: open in ghci.",
     "Pattern syntax:" ,
     "   (FORM | LEMMA | POS | DEPREL | DEPREL_) <string>",
+    " | ARG <pos> <deprel>",
     " | (FEATS | FEATS_) <features>",
     " | (AND | OR) <pattern> <pattern>",
     " | NOT <pattern>",
     " | (TREE | TREE_) <pattern> <pattern>*",
+    " | TRUE",
     "where the _ variants mean matching a part.",
     "Options:"
     ] ++ ["  " ++ opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
