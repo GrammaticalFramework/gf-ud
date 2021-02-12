@@ -37,8 +37,8 @@ data UDPattern =
   | FEATS_ UDDatas -- a sublist of features matches exactly
   | DEPREL String   -- deprel matches exactly
   | DEPREL_ String -- prefix part of deprel matches, e.g. nsubj:pass matches nsubs
-  | AND UDPattern UDPattern
-  | OR UDPattern UDPattern
+  | AND [UDPattern]
+  | OR [UDPattern]
   | NOT UDPattern
   | TREE UDPattern [UDPattern] -- subtrees match exactly
   | TREE_ UDPattern [UDPattern] -- some sublist of subtrees matches exactly
@@ -60,8 +60,8 @@ ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
     or [fs == uddlist | fs <- sublists (length uddlist) (udFEATS node)]
   DEPREL s -> udDEPREL node == s
   DEPREL_ s -> takeWhile (/=':') (udDEPREL node) == s
-  AND p q -> ifMatchUDPattern p tree && ifMatchUDPattern q tree
-  OR p q -> ifMatchUDPattern p tree || ifMatchUDPattern q tree
+  AND ps -> and [ifMatchUDPattern p tree | p <- ps]
+  OR ps -> or [ifMatchUDPattern p tree | p <- ps]
   NOT p -> not (ifMatchUDPattern p tree)
   TREE p ps -> ifMatchUDPattern p tree
     && length ps == length subtrees
@@ -69,7 +69,7 @@ ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
   TREE_ p ps ->
     or [ifMatchUDPattern (TREE p ps) (RTree node qs) | qs <- sublists (length ps) subtrees]
   TRUE -> True
-  ARG pos deprel -> ifMatchUDPattern (AND (POS pos) (DEPREL deprel)) tree
+  ARG pos deprel -> ifMatchUDPattern (AND [POS pos, DEPREL deprel]) tree
   DEPTH_EQUALS d -> depthRTree tree == d
   DEPTH_UNDER d -> depthRTree tree < d
   DEPTH_OVER d -> depthRTree tree > d

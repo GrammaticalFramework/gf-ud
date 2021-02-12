@@ -102,12 +102,12 @@ $ gfud not-covered en_ewt-ud-train.conllu data/wordnet-train.conllu DEPREL
 ["det:predet"] ["dislocated"] ["flat:foreign"] ["goeswith"] ["list"] ["nmod:npmod"]
 ["nmod:tmod"] ["obl:npmod"] ["obl:tmod"] ["orphan"] ["parataxis"] ["reparandum"] ["vocative"]
 ```
-Find subtrees that satisfy given patterns, written in a LISP-like syntax.
+Find subtrees that satisfy given patterns, written in a Haskell-like syntax.
 A subtree consists of a head and its dependents.
 Pattern matching goes recursively into each tree and finds all subtrees that match the pattern.
 The complete pattern syntax is given in the `gfud` help message.
 ```
-$ cat en_ewt-ud-train.conllu | gfud pattern-match 'AND (POS "ADV") (DEPREL "xcomp")'
+$ cat en_ewt-ud-train.conllu | gfud pattern-match 'AND [POS "ADV", DEPREL "xcomp"]'
 # sent_id = answers-20111108111031AARG57j_ans-0006
 # text = I will get a treat and try to get him in there that way, it wont work.
 11	in	in	ADP	IN	_	12	case	12:case	_
@@ -124,7 +124,7 @@ Replace or delete subtrees that satisfy a certain pattern, or flatten trees belo
 The complete syntax is given in the `gfud` help message.
 The nodes of the resulting trees are renumbered so that they are still valid dependency trees.
 ```
-$ cat en_ewt-ud-train.conllu | gfud pattern-replace 'FLATTEN (OR (DEPREL "nsubj") (DEPREL "obj")) 1'
+$ cat en_ewt-ud-train.conllu | gfud pattern-replace 'FLATTEN (OR [DEPREL "nsubj", DEPREL "obj"])za 1'
 # newdoc id = weblog-typepad.com_ripples_20040407125600_ENG_20040407_125600
 # sent_id = weblog-typepad.com_ripples_20040407125600_ENG_20040407_125600-0001
 # text = Elena's motorcycle tour through the region around Chernobyl has revived interest in one of the most serious nuclear disasters in history.

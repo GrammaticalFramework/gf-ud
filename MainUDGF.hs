@@ -116,7 +116,7 @@ helpMsg = unlines $ [
     "   (FORM | LEMMA | POS | DEPREL | DEPREL_) <string>",
     " | ARG <pos> <deprel>",
     " | (FEATS | FEATS_) <features>",
-    " | (AND | OR) <pattern> <pattern>",
+    " | (AND | OR) [ <pattern>,* ]",
     " | NOT <pattern>",
     " | (TREE | TREE_) <pattern> <pattern>*",
     " | (DEPTH_EQUALS | DEPTH_UNDER | DEPTH_OVER) <int>",
