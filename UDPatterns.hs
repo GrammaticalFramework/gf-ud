@@ -19,7 +19,11 @@ matchesUDPattern p tree@(RTree node subtrees) =
 
 showReplacementsInUDSentence :: UDReplacement -> UDSentence -> String
 showReplacementsInUDSentence rep s =
-  prt (adjustUDIds (udTree2sentence (replacementsWithUDPattern rep (udSentence2tree s))))
+  prt (ns{
+    udCommentLines = udCommentLines s ++ ["# newtext = " ++ unwords (map udFORM (udWordLines ns))]
+    })
+ where
+   ns = adjustUDIds (udTree2sentence (replacementsWithUDPattern rep (udSentence2tree s)))
 
 replacementsWithUDPattern :: UDReplacement -> UDTree -> UDTree
 replacementsWithUDPattern rep tree = case replaceWithUDPattern rep tree of
@@ -40,6 +44,9 @@ data UDPattern =
   | TREE_ UDPattern [UDPattern] -- some sublist of subtrees matches exactly
   | TRUE
   | ARG String String
+  | DEPTH_EQUALS Int
+  | DEPTH_UNDER Int
+  | DEPTH_OVER Int
  deriving (Show,Read)
 
 ifMatchUDPattern :: UDPattern -> UDTree -> Bool
@@ -63,6 +70,9 @@ ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
     or [ifMatchUDPattern (TREE p ps) (RTree node qs) | qs <- sublists (length ps) subtrees]
   TRUE -> True
   ARG pos deprel -> ifMatchUDPattern (AND (POS pos) (DEPREL deprel)) tree
+  DEPTH_EQUALS d -> depthRTree tree == d
+  DEPTH_UNDER d -> depthRTree tree < d
+  DEPTH_OVER d -> depthRTree tree > d
 
 
 data UDReplacement =

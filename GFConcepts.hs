@@ -93,6 +93,9 @@ leavesRTree t = case t of
   RTree a [] -> [a]
   RTree a ts -> concatMap leavesRTree ts
 
+
+depthRTree :: RTree a -> Int
+depthRTree t = 1 + maximum (0 : map depthRTree (subtrees t))
 -----------------
 
 mkFun :: [String] -> CId -> CId
