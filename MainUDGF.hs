@@ -42,6 +42,11 @@ main = do
        ss <- getContents >>= return . parseUDText
        mapM_ putStrLn $ filter (not . null) $ map (showMatchesInUDSentence pattern) ss
     
+    "pattern-replace":ws -> do
+       let pattern = (read (unwords ws)) :: UDReplacement
+       ss <- getContents >>= return . parseUDText
+       mapM_ putStrLn $ map (showReplacementsInUDSentence pattern) ss
+    
     "cosine-similarity":file1:file2:opts -> do
       ud1 <- parseUDFile file1
       ud2 <- parseUDFile file2
@@ -92,6 +97,7 @@ helpMsg = unlines $ [
     " | gfud check-annotations <path> <language> <startcat>",
     " | gfud statistics <option>*",
     " | gfud pattern-match <pattern>",
+    " | gfud pattern-replace <replacement>",
     " | gfud cosine-similarity <file> <file> <option>*",
     " | gfud not-covered <standardfile> <testedfile> <option>*",
     " | gfud extract-pos-words",
@@ -115,6 +121,11 @@ helpMsg = unlines $ [
     " | (TREE | TREE_) <pattern> <pattern>*",
     " | TRUE",
     "where the _ variants mean matching a part.",
+    "Replacement syntax:",
+    "   REPLACE <pattern> <pattern>",
+    " | PRUNE <pattern>",
+    " | REMOVE <pattern>",
+    " | FLATTEN <pattern> <int>",
     "Options:"
     ] ++ ["  " ++ opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 

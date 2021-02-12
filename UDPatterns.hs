@@ -10,12 +10,20 @@ showMatchesInUDSentence p s =
   if   null matches then ""
   else unlines (udCommentLines s ++ matches)
  where
-   matches = [prUDTree t | t <- matchesUDPattern p (udSentence2tree s)]
+   matches = [prt (udTree2sentence t) | t <- matchesUDPattern p (udSentence2tree s)]
 
 matchesUDPattern :: UDPattern -> UDTree -> [UDTree]
 matchesUDPattern p tree@(RTree node subtrees) =
   [tree | ifMatchUDPattern p tree] ++
   concatMap (matchesUDPattern p) subtrees
+
+showReplacementsInUDSentence :: UDReplacement -> UDSentence -> String
+showReplacementsInUDSentence rep s =
+  prt (adjustUDIds (udTree2sentence (replacementsWithUDPattern rep (udSentence2tree s))))
+
+replacementsWithUDPattern :: UDReplacement -> UDTree -> UDTree
+replacementsWithUDPattern rep tree = case replaceWithUDPattern rep tree of
+  RTree node subtrs -> RTree node (map (replacementsWithUDPattern rep) subtrs)
 
 data UDPattern =
     FORM String
@@ -55,6 +63,31 @@ ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
     or [ifMatchUDPattern (TREE p ps) (RTree node qs) | qs <- sublists (length ps) subtrees]
   TRUE -> True
   ARG pos deprel -> ifMatchUDPattern (AND (POS pos) (DEPREL deprel)) tree
+
+
+data UDReplacement =
+    REPLACE UDPattern UDPattern
+  | PRUNE UDPattern  -- drop dependents, shorthand for FLATTEN p 0
+  | REMOVE UDPattern -- drop the whole subtree, if not the root
+  | FLATTEN UDPattern Int -- cut the tree at depth Int
+ deriving (Show,Read)
+
+replaceWithUDPattern :: UDReplacement -> UDTree -> UDTree
+replaceWithUDPattern rep tree@(RTree node subtrs) = case rep of
+  REPLACE cond change | ifMatchUDPattern cond tree -> case change of
+    FORM s -> tree{root = node{udFORM = s}}
+    LEMMA s -> tree{root = node{udLEMMA = s}}
+    POS s -> tree{root = node{udUPOS = s}}
+    DEPREL s -> tree{root = node{udDEPREL = s}}
+  PRUNE cond | ifMatchUDPattern cond tree -> tree{subtrees = []}
+  REMOVE cond -> RTree node [st | st <- subtrs, not (ifMatchUDPattern cond st)]
+  FLATTEN cond depth | ifMatchUDPattern cond tree -> flattenRTree depth tree
+  _ -> tree
+
+flattenRTree :: Int -> RTree a -> RTree a
+flattenRTree d tr@(RTree node subtrs) = case d of
+  0 -> RTree node []
+  _ -> RTree node (map (flattenRTree (d-1)) subtrs)
 
 --------------------------------------------------
 --- a hack to read FEATS with their usual syntax
