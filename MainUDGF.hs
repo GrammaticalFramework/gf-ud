@@ -38,12 +38,18 @@ main = do
     "statistics":opts -> getContents >>= mapM_ print . udFrequencies (selectOpts opts) . parseUDText
 
     "pattern-match":ws -> do
-       let pattern = (read (unwords ws)) :: UDPattern
+       patterntext <- case ws of
+         "-f":file:_ -> readFile file
+         _ -> return $ unwords ws
+       let pattern = (read patterntext) :: UDPattern
        ss <- getContents >>= return . parseUDText
        mapM_ putStrLn $ filter (not . null) $ map (showMatchesInUDSentence pattern) ss
     
     "pattern-replace":ws -> do
-       let pattern = (read (unwords ws)) :: UDReplacement
+       patterntext <- case ws of
+         "-f":file:_ -> readFile file
+         _ -> return $ unwords ws
+       let pattern = (read patterntext) :: UDReplacement
        ss <- getContents >>= return . parseUDText
        mapM_ putStrLn $ map (showReplacementsInUDSentence pattern) ss
     
@@ -96,8 +102,8 @@ helpMsg = unlines $ [
     " | gfud check-treebank",
     " | gfud check-annotations <path> <language> <startcat>",
     " | gfud statistics <option>*",
-    " | gfud pattern-match '<pattern>'",
-    " | gfud pattern-replace '<replacement>'",
+    " | gfud pattern-match ('<pattern>' | -f <file>)",
+    " | gfud pattern-replace ('<replacement>' | -f <file>)",
     " | gfud cosine-similarity <file> <file> <option>*",
     " | gfud not-covered <standardfile> <testedfile> <option>*",
     " | gfud extract-pos-words",
@@ -117,17 +123,20 @@ helpMsg = unlines $ [
     " | ARG <pos> <deprel>",
     " | (FEATS | FEATS_) <features>",
     " | (AND | OR) [ <pattern>,* ]",
+    " | (SEQUENCE | SEQUENCE_) [ <pattern>,* ]",
     " | NOT <pattern>",
     " | (TREE | TREE_) <pattern> <pattern>*",
     " | (DEPTH_EQUALS | DEPTH_UNDER | DEPTH_OVER) <int>",
     " | TRUE",
-    "where DEPREL_, FEATS_, TREE_ mean matching a subset/substring.",
-    "<string> arguments require double quotes, and the <pattern> itself is in single quotes.",
+    "where DEPREL_, FEATS_, SEQUENCW_, TREE_ mean matching a subset/substring.",
+    "<string> arguments require double quotes, and the <pattern> itself is in single quotes",
+    "if read from command line, but not if read from a file (the -f option).",
     "Replacement syntax:",
     "   REPLACE <pattern> <pattern>",
     " | PRUNE <pattern>",
     " | REMOVE <pattern>",
     " | FLATTEN <pattern> <int>",
+    " | CHANGES [ <pattern>,* ]",
     "Options:"
     ] ++ ["  " ++ opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 

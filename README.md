@@ -123,6 +123,7 @@ $ cat en_ewt-ud-train.conllu | gfud pattern-match 'AND [POS "ADV", DEPREL "xcomp
 Replace or delete subtrees that satisfy a certain pattern, or flatten trees below a given depth.
 The complete syntax is given in the `gfud` help message.
 The nodes of the resulting trees are renumbered so that they are still valid dependency trees.
+The matching or replacement pattern can also be read from a file with the `-f` option, which is a good practice in particulat with complex replacement patterns collected under a `CHANGES` list.
 ```
 $ cat en_ewt-ud-train.conllu | gfud pattern-replace 'FLATTEN (OR [DEPREL "nsubj", DEPREL "obj"])za 1'
 # newdoc id = weblog-typepad.com_ripples_20040407125600_ENG_20040407_125600
