@@ -137,6 +137,7 @@ helpMsg = unlines $ [
     " | REMOVE <pattern>",
     " | FLATTEN <pattern> <int>",
     " | CHANGES [ <pattern>,* ]",
+    " | COMPOSE [ <pattern>,* ]",
     "Options:"
     ] ++ ["  " ++ opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 

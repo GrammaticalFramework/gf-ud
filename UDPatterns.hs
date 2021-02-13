@@ -107,6 +107,7 @@ data UDReplacement =
   | REMOVE UDPattern -- drop the whole subtree, if not the root
   | FLATTEN UDPattern Int -- cut the tree at depth Int
   | CHANGES [UDReplacement] -- try different replacements in this order, break after first applicable
+  | COMPOSE [UDReplacement] -- make all changes one after the other
  deriving (Show,Read)
 
 replaceWithUDPattern :: UDReplacement -> UDTree -> (UDTree,Bool)
@@ -124,6 +125,10 @@ replaceWithUDPattern rep tree@(RTree node subtrs) = case rep of
     r:rs -> case replaceWithUDPattern r tree of
       (tr,True) -> (tr,True)
       _ -> replaceWithUDPattern (CHANGES rs) tree
+    _ -> (tree,False)
+  COMPOSE reps -> case reps of
+    r:rs -> case replaceWithUDPattern r tree of
+      (tr,b) -> let (tr2,bs) = replaceWithUDPattern (COMPOSE rs) tr in (tr2, b || bs)
     _ -> (tree,False)
   _ -> (tree,False)
  where
