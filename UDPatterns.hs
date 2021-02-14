@@ -118,6 +118,11 @@ replaceWithUDPattern rep tree@(RTree node subtrs) = case rep of
     LEMMA s -> tree{root = node{udLEMMA = s}}
     POS s -> tree{root = node{udUPOS = s}}
     DEPREL s -> tree{root = node{udDEPREL = s}}
+    AND ps -> case ps of
+      p:pp -> let
+                (tr,_)  = replaceWithUDPattern (REPLACE TRUE p) tree
+              in fst (replaceWithUDPattern (REPLACE TRUE (AND pp)) tr)
+      _ -> tree
   UNDER cond replace | ifMatchUDPattern cond tree -> true $ tree{subtrees = map (fst . replaceWithUDPattern rep) subtrs} 
   PRUNE cond | ifMatchUDPattern cond tree -> true $ tree{subtrees = []}
   FILTER_SUBTREES cond scond | ifMatchUDPattern cond tree ->

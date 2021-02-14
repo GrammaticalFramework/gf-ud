@@ -8,5 +8,12 @@ COMPOSE [
     FILTER_SUBTREES (OR [DEPREL "xcomp",DEPREL "ccomp"]) (DEPREL "mark"),
     FILTER_SUBTREES (DEPREL "obl") (DEPREL "case"),
     FLATTEN (OR [DEPREL_ "nsubj", DEPREL "obj", DEPREL"cop", DEPREL "iobj"]) 0
+    ],
+  CHANGES [
+    REPLACE (DEPREL_ "nsubj") (AND [FORM "X", LEMMA "X"]),
+    REPLACE (DEPREL "obj")  (AND [FORM "Y", LEMMA "Y"]),
+    REPLACE (DEPREL "obl")  (AND [FORM "Z", LEMMA "Z"]),
+    REPLACE (DEPREL "ccomp")  (AND [FORM "S", LEMMA "S"]),
+    REPLACE (DEPREL "xcomp")  (AND [FORM "V", LEMMA "V"])
     ]
   ]

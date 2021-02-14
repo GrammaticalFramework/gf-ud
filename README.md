@@ -136,16 +136,23 @@ COMPOSE [
     FILTER_SUBTREES (OR [DEPREL "xcomp",DEPREL "ccomp"]) (DEPREL "mark"),
     FILTER_SUBTREES (DEPREL "obl") (DEPREL "case"),
     FLATTEN (OR [DEPREL_ "nsubj", DEPREL "obj", DEPREL"cop", DEPREL "iobj"]) 0
+    ],
+  CHANGES [
+    REPLACE (DEPREL_ "nsubj") (AND [FORM "X", LEMMA "X"]),
+    REPLACE (DEPREL "obj")  (AND [FORM "Y", LEMMA "Y"]),
+    REPLACE (DEPREL "obl")  (AND [FORM "Z", LEMMA "Z"]),
+    REPLACE (DEPREL "ccomp")  (AND [FORM "S", LEMMA "S"]),
+    REPLACE (DEPREL "xcomp")  (AND [FORM "V", LEMMA "V"])
     ]
   ]
 ```
 Here is a sample from an example run:
 ```
 $ cat en_pud-ud-test.conllu | gfud pattern-replace -f grammars/predicates.hst
-sent_id = n01003013
+# sent_id = n01003013
 # text = Maybe the dress code was too stuffy.
-# newtext = code was stuffy
-1       code    code    NOUN    NN      Number=Sing     3       nsubj   ADJUSTED        _
+# newtext = X was stuffy
+1       X       X       NOUN    NN      Number=Sing     3       nsubj   ADJUSTED        _
 2       was     be      AUX     VBD     Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin   3       cop     ADJUSTED
         _
 3       stuffy  stuffy  ADJ     JJ      Degree=Pos      0       root    ADJUSTED        SpaceAfter=No
@@ -153,12 +160,12 @@ sent_id = n01003013
 # newdoc id = n01004
 # sent_id = n01004009
 # text = Rather than teaching the scientific method as a separate unit, for example, students learn science content by applying it.
-# newtext = for example students learn content
+# newtext = for Z X learn Y
 1       for     for     ADP     IN      _       2       case    ADJUSTED        _
-2       example example NOUN    NN      Number=Sing     4       obl     ADJUSTED        SpaceAfter=No
-3       students        student NOUN    NNS     Number=Plur     4       nsubj   ADJUSTED        _
+2       Z       Z       NOUN    NN      Number=Sing     4       obl     ADJUSTED        SpaceAfter=No
+3       X       X       NOUN    NNS     Number=Plur     4       nsubj   ADJUSTED        _
 4       learn   learn   VERB    VBP     Mood=Ind|Tense=Pres|VerbForm=Fin        0       root    ADJUSTED        _
-5       content content NOUN    NN      Number=Sing     4       obj     ADJUSTED        _
+5       Y       Y       NOUN    NN      Number=Sing     4       obj     ADJUSTED        _
 ```
 Visualize a treebank by creating a LaTeX file or a pdf directly (requires pdflatex)
 ```
