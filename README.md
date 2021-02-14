@@ -126,55 +126,33 @@ The nodes of the resulting trees are renumbered so that they are still valid dep
 The matching or replacement pattern can also be read from a file with the `-f` option, which is a good practice in particulat with complex replacement patterns collected under a `CHANGES` list.
 Here is an example looking for main arguments of predication, from file `grammars/predicates.hst` (the suffix hst refers to "Haskell term"):
 ```
-CHANGES [
-    COMPOSE [ 
-      FLATTEN (TREE_ (DEPREL "root") [DEPREL "nsubj", DEPREL "cop"]) 1,
-      REMOVE (NOT (OR [DEPREL "root", DEPREL "nsubj", DEPREL "cop"]))
-      ],
-    COMPOSE [ 
-      FLATTEN (TREE_ (DEPREL "root") [DEPREL "nsubj", DEPREL "iobj", DEPREL "obj"]) 1,
-      REMOVE (NOT (OR [DEPREL "root", DEPREL "nsubj", DEPREL "iobj", DEPREL "obj"]))
-      ],
-    COMPOSE [ 
-      FLATTEN (TREE_ (DEPREL "root") [DEPREL "nsubj", DEPREL "obj"]) 1,
-      REMOVE (NOT (OR [DEPREL "root", DEPREL "nsubj", DEPREL "obj"]))
-      ], 
-    COMPOSE [ 
-      FLATTEN (TREE_ (DEPREL "root") [DEPREL "nsubj", DEPREL "obl"]) 1,
-      REMOVE (NOT (OR [DEPREL "root", DEPREL "nsubj", DEPREL "obl"]))
-      ]
+COMPOSE [
+  REMOVE (NOT (OR [
+    DEPREL "obj", DEPREL "nsubj", DEPREL "obl", DEPREL"cop", DEPREL "case", DEPREL "iobj",
+    DEPREL "xcomp", DEPREL "ccomp"
+    ])),
+  FLATTEN (OR [DEPREL "xcomp",DEPREL "ccomp"]) 0
   ]
 ```
-Here is an example run:
+Here is the beginning of an example run:
 ```
-$ cat en_pud-ud-test.conllu | gfud pattern-replace -f grammars/predicates.hst | more
+$ cat en_pud-ud-test.conllu | gfud pattern-replace -f grammars/predicates.hst
 # newdoc id = n01001
 # sent_id = n01001011
-# text = “While much of the digital transition is unprecedented in the United States,
-the peaceful transition of power is not,” Obama special assistant Kori Schulman
-wrote in a blog post Monday.
+# text = “While much of the digital transition is unprecedented in the United States, the peaceful transition of power is not,” Obama special assistant Kori Schulman wrote in a blog post Monday.
 # newtext = transition is
 1       transition      transition      NOUN    NN      Number=Sing     2       nsubj   ADJUSTED        _
 2       is      be      AUX     VBZ     Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin   0       root    ADJUSTED
         _
 
 # sent_id = n01001013
-# text = For those who follow social media transitions on Capitol Hill,
-this will be a little different.
-# newtext = this be different
-1       this    this    PRON    DT      Number=Sing|PronType=Dem        3       nsubj   ADJUSTED        _
-2       be      be      AUX     VB      VerbForm=Inf    3       cop     ADJUSTED        _
-3       different       different       ADJ     JJ      Degree=Pos      0       root    ADJUSTED        SpaceAfter=No
-
-# newdoc id = n01002
-# sent_id = n01002017
-# text = But in a break from his past rhetoric about curtailing immigration,
-the GOP nominee proclaimed that as president he would allow “tremendous numbers”
-of legal immigrants based on a “merit system.”
-# newtext = nominee proclaimed
-1       nominee nominee NOUN    NN      Number=Sing     2       nsubj   ADJUSTED        _
-2       proclaimed      proclaim        VERB    VBD     Mood=Ind|Tense=Past|VerbForm=Fin        0       root    ADJUSTED
-        _
+# text = For those who follow social media transitions on Capitol Hill, this will be a little different.
+# newtext = For those this be different
+1       For     for     ADP     IN      _       2       case    ADJUSTED        _
+2       those   those   PRON    DT      Number=Plur|PronType=Dem        5       obl     ADJUSTED        _
+3       this    this    PRON    DT      Number=Sing|PronType=Dem        5       nsubj   ADJUSTED        _
+4       be      be      AUX     VB      VerbForm=Inf    5       cop     ADJUSTED        _
+5       different       different       ADJ     JJ      Degree=Pos      0       root    ADJUSTED        SpaceAfter=No
 ```
 Visualize a treebank by creating a LaTeX file or a pdf directly (requires pdflatex)
 ```

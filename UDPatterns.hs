@@ -103,6 +103,7 @@ findMatchingUDSequence strict ps tree
 
 data UDReplacement =
     REPLACE UDPattern UDPattern
+  | UNDER UDPattern UDReplacement
   | PRUNE UDPattern  -- drop dependents, shorthand for FLATTEN p 0
   | REMOVE UDPattern -- drop the whole subtree, if not the root
   | FLATTEN UDPattern Int -- cut the tree at depth Int
@@ -117,6 +118,7 @@ replaceWithUDPattern rep tree@(RTree node subtrs) = case rep of
     LEMMA s -> tree{root = node{udLEMMA = s}}
     POS s -> tree{root = node{udUPOS = s}}
     DEPREL s -> tree{root = node{udDEPREL = s}}
+  UNDER cond replace | ifMatchUDPattern cond tree -> true $ tree{subtrees = map (fst . replaceWithUDPattern rep) subtrs} 
   PRUNE cond | ifMatchUDPattern cond tree -> true $ tree{subtrees = []}
   REMOVE cond -> let sts = [st | st <- subtrs, not (ifMatchUDPattern cond st)]
                  in (RTree node sts, length sts /= length subtrs)

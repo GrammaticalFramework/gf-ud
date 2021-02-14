@@ -1,18 +1,7 @@
-CHANGES [
-    COMPOSE [ 
-      FLATTEN (TREE_ (DEPREL "root") [DEPREL "nsubj", DEPREL "cop"]) 1,
-      REMOVE (NOT (OR [DEPREL "root", DEPREL "nsubj", DEPREL "cop"]))
-      ],
-    COMPOSE [ 
-      FLATTEN (TREE_ (DEPREL "root") [DEPREL "nsubj", DEPREL "iobj", DEPREL "obj"]) 1,
-      REMOVE (NOT (OR [DEPREL "root", DEPREL "nsubj", DEPREL "iobj", DEPREL "obj"]))
-      ],
-    COMPOSE [ 
-      FLATTEN (TREE_ (DEPREL "root") [DEPREL "nsubj", DEPREL "obj"]) 1,
-      REMOVE (NOT (OR [DEPREL "root", DEPREL "nsubj", DEPREL "obj"]))
-      ], 
-    COMPOSE [ 
-      FLATTEN (TREE_ (DEPREL "root") [DEPREL "nsubj", DEPREL "obl"]) 1,
-      REMOVE (NOT (OR [DEPREL "root", DEPREL "nsubj", DEPREL "obl"]))
-      ]
+COMPOSE [
+  REMOVE (NOT (OR [
+    DEPREL "obj", DEPREL "nsubj", DEPREL "obl", DEPREL"cop", DEPREL "case", DEPREL "iobj",
+    DEPREL "xcomp", DEPREL "ccomp"
+    ])),
+  FLATTEN (OR [DEPREL "xcomp",DEPREL "ccomp"]) 0
   ]
