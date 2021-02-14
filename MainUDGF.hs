@@ -133,11 +133,12 @@ helpMsg = unlines $ [
     "if read from command line, but not if read from a file (the -f option).",
     "Replacement syntax:",
     "   REPLACE <pattern> <pattern>",
+    " | UNDER <pattern> <replacement>",
     " | PRUNE <pattern>",
-    " | REMOVE <pattern>",
+    " | FILTER_SUBTREES <pattern> <pattern>",
     " | FLATTEN <pattern> <int>",
-    " | CHANGES [ <pattern>,* ]",
-    " | COMPOSE [ <pattern>,* ]",
+    " | CHANGES [ <replacement>,* ]",
+    " | COMPOSE [ <replacement>,* ]",
     "Options:"
     ] ++ ["  " ++ opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 

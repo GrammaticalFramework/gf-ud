@@ -1,7 +1,12 @@
 COMPOSE [
-  REMOVE (NOT (OR [
-    DEPREL "obj", DEPREL "nsubj", DEPREL "obl", DEPREL"cop", DEPREL "case", DEPREL "iobj",
+  FILTER_SUBTREES (DEPREL "root") (OR [
+    DEPREL_ "nsubj", DEPREL "obj", DEPREL "obl", DEPREL "iobj",
+    DEPREL "cop", DEPREL "aux:pass", 
     DEPREL "xcomp", DEPREL "ccomp"
-    ])),
-  FLATTEN (OR [DEPREL "xcomp",DEPREL "ccomp"]) 0
+    ]),
+  CHANGES [
+    FILTER_SUBTREES (OR [DEPREL "xcomp",DEPREL "ccomp"]) (DEPREL "mark"),
+    FILTER_SUBTREES (DEPREL "obl") (DEPREL "case"),
+    FLATTEN (OR [DEPREL_ "nsubj", DEPREL "obj", DEPREL"cop", DEPREL "iobj"]) 0
+    ]
   ]

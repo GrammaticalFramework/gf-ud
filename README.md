@@ -127,32 +127,38 @@ The matching or replacement pattern can also be read from a file with the `-f` o
 Here is an example looking for main arguments of predication, from file `grammars/predicates.hst` (the suffix hst refers to "Haskell term"):
 ```
 COMPOSE [
-  REMOVE (NOT (OR [
-    DEPREL "obj", DEPREL "nsubj", DEPREL "obl", DEPREL"cop", DEPREL "case", DEPREL "iobj",
+  FILTER_SUBTREES (DEPREL "root") (OR [
+    DEPREL_ "nsubj", DEPREL "obj", DEPREL "obl", DEPREL "iobj",
+    DEPREL "cop", DEPREL "aux:pass", 
     DEPREL "xcomp", DEPREL "ccomp"
-    ])),
-  FLATTEN (OR [DEPREL "xcomp",DEPREL "ccomp"]) 0
+    ]),
+  CHANGES [
+    FILTER_SUBTREES (OR [DEPREL "xcomp",DEPREL "ccomp"]) (DEPREL "mark"),
+    FILTER_SUBTREES (DEPREL "obl") (DEPREL "case"),
+    FLATTEN (OR [DEPREL_ "nsubj", DEPREL "obj", DEPREL"cop", DEPREL "iobj"]) 0
+    ]
   ]
 ```
-Here is the beginning of an example run:
+Here is a sample from an example run:
 ```
 $ cat en_pud-ud-test.conllu | gfud pattern-replace -f grammars/predicates.hst
-# newdoc id = n01001
-# sent_id = n01001011
-# text = “While much of the digital transition is unprecedented in the United States, the peaceful transition of power is not,” Obama special assistant Kori Schulman wrote in a blog post Monday.
-# newtext = transition is
-1       transition      transition      NOUN    NN      Number=Sing     2       nsubj   ADJUSTED        _
-2       is      be      AUX     VBZ     Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin   0       root    ADJUSTED
+sent_id = n01003013
+# text = Maybe the dress code was too stuffy.
+# newtext = code was stuffy
+1       code    code    NOUN    NN      Number=Sing     3       nsubj   ADJUSTED        _
+2       was     be      AUX     VBD     Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin   3       cop     ADJUSTED
         _
+3       stuffy  stuffy  ADJ     JJ      Degree=Pos      0       root    ADJUSTED        SpaceAfter=No
 
-# sent_id = n01001013
-# text = For those who follow social media transitions on Capitol Hill, this will be a little different.
-# newtext = For those this be different
-1       For     for     ADP     IN      _       2       case    ADJUSTED        _
-2       those   those   PRON    DT      Number=Plur|PronType=Dem        5       obl     ADJUSTED        _
-3       this    this    PRON    DT      Number=Sing|PronType=Dem        5       nsubj   ADJUSTED        _
-4       be      be      AUX     VB      VerbForm=Inf    5       cop     ADJUSTED        _
-5       different       different       ADJ     JJ      Degree=Pos      0       root    ADJUSTED        SpaceAfter=No
+# newdoc id = n01004
+# sent_id = n01004009
+# text = Rather than teaching the scientific method as a separate unit, for example, students learn science content by applying it.
+# newtext = for example students learn content
+1       for     for     ADP     IN      _       2       case    ADJUSTED        _
+2       example example NOUN    NN      Number=Sing     4       obl     ADJUSTED        SpaceAfter=No
+3       students        student NOUN    NNS     Number=Plur     4       nsubj   ADJUSTED        _
+4       learn   learn   VERB    VBP     Mood=Ind|Tense=Pres|VerbForm=Fin        0       root    ADJUSTED        _
+5       content content NOUN    NN      Number=Sing     4       obj     ADJUSTED        _
 ```
 Visualize a treebank by creating a LaTeX file or a pdf directly (requires pdflatex)
 ```

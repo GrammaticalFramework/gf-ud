@@ -105,7 +105,7 @@ data UDReplacement =
     REPLACE UDPattern UDPattern
   | UNDER UDPattern UDReplacement
   | PRUNE UDPattern  -- drop dependents, shorthand for FLATTEN p 0
-  | REMOVE UDPattern -- drop the whole subtree, if not the root
+  | FILTER_SUBTREES UDPattern UDPattern -- keep only subtrees that match the second pattern
   | FLATTEN UDPattern Int -- cut the tree at depth Int
   | CHANGES [UDReplacement] -- try different replacements in this order, break after first applicable
   | COMPOSE [UDReplacement] -- make all changes one after the other
@@ -120,8 +120,9 @@ replaceWithUDPattern rep tree@(RTree node subtrs) = case rep of
     DEPREL s -> tree{root = node{udDEPREL = s}}
   UNDER cond replace | ifMatchUDPattern cond tree -> true $ tree{subtrees = map (fst . replaceWithUDPattern rep) subtrs} 
   PRUNE cond | ifMatchUDPattern cond tree -> true $ tree{subtrees = []}
-  REMOVE cond -> let sts = [st | st <- subtrs, not (ifMatchUDPattern cond st)]
-                 in (RTree node sts, length sts /= length subtrs)
+  FILTER_SUBTREES cond scond | ifMatchUDPattern cond tree ->
+    let sts = [st | st <- subtrs, ifMatchUDPattern scond st]
+    in (RTree node sts, length sts /= length subtrs)
   FLATTEN cond depth | ifMatchUDPattern cond tree -> true $ flattenRTree depth tree
   CHANGES reps -> case reps of
     r:rs -> case replaceWithUDPattern r tree of
