@@ -18,6 +18,11 @@ cat
 --- for synthesis experiments, Eng specific
   There ; -- expletive
   Be ; -- copula of existential
+  NPConj ; -- conjunct with Conj as cc
+  NPComma ; -- conjunct with , as punct
+  APConj ;
+  VPConj ;
+  SConj ;
 
 -- not seen in UD explicitly
 fun
@@ -46,7 +51,8 @@ PrepDetN : Prep -> Det -> NN -> PP ; -- case det head 1130 ; obl ; in the car
 -- Prep -> Det -> NN -> PP ; -- case det head 706 ; nmod ; around this city
 PrepNNP : Prep -> NNP -> PP ; -- case head 785 ; nmod ; of TIME
 -- Prep -> NN -> PP ; -- case head 669 ; obl ; in time
-Conj2NP : NP -> Conj -> NP -> NP ; -- head cc conj 648 ; conj ; and dress
+Conj2NP : NP -> NPConj -> NP ; -- head conj 648 ;
+ConjNPConj : Conj -> NP -> NPConj ; -- cc head 648 ; conj ; and dress
 -- Conj -> PN -> PN ; -- cc head 283 ; conj ; and 15th
 -- NN -> NN -> NP ; -- head conj 51 ; obj ; receipt record
 PrepPN : Prep -> PN -> PP ; -- case head 636 ; nmod ; like Zahav
@@ -85,7 +91,8 @@ InfComplV2 : V -> NP -> VPP ; -- head obj 275 ; xcomp ; to take approach ; PART-
 -- PART -> V2 -> NP -> VP ; -- mark head obj 181 ; advcl ; to replace tire
 -- PART -> V2 -> NP -> VP ; -- mark head obj 88 ; acl ; to fix fence
 -- PART -> V2 -> NP -> VP ; -- mark head obj 67 ; xcomp ; to assist me
-Conj2AP : AP -> Conj -> AP -> AP ; -- head cc conj 262 ; 
+Conj2AP : AP -> APConj -> AP ; -- head conj 262 ;
+ConjAPConj : Conj -> AP -> APConj ; -- cc head ;
 -- Conj -> AP -> AP ; -- cc head 262 ; conj ; and friendly
 SgPrepAdjN : Prep -> AP -> NN -> PP ; -- case amod head 345 ;
 PlPrepAdjN : Prep -> AP -> NN -> PP ; -- case amod head 115 ;
@@ -101,8 +108,11 @@ PrepDetCompoundN : Prep -> Det -> NN -> NN -> PP ; -- case det compound head 233
 -- Prep -> Det -> NN -> NN -> PP ; -- case det compound head 133 ; nmod ; of the sales ladies
 ---- AP -> NN -> NN ; -- amod head 184 ; compound ; decent portion
 ---- AP -> NN -> NN ; -- amod head 67 ; obl:tmod ; several times
----- Conj -> VP -> NP -> VP ; -- cc head obj 184 ; conj ; and replace tires
-Conj3NP : NP -> NP -> Conj -> NP -> NP ; -- head conj cc conj 294 ; ---- PUNCT
+Conj2S : S -> SConj -> S ; -- head conj 100 ; ----
+ConjSConj : Conj -> S -> SConj ; -- cc head 800 ; ----
+--- Conj -> VP -> NP -> VP ; -- cc head obj 184 ; conj ; and replace tires
+CommaNPComma : NP -> NPComma ; -- head 800 ;
+Conj3NP : NP -> NPComma -> NPConj -> NP ; -- head conj conj 294 ;
 -- Punct -> NN -> NN ; -- punct head =176 ; conj ; , decor
 -- Punct -> PN -> PN ; -- punct head =118 ; conj ; , Boyles
 DetNinfVP : Det -> NN -> VPP -> NP ; -- det head acl 173 ; obj ; another attempt get

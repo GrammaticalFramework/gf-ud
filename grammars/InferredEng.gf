@@ -21,6 +21,10 @@ lincat
 ---
   There = NP ;
   Be = V ;
+  NPConj = {conj : Conj ; np : NP} ;
+  NPComma = {comma : Conj ; np : NP} ;
+  APConj = {conj : Conj ; ap : AP} ;
+  SConj = {conj : Conj ; s : S} ;
 
 lin
   UseN n = n ;
@@ -39,6 +43,7 @@ lin
 
 oper punctUtt : Utt -> {s : Str} -> Utt = \u,p -> lin Utt {s = u.s ++ p.s} ;
 oper ccUtt : Utt -> Utt -> Utt = \u,v -> lin Utt {s = u.s ++ v.s} ;
+oper commaConj = P.mkConj "," ; ---
 
 
 lin
@@ -48,7 +53,8 @@ PrepDetN prep det n = mkAdv prep (mkNP det n) ;
 
 PrepNNP prep nnp = mkAdv prep nnp ;
 
-Conj2NP x conj y = mkNP conj x y ;
+Conj2NP np npc = mkNP npc.conj np npc.np ;
+ConjNPConj conj np = {conj = conj ; np = np} ;
 
 PrepPN prep pn = mkAdv prep (mkNP pn) ;
 
@@ -82,7 +88,8 @@ InfComplV2 v np = lin Adv (mkUtt (mkVP (P.mkV2 v) np)) ;
 
 
 
-Conj2AP x conj y = mkAP conj x y ;
+Conj2AP x y = mkAP y.conj x y.ap ;
+ConjAPConj conj ap = {conj = conj ; ap = ap} ;
 
 SgPrepAdjN prep ap n = mkAdv prep (mkNP (mkCN ap n)) ;
 PlPrepAdjN prep ap n = mkAdv prep (mkNP aPl_Det (mkCN ap n)) ;
@@ -96,8 +103,11 @@ PrepDetCompoundN prep det x y = mkAdv prep (mkNP det (ExtendEng.CompoundN x y)) 
 
 --- AP -> CN -> CN ; -- amod head 184 ; compound ; decent portion
 --- AP -> CN -> CN ; -- amod head 67 ; obl:tmod ; several times
+Conj2S x y = mkS y.conj x y.s ;
+ConjSConj conj s = {conj = conj ; s = s} ;
 --- Conj -> VP -> NP -> VP ; -- cc head obj 184 ; conj ; and replace tires
-Conj3NP x y conj z = mkNP conj (mkListNP x (mkListNP y z)) ;
+CommaNPComma np = {comma = commaConj ; np = np} ;
+Conj3NP x npco npc = mkNP npco.comma x (mkNP npc.conj npco.np npc.np) ;
 
 DetNinfVP det n vpp = mkNP det (mkCN (mkCN n) vpp) ;
 DetNppartVP det n v2 = mkNP (mkNP det n) v2 ;

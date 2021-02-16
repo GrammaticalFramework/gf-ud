@@ -16,6 +16,7 @@ import PGF
 import System.Environment (getArgs)
 import Control.Concurrent
 import Control.Monad
+import Data.List(sortOn)
 
 -- to get parallel processing:
 -- Build with -threaded -rtsopts
@@ -76,7 +77,7 @@ main = do
        let entries = lexicalEntries env uds
        putStrLn $ unlines [unwords [w ++ "_" ++ c, c, "--", show i] | ((w,c),i) <- entries]
 
-    "eval":micmac:luas:goldf:testf:_ -> do
+    "eval":micmac:luas:goldf:testf:opts -> do
     
       putStrLn (unwords ("evaluating": tail xx))
       
@@ -86,17 +87,26 @@ main = do
       gold <- parseUDFile goldf
       test <- parseUDFile testf
 
-      let score = udCorpusScore mcro crit gold test
-      print score
+      case opts of
+        _ | isOpt (selectOpts opts) "units" -> do
+          let pairs = zip gold test
+          let scores = sortOn (udScore . fst) [(snd (udSentenceScore crit go [te]), (go,te)) | (go,te) <- pairs]
+          flip mapM_ scores $ \ (score,(go,te)) -> do
+            print score
+            putStrLn $ prUDAlign go te
+          
+        _ -> do
+          let score = udCorpusScore mcro crit gold test
+          print score
       
-    dir:path:lang:cat:opts | elem dir ["-ud2gf","-gf2ud","-ud2gfpar","-string2gf2ud"] -> do
+    dir:path:lang:cat:opts | elem (dropWhile (=='-') dir) ["ud2gf","gf2ud","ud2gfpar","string2gf2ud"] -> do
       env <- getEnv path lang cat
-      convertGFUD dir (selectOpts opts) env
+      convertGFUD (dropWhile (=='-') dir) (selectOpts opts) env
     _ -> putStrLn $ helpMsg
 
 helpMsg = unlines $ [
     "Usage:",
-    "   gfud (-ud2gf|-gf2ud|-string2gf2ud|-gf2udpar) <path> <language> <startcat>",
+    "   gfud (ud2gf|gf2ud|string2gf2ud|gf2udpar) <path> <language> <startcat>",
     " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",
     " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile>",
     " | gfud check-treebank",
@@ -144,13 +154,13 @@ helpMsg = unlines $ [
 
 convertGFUD :: String -> Opts -> UDEnv -> IO ()
 convertGFUD dir opts env = case dir of
-  "-ud2gf" -> getContents >>= ud2gfOpts (if null opts then defaultOptsUD2GF else opts) env
-  "-ud2gfpar" -> getContents >>= ud2gfOptsPar (if null opts then defaultOptsUD2GF else opts) env
+  "ud2gf" -> getContents >>= ud2gfOpts (if null opts then defaultOptsUD2GF else opts) env
+  "ud2gfpar" -> getContents >>= ud2gfOptsPar (if null opts then defaultOptsUD2GF else opts) env
   _ -> do
       s <- getContents
       let conv = case dir of
-            "-gf2ud" -> G.testTreeString
-            "-string2gf2ud" -> G.testString
+            "gf2ud" -> G.testTreeString
+            "string2gf2ud" -> G.testString
       let os = if null opts then defaultOptsGF2UD else opts
       uds <- mapM (\ (i,s) -> conv i os env s) $ zip [1..] . filter (not . null) $ lines s
       case opts of

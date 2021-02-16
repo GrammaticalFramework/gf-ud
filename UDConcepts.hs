@@ -308,6 +308,26 @@ strip (c:cs)
     strip' (c:cs)
       | isSpace c = strip' cs
       | otherwise = (c:cs)
+
+-----------------
+-- print aligned UD sentences
+------------------------------
+prUDAlign :: UDSentence -> UDSentence -> String
+prUDAlign s t = unlines [
+  pcv ++ rjust pcv ++ mark pcv pcw ++ "    " ++ pcw |
+    (v,w) <- zip ws wt,
+    let [pcv,pcw] = map prCompact [v,w]
+  ]
+ where
+   ws = (udWordLines s)
+   wt = (udWordLines t)
+   prCompact = concat . intersperse "  " . take 8 . words . prt
+   mark v w = if v==w then " " else "|"
+   rjust pcv = replicate (2 + mxs - length pcv) ' '
+   mxs = maximum (map (length . prCompact) ws)
+
+-----------------
+
 ------------------
 -- evaluations
 -----------------

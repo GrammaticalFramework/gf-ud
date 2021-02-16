@@ -49,6 +49,7 @@ fullOpts = [
   ("vud", "visualize dependency tree using LaTeX converted to pdf"),
   ("lud", "visualize dependency tree in LaTeX and output the LaTeX code"),
   ("lin", "linearize tree using the active language of the environment"),
+  ("units", "(eval) print evaluation per sentence, from lowest score upwards"),
   ("stat", "show statistics of original and interpreted words"),
   ("FORM ", "(statistics) surface forms"),
   ("LEMMA", "(statistics) lemmas"),

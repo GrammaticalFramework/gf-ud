@@ -1,6 +1,7 @@
 cd grammars
 gf -make InferredEng.gf
-echo "gr -probs=Inferred.probs -number=400 -cat=Utt -depth=12 | wf -file=\"../out/2-inferred-test.gft\"" | gf -run Inferred.pgf
+echo "gr -probs=Inferred.probs -number=500 -cat=Utt -depth=12 | wf -file=\"../out/1-inferred-test.gft\"" | gf -run Inferred.pgf
+sort -u ../out/1-inferred-test.gft >../out/2-inferred-test.gft
 echo "created out/2-inferred-test.gft"
 cd ..
 cat out/2-inferred-test.gft | gfud -gf2ud grammars/Inferred Eng Utt ud >out/2-inferred-test.conllu

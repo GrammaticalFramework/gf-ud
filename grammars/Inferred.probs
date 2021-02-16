@@ -11,6 +11,7 @@ DetN 0.2518
 PrepDetN 0.1836
 PrepNNP 0.1454
 Conj2NP 0.0982
+ConjNPConj 0.8
 PrepPN 0.1203
 PrepPron 0.0868
 PossN 0.0913
@@ -28,11 +29,15 @@ CompPN 0.0342
 FlatPN 0.0256
 InfComplV2 0.0611
 Conj2AP 0.0524
+ConjSConj 0.8
 SgPrepAdjN 0.0345
 PlPrepAdjN 0.0115
 CompoundN 0.0452
 DetCompoundN 0.0372
 PrepDetCompoundN 0.0366
+Conj2S 0.024
+ConjSConj 0.8
+CommaNPComma 0.8
 Conj3NP 0.0294
 DetNinfVP 0.0173
 DetNppartVP 0.0173

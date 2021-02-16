@@ -178,7 +178,21 @@ $ gfud eval macro LAS data/en_pud-ud-test.conllu out/wn-udpipe-en_pud.conllu
 evaluating macro LAS data/en_pud-ud-test.conllu out/wn-udpipe-en_pud.conllu
 UDScore {udScore = 0.4673854319745826, udMatching = 1000, udTotalLength = 21183, udSamesLength = 9624, udPerfectMatch = 0}
 ```
+If the option `units` is present, the scores are shown sentence by sentence, starting from the lowest score, and differing lines marked with `|` (like in unix `diff -y`):
+```
+$ gfud eval micro LAS en_pud-ud-test.conllu out/wn-udpipe-en_pud.conllu units
+UDScore {udScore = 0.7777777777777778, udMatching = 1, udTotalLength = 9, udSamesLength = 7, udPerfectMatch = 0}
+1  The  the  DET  DT  Definite=Def|PronType=Art  2  det       1  The  the  DET  DT  Definite=Def|PronType=Art  2  det
+2  consumer  consumer  NOUN  NN  Number=Sing  4  nsubj        2  consumer  consumer  NOUN  NN  Number=Sing  4  nsubj
+3  can  can  AUX  MD  VerbForm=Fin  4  aux                    3  can  can  AUX  MD  VerbForm=Fin  4  aux
+4  boost  boost  VERB  VB  VerbForm=Inf  0  root              4  boost  boost  VERB  VB  VerbForm=Inf  0  root
+5  the  the  DET  DT  Definite=Def|PronType=Art  6  det       5  the  the  DET  DT  Definite=Def|PronType=Art  6  det
+6  demand  demand  NOUN  NN  Number=Sing  4  obj              6  demand  demand  NOUN  NN  Number=Sing  4  obj
+7  for  for  ADP  IN  _  8  case                              7  for  for  ADP  IN  _  8  case
+8  change  change  NOUN  NN  Number=Sing  6  nmod        |    8  change  change  NOUN  NN  Number=Sing  4  obj
+9  .  .  PUNCT  .  _  4  punct                           |    9  .  .  PUNCT  .  _  4  mark
 
+```
 
 
 ### Parsing with DBNF
@@ -224,12 +238,12 @@ Compile a GF grammar, for example:
 ```
 Convert GF to UD:
 ```
-  cat test.gftrees | ./gfud -gf2ud grammars/MiniLang Eng Utt ud
+  cat test.gftrees | ./gfud gf2ud grammars/MiniLang Eng Utt ud
   echo "the black cat sees us" | ./gfud -string2gf2ud grammars/MiniLang Eng Utt
 ```
 Convert UD to GF:
 ```
-  cat test.conllu | ./gfud -ud2gf grammars/MiniLang Eng Utt at
+  cat test.conllu | ./gfud ud2gf grammars/MiniLang Eng Utt at
 ```
 
 ### Experiments with standard tools
