@@ -135,7 +135,7 @@ COMPOSE [
   CHANGES [
     FILTER_SUBTREES (OR [DEPREL "xcomp",DEPREL "ccomp"]) (DEPREL "mark"),
     FILTER_SUBTREES (DEPREL "obl") (DEPREL "case"),
-    FLATTEN (OR [DEPREL_ "nsubj", DEPREL "obj", DEPREL"cop", DEPREL "iobj"]) 0
+    PRUNE (OR [DEPREL_ "nsubj", DEPREL "obj", DEPREL"cop", DEPREL "iobj"]) 0
     ],
   CHANGES [
     REPLACE (DEPREL_ "nsubj") (AND [FORM "X", LEMMA "X"]),

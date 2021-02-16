@@ -104,9 +104,10 @@ findMatchingUDSequence strict ps tree
 data UDReplacement =
     REPLACE UDPattern UDPattern
   | UNDER UDPattern UDReplacement
-  | PRUNE UDPattern  -- drop dependents, shorthand for FLATTEN p 0
+  | PRUNE UDPattern Int -- drop dependents down to depth Int
   | FILTER_SUBTREES UDPattern UDPattern -- keep only subtrees that match the second pattern
-  | FLATTEN UDPattern Int -- cut the tree at depth Int
+  | FLATTEN UDPattern -- lift dependents of dependents to the same level as dependents
+  | RETARGET UDPattern UDPattern UDPattern -- retarget subtrees that satisfy patt1 to their (first) sister that patt2  
   | CHANGES [UDReplacement] -- try different replacements in this order, break after first applicable
   | COMPOSE [UDReplacement] -- make all changes one after the other
  deriving (Show,Read)
@@ -124,11 +125,27 @@ replaceWithUDPattern rep tree@(RTree node subtrs) = case rep of
               in fst (replaceWithUDPattern (REPLACE TRUE (AND pp)) tr)
       _ -> tree
   UNDER cond replace | ifMatchUDPattern cond tree -> true $ tree{subtrees = map (fst . replaceWithUDPattern rep) subtrs} 
-  PRUNE cond | ifMatchUDPattern cond tree -> true $ tree{subtrees = []}
+  PRUNE cond depth | ifMatchUDPattern cond tree -> true $ flattenRTree depth tree
   FILTER_SUBTREES cond scond | ifMatchUDPattern cond tree ->
     let sts = [st | st <- subtrs, ifMatchUDPattern scond st]
     in (RTree node sts, length sts /= length subtrs)
-  FLATTEN cond depth | ifMatchUDPattern cond tree -> true $ flattenRTree depth tree
+  RETARGET cond patt1 patt2 | ifMatchUDPattern cond tree ->
+    let
+      newhead = [subtr | subtr <- subtrs, ifMatchUDPattern patt2 subtr]
+      retarget st = case newhead of
+        subtr:_ | udID (root st) == udID (root subtr) ->
+          [subtr{subtrees = subtrees subtr ++
+              [t{root = (root t){udHEAD = udID (root subtr)}} | t <- subtrs, ifMatchUDPattern patt1 t] }]
+        _:_ | ifMatchUDPattern patt1 st -> []
+        _ -> [st]
+      sts = concat [retarget st | st <- subtrs]
+    in (RTree node sts, length sts /= length subtrs)
+  FLATTEN cond | ifMatchUDPattern cond tree ->
+    let sts = concat
+                [subtr{subtrees = []} :
+                  [t{root = (root t){udHEAD = udHEAD node}} | t <- subtrees subtr]
+                                 | subtr <- subtrs]
+    in (RTree node sts, length sts /= length subtrs)
   CHANGES reps -> case reps of
     r:rs -> case replaceWithUDPattern r tree of
       (tr,True) -> (tr,True)
