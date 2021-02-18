@@ -121,7 +121,6 @@ DetNppartVP : Det -> NN -> V2 -> NP ; -- det head acl:relcl 110 ; obj ; the fenc
 ----DetNNingVP : Det -> NN -> VP -> NP ; -- det head acl 59 ; nsubj ; the girl helping
 ComplPrepVP : VP -> PP -> VP ; -- head obl 171 ; acl ; received location
 -- VP -> PP -> VP ; -- head obl 61 ; acl ; run Tina
-
 CardTimePP : Card -> NN -> PP ; -- nummod head 153 ; nmod:tmod ; 610 AD
 ---- Card -> NN -> NN ; -- nummod head 85 ; obl:npmod ; ten minutes
 ---- Card -> NN -> NN ; -- nummod head 58 ; compound ; 20 hour
@@ -158,7 +157,7 @@ SubjPredObj : Subj -> NP -> V -> NP -> AdvCl ; -- mark nsubj head obj 123 ; advc
 UttPredObj : NP -> V -> NP -> Punct -> Utt ; -- nsubj head obj punct 119 ; root ; They had room .
 -- NP -> VP -> NP -> Punct -> VP ; -- nsubj head obj punct 54 ; root ; shops have owners .
 
--- Prep -> Prep -> Prep ; -- head fixed 116 ; case ; due to
+---- Prep -> Prep -> Prep ; -- head fixed 116 ; case ; due to
 -- Subj -> VP -> NP -> VP ; -- mark head obj 113 ; advcl ; after checking tire
 -- Subj -> VP -> NP -> VP ; -- mark head obj 58 ; acl ; of canceling membership
 -- PART -> VP -> VP ; -- mark head 110 ; xcomp ; to do

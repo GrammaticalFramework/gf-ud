@@ -1,171 +1,90 @@
--- UD labels for Structured grammar
--- example usage for Latex output: rf -file="trees.txt" -tree -lines | vd -abslabels=Parse.udlabels -output=latex -cnclabels=ParseEng.udlabels -view=open
--- for CoNLL output: vd -abslabels=Parse.udlabels -output=conll -cnclabels=ParseEng.udlabels
--- unsure configs are marked with ---, sometimes with the Parse.labels tags
-
 AdAP advmod head
---u AdAdV amod head
 AdAdv amod head
 AdNum advmod head
 AdVVP advmod head
 AdVVPSlash advmod head
 AddAdvQVP head advmod
---u AdjAsCN head
---u AdjAsNP head
 AdjCN amod head
 AdjDAP head amod
 AdjOrd head
-AdnCAdv empty head
+AdnCAdv head
 AdvAP head advmod
---u AdvAdv head advmod
 AdvCN head nmod
 AdvIAdv advmod head
 AdvIP head advmod
---u AdvImp advmod head
---u AdvIsNP head nsubj
 AdvNP head nmod
 AdvQVP head obj
---u AdvRAP head case nmod
---u AdvRNP head case nmod
---u AdvRVP head case nmod
 AdvS advmod head
 AdvSlash head advmod
 AdvVP head advmod
 AdvVPSlash head advmod
 ApposCN head appos
---u ApposNP head appos
---u BareN2 head
 BaseAP head conj
 BaseAdV head conj
 BaseAdv head conj
 BaseCN head conj
---u BaseCNN nummod head nummod conj --- _ head _ head
---u BaseComp head conj
 BaseDAP head conj
 BaseIAdv head conj
---u BaseImp head conj
 BaseNP head conj
 BaseRS head conj
 BaseS head conj
---u BaseVPI head conj
---u BaseVPI2 head conj
---u BaseVPS head conj
---u BaseVPS2 head conj
---u Base_nr_RNP head conj
---u Base_rn_RNP head conj
---u Base_rr_RNP head conj
---u ByVP head
-CAdvAP empty case amod head --- * 4 mod head mod
-CleftAdv head advcl --- mod mod
-CleftNP head acl --- mod mod
+CAdvAP case amod head
+CleftAdv head advcl
+CleftNP head acl
 CompAP head
 CompAdv head
---u CompBareCN head
 CompCN head
 CompIAdv head
 CompIP head
---u CompIQuant head
 CompNP head
---u CompQS head
---u CompS head
---u CompVP empty empty nsubj head --- mod mod _ head
 ComparA amod head
---u ComparAdv empty case head nmod --- _ head mod mod
+ComparAdvAdj advmod head obl
+ComparAdvAdjS advmod head ccomp
 ComplA2 head nmod
---u ComplBareVS head ccomp
---u ComplDirectVQ head ccomp
---u ComplDirectVS head ccomp
 ComplN2 head nmod
-ComplN3 head nmod --- head arg
+ComplN3 head nmod
 ComplSlash head obj
 ComplSlashIP head obj
---u ComplSlashPartLast head obj
 ComplVA head xcomp
---u ComplVPI2 head comp
---u ComplVPIVV head xcomp
---u ComplVPS2 head obj
 ComplVQ head ccomp
 ComplVS head ccomp
 ComplVV head xcomp
---u CompoundAP nmod head --- comp head
---u CompoundN compound head
 ConjAP cc head
 ConjAdV cc head
 ConjAdv cc head
 ConjCN cc head
---u ConjComp cc head
 ConjDet cc head
 ConjIAdv cc head
---u ConjImp cc head
 ConjNP cc head
---u ConjRNP cc head
 ConjRS cc head
 ConjS cc head
---u ConjVPI cc head
---u ConjVPI2 cc head
---u ConjVPS cc head
---u ConjVPS2 cc head
 ConsAP head conj
 ConsAdV head conj
 ConsAdv head conj
 ConsCN head conj
---u ConsComp head conj
 ConsDAP head conj
 ConsIAdv head conj
---u ConsImp head conj
 ConsNP head conj
 ConsRS head conj
 ConsS head conj
---u ConsVPI head conj
---u ConsVPI2 head conj
---u ConsVPS head conj
---u ConsVPS2 head conj
---u Cons_nr_RNP head conj
---u Cons_rr_RNP head conj
 CountNP det head
 DetCN det head
---u DetCNN det cc head --- mod _ head
 DetDAP head
 DetNP head
 DetQuant head nummod
 DetQuantOrd head nummod amod
---u EmbedPresPart head
 EmbedQS head
 EmbedS head
---u EmbedSSlash head
-EmbedVP empty empty obj head --- _ _ _ head
---u EmptyRelSlash head
---u EnoughAP head empty empty xcomp --- head _ _ mod
---u EnoughAdv head
+EmbedVP head
 ExistIP head
 ExistIPAdv head advmod
---u ExistMassCN head
 ExistNP head
 ExistNPAdv head nmod
---u ExistPluralCN head
---u ExistsNP head
---u ExtAdvAP head advmod
 ExtAdvNP head nmod
 ExtAdvS advmod head
 ExtAdvVP head advmod
---u ExtRelNP head acl
---u FocusAdV advmod head
---u FocusAdv advmod head
---u FocusComp nmod head --- mod mod
---u FocusObj obj head
---u FrontComplDirectVQ nsubj head ccomp
---u FrontComplDirectVS nsubj head ccomp
 FunRP case nmod head
---u GenIP head
---u GenModIP nummod nmod head --- mod mod mod
---u GenModNP nummod nmod head --- _ poss head
---u GenRP nummod head
 GenericCl head
---u GerundAdv head
---u GerundCN head
---u GerundNP head
---u IAdvAdv head
---u ICompAP head
 IDig head
 IIDig head goeswith
 IdetCN det head
@@ -175,89 +94,39 @@ ImpP3 obj head --- mod mod
 ImpPl1 head
 ImpVP head
 ImpersCl head
---u InLanguage head
---u InOrderToVP empty empty nmod head * --- _ _ _ head
---InflectionA head
---InflectionA2 head
---InflectionAdv head
---InflectionN head
---InflectionN2 head
---InflectionN3 head
---InflectionPrep head
---InflectionV head
---InflectionV2 head
---InflectionV2A head
---InflectionV2Q head
---InflectionV2S head
---InflectionV2V head
---InflectionV3 head
---InflectionVA head
---InflectionVQ head
---InflectionVS head
---InflectionVV head
 MassNP head
---MkDefinition nsubj head --- _ _
---MkDefinitionEx nsubj head advmod --- _ _ _
---MkDocument head advmod nmod --- _ _ _
---MkTag head
---u MkVPI head
---u MkVPI2 head
---u MkVPS empty empty head
---u MkVPS2 empty empty head
---u NoDefinition head
 NumCard head
 NumDigits head
---u NumLess head
---u NumMore head
 NumNumeral head
 OrdDigits head
 OrdNumeral head
 OrdNumeralSuperl nummod head
 OrdSuperl head
 PConjConj head
+PPartNP head xcomp
 PartNP head nmod
---u PassAgentVPSlash head nmod
---u PassVPSlash head
---u PastPartAP head
---u PastPartAgentAP head obj
 PhrUtt cc head discourse
---u PhrUttMark cc head discourse mark --- _ head _ _
 PositA head
 PositAdAAdj head
---u PositAdVAdj head
 PositAdvAdj head
---u PossCNN_RNP det cc head nmod --- _ _ head poss
 PossNP head nmod
 PossPron head
---u PossPronRNP nmod nummod head nmod --- poss _ head mod
---u PredAPVP amod head --- mod mod
---u PredIAdvVP advmod head
 PredSCVP csubj head
 PredVP nsubj head
---u PredVPS nsubj head
-PredetNP det head
---u PredetRNP det head
---u PrepCN case head
+PredetNP det:predet head
 PrepIP case head
 PrepNP case head
---u PresPartAP head
 ProgrVP head
---u ProgrVPSlash head
 QuestCl head
 QuestIAdv advmod head
 QuestIComp head nsubj
 QuestQVP nsubj head
 QuestSlash obj head
 QuestVP nsubj head
---u RecipVPSlash head
---u RecipVPSlashCN head obj
-ReflA2 head nmod
---u ReflPoss nummod head
---u ReflPossCNN cc head
---u ReflVPSlash head obj
-RelCN head acl
+ReflA2 head
+RelCN head acl:relcl
 RelCl head
-RelNP head acl
+RelNP head acl:relcl
 RelS head advcl
 RelSlash mark head
 RelVP mark head
@@ -265,191 +134,104 @@ SSubjS head mark advcl
 SelfAdVVP head
 SelfAdvVP head
 SelfNP head
-SentAP head acl --- head mod
-SentCN head acl --- head mod
-Slash2V3 head iobj --- head obj
+SentAP head acl
+SentCN head acl
+Slash2V3 head iobj
 Slash3V3 head obj
---u SlashBareV2S head ccomp
 SlashPrep head case
 SlashV2A head xcomp
 SlashV2Q head ccomp
 SlashV2S head ccomp
 SlashV2V head xcomp
----SlashV2V head empty empty xcomp
-SlashV2VNP head obj empty empty xcomp
+SlashV2VNP head obj xcomp
 SlashV2a head
 SlashVP nsubj head
 SlashVS nsubj head ccomp
-SlashVV head empty empty acl
---u StrandQuestSlash obj head *
---u StrandRelSlash * obj head
---u SubjRelNP head acl ---
+SlashVV head ccomp
 SubjS mark head
-TTAnt empty head --- head head
---u TimeNP head
+TTAnt aux head --- head head
 Use2N3 head
 Use3N3 head
 UseA2 head
---u UseACard head
---u UseAdAACard advmod head
-UseCl empty empty head
+UseCl aux advmod head
 UseComp head
---u UseComp_estar head
 UseComparA head
---u UseDAP head
---u UseDAPFem head
---u UseDAPMasc head
 UseN head
 UsePN head
 UsePron head
-UseQCl empty empty head
-UseRCl empty empty head
-UseSlash empty empty head
+UseQCl aux advmod head
+UseRCl aux advmod head
+UseSlash aux advmod head
 UseV head
 UttAP head
---u UttAPFem head
---u UttAPMasc head
---u UttAccIP head
---u UttAccNP head
---u UttAdV head
 UttAdv head
 UttCN head
 UttCard head
---u UttDatIP head
---u UttDatNP head
 UttIAdv head
 UttIP head
-UttImpPl empty head
-UttImpPol empty head
-UttImpSg empty head
+UttImpPl aux head
+UttImpPol aux head
+UttImpSg aux head
 UttInterj head
 UttNP head
 UttQS head
 UttS head
-UttVP empty empty obj head --- _ _ _ head
---u UttVPS obj head --- _ head
---u UttVPShort head
-VPSlashPrep head case --- head mod
+UttVP head
+VPSlashPrep head case
 VocNP head
---u WithoutVP head
---u bottle_of_CN head
---u come_to_VP head
---u come_to_adj_VP amod head --- mod head
---u cup_of_CN head
---u dayMonthAdv head nmod --- mod mod
---u dayMonthYearAdv head nmod advmod --- mod mod mod
---u few_X_short_of_Y head nmod nmod --- mod mod mod
---u glass_of_CN head
---u has_age_VP head
---u have_name_Cl nmod head --- mod mod
---u how_far_QCl head
---u how_old_QCl head
---u intMonthday head
---u intYear head
---u languageCN head
---u languageNP head
---u married_Cl nsubj head --- mod mod
---u monthAdv head
---u monthN head
---u monthPN head
---u monthYearAdv head nmod --- mod mod
---u n_unit_CN nummod nmod head ---
---u n_units_AP nummod nmod head --- mod mod head
---u n_units_of_NP nummod head nmod --- mod mod mod
---u none_of_NP_affair_VP head
-num head
----pot0 head
----pot0as1 head
----pot1 head
----pot1as2 head
----pot1plus *
----pot1to19 head
----pot2 head
----pot2as3 head
----pot2plus *
----pot3 head
----pot3as4 head
----pot3plus *
----pot4 head
----pot4plus *
---u tend_VP head
---u timeHour head
----timeHourMinute *
---u timeunitAdv nummod head
---u timeunitRange nummod nummod head ---
---u weather_adjCl head
---u weekdayHabitualAdv head
---u weekdayLastAdv head
---u weekdayN head
---u weekdayNextAdv head
---u weekdayPN head
---u weekdayPunctualAdv head
---u what_name_QCl head
---u yearAdv head
+
+UttPunctTop head punct
+UttVocativePunctTop head vocative punct
+ConjUttPunctTop cc head punct
+
+CompoundN compound head
+CompoundPN compound head
+FlatPN head flat
+GenModNP nummod nmod:poss head
 
 A ADJ
----A2 ADJ
---ACard ADV
----AP ADJ
+A2 ADJ
 AdA ADV
 AdN ADV
 AdV ADV
 Adv ADV
 Ant X
---Bracket X
 CAdv ADV
---CN NOUN
---CNN NOUN
 Card NUM
 Cl X
 ClSlash X
 Comp X
 Conj CCONJ
 DAP DET
---u Definition X
 Det DET
 Dig NUM
 Digit NUM
 Digits NUM
---u Document X
 Float NUM
---u Hour NUM
 IAdv ADV
 IComp X
 IDet DET
 IP PRON
 IQuant DET
---Imp VERB
---Inflection X
 Int NUM
 Interj INTJ
---Language NOUN
 ListAP X
 ListAdV X
 ListAdv X
 ListCN X
---u ListComp X
 ListDAP X
 ListIAdv X
---u ListImp X
 ListNP X
 ListRS X
 ListS X
---u ListVPI X
---u ListVPI2 X
---u ListVPS X
---u ListVPS2 X
---Mark PUNCT
---Month NOUN
---Monthday NUM
 N NOUN
----N2 NOUN
----N3 NOUN
-NP PRON ---
+N2 NOUN
+N3 NOUN
+NP PRON
 Num NUM
 Numeral NUM
 Ord NUM
-PConj CONJ
+PConj CCONJ
 PN PROPN
 Phr X
 Pol X
@@ -460,45 +242,30 @@ QCl X
 QS X
 QVP X
 Quant DET
---Quote PUNCT
 RCl X
----RNP PRON
---u RNPList X
----RP PRON
+RP PRON
 RS X
 S X
 SC X
 SSlash X
-String PROPN ---
-Sub10 NUM
-Sub100 NUM
-Sub1000 NUM
-Sub1000000 NUM
---u Sub1000000000 NUM
+String SYM
 Subj SCONJ
---u Tag X
 Temp X
 Tense X
---Text X
---Timeunit NOUN
+Text X
 Utt X
 V VERB
 V2 VERB
----V2A VERB
----V2Q VERB
----V2S VERB
----V2V VERB
----V3 VERB
----VA VERB
-VP X
---u VPI X
---u VPI2 X
---u VPS X
---u VPS2 X
-VPSlash X
----VQ VERB
+V2A VERB
+V2Q VERB
+V2S VERB
+V2V VERB
+V3 VERB
+VA VERB
+VQ VERB
 VS VERB
 VV VERB
---Voc NOUN ---
---Weekday NOUN
---Year NUM
+Voc INTJ
+
+Punct PUNCT
+

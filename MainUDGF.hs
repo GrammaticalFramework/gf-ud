@@ -59,6 +59,20 @@ main = do
       ud2 <- parseUDFile file2
       print $ udCosineSimilarity (selectOpts opts) ud1 ud2
   
+    "cosine-similarity-sort":file1:file2:fopts -> do
+      ud1 <- parseUDFile file1
+      ud2 <- parseUDFile file2
+      let opts = selectOpts fopts
+      let reference = udFrequencyMap opts ud1
+      let results = [(ud,sim) |
+            ud <- ud2,
+            let udmap = udFrequencyMap opts [ud],
+            let sim = cosineSimilarityOfMaps reference udmap
+            ]
+      let sortedResults = sortOn ((0-) . snd) results
+      flip mapM_ sortedResults $ \ (ud,sim) -> do
+        putStrLn $ prt $ ud{udCommentLines = ("# similarity " ++ show sim) : udCommentLines ud}
+  
     "not-covered":file1:file2:opts -> do
       ud1 <- parseUDFile file1
       ud2 <- parseUDFile file2
@@ -115,6 +129,7 @@ helpMsg = unlines $ [
     " | gfud pattern-match ('<pattern>' | -f <file>)",
     " | gfud pattern-replace ('<replacement>' | -f <file>)",
     " | gfud cosine-similarity <file> <file> <option>*",
+    " | gfud cosine-similarity-sort <file> <file> <option>*",
     " | gfud not-covered <standardfile> <testedfile> <option>*",
     " | gfud extract-pos-words",
     " | gfud extract-pos-feats-words",
