@@ -137,7 +137,7 @@ SelfNP head
 SentAP head acl
 SentCN head acl
 Slash2V3 head iobj
-Slash3V3 head obj
+---Slash3V3 head obj
 SlashPrep head case
 SlashV2A head xcomp
 SlashV2Q head ccomp
@@ -188,6 +188,8 @@ CompoundN compound head
 CompoundPN compound head
 FlatPN head flat
 GenModNP nummod nmod:poss head
+PredPassVPSlash nsubj:pass head
+PredPassSCVPSlash csubj:pass head
 
 A ADJ
 A2 ADJ

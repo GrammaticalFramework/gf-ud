@@ -17,6 +17,7 @@ import System.Environment (getArgs)
 import Control.Concurrent
 import Control.Monad
 import Data.List(sortOn)
+import Data.Char(isDigit)
 
 -- to get parallel processing:
 -- Build with -threaded -rtsopts
@@ -62,14 +63,16 @@ main = do
     "cosine-similarity-sort":file1:file2:fopts -> do
       ud1 <- parseUDFile file1
       ud2 <- parseUDFile file2
-      let opts = selectOpts fopts
+      let (limit,opts) = case fopts of
+             "-threshold":d:ropts | all isDigit d -> ((read d :: Double)/100, selectOpts ropts)
+             _ -> (0, selectOpts fopts)
       let reference = udFrequencyMap opts ud1
       let results = [(ud,sim) |
             ud <- ud2,
             let udmap = udFrequencyMap opts [ud],
             let sim = cosineSimilarityOfMaps reference udmap
             ]
-      let sortedResults = sortOn ((0-) . snd) results
+      let sortedResults = sortOn ((0-) . snd) (filter ((>= limit) . snd) results)
       flip mapM_ sortedResults $ \ (ud,sim) -> do
         putStrLn $ prt $ ud{udCommentLines = ("# similarity " ++ show sim) : udCommentLines ud}
   

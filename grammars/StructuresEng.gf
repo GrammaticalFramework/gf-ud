@@ -1,14 +1,15 @@
 concrete StructuresEng of Structures =
   GrammarEng - [
     PNeg,
-    language_title_Utt
+    language_title_Utt, Slash3V3, PassV2,
+    IndefArt
     ],
   LexiconEng,
   ExtendEng [
     CompoundN,
     GenModNP ----
     ]
-    ** open SyntaxEng, (P=ParadigmsEng), (R=ResEng) in {
+    ** open SyntaxEng, (P=ParadigmsEng), (R=ResEng), (E=ExtendEng) in {
 
   lin
     PNeg = UncontractedNeg ;
@@ -28,5 +29,8 @@ concrete StructuresEng of Structures =
 
     CompoundPN a b = b ** {s = \\c => a.s ! R.Nom ++ b.s ! c} ; -- gender from b
     FlatPN     a b = a ** {s = \\c => a.s ! R.Nom ++ b.s ! c} ; -- gender from a
+
+    PredPassVPSlash np vps = mkCl np (E.PassVPSlash vps) ;
+    PredPassSCVPSlash sc vps = mkCl sc (E.PassVPSlash vps) ;
     
   }
