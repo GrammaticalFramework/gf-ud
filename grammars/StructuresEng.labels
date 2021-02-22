@@ -19,11 +19,13 @@
 #word of of _
 #word that that _
 #word there there _
+#word it it _
 #word not not Polarity=Neg
 #word n't not Polarity=Neg
 #word 's 's _
 #word ' ' _
 #word , , _
+#word : : _
 
 #lemma DEFAULT_ do Do aux head
 #lemma DEFAULT_ be Cop cop head
@@ -34,10 +36,12 @@
 #lemma DEFAULT_ of Prep case head
 #lemma DEFAULT_ to To mark head
 #lemma DEFAULT_ there There expl head
+#lemma DEFAULT_ it Pron expl head
 #lemma DEFAULT_ not Neg advmod head
 #lemma DEFAULT_ , Comma punct head
 #lemma DEFAULT_ 's Gen case head
 #lemma DEFAULT_ ' Gen case head
+#lemma DEFAULT_ : Punct punct head
 
 #lemma PredPassVPSlash be Cop aux:pass head
 

@@ -29,5 +29,10 @@ fun
 
   PredPassVPSlash : NP -> VPSlash -> Cl ;
   PredPassSCVPSlash : SC -> VPSlash -> Cl ;
+  UttList : Utt -> Utt -> Utt ;
+  DirectComplVS : VS -> Utt -> VP ;
+
+  ApposNP : NP -> NP -> NP ;
+
 
 }

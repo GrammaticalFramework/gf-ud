@@ -25,10 +25,11 @@ udFrequencies opts sents =
     addTotal = ([(["TOTAL SENTENCES"],length sents),(["TOTAL WORDS"],total)]++)
 
 udFrequencyMap :: Opts -> [UDSentence] -> M.Map [String] Int
-udFrequencyMap opts sents =
-   if isOpt opts "SUBTREETYPE"
-   then M.fromList [([prUDType ut],n) | (ut,n) <- M.assocs (udTypeFrequencyMap sents)]
-   else frequencyMap $ map f $ allWords
+udFrequencyMap opts sents
+   | isOpt opts "SUBTREETYPE" = M.fromList [([prUDType ut],n) | (ut,n) <- M.assocs (udTypeFrequencyMap sents)]
+   | isOpt opts "LENGTH" = frequencyMap $ map (return . show . length . udWordLines) sents
+   | isOpt opts "DEPTH" = frequencyMap $ map (return . show . depthRTree . udSentence2tree) sents
+   | otherwise = frequencyMap $ map f $ allWords
   where
     f = \w -> [fun w | (opt,fun) <- optfuns, isOpt opts opt]
     optfuns = [

@@ -57,6 +57,8 @@ fullOpts = [
   ("FEATS", "(statistics) morphological features"),
   ("DISTANCE", "(statistics) distance to head i.e. head_position - own_position"),
   ("DEPREL", "(statistics) dependency labels"),
-  ("SUBTREETYPE", "(statistics) types of subtrees")
+  ("SUBTREETYPE", "(statistics) types of subtrees"),
+  ("LENGTH", "(statistics) number of words in a sentence"),
+  ("DEPTH", "(statistics) depth of dependency tree")
   ]
 

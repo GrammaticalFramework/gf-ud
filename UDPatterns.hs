@@ -53,6 +53,9 @@ data UDPattern =
   | DEPTH_EQUALS Int
   | DEPTH_UNDER Int
   | DEPTH_OVER Int
+  | LENGTH_EQUALS Int
+  | LENGTH_UNDER Int
+  | LENGTH_OVER Int
  deriving (Show,Read)
 
 ifMatchUDPattern :: UDPattern -> UDTree -> Bool
@@ -81,6 +84,9 @@ ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
   DEPTH_EQUALS d -> depthRTree tree == d
   DEPTH_UNDER d -> depthRTree tree < d
   DEPTH_OVER d -> depthRTree tree > d
+  LENGTH_EQUALS d -> length (allNodesRTree tree) == d
+  LENGTH_UNDER d -> length (allNodesRTree tree) < d
+  LENGTH_OVER d -> length (allNodesRTree tree) > d
 
 
 findMatchingUDSequence :: Bool -> [UDPattern] -> UDTree -> Maybe UDTree

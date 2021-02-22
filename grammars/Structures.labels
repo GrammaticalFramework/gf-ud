@@ -190,6 +190,9 @@ FlatPN head flat
 GenModNP nummod nmod:poss head
 PredPassVPSlash nsubj:pass head
 PredPassSCVPSlash csubj:pass head
+UttList head list
+DirectComplVS head parataxis
+ApposNP head appos
 
 A ADJ
 A2 ADJ

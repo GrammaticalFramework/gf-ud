@@ -32,5 +32,8 @@ concrete StructuresEng of Structures =
 
     PredPassVPSlash np vps = mkCl np (E.PassVPSlash vps) ;
     PredPassSCVPSlash sc vps = mkCl sc (E.PassVPSlash vps) ;
-    
+
+    UttList u v = {s = u.s ++ "," ++ v.s} ;
+    DirectComplVS vs u = mkVP vs <lin S {s = ":" ++ u.s} : S> ;
+    ApposNP np appos = mkNP np (mkAdv (P.mkPrep ",") appos) ; 
   }
