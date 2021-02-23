@@ -86,6 +86,7 @@ main = do
     "parse2pdf":_ -> getContents >>= visualizeAbsTrees initUDEnv . map pAbsTree . selectParseTrees . lines
 
     "conll2tree":_ -> getContents >>= mapM_ putStrLn . map (prUDTree . udSentence2tree) . parseUDText
+    "adjust-positions":_ -> getContents >>= mapM_ putStrLn . map (prt . udTree2sentence . createRoot . udSentence2tree . adjustUDIds) . parseUDText
     
     "extract-pos-words":_ -> getContents >>= putStrLn . unlines . map ud2poswords . parseUDText
     "extract-pos-feats-words":_ -> getContents >>= putStrLn . unlines . map ud2posfeatswords . parseUDText
@@ -125,11 +126,7 @@ main = do
 
 helpMsg = unlines $ [
     "Usage:",
-    "   gfud (ud2gf|gf2ud|string2gf2ud|ud2gfparallel) <path> <language> <startcat> <option>*",
-    " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",
-    " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile> units?",
-    " | gfud check-treebank",
-    " | gfud check-annotations <path> <language> <startcat>",
+    "   gfud check-treebank",
     " | gfud statistics <option>*",
     " | gfud pattern-match ('<pattern>' | -f <file>)",
     " | gfud pattern-replace ('<replacement>' | -f <file>)",
@@ -139,11 +136,16 @@ helpMsg = unlines $ [
     " | gfud extract-pos-words",
     " | gfud extract-pos-feats-words",
     " | gfud lexical-entries <abslabels-file>",
+    " | gfud conll2tree",
+    " | gfud adjust-positions",
     " | gfud conll2pdf",
     " | gfud parse2pdf",
     " | gfud conll2latex",
     " | gfud parse2latex <file>",
-    " | gfud conll2tree",
+    " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile> units?",
+    " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",
+    " | gfud check-annotations <path> <language> <startcat>",
+    " | gfud (ud2gf|gf2ud|string2gf2ud|ud2gfparallel) <path> <language> <startcat> <option>*",
     "where path = grammardir/abstractprefix, language = concretesuffix.",
     "The files read are <path>.pgf, <path>.labels, and <path><language>.labels.",
     "Except for <file> arguments, the input comes from stdIO, and the output goes there as well",
@@ -161,6 +163,7 @@ helpMsg = unlines $ [
     " | (DEPTH | DEPTH_UNDER | DEPTH_OVER) <int>",
     " | (LENGTH | LENGTH_UNDER | LENGTH_OVER) <int>",
     " | TRUE",
+    " | PROJECTIVE",
     "where DEPREL_, FEATS_, SEQUENCW_, TREE_ mean matching a subset/substring.",
     "<string> arguments require double quotes, and the <pattern> itself is in single quotes",
     "if read from command line, but not if read from a file (the -f option).",

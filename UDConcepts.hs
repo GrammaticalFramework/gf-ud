@@ -117,7 +117,7 @@ instance UDObject UDData where
   prt d = udArg d ++ "=" ++ concat (intersperse "," (udVals d))
   prs s = case break (=='=') (strip s) of
     (a,_:vs@(_:_)) -> UDData a (getSeps ',' vs)
-    _ -> error ("ERROR:" ++ s ++ " invalid UDData")
+    (a,_) -> UDData a [] ---- error ("ERROR:" ++ s ++ " invalid UDData")
 
 --- this works only for | separated lists...
 instance UDObject d => UDObject [d] where
@@ -231,7 +231,15 @@ adjustUDIds uds =
     udDEPS = "ADJUSTED"
     }
 
+createRoot :: UDTree -> UDTree
+createRoot tree = tree{root = (root tree){udDEPREL = root_Label, udDEPS = udDEPREL (root tree)}}
 
+isProjective :: UDTree -> Bool
+isProjective udt = length nodes - 1 == maxId - minId
+ where
+   nodes = map (udPosition . udID) (allNodesRTree udt)
+   maxId = maximum nodes
+   minId = minimum nodes
 
 ---------------------
 -- auxiliaries

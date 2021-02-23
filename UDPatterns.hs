@@ -49,6 +49,7 @@ data UDPattern =
   | TREE UDPattern [UDPattern] -- subtrees match exactly
   | TREE_ UDPattern [UDPattern] -- some sublist of subtrees matches exactly
   | TRUE
+  | PROJECTIVE
   | ARG String String
   | DEPTH Int
   | DEPTH_UNDER Int
@@ -80,6 +81,7 @@ ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
   TREE_ p ps ->
     or [ifMatchUDPattern (TREE p ps) (RTree node qs) | qs <- sublists (length ps) subtrees]
   TRUE -> True
+  PROJECTIVE -> isProjective tree
   ARG pos deprel -> ifMatchUDPattern (AND [POS pos, DEPREL deprel]) tree
   DEPTH d -> depthRTree tree == d
   DEPTH_UNDER d -> depthRTree tree < d
@@ -149,7 +151,7 @@ replaceWithUDPattern rep tree@(RTree node subtrs) = case rep of
   FLATTEN cond | ifMatchUDPattern cond tree ->
     let sts = concat
                 [subtr{subtrees = []} :
-                  [t{root = (root t){udHEAD = udHEAD node}} | t <- subtrees subtr]
+                  [t{root = (root t){udHEAD = udID node}} | t <- subtrees subtr]
                                  | subtr <- subtrs]
     in (RTree node sts, length sts /= length subtrs)
   CHANGES reps -> case reps of

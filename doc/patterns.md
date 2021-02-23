@@ -1,10 +1,13 @@
 # Pattern matching CoNLL trees with gfud
 
 
+## Overview
+
+As described in the main document of gfud (its README.md), there are two functionalities using patterns on UD trees for analysing and changing them.
+
 `pattern-match`: Find subtrees that satisfy given patterns, written in a Haskell-like syntax.
 A subtree consists of a head and its dependents.
 Pattern matching goes recursively into each tree and finds all subtrees that match the pattern.
-The complete pattern syntax is given in the `gfud` help message.
 ```
 $ cat en_ewt-ud-train.conllu | gfud pattern-match 'AND [POS "ADV", DEPREL "xcomp"]'
 # sent_id = answers-20111108111031AARG57j_ans-0006
@@ -20,9 +23,8 @@ $ cat en_ewt-ud-train.conllu | gfud pattern-match 'AND [POS "ADV", DEPREL "xcomp
 9	crate	crate	NOUN	NN	Number=Sing	6	obl	6:obl:to	SpaceAfter=No
 ``` 
 `pattern-replace`: Replace or delete subtrees that satisfy a certain pattern, or flatten trees below a given depth.
-The complete syntax is given in the `gfud` help message.
 The nodes of the resulting trees are renumbered so that they are still valid dependency trees.
-The matching or replacement pattern can also be read from a file with the `-f` option, which is a good practice in particulat with complex replacement patterns collected under a `CHANGES` list.
+The matching or replacement pattern can also be read from a file with the `-f` option, which is a good practice in particulat with complex replacement patterns collected under a `CHANGES` or `COMPOSE` list.
 Here is an example looking for main arguments of predication, from file `grammars/predicates.hst` (the suffix hst refers to "Haskell term"):
 ```
 COMPOSE [
@@ -66,3 +68,121 @@ $ cat en_pud-ud-test.conllu | gfud pattern-replace -f grammars/predicates.hst
 4       learn   learn   VERB    VBP     Mood=Ind|Tense=Pres|VerbForm=Fin        0       root    ADJUSTED        _
 5       Y       Y       NOUN    NN      Number=Sing     4       obj     ADJUSTED        _
 ```
+
+## The syntax of patterns and replacements
+
+Here is an overview of the pattern syntax:
+```
+Analysis patterns, <pattern>:
+   (FORM | LEMMA | POS | DEPREL | DEPREL_) <string> 
+ | (FEATS | FEATS_) <features>
+ | (AND | OR) [ <pattern>,* ]
+ | ARG <pos> <deprel>
+ | (SEQUENCE | SEQUENCE_) [ <pattern>,* ]
+ | NOT <pattern>
+ | (TREE | TREE_) <pattern> <pattern>*
+ | (DEPTH | DEPTH_UNDER | DEPTH_OVER) <int>
+ | (LENGTH | LENGTH_UNDER | LENGTH_OVER) <int>
+ | TRUE
+ | PROJECTIVE
+
+Replacement patterns, <replacement>:
+   REPLACE <pattern> <pattern>
+ | UNDER <pattern> <replacement>
+ | PRUNE <pattern> <int>
+ | FILTER_SUBTREES <pattern> <pattern>
+ | FLATTEN <pattern>
+ | RETARGET <pattern> <pattern> <pattern>
+ | CHANGES [ <replacement>,* ]
+ | COMPOSE [ <replacement>,* ]
+```
+`<string>` arguments are strings in double quotes.
+The entire `<pattern>` requires single quotes if read from command line, but not if read from a file (with the `-f` option).
+
+
+## The semantics of pattern matching
+
+Pattern matching operates of *trees* and their *subtrees*, which are obtained from the CoNLL descriptions in the following way:
+- A subtree consists of a head and its dependents.
+
+The nodes of a tree keep all the information that is present in the CoNLL tree, just in an explicit tree format.
+This format can be inspected with the command `gfud conll2tree`, which, for instance, from
+```
+1	every	every	DET	Det	FORM=0	2	det	_	FUN=every_Det
+2	cat	cat	NOUN	N	Number=Sing	3	nsubj	_	FUN=cat_N
+3	sees	see	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=see_V2
+4	us	we	PRON	Pron	Case=Acc|PronType=Prs	3	obj	_	FUN=we_Pron
+```
+produces
+```
+3	sees	see	VERB	V2	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	FUN=see_V2
+    2	cat	cat	NOUN	N	Number=Sing	3	nsubj	_	FUN=cat_N
+        1	every	every	DET	Det	FORM=0	2	det	_	FUN=every_Det
+    4	us	we	PRON	Pron	Case=Acc|PronType=Prs	3	obj	_	FUN=we_Pron
+```
+The command `gfud pattern-match <pattern>` goes through all trees in its input and, recursively, all their subtrees.
+If it finds a match in a tree, it prints out
+- the tree metadata (comments prefixed with '#')
+- the subtrees that match
+
+The simplest patterns are those that match individual words (i.e. lines in the CoNLL representation).
+Thus, by reference to the example above,
+- `FORM "sees"` matches the word on line 3 and thereby the entire tree
+- `LEMMA "see"` matches the same tree
+- `POS "NOUN"` matches line 2 and thereby the subtree containing *every cat*
+- `DEPREL "obj"` matches line 4 and thereby the on-word tree *us*
+- `FEATS Case=Acc|PronType=Prs` matches line 4, *us*
+
+The underscore versions are more liberal, as it is enough to match a part:
+- `FEATS_ Number=Sing` matches both 3 (the whole of the sentence) and 2 (*every cat*)
+- `DEPREL_ nsubj` would also match `nsubj:pass` and any other label whose prefix (before the colon `:`) is `nsubj`
+
+Patterns can be combined with logical operators:
+- `AND [LEMMA "see", POS "VERB"]` matches any line with both these characteristics
+- `OR [POS "ADJ", POS "VERB", POS "NOUN"]` matches any line with at least one of these characteristics
+- `NOT (POS "VERB")` matches lines whose POS tag is not `VERB`
+- `TRUE` matches all trees; it is useful as a part of some complex patterns
+- `ARG "NOUN" "nsubj"` is a shorthand for `AND [POS "NOUN", DEPREL "nsubj"]`, a commonly used pattern type, since it corresponds to the  argument and value types used in `SUBTREETYPE`
+
+All of the patterns above are tested by just matching with the heads of subtrees.
+The following patterns assume a more global view:
+- `DEPTH 2` matches trees of depth exactly 2 (head, children, grandchildren), where `DEPTH 0` matches trees without children
+- `DEPTH_UNDER 2` matches trees with depth less than 2
+- `DEPTH_OVER 2` matches trees with depth more than 2
+- `LENGTH 2` matches trees that cover exactly 2 words
+- `LENGTH_UNDER 2` matches trees with length less than 2
+- `LENGTH_OVER 2` matches trees with length more than 2
+- `SEQUENCE [POS "DET", POS "NOUN"]` matches the smallest subtrees where a `DET` and a `NOUN` occur in this order, with no intervening words
+- `SEQUENCE_` is similar to `SEQUENCE`, except that the sequence does not need to be contiguous
+- `TREE (POS "NOUN") [POS "VERB", POS "ADJ"]` matches trees whose root is a `NOUN` and children are a `VERB` and and `ADJ`
+- `TREE_` is similar to `TREE`, except that the arguments need not be contiguous
+- `PROJECTIVE` matches trees that are **projective**, i.e. whose position numbers, when sorted, form a contiguous sequence
+
+Notice how simple the definition of projectivity is when dependency trees are seen as trees.
+This simplicity of course assumes that the position numbers are always given in the strict order of words without holes or duplications.
+Non-projectivity, which is probably a more interesting property, is expressed as `NOT PROJECTIVE`.
+The call
+```
+$ cat en_ewt-ud-train.conllu | gfud pattern-match 'NOT PROJECTIVE' | grep sent_id | wc -l
+93
+```
+finds all non-projective subtrees of the treebank processed and returns the count of those trees that have non-projective subtrees.
+
+
+## The semantics of replacements
+
+Just line `pattern-match`, `pattern-replace` traverses all trees in its input and performs the specified changes in all subtrees.
+The simplest replacement is to change a label or a lemma - for instance,
+- `REPLACE (DEPREL "dobj") (DEPREL "obj")` changes the UD v1 label `dobj` to the v2 label `obj` every where
+- `UNDER (POS "VERB") (REPLACE (DEPREL "nmod") (DEPREL "obl"))` changes `nmod` to `obj`, if immediately dominated by a `VERB`
+- `FILTER_SUBTREES (POS "NOUN") (OR [DEPREL "det",DEPREL "amod"])` removes all other subtrees of a `NOUN` than those labelled `det` or `amod`
+- `FLATTEN (DEPREL "root")` makes all grandchildren to have the `root` as their head, thus decreasing the depth of the tree by 1
+- `PRUNE (POS "NOUN") 1` drops out all subsubtrees of nouns, thus decreasing the depth of `NOUN` trees to 1
+- `RETARGET (DEPREL "root") (DEPREL "case") (DEPREL "obl")` changes the head of a `case` subtree to be the `obl` subtree, if under `root`
+
+It is often useful to perform several changes in parallel or in sequence:
+- `CHANGES [X,Y,Z]` looks for possibilities to perform each of these changes, and applies the first one that matches, in the given order
+- `COMPOSE [X,Y,Z]` performs the change `X` first, and then the remaining ones on the result, in the given order
+
+
+
