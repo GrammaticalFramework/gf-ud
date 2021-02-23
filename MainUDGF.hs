@@ -85,6 +85,8 @@ main = do
     
     "parse2pdf":_ -> getContents >>= visualizeAbsTrees initUDEnv . map pAbsTree . selectParseTrees . lines
 
+    "conll2tree":_ -> getContents >>= mapM_ putStrLn . map (prUDTree . udSentence2tree) . parseUDText
+    
     "extract-pos-words":_ -> getContents >>= putStrLn . unlines . map ud2poswords . parseUDText
     "extract-pos-feats-words":_ -> getContents >>= putStrLn . unlines . map ud2posfeatswords . parseUDText
 
@@ -116,14 +118,14 @@ main = do
           let score = udCorpusScore mcro crit gold test
           print score
       
-    dir:path:lang:cat:opts | elem (dropWhile (=='-') dir) ["ud2gf","gf2ud","ud2gfpar","string2gf2ud"] -> do
+    dir:path:lang:cat:opts | elem (dropWhile (=='-') dir) ["ud2gf","gf2ud","ud2gfparallel","string2gf2ud"] -> do
       env <- getEnv path lang cat
       convertGFUD (dropWhile (=='-') dir) (selectOpts opts) env
     _ -> putStrLn $ helpMsg
 
 helpMsg = unlines $ [
     "Usage:",
-    "   gfud (ud2gf|gf2ud|string2gf2ud|gf2udpar) <path> <language> <startcat>",
+    "   gfud (ud2gf|gf2ud|string2gf2ud|ud2gfparallel) <path> <language> <startcat> <option>*",
     " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",
     " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile> units?",
     " | gfud check-treebank",
@@ -141,11 +143,13 @@ helpMsg = unlines $ [
     " | gfud parse2pdf",
     " | gfud conll2latex",
     " | gfud parse2latex <file>",
-    "where path = grammardir/abstractprefix, language = concretesuffix",
-    "Except for file arguments, the input comes from stdIO, and the output goes there as well",
-    "The option -gf2udpar should be used with the Haskell runtime flag +RTS -Nx -RTS",
+    " | gfud conll2tree",
+    "where path = grammardir/abstractprefix, language = concretesuffix.",
+    "The files read are <path>.pgf, <path>.labels, and <path><language>.labels.",
+    "Except for <file> arguments, the input comes from stdIO, and the output goes there as well",
+    "The option ud2gfparallel should be used with the Haskell runtime flag +RTS -Nx -RTS",
     "where x is the number of cores you want to use in parallel processing.",
-    "For more functionalities: open in ghci.",
+    "For more functionalities: open MainUDGF.hs in ghci.",
     "Pattern syntax:" ,
     "   (FORM | LEMMA | POS | DEPREL | DEPREL_) <string>",
     " | ARG <pos> <deprel>",
@@ -154,7 +158,8 @@ helpMsg = unlines $ [
     " | (SEQUENCE | SEQUENCE_) [ <pattern>,* ]",
     " | NOT <pattern>",
     " | (TREE | TREE_) <pattern> <pattern>*",
-    " | (DEPTH_EQUALS | DEPTH_UNDER | DEPTH_OVER) <int>",
+    " | (DEPTH | DEPTH_UNDER | DEPTH_OVER) <int>",
+    " | (LENGTH | LENGTH_UNDER | LENGTH_OVER) <int>",
     " | TRUE",
     "where DEPREL_, FEATS_, SEQUENCW_, TREE_ mean matching a subset/substring.",
     "<string> arguments require double quotes, and the <pattern> itself is in single quotes",
@@ -174,7 +179,7 @@ helpMsg = unlines $ [
 convertGFUD :: String -> Opts -> UDEnv -> IO ()
 convertGFUD dir opts env = case dir of
   "ud2gf" -> getContents >>= ud2gfOpts (if null opts then defaultOptsUD2GF else opts) env
-  "ud2gfpar" -> getContents >>= ud2gfOptsPar (if null opts then defaultOptsUD2GF else opts) env
+  "ud2gfparallel" -> getContents >>= ud2gfOptsPar (if null opts then defaultOptsUD2GF else opts) env
   _ -> do
       s <- getContents
       let conv = case dir of
@@ -221,8 +226,9 @@ termInfix = "Infix"
 termcat = "Term"
 
 checkUDSentences :: [UDSentence] -> String
-checkUDSentences uds = unlines $
-  errorsInUDSentences uds
+checkUDSentences uds = case errorsInUDSentences uds of
+  [] -> "# treebank OK"
+  msgs -> unlines msgs
 
 -------------------
 

@@ -50,10 +50,10 @@ data UDPattern =
   | TREE_ UDPattern [UDPattern] -- some sublist of subtrees matches exactly
   | TRUE
   | ARG String String
-  | DEPTH_EQUALS Int
+  | DEPTH Int
   | DEPTH_UNDER Int
   | DEPTH_OVER Int
-  | LENGTH_EQUALS Int
+  | LENGTH Int
   | LENGTH_UNDER Int
   | LENGTH_OVER Int
  deriving (Show,Read)
@@ -81,10 +81,10 @@ ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
     or [ifMatchUDPattern (TREE p ps) (RTree node qs) | qs <- sublists (length ps) subtrees]
   TRUE -> True
   ARG pos deprel -> ifMatchUDPattern (AND [POS pos, DEPREL deprel]) tree
-  DEPTH_EQUALS d -> depthRTree tree == d
+  DEPTH d -> depthRTree tree == d
   DEPTH_UNDER d -> depthRTree tree < d
   DEPTH_OVER d -> depthRTree tree > d
-  LENGTH_EQUALS d -> length (allNodesRTree tree) == d
+  LENGTH d -> length (allNodesRTree tree) == d
   LENGTH_UNDER d -> length (allNodesRTree tree) < d
   LENGTH_OVER d -> length (allNodesRTree tree) > d
 
