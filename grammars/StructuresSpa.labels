@@ -1,0 +1,29 @@
+#word es ser Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word fue ser Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin
+#word son ser Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin
+#word eran ser Mood=Ind|Number=Plur|Person=3|Tense=Imp|VerbForm=Fin
+#word era ser Mood=Ind|Number=Sing|Person=3|Tense=Imp|VerbForm=Fin
+#word ser ser VerbForm=Inf
+#word no no Polarity=Neg
+#word está estar Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word sido ser Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part
+#word fueron ser Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin
+#word sea ser Mood=Sub|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word están estar Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin
+#word estaba estar Mood=Ind|Number=Sing|Person=3|Tense=Imp|VerbForm=Fin
+
+#word no no Polarity=Neg
+
+#word que that _
+#word , , _
+#word : : _
+
+#lemma DEFAULT_ ser Cop cop head
+#lemma DEFAULT_ estar Cop cop head
+#lemma DEFAULT_ que That mark head
+#lemma DEFAULT_ , Comma punct head
+#lemma DEFAULT_ : Punct punct head
+
+#auxcat Cop AUX
+#auxcat That PART
+#auxcat Comma PUNCT

@@ -21,7 +21,7 @@
 
 #lemma DEFAULT_ olla Cop cop head
 #lemma DEFAULT_ että That mark head
-#lemma DEFAULT_ wi Neg advmod head
+#lemma DEFAULT_ ei Neg advmod head
 #lemma DEFAULT_ , Comma punct head
 #lemma DEFAULT_ : Punct punct head
 
