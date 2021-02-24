@@ -1,0 +1,278 @@
+## 3-structures.conllu
+
+$ source test-structures.sh 
+
+created out/2-structures-test.gft
+created out/1-structures-test.conllu
+created out/2-structures-test.conllu
+(["TOTAL SENTENCES"],1950)
+(["TOTAL WORDS"],45497)
+(["punct"],6493)
+(["case"],5677)
+(["det"],5259)
+(["nmod"],4225)
+(["nsubj"],3606)
+(["advmod"],2836)
+(["mark"],2267)
+(["root"],1950)
+(["amod"],1738)
+(["dep"],1555)
+(["appos"],1513)
+(["obj"],1237)
+(["conj"],1015)
+(["cc"],920)
+(["compound"],642)
+(["cop"],583)
+(["ccomp"],547)
+(["xcomp"],429)
+(["aux"],388)
+(["nmod:poss"],375)
+(["acl:relcl"],321)
+(["advcl"],304)
+(["fixed"],266)
+(["parataxis"],256)
+(["aux:pass"],189)
+(["nsubj:pass"],189)
+(["obl"],158)
+(["flat"],150)
+(["list"],110)
+(["nummod"],94)
+(["compound:prt"],59)
+(["acl"],42)
+(["csubj"],35)
+(["goeswith"],33)
+(["iobj"],22)
+(["det:predet"],11)
+(["vocative"],3)
+POS not covered:
+["SYM"]
+DEPREL not covered:
+["_"] ["cc:preconj"] ["csubj:pass"] ["discourse"] ["dislocated"] ["expl"] ["flat:foreign"] ["nmod:npmod"] ["nmod:tmod"] ["obl:npmod"] ["obl:tmod"] ["orphan"] ["reparandum"]
+DEPREL similarity:
+0.8902699820773682
+SUBTREETYPE similarity:
+0.9112764983149776
+
+$ source test-training.sh 
+Loading training data: done.
+Training the UDPipe model.
+Parser transition options: system=projective, oracle=dynamic, structured_interval=8, single_root=1
+Parser uses lemmas/upos/xpos/feats: from gold data
+Parser embeddings options: upostag=20, feats=20, xpostag=0, form=50, lemma=0, deprel=20
+  form mincount=2, precomputed form embeddings=none
+  lemma mincount=2, precomputed lemma embeddings=none
+Parser network options: iterations=10, hidden_layer=200, batch_size=10,
+  learning_rate=0.0200, learning_rate_final=0.0010, l2=0.5000, early_stopping=0
+Initialized 'universal_tag' embedding with 0,16 words and 0.0%,100.0% coverage.
+Initialized 'feats' embedding with 0,75 words and 0.0%,100.0% coverage.
+Initialized 'form' embedding with 0,878 words and 0.0%,99.7% coverage.
+Initialized 'deprel' embedding with 0,37 words and 0.0%,100.0% coverage.
+Iteration 1: training logprob -5.3337e+04
+Iteration 2: training logprob -8.7261e+04
+Iteration 3: training logprob -6.2570e+04
+Iteration 4: training logprob -4.6657e+04
+Iteration 5: training logprob -3.6348e+04
+Iteration 6: training logprob -3.1159e+04
+Iteration 7: training logprob -2.6105e+04
+Iteration 8: training logprob -2.2568e+04
+Iteration 9: training logprob -2.1015e+04
+Iteration 10: training logprob -2.0589e+04
+The trained UDPipe model was saved.
+
+real	16m20.518s
+user	16m18.399s
+sys	0m0.919s
+Loading UDPipe model: done.
+evaluating macro LAS en_ewt-ud-test.conllu out/ewt-structures-udpipe.conllu
+UDScore {udScore = 0.5643887482482008, udMatching = 1184, udTotalLength = 15071, udSamesLength = 7216, udPerfectMatch = 267}
+Loading UDPipe model: done.
+evaluating macro LAS en_pud-ud-test.conllu out/pud-structures-udpipe.conllu
+UDScore {udScore = 0.5436913607508639, udMatching = 1000, udTotalLength = 21183, udSamesLength = 11085, udPerfectMatch = 16}
+
+
+
+
+
+
+
+
+
+$ source test-training.sh 
+Loading training data: done.
+Training the UDPipe model.
+Parser transition options: system=projective, oracle=dynamic, structured_interval=8, single_root=1
+Parser uses lemmas/upos/xpos/feats: from gold data
+Parser embeddings options: upostag=20, feats=20, xpostag=0, form=50, lemma=0, deprel=20
+  form mincount=2, precomputed form embeddings=none
+  lemma mincount=2, precomputed lemma embeddings=none
+Parser network options: iterations=10, hidden_layer=200, batch_size=10,
+  learning_rate=0.0200, learning_rate_final=0.0010, l2=0.5000, early_stopping=0
+Initialized 'universal_tag' embedding with 0,16 words and 0.0%,100.0% coverage.
+Initialized 'feats' embedding with 0,78 words and 0.0%,100.0% coverage.
+Initialized 'form' embedding with 0,1574 words and 0.0%,96.6% coverage.
+Initialized 'deprel' embedding with 0,37 words and 0.0%,100.0% coverage.
+Iteration 1: training logprob -6.1753e+04
+Iteration 2: training logprob -9.9082e+04
+Iteration 3: training logprob -6.9306e+04
+Iteration 4: training logprob -5.2742e+04
+Iteration 5: training logprob -4.2034e+04
+Iteration 6: training logprob -3.4760e+04
+Iteration 7: training logprob -2.7982e+04
+Iteration 8: training logprob -2.4930e+04
+Iteration 9: training logprob -2.2957e+04
+Iteration 10: training logprob -2.2802e+04
+The trained UDPipe model was saved.
+
+real	19m4.797s
+user	19m0.648s
+sys	0m2.012s
+Loading UDPipe model: done.
+evaluating macro LAS en_ewt-ud-test.conllu out/ewt-structures-udpipe.conllu
+UDScore {udScore = 0.5942672310315782, udMatching = 1184, udTotalLength = 15071, udSamesLength = 7895, udPerfectMatch = 271}
+Loading UDPipe model: done.
+evaluating macro LAS en_pud-ud-test.conllu out/pud-structures-udpipe.conllu
+UDScore {udScore = 0.5787947209645565, udMatching = 1000, udTotalLength = 21183, udSamesLength = 11851, udPerfectMatch = 24}
+
+
+
+
+
+
+
+
+
+cp -p out/1-structures-test.conllu out/2-structures-test.conllu 
+aarnes-mbp:gf-ud aarne$ cat data/wordnet-train.conllu >> out/2-structures-test.conllu
+
+aarnes-mbp:gf-ud aarne$ gfud cosine-similarity en_ewt-ud-train.conllu out/2-structures-test.conllu DEPREL
+0.924599944363916
+aarnes-mbp:gf-ud aarne$ gfud cosine-similarity en_ewt-ud-train.conllu out/2-structures-test.conllu SUBTREETYPE
+0.8937922765562056
+aarnes-mbp:gf-ud aarne$ gfud not-covered  en_ewt-ud-train.conllu out/2-structures-test.conllu DEPREL
+["_"] ["cc:preconj"] ["dislocated"] ["flat:foreign"] ["nmod:npmod"] ["nmod:tmod"] ["obl:npmod"] ["obl:tmod"] ["orphan"] ["reparandum"]
+
+aarnes-mbp:gf-ud aarne$ source test-training.sh 
+Loading training data: done.
+Training the UDPipe model.
+Parser transition options: system=projective, oracle=dynamic, structured_interval=8, single_root=1
+Parser uses lemmas/upos/xpos/feats: from gold data
+Parser embeddings options: upostag=20, feats=20, xpostag=0, form=50, lemma=0, deprel=20
+  form mincount=2, precomputed form embeddings=none
+  lemma mincount=2, precomputed lemma embeddings=none
+Parser network options: iterations=10, hidden_layer=200, batch_size=10,
+  learning_rate=0.0200, learning_rate_final=0.0010, l2=0.5000, early_stopping=0
+Initialized 'universal_tag' embedding with 0,16 words and 0.0%,100.0% coverage.
+Initialized 'feats' embedding with 0,122 words and 0.0%,100.0% coverage.
+Initialized 'form' embedding with 0,3874 words and 0.0%,97.3% coverage.
+Initialized 'deprel' embedding with 0,40 words and 0.0%,100.0% coverage.
+Iteration 1: training logprob -1.4453e+05
+Iteration 2: training logprob -2.4603e+05
+Iteration 3: training logprob -1.7319e+05
+Iteration 4: training logprob -1.3113e+05
+Iteration 5: training logprob -1.0286e+05
+Iteration 6: training logprob -8.6938e+04
+Iteration 7: training logprob -7.2978e+04
+Iteration 8: training logprob -6.5370e+04
+Iteration 9: training logprob -6.0753e+04
+Iteration 10: training logprob -5.6899e+04
+The trained UDPipe model was saved.
+
+real	125m22.908s
+user	64m3.335s
+sys	0m3.324s
+Loading UDPipe model: done.
+evaluating macro LAS en_ewt-ud-test.conllu out/ewt-structures-udpipe.conllu
+UDScore {udScore = 0.5881735390033415, udMatching = 1184, udTotalLength = 15071, udSamesLength = 7759, udPerfectMatch = 266}
+Loading UDPipe model: done.
+evaluating macro LAS en_pud-ud-test.conllu out/pud-structures-udpipe.conllu
+UDScore {udScore = 0.5706053426506997, udMatching = 1000, udTotalLength = 21183, udSamesLength = 11667, udPerfectMatch = 23}
+aarnes-mbp:gf-ud a
+
+
+# Spanish, using
+
+NUMBER=3200
+THRESHOLD=50
+
+$ source spa-test.sh 
+
+created out/2-structures-spa.gft
+created out/1-structures-spa.conllu
+created out/2-structures-spa.conllu
+(["TOTAL SENTENCES"],1110)
+(["TOTAL WORDS"],21059)
+(["det"],2889)
+(["dep"],2719)
+(["punct"],2359)
+(["nmod"],2143)
+(["case"],1892)
+(["nsubj"],1702)
+(["advmod"],1281)
+(["root"],1110)
+(["amod"],854)
+(["obj"],780)
+(["appos"],521)
+(["mark"],429)
+(["cc"],392)
+(["conj"],339)
+(["cop"],316)
+(["compound"],217)
+(["ccomp"],191)
+(["xcomp"],178)
+(["parataxis"],134)
+(["nsubj:pass"],106)
+(["acl:relcl"],90)
+(["advcl"],83)
+(["flat"],79)
+(["nummod"],65)
+(["nmod:poss"],55)
+(["aux"],44)
+(["list"],29)
+(["goeswith"],22)
+(["acl"],17)
+(["csubj"],13)
+(["det:predet"],6)
+(["vocative"],3)
+(["iobj"],1)
+POS not covered:
+["INTJ"] ["PART"] ["SYM"] ["_"]
+DEPREL not covered:
+["_"] ["aux:pass"] ["fixed"] ["obl"]
+DEPREL similarity:
+0.8227363752885232
+SUBTREETYPE similarity:
+0.8858881694123808
+
+
+$ source spa-parse.sh 
+Loading training data: done.
+Training the UDPipe model.
+Parser transition options: system=projective, oracle=dynamic, structured_interval=8, single_root=1
+Parser uses lemmas/upos/xpos/feats: from gold data
+Parser embeddings options: upostag=20, feats=20, xpostag=0, form=50, lemma=0, deprel=20
+  form mincount=2, precomputed form embeddings=none
+  lemma mincount=2, precomputed lemma embeddings=none
+Parser network options: iterations=10, hidden_layer=200, batch_size=10,
+  learning_rate=0.0200, learning_rate_final=0.0010, l2=0.5000, early_stopping=0
+Initialized 'universal_tag' embedding with 0,14 words and 0.0%,100.0% coverage.
+Initialized 'feats' embedding with 0,64 words and 0.0%,100.0% coverage.
+Initialized 'form' embedding with 0,940 words and 0.0%,98.2% coverage.
+Initialized 'deprel' embedding with 0,33 words and 0.0%,100.0% coverage.
+Iteration 1: training logprob -2.8176e+04
+Iteration 2: training logprob -3.8775e+04
+Iteration 3: training logprob -2.7686e+04
+Iteration 4: training logprob -2.0064e+04
+Iteration 5: training logprob -1.4990e+04
+Iteration 6: training logprob -1.1933e+04
+Iteration 7: training logprob -1.0394e+04
+Iteration 8: training logprob -8.6476e+03
+Iteration 9: training logprob -8.4411e+03
+Iteration 10: training logprob -8.6240e+03
+The trained UDPipe model was saved.
+
+real	7m0.719s
+user	6m59.829s
+sys	0m0.304s
+Loading UDPipe model: done.
+evaluating macro LAS es_gsd-ud-test.conllu out/spa-structures-udpipe.conllu
+UDScore {udScore = 0.5220851536674292, udMatching = 426, udTotalLength = 12267, udSamesLength = 6094, udPerfectMatch = 3}
