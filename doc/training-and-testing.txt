@@ -98,3 +98,89 @@ However, this is because of superfluous wrappings:
 I.e. no differences!
 
 
+############# Finnish, first without morphological tags other than for "olla"
+
+$ grep -v ProgrVP out/2-structures-fin.gft >tt 
+Aarnes-MacBook-Pro:gf-ud aarne$ mv tt out/2-structures-fin.gft 
+Aarnes-MacBook-Pro:gf-ud aarne$ source fin-test.sh 
+created out/1-structures-fin.conllu
+created out/2-structures-fin.conllu
+(["TOTAL SENTENCES"],2959)
+(["TOTAL WORDS"],43664)
+(["punct"],7279)
+(["dep"],5018)
+(["nsubj"],4581)
+(["det"],4524)
+(["nmod"],3018)
+(["root"],2959)
+(["advmod"],2231)
+(["case"],1774)
+(["amod"],1679)
+(["obj"],1457)
+(["conj"],1257)
+(["cc"],1150)
+(["appos"],990)
+(["mark"],912)
+(["ccomp"],830)
+(["cop"],762)
+(["xcomp"],585)
+(["compound"],501)
+(["parataxis"],430)
+(["nsubj:pass"],378)
+(["flat"],195)
+(["acl:relcl"],191)
+(["advcl"],186)
+(["fixed"],158)
+(["nummod"],156)
+(["list"],125)
+(["nmod:poss"],109)
+(["goeswith"],93)
+(["csubj"],55)
+(["acl"],50)
+(["iobj"],21)
+(["det:predet"],7)
+(["csubj:pass"],3)
+POS not covered:
+["SYM"] ["_"]
+DEPREL not covered:
+["_"] ["aux"] ["aux:pass"] ["cc:preconj"] ["compound:nn"] ["compound:prt"] ["cop:own"] ["csubj:cop"] ["discourse"] ["flat:name"] ["nmod:gobj"] ["nmod:gsubj"] ["nsubj:cop"] ["obl"] ["orphan"] ["vocative"] ["xcomp:ds"]
+DEPREL similarity:
+0.719802861826506
+SUBTREETYPE similarity:
+0.669945250305958
+Aarnes-MacBook-Pro:gf-ud aarne$ source fin-parse.sh 
+Loading training data: done.
+Training the UDPipe model.
+Parser transition options: system=projective, oracle=dynamic, structured_interval=8, single_root=1
+Parser uses lemmas/upos/xpos/feats: from gold data
+Parser embeddings options: upostag=20, feats=20, xpostag=0, form=50, lemma=0, deprel=20
+  form mincount=2, precomputed form embeddings=none
+  lemma mincount=2, precomputed lemma embeddings=none
+Parser network options: iterations=10, hidden_layer=200, batch_size=10,
+  learning_rate=0.0200, learning_rate_final=0.0010, l2=0.5000, early_stopping=0
+Initialized 'universal_tag' embedding with 0,15 words and 0.0%,100.0% coverage.
+Initialized 'feats' embedding with 0,83 words and 0.0%,100.0% coverage.
+Initialized 'form' embedding with 0,1978 words and 0.0%,97.6% coverage.
+Initialized 'deprel' embedding with 0,33 words and 0.0%,100.0% coverage.
+Iteration 1: training logprob -4.2720e+04
+Iteration 2: training logprob -6.6588e+04
+Iteration 3: training logprob -4.3721e+04
+Iteration 4: training logprob -3.1050e+04
+Iteration 5: training logprob -2.4210e+04
+Iteration 6: training logprob -1.8006e+04
+Iteration 7: training logprob -1.5012e+04
+Iteration 8: training logprob -1.2412e+04
+Iteration 9: training logprob -1.2186e+04
+Iteration 10: training logprob -1.1481e+04
+The trained UDPipe model was saved.
+
+real	14m56.272s
+user	14m53.923s
+sys	0m0.861s
+Loading UDPipe model: done.
+evaluating macro LAS fi_tdt-ud-test.conllu out/fin-structures-udpipe.conllu
+UDScore {udScore = 0.29447885990659556, udMatching = 1555, udTotalLength = 21126, udSamesLength = 4997, udPerfectMatch = 41}
+
+gfud eval macro UAS fi_tdt-ud-test.conllu out/fin-structures-udpipe.conllu
+evaluating macro UAS fi_tdt-ud-test.conllu out/fin-structures-udpipe.conllu
+UDScore {udScore = 0.4568837750127516, udMatching = 1555, udTotalLength = 21126, udSamesLength = 8226, udPerfectMatch = 134}

@@ -51,7 +51,7 @@ fullOpts = [
   ("lin", "linearize tree using the active language of the environment"),
   ("units", "(eval) print evaluation per sentence, from lowest score upwards"),
   ("stat", "show statistics of original and interpreted words"),
-  ("FORM ", "(statistics) surface forms"),
+  ("FORM", "(statistics) surface forms"),
   ("LEMMA", "(statistics) lemmas"),
   ("POS", "(statistics) part of speech tags"),
   ("FEATS", "(statistics) morphological features"),

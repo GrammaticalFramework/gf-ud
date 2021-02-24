@@ -33,7 +33,7 @@ udFrequencyMap opts sents
   where
     f = \w -> [fun w | (opt,fun) <- optfuns, isOpt opts opt]
     optfuns = [
-      ("FORM ", udFORM),
+      ("FORM", udFORM),
       ("LEMMA", udLEMMA),
       ("POS",   udUPOS),
       ("FEATS", prt . udFEATS),
