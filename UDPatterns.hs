@@ -110,8 +110,16 @@ findMatchingUDSequence strict ps tree
 
 
 data UDReplacement =
-    REPLACE UDPattern UDPattern
+    REPLACE_FORM String String
+  | REPLACE_LEMMA String String
+  | REPLACE_POS String String
+  | REPLACE_DEPREL String String
+  | REPLACE_DEPREL_ String String
+  | REPLACE_FEATS UDDatas UDDatas
+  | REPLACE_FEATS_ UDDatas UDDatas
+  | IF UDPattern UDReplacement
   | UNDER UDPattern UDReplacement
+  | OVER UDPattern UDReplacement
   | PRUNE UDPattern Int -- drop dependents down to depth Int
   | FILTER_SUBTREES UDPattern UDPattern -- keep only subtrees that match the second pattern
   | FLATTEN UDPattern -- lift dependents of dependents to the same level as dependents
@@ -122,17 +130,18 @@ data UDReplacement =
 
 replaceWithUDPattern :: UDReplacement -> UDTree -> (UDTree,Bool)
 replaceWithUDPattern rep tree@(RTree node subtrs) = case rep of
-  REPLACE cond change | ifMatchUDPattern cond tree -> true $ case change of
-    FORM s -> tree{root = node{udFORM = s}}
-    LEMMA s -> tree{root = node{udLEMMA = s}}
-    POS s -> tree{root = node{udUPOS = s}}
-    DEPREL s -> tree{root = node{udDEPREL = s}}
-    AND ps -> case ps of
-      p:pp -> let
-                (tr,_)  = replaceWithUDPattern (REPLACE TRUE p) tree
-              in fst (replaceWithUDPattern (REPLACE TRUE (AND pp)) tr)
-      _ -> tree
-  UNDER cond replace | ifMatchUDPattern cond tree -> true $ tree{subtrees = map (fst . replaceWithUDPattern rep) subtrs} 
+  REPLACE_FORM old new | ifMatchUDPattern (FORM old) tree -> true $ tree{root = node{udFORM = new}}
+  REPLACE_LEMMA old new | ifMatchUDPattern (LEMMA old) tree -> true $ tree{root = node{udLEMMA = new}}
+  REPLACE_POS old new | ifMatchUDPattern (POS old) tree -> true $ tree{root = node{udUPOS = new}}
+  REPLACE_DEPREL old new | ifMatchUDPattern (DEPREL old) tree -> true $ tree{root = node{udDEPREL = new}}
+  REPLACE_DEPREL_ old new | ifMatchUDPattern (DEPREL_ old) tree -> true $ tree{root = node{udDEPREL = new}}
+  REPLACE_FEATS old new | ifMatchUDPattern (FEATS old) tree -> true $ tree{root = node{udFEATS = uddatas2list new}}
+  REPLACE_FEATS_ old new | ifMatchUDPattern (FEATS_ old) tree -> true $
+    let news = [(udArg fv, udVals fv) | fv <- uddatas2list new] in
+    tree{root = node{udFEATS = [maybe fv (\v -> fv{udVals = v}) (lookup (udArg fv) news) | fv <- udFEATS node]}}
+  IF cond replace | ifMatchUDPattern cond tree -> replaceWithUDPattern replace tree
+  UNDER cond replace | ifMatchUDPattern cond tree -> true $ tree{subtrees = map (fst . replaceWithUDPattern replace) subtrs} 
+  OVER cond replace | any (ifMatchUDPattern cond) subtrs -> replaceWithUDPattern replace tree
   PRUNE cond depth | ifMatchUDPattern cond tree -> true $ flattenRTree depth tree
   FILTER_SUBTREES cond scond | ifMatchUDPattern cond tree ->
     let sts = [st | st <- subtrs, ifMatchUDPattern scond st]

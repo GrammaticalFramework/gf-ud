@@ -52,6 +52,7 @@ main = do
          "-f":file:_ -> readFile file
          _ -> return $ unwords ws
        let pattern = (read patterntext) :: UDReplacement
+       putStrLn $ "## " ++ show pattern
        ss <- getContents >>= return . parseUDText
        mapM_ putStrLn $ map (showReplacementsInUDSentence pattern) ss
     
@@ -168,8 +169,11 @@ helpMsg = unlines $ [
     "<string> arguments require double quotes, and the <pattern> itself is in single quotes",
     "if read from command line, but not if read from a file (the -f option).",
     "Replacement syntax:",
-    "   REPLACE <pattern> <pattern>",
+    "   (REPLACE_FORM | REPLACE_LEMMA | REPLACE_POS | REPLACE_DEPREL | REPLACE_DEPREL_) <string>",
+    " | (REPLACE_FEATS | REPLACE_FEATS_) <features>",
+    " | IF <pattern> <replacement>",
     " | UNDER <pattern> <replacement>",
+    " | OVER <pattern> <replacement>",
     " | PRUNE <pattern> <int>",
     " | FILTER_SUBTREES <pattern> <pattern>",
     " | FLATTEN <pattern>",

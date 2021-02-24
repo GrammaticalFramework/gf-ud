@@ -87,8 +87,11 @@ Analysis patterns, <pattern>:
  | PROJECTIVE
 
 Replacement patterns, <replacement>:
-   REPLACE <pattern> <pattern>
+   (REPLACE_FORM | REPLACE_LEMMA | REPLACE_POS | REPLACE_DEPREL | REPLACE_DEPREL_) <string>
+ | (REPLACE_FEATS | REPLACE_FEATS_) <features>
+ | IF <pattern> <replacement>
  | UNDER <pattern> <replacement>
+ | OVER <pattern> <replacement>
  | PRUNE <pattern> <int>
  | FILTER_SUBTREES <pattern> <pattern>
  | FLATTEN <pattern>
@@ -172,9 +175,22 @@ finds all non-projective subtrees of the treebank processed and returns the coun
 ## The semantics of replacements
 
 Just line `pattern-match`, `pattern-replace` traverses all trees in its input and performs the specified changes in all subtrees.
-The simplest replacement is to change a label or a lemma - for instance,
-- `REPLACE (DEPREL "dobj") (DEPREL "obj")` changes the UD v1 label `dobj` to the v2 label `obj` every where
-- `UNDER (POS "VERB") (REPLACE (DEPREL "nmod") (DEPREL "obl"))` changes `nmod` to `obj`, if immediately dominated by a `VERB`
+The simplest replacement is to change a feature of a single word:
+- `REPLACE_FORM "color" "colour"` changes the word form `color` to `colour`
+- `REPLACE_LEMMA "color" "colour"` changes the lemma `color` to `colour`
+- `REPLACE_POS "PROPN" "NOUN"` changes the POS tag `PROPN` to `NOUN`
+- `REPLACE_DEPREL "dobj" "obj"` changes the label `dobj` to `obj`
+- `REPLACE_DEPREL_ "nsubj" "nsubj"` changes all labels of form `nsubj:...` to `nsubj`
+- `REPLACE_FEATS "NUMBER=Sing" "NUMBER=Plur"` changes the `NUMBER` feature, if it appears alone
+- `REPLACE_FEATS_ "NUMBER=Sing" "NUMBER=Plur"` changes the `NUMBER` feature, wherever it appears among the features
+
+These simple replacements are applied everywhere in trees.
+This behaviour can be restricted by conditions:
+- `IF (FORM "United") (REPLACE_POS "PROPN" "ADJ")` changes the POS tag of the word `United`
+- `UNDER (POS "VERB") (REPLACE_DEPREL "nmod" "obl")` changes `nmod` to `obl`, if immediately dominated by a `VERB`
+- `OVER (DEPREL "case") (REPLACE_DEPREL "obj" "obl")` changes `obj` to `obl`, if any of the immediate subtrees has the label `case`
+
+The following replacements apply globally to trees:
 - `FILTER_SUBTREES (POS "NOUN") (OR [DEPREL "det",DEPREL "amod"])` removes all other subtrees of a `NOUN` than those labelled `det` or `amod`
 - `FLATTEN (DEPREL "root")` makes all grandchildren to have the `root` as their head, thus decreasing the depth of the tree by 1
 - `PRUNE (POS "NOUN") 1` drops out all subsubtrees of nouns, thus decreasing the depth of `NOUN` trees to 1
