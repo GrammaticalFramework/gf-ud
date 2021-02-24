@@ -10,10 +10,10 @@ COMPOSE [
     PRUNE (OR [DEPREL_ "nsubj", DEPREL "obj", DEPREL"cop", DEPREL "iobj"]) 0
     ],
   CHANGES [
-    REPLACE (DEPREL_ "nsubj") (AND [FORM "X", LEMMA "X"]),
-    REPLACE (DEPREL "obj")  (AND [FORM "Y", LEMMA "Y"]),
-    REPLACE (DEPREL "obl")  (AND [FORM "Z", LEMMA "Z"]),
-    REPLACE (DEPREL "ccomp")  (AND [FORM "S", LEMMA "S"]),
-    REPLACE (DEPREL "xcomp")  (AND [FORM "V", LEMMA "V"])
+    IF (DEPREL_ "nsubj") (REPLACE_FORM "*" "X"),
+    IF (DEPREL "obj")    (REPLACE_FORM "*" "Y"), 
+    IF (DEPREL "obl")    (REPLACE_FORM "*" "Z"), 
+    IF (DEPREL "ccomp")  (REPLACE_FORM "*" "S"), 
+    IF (DEPREL "xcomp")  (REPLACE_FORM "*" "V")
     ]
   ]

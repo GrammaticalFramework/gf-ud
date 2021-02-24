@@ -27,7 +27,8 @@ The nodes of the resulting trees are renumbered so that they are still valid dep
 The matching or replacement pattern can also be read from a file with the `-f` option, which is a good practice in particulat with complex replacement patterns collected under a `CHANGES` or `COMPOSE` list.
 Here is an example looking for main arguments of predication, from file `grammars/predicates.hst` (the suffix hst refers to "Haskell term"):
 ```
-COMPOSE [
+
+COMPOSE [COMPOSE [
   FILTER_SUBTREES (DEPREL "root") (OR [
     DEPREL_ "nsubj", DEPREL "obj", DEPREL "obl", DEPREL "iobj",
     DEPREL "cop", DEPREL "aux:pass", 
@@ -39,11 +40,11 @@ COMPOSE [
     PRUNE (OR [DEPREL_ "nsubj", DEPREL "obj", DEPREL"cop", DEPREL "iobj"]) 0
     ],
   CHANGES [
-    REPLACE (DEPREL_ "nsubj") (AND [FORM "X", LEMMA "X"]),
-    REPLACE (DEPREL "obj")  (AND [FORM "Y", LEMMA "Y"]),
-    REPLACE (DEPREL "obl")  (AND [FORM "Z", LEMMA "Z"]),
-    REPLACE (DEPREL "ccomp")  (AND [FORM "S", LEMMA "S"]),
-    REPLACE (DEPREL "xcomp")  (AND [FORM "V", LEMMA "V"])
+    IF (DEPREL_ "nsubj") (REPLACE_FORM "*" "X"),
+    IF (DEPREL "obj")    (REPLACE_FORM "*" "Y"), 
+    IF (DEPREL "obl")    (REPLACE_FORM "*" "Z"), 
+    IF (DEPREL "ccomp")  (REPLACE_FORM "*" "S"), 
+    IF (DEPREL "xcomp")  (REPLACE_FORM "*" "V")
     ]
   ]
 ```
@@ -53,7 +54,7 @@ $ cat en_pud-ud-test.conllu | gfud pattern-replace -f grammars/predicates.hst
 # sent_id = n01003013
 # text = Maybe the dress code was too stuffy.
 # newtext = X was stuffy
-1       X       X       NOUN    NN      Number=Sing     3       nsubj   ADJUSTED        _
+1       X       code       NOUN    NN      Number=Sing     3       nsubj   ADJUSTED        _
 2       was     be      AUX     VBD     Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin   3       cop     ADJUSTED
         _
 3       stuffy  stuffy  ADJ     JJ      Degree=Pos      0       root    ADJUSTED        SpaceAfter=No
@@ -63,10 +64,10 @@ $ cat en_pud-ud-test.conllu | gfud pattern-replace -f grammars/predicates.hst
 # text = Rather than teaching the scientific method as a separate unit, for example, students learn science content by applying it.
 # newtext = for Z X learn Y
 1       for     for     ADP     IN      _       2       case    ADJUSTED        _
-2       Z       Z       NOUN    NN      Number=Sing     4       obl     ADJUSTED        SpaceAfter=No
-3       X       X       NOUN    NNS     Number=Plur     4       nsubj   ADJUSTED        _
+2       Z       example       NOUN    NN      Number=Sing     4       obl     ADJUSTED        SpaceAfter=No
+3       X       student       NOUN    NNS     Number=Plur     4       nsubj   ADJUSTED        _
 4       learn   learn   VERB    VBP     Mood=Ind|Tense=Pres|VerbForm=Fin        0       root    ADJUSTED        _
-5       Y       Y       NOUN    NN      Number=Sing     4       obj     ADJUSTED        _
+5       Y       content       NOUN    NN      Number=Sing     4       obj     ADJUSTED        _
 ```
 
 ## The syntax of patterns and replacements
@@ -134,11 +135,14 @@ Thus, by reference to the example above,
 - `LEMMA "see"` matches the same tree
 - `POS "NOUN"` matches line 2 and thereby the subtree containing *every cat*
 - `DEPREL "obj"` matches line 4 and thereby the on-word tree *us*
-- `FEATS Case=Acc|PronType=Prs` matches line 4, *us*
+- `FEATS "Case=Acc|PronType=Prs"` matches line 4, *us*
 
 The underscore versions are more liberal, as it is enough to match a part:
 - `FEATS_ Number=Sing` matches both 3 (the whole of the sentence) and 2 (*every cat*)
 - `DEPREL_ nsubj` would also match `nsubj:pass` and any other label whose prefix (before the colon `:`) is `nsubj`
+
+In all these patterns, the wildcard `*` in the beginning or the end of the string matches any substring.
+For example, `POS "N*"` matches any word whose POS tag starts with an `N`, and `DEPREL "*comp"` matches any word whose dependency label ends with `comp`.
 
 Patterns can be combined with logical operators:
 - `AND [LEMMA "see", POS "VERB"]` matches any line with both these characteristics
@@ -181,8 +185,8 @@ The simplest replacement is to change a feature of a single word:
 - `REPLACE_POS "PROPN" "NOUN"` changes the POS tag `PROPN` to `NOUN`
 - `REPLACE_DEPREL "dobj" "obj"` changes the label `dobj` to `obj`
 - `REPLACE_DEPREL_ "nsubj" "nsubj"` changes all labels of form `nsubj:...` to `nsubj`
-- `REPLACE_FEATS "NUMBER=Sing" "NUMBER=Plur"` changes the `NUMBER` feature, if it appears alone
-- `REPLACE_FEATS_ "NUMBER=Sing" "NUMBER=Plur"` changes the `NUMBER` feature, wherever it appears among the features
+- `REPLACE_FEATS "Number=Sing" "Number=Plur"` changes the `Number` feature, if it appears as the only feature
+- `REPLACE_FEATS_ "Number=Sing" "Number=Plur"` changes the `Number` feature, wherever it appears among the features
 
 These simple replacements are applied everywhere in trees.
 This behaviour can be restricted by conditions:

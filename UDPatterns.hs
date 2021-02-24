@@ -37,8 +37,8 @@ data UDPattern =
     FORM String
   | LEMMA String
   | POS String
-  | FEATS UDDatas  -- feature list matches exactly
-  | FEATS_ UDDatas -- a sublist of features matches exactly
+  | FEATS String  -- feature list matches exactly
+  | FEATS_ String -- a sublist of features matches exactly
   | DEPREL String   -- deprel matches exactly
   | DEPREL_ String -- prefix part of deprel matches, e.g. nsubj:pass matches nsubs
   | AND [UDPattern]
@@ -61,15 +61,15 @@ data UDPattern =
 
 ifMatchUDPattern :: UDPattern -> UDTree -> Bool
 ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
-  FORM s -> udFORM node == s
-  LEMMA s -> udLEMMA node == s
-  POS s -> udUPOS node == s
-  FEATS udds -> udFEATS node == uddatas2list udds
-  FEATS_ udds ->
-    let uddlist = uddatas2list udds in
+  FORM s -> matchString s (udFORM node)
+  LEMMA s -> matchString s (udLEMMA node)
+  POS s -> matchString s (udUPOS node)
+  FEATS udds -> udFEATS node == prs udds
+  FEATS_ udds -> 
+    let uddlist = prs udds in
     or [fs == uddlist | fs <- sublists (length uddlist) (udFEATS node)]
-  DEPREL s -> udDEPREL node == s
-  DEPREL_ s -> takeWhile (/=':') (udDEPREL node) == s
+  DEPREL s -> matchString s (udDEPREL node)
+  DEPREL_ s -> matchString s (takeWhile (/=':') (udDEPREL node))
   AND ps -> and [ifMatchUDPattern p tree | p <- ps]
   OR ps -> or [ifMatchUDPattern p tree | p <- ps]
   NOT p -> not (ifMatchUDPattern p tree)
@@ -90,7 +90,11 @@ ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
   LENGTH_UNDER d -> length (allNodesRTree tree) < d
   LENGTH_OVER d -> length (allNodesRTree tree) > d
 
-
+matchString p s = case p of
+  '*':pp -> pp == drop (length s - length pp) s
+  _:_ | last p =='*' -> init p == take (length (init p)) s
+  _ -> p == s
+  
 findMatchingUDSequence :: Bool -> [UDPattern] -> UDTree -> Maybe UDTree
 findMatchingUDSequence strict ps tree 
   | null ps = return tree
@@ -115,8 +119,8 @@ data UDReplacement =
   | REPLACE_POS String String
   | REPLACE_DEPREL String String
   | REPLACE_DEPREL_ String String
-  | REPLACE_FEATS UDDatas UDDatas
-  | REPLACE_FEATS_ UDDatas UDDatas
+  | REPLACE_FEATS String String
+  | REPLACE_FEATS_ String String
   | IF UDPattern UDReplacement
   | UNDER UDPattern UDReplacement
   | OVER UDPattern UDReplacement
@@ -135,9 +139,9 @@ replaceWithUDPattern rep tree@(RTree node subtrs) = case rep of
   REPLACE_POS old new | ifMatchUDPattern (POS old) tree -> true $ tree{root = node{udUPOS = new}}
   REPLACE_DEPREL old new | ifMatchUDPattern (DEPREL old) tree -> true $ tree{root = node{udDEPREL = new}}
   REPLACE_DEPREL_ old new | ifMatchUDPattern (DEPREL_ old) tree -> true $ tree{root = node{udDEPREL = new}}
-  REPLACE_FEATS old new | ifMatchUDPattern (FEATS old) tree -> true $ tree{root = node{udFEATS = uddatas2list new}}
+  REPLACE_FEATS old new | ifMatchUDPattern (FEATS old) tree -> true $ tree{root = node{udFEATS = prs new}}
   REPLACE_FEATS_ old new | ifMatchUDPattern (FEATS_ old) tree -> true $
-    let news = [(udArg fv, udVals fv) | fv <- uddatas2list new] in
+    let news = [(udArg fv, udVals fv) | fv <- prs new] in
     tree{root = node{udFEATS = [maybe fv (\v -> fv{udVals = v}) (lookup (udArg fv) news) | fv <- udFEATS node]}}
   IF cond replace | ifMatchUDPattern cond tree -> replaceWithUDPattern replace tree
   UNDER cond replace | ifMatchUDPattern cond tree -> true $ tree{subtrees = map (fst . replaceWithUDPattern replace) subtrs} 
@@ -210,6 +214,7 @@ list2uddatas l = case l of
 
 instance Read UDDatas where
   readsPrec _ s = [(list2uddatas (prs s),"")]
+  
 -------------------------------------------------
 
 -- convenience, must be in some standard lib...
