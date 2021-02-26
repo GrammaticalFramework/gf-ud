@@ -18,12 +18,13 @@ data UDSentence = UDSentence {
   }
 
 data UDId =
-    UDIdRoot  -- 0
-  | UDIdInt Int
+    UDIdInt Int
   | UDIdRange Int Int
   | UDIdEmpty Float -- "may be a decimal number for empty nodes (lower than 1 but greater than 0)"
   | UDIdNone -- _
    deriving (Eq,Ord,Show)
+
+udIdRoot = UDIdInt 0
 
 -- tab-separated text line describing a word
 data UDWord = UDWord {
@@ -91,8 +92,8 @@ instance UDObject UDWord where
   errors w@(UDWord id fo le up xp fe he de ds mi) =
     concat [errors id, checkUDPOS up, errors fe, errors he, checkUDLabel de, errors mi] ++
     case w of
-      _ | not   ((udHEAD w /= UDIdRoot || udDEPREL w == "root") 
-             && (udHEAD w == UDIdRoot || udDEPREL w /= "root"))         -- head 0 iff label root
+      _ | not   ((udHEAD w /= udIdRoot || udDEPREL w == "root") 
+             && (udHEAD w == udIdRoot || udDEPREL w /= "root"))         -- head 0 iff label root
           -> ["root iff 0 does not hold in:",prt w]
       _ -> []
 
@@ -102,10 +103,9 @@ instance UDObject UDId where
     UDIdInt n -> show n
     UDIdRange m n -> show m ++ "-" ++ show n
     UDIdEmpty f -> show f
-    UDIdRoot -> "0"
     UDIdNone -> "_"
   prs s = case (strip s) of
-    "0" -> UDIdRoot
+    "0" -> udIdRoot
     "_" -> UDIdNone
     _ | all isDigit s -> UDIdInt (read s)
     _ -> case break (flip elem ".-") s of
@@ -173,7 +173,7 @@ type UDTree = RTree UDWord
 udSentence2tree :: UDSentence -> UDTree
 udSentence2tree s = s2t rootWord where
   s2t hd = RTree hd [s2t w | w <- ws, udHEAD w == udID hd]
-  rootWord = head [w | w <- ws, udHEAD w == UDIdRoot] -- unique if check succeeds
+  rootWord = head [w | w <- ws, udHEAD w == udIdRoot] -- unique if check succeeds
   ws = udWordLines s
 
 -- opposite conversion
@@ -192,7 +192,7 @@ prUDTree = prLinesRTree prt
 
 checkUDWords :: [UDWord] -> [String]
 checkUDWords ws = concatMap errors ws ++ case ws of
-  _ | length (filter ((==UDIdRoot) . udHEAD) ws) /=1               -- exactly one 0 
+  _ | length (filter ((==udIdRoot) . udHEAD) ws) /=1               -- exactly one 0 
         -> ["no unique root in:", pws]
   _ | ids /= [1 .. length ids]
         -> ["word id sequence not 1..n in " ++ pws]
@@ -232,7 +232,7 @@ adjustUDIds uds =
     }
 
 createRoot :: UDTree -> UDTree
-createRoot tree = tree{root = (root tree){udDEPREL = root_Label, udDEPS = udDEPREL (root tree)}}
+createRoot tree = tree{root = (root tree){udDEPREL = root_Label, udHEAD = udIdRoot, udDEPS = udDEPREL (root tree)}}
 
 isProjective :: UDTree -> Bool
 isProjective udt = length nodes - 1 == maxId - minId
@@ -247,7 +247,7 @@ isProjective udt = length nodes - 1 == maxId - minId
 
 int2udid :: Int -> UDId
 int2udid n = case n of
-   0 -> UDIdRoot
+   0 -> udIdRoot
    _ -> UDIdInt n
 
 udid2int :: UDId -> Int
@@ -276,7 +276,6 @@ unHeadLabel l = dropWhile (=='+') l
 
 udPosition udid = case udid of
     UDIdInt i -> i
-    UDIdRoot  -> 0
     _ -> error ("ERROR: no position computed from " ++ prt udid) --- never happens in gf2ud...
 
 -- distance between head and dependent

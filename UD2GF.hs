@@ -440,7 +440,7 @@ udtree2devtree = markClosest . initialize
       devFeats = udFEATS un,
       devLabel = udDEPREL un,
       devIndex = udID un,
-      devClosest = UDIdRoot, --- junk value
+      devClosest = udIdRoot, --- junk value
       devNeedBackup = False, ---- TODO start with True, mark when used
       devIsUnknown = True
      }) (map initialize uts)

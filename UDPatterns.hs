@@ -3,14 +3,19 @@ module UDPatterns where
 import UDConcepts
 import GFConcepts
 import UDAnalysis
+import UDOptions
 
 
-showMatchesInUDSentence :: UDPattern -> UDSentence -> String
-showMatchesInUDSentence p s =
+showMatchesInUDSentence :: Opts -> UDPattern -> UDSentence -> String
+showMatchesInUDSentence opts p s =
   if   null matches then ""
   else unlines (udCommentLines s ++ matches)
  where
-   matches = [prt (udTree2sentence t) | t <- matchesUDPattern p (udSentence2tree s)]
+   matches = [prt (adjust t) | t <- matchesUDPattern p (udSentence2tree s)]
+   adjust
+     | isOpt opts "adjust" = adjustUDIds . udTree2sentence . createRoot
+     | isOpt opts "prune" = udTree2sentence . (\t -> t{subtrees = []})
+     | otherwise = udTree2sentence
 
 matchesUDPattern :: UDPattern -> UDTree -> [UDTree]
 matchesUDPattern p tree@(RTree node subtrees) = case p of
@@ -25,7 +30,7 @@ showReplacementsInUDSentence rep s =
     if changed then ["# newtext = " ++ unwords (map udFORM (udWordLines ns))] else []
     })
  where
-   ns = adjustUDIds (udTree2sentence tr)
+   ns = adjustUDIds $ udTree2sentence $ createRoot tr
    (tr,changed) = replacementsWithUDPattern rep (udSentence2tree s)
 
 replacementsWithUDPattern :: UDReplacement -> UDTree -> (UDTree,Bool)

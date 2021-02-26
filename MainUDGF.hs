@@ -39,13 +39,15 @@ main = do
     
     "statistics":opts -> getContents >>= mapM_ print . udFrequencies (selectOpts opts) . parseUDText
 
-    "pattern-match":ws -> do
+    "pattern-match":ws0 -> do
+       let (opts,ws) = span (flip elem ["adjust","prune"]) ws0
+       let sopts = selectOpts opts
        patterntext <- case ws of
          "-f":file:_ -> readFile file
          _ -> return $ unwords ws
        let pattern = (read patterntext) :: UDPattern
        ss <- getContents >>= return . parseUDText
-       mapM_ putStrLn $ filter (not . null) $ map (showMatchesInUDSentence pattern) ss
+       mapM_ putStrLn $ filter (not . null) $ map (showMatchesInUDSentence sopts pattern) ss
     
     "pattern-replace":ws -> do
        patterntext <- case ws of
@@ -129,7 +131,7 @@ helpMsg = unlines $ [
     "Usage:",
     "   gfud check-treebank",
     " | gfud statistics <option>*",
-    " | gfud pattern-match ('<pattern>' | -f <file>)",
+    " | gfud pattern-match (adjust|prune)? ('<pattern>' | -f <file>)",
     " | gfud pattern-replace ('<replacement>' | -f <file>)",
     " | gfud cosine-similarity <file> <file> <option>*",
     " | gfud cosine-similarity-sort <file> <file> <option>*",
