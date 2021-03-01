@@ -1,5 +1,6 @@
 module UDPatterns where
 
+import RTree
 import UDConcepts
 import GFConcepts
 import UDAnalysis
