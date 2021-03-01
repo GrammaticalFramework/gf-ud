@@ -1,0 +1,19 @@
+COMPOSE [
+  FILTER_SUBTREES (DEPREL "root") (OR [
+    DEPREL_ "nsubj", DEPREL "obj", DEPREL "obl", DEPREL "iobj",
+    DEPREL "cop", DEPREL "aux:pass", 
+    DEPREL "xcomp", DEPREL "ccomp"
+    ]),
+  CHANGES [
+    FILTER_SUBTREES (OR [DEPREL "xcomp",DEPREL "ccomp"]) (DEPREL "mark"),
+    FILTER_SUBTREES (DEPREL "obl") (DEPREL "case"),
+    PRUNE (OR [DEPREL_ "nsubj", DEPREL "obj", DEPREL"cop", DEPREL "iobj"]) 0
+    ],
+  CHANGES [
+    IF (DEPREL_ "nsubj") (REPLACE_FORM "*" "X"),
+    IF (DEPREL "obj")    (REPLACE_FORM "*" "Y"), 
+    IF (DEPREL "obl")    (REPLACE_FORM "*" "Z"), 
+    IF (DEPREL "ccomp")  (REPLACE_FORM "*" "S"), 
+    IF (DEPREL "xcomp")  (REPLACE_FORM "*" "V")
+    ]
+  ]

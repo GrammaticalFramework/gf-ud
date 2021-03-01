@@ -49,12 +49,18 @@ fullOpts = [
   ("vud", "visualize dependency tree using LaTeX converted to pdf"),
   ("lud", "visualize dependency tree in LaTeX and output the LaTeX code"),
   ("lin", "linearize tree using the active language of the environment"),
+  ("units", "(eval) print evaluation per sentence, from lowest score upwards"),
   ("stat", "show statistics of original and interpreted words"),
-  ("FORM ", "(statistics) surface forms"),
+  ("adjust", "(pattern-match) adjust results to a valid UD trees with root"), 
+  ("prune", "(pattern-match) show only the roots of matching subtrees"),
+  ("FORM", "(statistics) surface forms"),
   ("LEMMA", "(statistics) lemmas"),
   ("POS", "(statistics) part of speech tags"),
   ("FEATS", "(statistics) morphological features"),
   ("DISTANCE", "(statistics) distance to head i.e. head_position - own_position"),
-  ("DEPREL", "(statistics) dependency labels")
+  ("DEPREL", "(statistics) dependency labels"),
+  ("SUBTREETYPE", "(statistics) types of subtrees"),
+  ("LENGTH", "(statistics) number of words in a sentence"),
+  ("DEPTH", "(statistics) depth of dependency tree")
   ]
 

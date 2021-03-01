@@ -1,0 +1,189 @@
+#fun SPredObj nsubj head obj
+
+#fun DetN det head
+#fun PrepDetN case det head
+#fun PrepNNP case head
+#fun Conj2NP head conj
+#fun ConjNPConj cc head
+#fun PrepPN case head
+#fun PrepPron case head
+#fun PossN nmod:poss head
+#fun PrepPossN case nmod:poss head
+#fun DetAdjN det amod head
+#fun AdAdvP advmod head
+#fun FixedAdvP head fixed
+#fun DetNPrep det head nmod
+#fun PrepDetAdjN case det amod head
+#fun AdAP advmod head
+#fun PrepDetNPrep case det head nmod
+#fun SgAdjNNP amod head
+#fun PlAdjNNP amod head
+#fun CompPN compound head
+#fun FlatPN head flat
+#fun InfComplV2 head obj
+#fun Conj2AP head conj
+#fun ConjAPConj cc head
+#fun SgPrepAdjN case amod head
+#fun PlPrepAdjN case amod head
+#fun CompoundN compound head
+#fun DetCompoundN det compound head
+#fun PrepDetCompoundN case det compound head
+#fun Conj2S head conj
+#fun ConjSConj cc head
+#fun Conj3NP head conj conj
+#fun DetNinfVP det head acl
+#fun DetNppartVP det head acl:relcl
+#fun ComplPrepVP head obl
+#fun CardTimePP nummod head
+#fun PrepCompN case compound head
+#fun PrepCompPN case compound head
+#fun PrepCardN case nummod head
+#fun UttN head punct
+#fun DateUtt head nmod:tmod
+#fun UttPredVS nsubj head ccomp punct
+#fun UttPredVV nsubj head xcomp punct
+#fun UttCardN head punct appos punct
+#fun DetPN det head
+#fun NNPPrep head nmod
+#fun UttPN head punct
+#fun PrepNNPPrep case head nmod
+#fun PrepCard case head
+#fun SubjPredObj mark nsubj head obj
+#fun UttPredObj nsubj head obj punct
+
+#fun UttAuxPredObj nsubj head obj punct
+
+#fun UttInterj head punct
+#fun UttExist expl head nsubj punct
+
+#fun UttPredAP nsubj head punct
+
+#fun InfComplS head ccomp
+#fun InfComplAdvCl head advcl 
+#fun InfComplVPP head xcomp
+
+#fun InfVPP head obl
+
+#fun UttPassObl nsubj:pass head obl punct
+
+#cat A ADJ primary
+#cat A2 ADJ
+#cat ACard ADV
+#cat AP ADJ
+#cat AdA ADV
+#cat AdN ADV
+#cat AdV ADV
+#cat Adv ADV primary
+#cat Ant X
+#cat Bracket X
+#cat CAdv ADV
+#cat CN NOUN
+#cat CNN NOUN
+#cat Card NUM
+#cat Cl X
+#cat ClSlash X
+#cat Comp X
+#cat Conj CCONJ
+#cat Conj CONJ
+#cat DAP DET
+#cat Definition X
+#cat Det DET primary
+#cat Dig NUM
+#cat Digit NUM
+#cat Digits NUM
+#cat Document X
+#cat Float NUM
+#cat Hour NUM
+#cat IAdv ADV
+#cat IComp X
+#cat IDet DET
+#cat IP PRON
+#cat IQuant DET
+#cat Imp VERB
+#cat Inflection X
+#cat Int NUM
+#cat Interj INTJ
+#cat Language NOUN
+#cat ListAP X
+#cat ListAdV X
+#cat ListAdv X
+#cat ListCN X
+#cat ListComp X
+#cat ListDAP X
+#cat ListIAdv X
+#cat ListImp X
+#cat ListNP X
+#cat ListRS X
+#cat ListS X
+#cat ListVPI X
+#cat ListVPI2 X
+#cat ListVPS X
+#cat ListVPS2 X
+#cat Mark PUNCT
+#cat Month NOUN
+#cat Monthday NUM
+#cat N NOUN primary
+#cat N2 NOUN
+#cat N3 NOUN
+#cat NP PRON ----
+#cat Num NUM
+#cat Numeral NUM
+#cat Ord NUM
+#cat PConj CCONJ
+#cat PConj CONJ
+#cat PN PROPN primary
+#cat Phr X
+#cat Pol X
+#cat Predet DET
+#cat Prep ADP primary
+#cat Pron PRON
+#cat Punct PUNCT
+#cat QCl X
+#cat QS X
+#cat QVP X
+#cat Quant DET
+#cat Quote PUNCT
+#cat RCl X
+#cat RNP PRON
+#cat RNPList X
+#cat RP PRON
+#cat RS X
+#cat S X
+#cat SC X
+#cat SSlash X
+#cat Sub10 NUM
+#cat Sub100 NUM
+#cat Sub1000 NUM
+#cat Sub1000000 NUM
+#cat Sub1000000000 NUM
+#cat Subj SCONJ
+#cat Tag X
+#cat Temp X
+#cat Tense X
+#cat Text X
+#cat Timeunit NOUN
+#cat Utt X
+#cat V VERB primary
+#cat V2 VERB
+#cat V2A VERB
+#cat V2Q VERB
+#cat V2S VERB
+#cat V2V VERB
+#cat V3 VERB
+#cat VA VERB
+#cat VP X
+#cat VPI X
+#cat VPI2 X
+#cat VPS X
+#cat VPS2 X
+#cat VPSlash X
+#cat VQ VERB
+#cat VS VERB
+#cat VV VERB
+#cat Weekday NOUN
+#cat Year NUM
+
+
+#cat Be VERB
+#cat There PRON
+

@@ -9,12 +9,15 @@ import UDConcepts
 import GFConcepts (pAbsTree)
 import UDVisualization
 import UDAnalysis
+import UDPatterns
 
 import PGF
 
 import System.Environment (getArgs)
 import Control.Concurrent
 import Control.Monad
+import Data.List(sortOn)
+import Data.Char(isDigit)
 
 -- to get parallel processing:
 -- Build with -threaded -rtsopts
@@ -35,11 +38,59 @@ main = do
     "check-annotations":path:lang:cat:_ -> checkAnnotations path lang cat
     
     "statistics":opts -> getContents >>= mapM_ print . udFrequencies (selectOpts opts) . parseUDText
+
+    "pattern-match":ws0 -> do
+       let (opts,ws) = span (flip elem ["adjust","prune"]) ws0
+       let sopts = selectOpts opts
+       patterntext <- case ws of
+         "-f":file:_ -> readFile file
+         _ -> return $ unwords ws
+       let pattern = (read patterntext) :: UDPattern
+       ss <- getContents >>= return . parseUDText
+       mapM_ putStrLn $ filter (not . null) $ map (showMatchesInUDSentence sopts pattern) ss
+    
+    "pattern-replace":ws -> do
+       patterntext <- case ws of
+         "-f":file:_ -> readFile file
+         _ -> return $ unwords ws
+       let pattern = (read patterntext) :: UDReplacement
+       putStrLn $ "## " ++ show pattern
+       ss <- getContents >>= return . parseUDText
+       mapM_ putStrLn $ map (showReplacementsInUDSentence pattern) ss
+    
+    "cosine-similarity":file1:file2:opts -> do
+      ud1 <- parseUDFile file1
+      ud2 <- parseUDFile file2
+      print $ udCosineSimilarity (selectOpts opts) ud1 ud2
+  
+    "cosine-similarity-sort":file1:file2:fopts -> do
+      ud1 <- parseUDFile file1
+      ud2 <- parseUDFile file2
+      let (limit,opts) = case fopts of
+             "-threshold":d:ropts | all isDigit d -> ((read d :: Double)/100, selectOpts ropts)
+             _ -> (0, selectOpts fopts)
+      let reference = udFrequencyMap opts ud1
+      let results = [(ud,sim) |
+            ud <- ud2,
+            let udmap = udFrequencyMap opts [ud],
+            let sim = cosineSimilarityOfMaps reference udmap
+            ]
+      let sortedResults = sortOn ((0-) . snd) (filter ((>= limit) . snd) results)
+      flip mapM_ sortedResults $ \ (ud,sim) -> do
+        putStrLn $ prt $ ud{udCommentLines = ("# similarity " ++ show sim) : udCommentLines ud}
+  
+    "not-covered":file1:file2:opts -> do
+      ud1 <- parseUDFile file1
+      ud2 <- parseUDFile file2
+      putStrLn $ unwords $ map show $ notCoveredFeatures (selectOpts opts) ud1 ud2
   
     "parse2latex":file:_ -> getContents >>= absTrees2latex initUDEnv file . map pAbsTree . selectParseTrees . lines
     
     "parse2pdf":_ -> getContents >>= visualizeAbsTrees initUDEnv . map pAbsTree . selectParseTrees . lines
 
+    "conll2tree":_ -> getContents >>= mapM_ putStrLn . map (prUDTree . udSentence2tree) . parseUDText
+    "adjust-positions":_ -> getContents >>= mapM_ putStrLn . map (prt . udTree2sentence . createRoot . udSentence2tree . adjustUDIds) . parseUDText
+    
     "extract-pos-words":_ -> getContents >>= putStrLn . unlines . map ud2poswords . parseUDText
     "extract-pos-feats-words":_ -> getContents >>= putStrLn . unlines . map ud2posfeatswords . parseUDText
 
@@ -49,7 +100,7 @@ main = do
        let entries = lexicalEntries env uds
        putStrLn $ unlines [unwords [w ++ "_" ++ c, c, "--", show i] | ((w,c),i) <- entries]
 
-    "eval":micmac:luas:goldf:testf:_ -> do
+    "eval":micmac:luas:goldf:testf:opts -> do
     
       putStrLn (unwords ("evaluating": tail xx))
       
@@ -59,46 +110,89 @@ main = do
       gold <- parseUDFile goldf
       test <- parseUDFile testf
 
-      let score = udCorpusScore mcro crit gold test
-      print score
+      case opts of
+        _ | isOpt (selectOpts opts) "units" -> do
+          let pairs = zip gold test
+          let scores = sortOn (udScore . fst) [(snd (udSentenceScore crit go [te]), (go,te)) | (go,te) <- pairs]
+          flip mapM_ scores $ \ (score,(go,te)) -> do
+            print score
+            putStrLn $ prUDAlign go te
+          
+        _ -> do
+          let score = udCorpusScore mcro crit gold test
+          print score
       
-    dir:path:lang:cat:opts | elem dir ["-ud2gf","-gf2ud","-ud2gfpar","-string2gf2ud"] -> do
+    dir:path:lang:cat:opts | elem (dropWhile (=='-') dir) ["ud2gf","gf2ud","ud2gfparallel","string2gf2ud"] -> do
       env <- getEnv path lang cat
-      convertGFUD dir (selectOpts opts) env
+      convertGFUD (dropWhile (=='-') dir) (selectOpts opts) env
     _ -> putStrLn $ helpMsg
 
 helpMsg = unlines $ [
     "Usage:",
-    "   gfud (-ud2gf|-gf2ud|-string2gf2ud|-gf2udpar) <path> <language> <startcat>",
-    " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",
-    " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile>",
-    " | gfud check-treebank",
-    " | gfud check-annotations <path> <language> <startcat>",
+    "   gfud check-treebank",
     " | gfud statistics <option>*",
+    " | gfud pattern-match (adjust|prune)? ('<pattern>' | -f <file>)",
+    " | gfud pattern-replace ('<replacement>' | -f <file>)",
+    " | gfud cosine-similarity <file> <file> <option>*",
+    " | gfud cosine-similarity-sort <file> <file> <option>*",
+    " | gfud not-covered <standardfile> <testedfile> <option>*",
     " | gfud extract-pos-words",
     " | gfud extract-pos-feats-words",
     " | gfud lexical-entries <abslabels-file>",
+    " | gfud conll2tree",
+    " | gfud adjust-positions",
     " | gfud conll2pdf",
     " | gfud parse2pdf",
     " | gfud conll2latex",
     " | gfud parse2latex <file>",
-    "where path = grammardir/abstractprefix, language = concretesuffix",
-    "The input comes from stdIO, and the output goes there as well",
-    "The option -gf2udpar should be used with the Haskell runtime flag +RTS -Nx -RTS",
+    " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile> units?",
+    " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",
+    " | gfud check-annotations <path> <language> <startcat>",
+    " | gfud (ud2gf|gf2ud|string2gf2ud|ud2gfparallel) <path> <language> <startcat> <option>*",
+    "where path = grammardir/abstractprefix, language = concretesuffix.",
+    "The files read are <path>.pgf, <path>.labels, and <path><language>.labels.",
+    "Except for <file> arguments, the input comes from stdIO, and the output goes there as well",
+    "The option ud2gfparallel should be used with the Haskell runtime flag +RTS -Nx -RTS",
     "where x is the number of cores you want to use in parallel processing.",
-    "For more functionalities: open in ghci.",
+    "For more functionalities: open MainUDGF.hs in ghci.",
+    "Pattern syntax:" ,
+    "   (FORM | LEMMA | POS | DEPREL | DEPREL_ | FEATS | FEATS_) <string>",
+    " | ARG <pos> <deprel>",
+    " | (AND | OR) [ <pattern>,* ]",
+    " | (SEQUENCE | SEQUENCE_) [ <pattern>,* ]",
+    " | NOT <pattern>",
+    " | (TREE | TREE_) <pattern> <pattern>*",
+    " | (DEPTH | DEPTH_UNDER | DEPTH_OVER) <int>",
+    " | (LENGTH | LENGTH_UNDER | LENGTH_OVER) <int>",
+    " | TRUE",
+    " | PROJECTIVE",
+    "where DEPREL_, FEATS_, SEQUENCW_, TREE_ mean matching a subset/substring.",
+    "<string> arguments require double quotes, and the <pattern> itself is in single quotes",
+    "if read from command line, but not if read from a file (the -f option).",
+    "Replacement syntax:",
+    "   (REPLACE_FORM | REPLACE_LEMMA | REPLACE_POS | REPLACE_DEPREL | REPLACE_DEPREL_) <string> <string>",
+    " | (REPLACE_FEATS | REPLACE_FEATS_) <string> <string>",
+    " | IF <pattern> <replacement>",
+    " | UNDER <pattern> <replacement>",
+    " | OVER <pattern> <replacement>",
+    " | PRUNE <pattern> <int>",
+    " | FILTER_SUBTREES <pattern> <pattern>",
+    " | FLATTEN <pattern>",
+    " | RETARGET <pattern> <pattern> <pattern>",
+    " | CHANGES [ <replacement>,* ]",
+    " | COMPOSE [ <replacement>,* ]",
     "Options:"
-    ] ++ [opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
+    ] ++ ["  " ++ opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 
 convertGFUD :: String -> Opts -> UDEnv -> IO ()
 convertGFUD dir opts env = case dir of
-  "-ud2gf" -> getContents >>= ud2gfOpts (if null opts then defaultOptsUD2GF else opts) env
-  "-ud2gfpar" -> getContents >>= ud2gfOptsPar (if null opts then defaultOptsUD2GF else opts) env
+  "ud2gf" -> getContents >>= ud2gfOpts (if null opts then defaultOptsUD2GF else opts) env
+  "ud2gfparallel" -> getContents >>= ud2gfOptsPar (if null opts then defaultOptsUD2GF else opts) env
   _ -> do
       s <- getContents
       let conv = case dir of
-            "-gf2ud" -> G.testTreeString
-            "-string2gf2ud" -> G.testString
+            "gf2ud" -> G.testTreeString
+            "string2gf2ud" -> G.testString
       let os = if null opts then defaultOptsGF2UD else opts
       uds <- mapM (\ (i,s) -> conv i os env s) $ zip [1..] . filter (not . null) $ lines s
       case opts of
@@ -140,8 +234,9 @@ termInfix = "Infix"
 termcat = "Term"
 
 checkUDSentences :: [UDSentence] -> String
-checkUDSentences uds = unlines $
-  errorsInUDSentences uds
+checkUDSentences uds = case errorsInUDSentences uds of
+  [] -> "# treebank OK"
+  msgs -> unlines msgs
 
 -------------------
 

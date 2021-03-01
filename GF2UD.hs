@@ -112,7 +112,7 @@ adjustUDTree env tr@(RTree node trs) = RTree (adjust node atrs) atrs
 
 -- change node structure, create links to heads
 wordTree2udTree :: AnnotTree -> UDTree
-wordTree2udTree = annot UDIdRoot where
+wordTree2udTree = annot udIdRoot where
   annot udid tr@(RTree node trs) =
     let (position,tok) = case anToken node of
            Just pt -> pt

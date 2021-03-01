@@ -1,0 +1,168 @@
+#word es ser Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word fue ser Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin
+#word son ser Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin
+#word eran ser Mood=Ind|Number=Plur|Person=3|Tense=Imp|VerbForm=Fin
+#word era ser Mood=Ind|Number=Sing|Person=3|Tense=Imp|VerbForm=Fin
+#word ser ser VerbForm=Inf
+#word no no Polarity=Neg
+#word está estar Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word sido ser Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part
+#word fueron ser Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin
+#word sea ser Mood=Sub|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word están estar Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin
+#word estaba estar Mood=Ind|Number=Sing|Person=3|Tense=Imp|VerbForm=Fin
+
+-- more forms of ser and estar can be seen with
+--   cat es_gsd-ud-train.conllu | gfud pattern-match 'DEPREL "cop"' | gfud statistics FORM LEMMA FEATS
+
+#word no no Polarity=Neg
+
+#word que that _
+#word , , _
+#word : : _
+
+#lemma DEFAULT_ ser Cop cop head
+#lemma DEFAULT_ estar Cop cop head
+#lemma DEFAULT_ haber Haber aux head
+#lemma DEFAULT_ que That mark head
+#lemma DEFAULT_ no No advmod head
+#lemma DEFAULT_ , Comma punct head
+#lemma DEFAULT_ : Punct punct head
+
+#auxcat Cop AUX
+#auxcat That PART
+#auxcat No ADV
+#auxcat Comma PUNCT
+#auxcat Haber AUX
+
+#change obj > obl above case
+#change iobj > obl above case
+
+-- cat es_gsd-ud-train.conllu | grep AUX | grep haber | cut -f2,3,6 | sort -u
+#word ha haber Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word han haber Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin
+#word había haber Mood=Ind|Number=Sing|Person=3|Tense=Imp|VerbForm=Fin
+
+#morpho N 0 Number=Sing
+#morpho N 1 Number=Plur
+
+#morpho A,A2 0 Gender=Masc|Number=Sing  -- s Posit (ASg Masc AAttr) malo
+#morpho A,A2 1 Gender=Masc|Number=Sing  -- s Posit (ASg Masc APred) malo
+#morpho A,A2 2 Gender=Fem|Number=Sing  -- s Posit (ASg Fem AAttr) mala
+#morpho A,A2 3 Gender=Fem|Number=Sing  -- s Posit (ASg Fem APred) mala
+#morpho A,A2 4 Gender=Masc|Number=Plur  -- s Posit (APl Masc) malos
+#morpho A,A2 5 Gender=Fem|Number=Plur  -- s Posit (APl Fem) malas
+
+
+-- TODO
+-- cat es_gsd-ud-train.conllu | gfud statistics POS FEATS | grep VERB
+-- gfud check-annotations grammars/Structures Spa Top | grep "morpho V "
+
+#morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 0 VerbForm=Inf
+#morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 1 VerbForm=Inf
+#morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 2 Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin
+#morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 3 Mood=Ind|Number=Sing|Person=2|Tense=Pres|VerbForm=Fin
+#morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 4 Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 5 -- s (VFin (VPres Indic) Pl P1) soplamos
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 6 -- s (VFin (VPres Indic) Pl P2) sopláis
+#morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 7 Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 8 -- s (VFin (VPres Conjunct) Sg P1) sople
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 9 -- s (VFin (VPres Conjunct) Sg P2) soples
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 10 -- s (VFin (VPres Conjunct) Sg P3) sople
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 11 -- s (VFin (VPres Conjunct) Pl P1) soplemos
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 12 -- s (VFin (VPres Conjunct) Pl P2) sopléis
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 13 -- s (VFin (VPres Conjunct) Pl P3) soplen
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 14 -- s (VFin (VImperf Indic) Sg P1) soplaba
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 15 -- s (VFin (VImperf Indic) Sg P2) soplabas
+#morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 16 Mood=Ind|Number=Sing|Person=3|Tense=Imp|VerbForm=Fin
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 17 -- s (VFin (VImperf Indic) Pl P1) soplábamos
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 18 -- s (VFin (VImperf Indic) Pl P2) soplabais
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 19 -- s (VFin (VImperf Indic) Pl P3) soplaban
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 20 -- s (VFin (VImperf Conjunct) Sg P1) soplara
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 21 -- s (VFin (VImperf Conjunct) Sg P2) soplaras
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 22 -- s (VFin (VImperf Conjunct) Sg P3) soplara
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 23 -- s (VFin (VImperf Conjunct) Pl P1) sopláramos
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 24 -- s (VFin (VImperf Conjunct) Pl P2) soplarais
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 25 -- s (VFin (VImperf Conjunct) Pl P3) soplaran
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 26 -- s (VFin VPasse Sg P1) soplé
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 27 -- s (VFin VPasse Sg P2) soplaste
+#morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 28 Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 29 -- s (VFin VPasse Pl P1) soplamos
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 30 -- s (VFin VPasse Pl P2) soplasteis
+#morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 31 Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 32 -- s (VFin VFut Sg P1) soplaré
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 33 -- s (VFin VFut Sg P2) soplarás
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 34 -- s (VFin VFut Sg P3) soplará
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 35 -- s (VFin VFut Pl P1) soplaremos
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 36 -- s (VFin VFut Pl P2) soplaréis
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 37 -- s (VFin VFut Pl P3) soplarán
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 38 -- s (VFin VCondit Sg P1) soplaría
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 39 -- s (VFin VCondit Sg P2) soplarías
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 40 -- s (VFin VCondit Sg P3) soplaría
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 41 -- s (VFin VCondit Pl P1) soplaríamos
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 42 -- s (VFin VCondit Pl P2) soplaríais
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 43 -- s (VFin VCondit Pl P3) soplarían
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 44 -- s (VImper SgP2) sopla
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 45 -- s (VImper PlP1) soplemos
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 46 -- s (VImper PlP2) soplad
+#morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 47 Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 48 -- s (VPart Masc Pl) soplados
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 49 -- s (VPart Fem Sg) soplada
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 50 -- s (VPart Fem Pl) sopladas
+#morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 51 VerbForm=Ger
+-- #morpho V,V2,V3,VS,VV,VA,VQ,V2V,V2S,V2V,V2A,V2Q 52 -- s VPresPart soplando
+
+
+-- (["VERB","Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin"],5836)
+-- (["VERB","VerbForm=Inf"],5500)
+-- (["VERB","Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin"],4614)
+-- (["VERB","Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin"],2186)
+-- (["VERB","Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part"],2044)
+-- (["VERB","VerbForm=Ger"],1629)
+-- (["VERB","Gender=Masc|Number=Sing|VerbForm=Part"],1524)
+-- (["VERB","Mood=Ind|Number=Sing|Person=3|Tense=Imp|VerbForm=Fin"],1298)
+-- (["VERB","Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin"],1054)
+-- (["VERB","Gender=Fem|Number=Sing|VerbForm=Part"],883)
+-- (["VERB","Mood=Ind|Number=Plur|Person=3|Tense=Imp|VerbForm=Fin"],607)
+-- (["VERB","Gender=Masc|Number=Plur|VerbForm=Part"],487)
+-- (["VERB","Gender=Fem|Number=Sing|Tense=Past|VerbForm=Part"],387)
+-- (["VERB","Gender=Fem|Number=Plur|VerbForm=Part"],385)
+-- (["VERB","Mood=Ind|Number=Sing|Person=3|Tense=Fut|VerbForm=Fin"],374)
+-- (["VERB","Mood=Sub|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin"],358)
+-- (["VERB","Gender=Masc|Number=Sing|VerbForm=Fin"],280)
+-- (["VERB","Mood=Cnd|Number=Sing|Person=3|VerbForm=Fin"],239)
+-- (["VERB","Gender=Fem|Number=Sing|VerbForm=Fin"],220)
+-- (["VERB","Mood=Sub|Number=Sing|Person=3|Tense=Imp|VerbForm=Fin"],182)
+-- (["VERB","VerbForm=Fin"],181)
+-- (["VERB","Gender=Masc|Number=Plur|Tense=Past|VerbForm=Part"],177)
+-- (["VERB","Mood=Ind|Number=Plur|Person=1|Tense=Pres|VerbForm=Fin"],169)
+-- (["VERB","Mood=Sub|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin"],163)
+-- (["VERB","Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin"],149)
+-- (["VERB","Gender=Fem|Number=Plur|Tense=Past|VerbForm=Part"],126)
+-- (["VERB","Mood=Ind|Number=Plur|Person=3|Tense=Fut|VerbForm=Fin"],121)
+-- (["VERB","Mood=Ind|Number=Sing|Person=1|Tense=Past|VerbForm=Fin"],83)
+-- (["VERB","Mood=Sub|Number=Plur|Person=3|Tense=Imp|VerbForm=Fin"],82)
+-- (["VERB","Mood=Cnd|Number=Plur|Person=3|VerbForm=Fin"],71)
+-- (["VERB","Mood=Ind|Number=Sing|Person=2|Tense=Pres|VerbForm=Fin"],49)
+-- (["VERB","Gender=Fem|Number=Plur|VerbForm=Fin"],48)
+-- (["VERB","Gender=Masc|Number=Plur|VerbForm=Fin"],44)
+-- (["VERB","Number=Sing|VerbForm=Fin"],42)
+-- (["VERB","Mood=Ind|Number=Plur|Person=1|Tense=Past|VerbForm=Fin"],40)
+-- (["VERB","Mood=Ind|Number=Plur|Person=1|Tense=Fut|VerbForm=Fin"],29)
+-- (["VERB","Mood=Ind|Number=Sing|Person=1|Tense=Fut|VerbForm=Fin"],23)
+-- (["VERB","Mood=Imp|Number=Plur|Person=3|VerbForm=Fin"],19)
+-- (["VERB","Mood=Imp|Number=Sing|Person=3|VerbForm=Fin"],18)
+-- (["VERB","Number=Plur|VerbForm=Fin"],18)
+-- (["VERB","Mood=Ind|Number=Plur|Person=1|Tense=Imp|VerbForm=Fin"],15)
+-- (["VERB","Mood=Imp|Number=Sing|Person=2|VerbForm=Fin"],14)
+-- (["VERB","Gender=Masc|VerbForm=Fin"],6)
+-- (["VERB","Mood=Sub|Number=Plur|Person=1|Tense=Pres|VerbForm=Fin"],6)
+-- (["VERB","Mood=Imp|Number=Plur|Person=1|VerbForm=Fin"],5)
+-- (["VERB","Mood=Cnd|Number=Plur|Person=1|VerbForm=Fin"],3)
+-- (["VERB","Mood=Ind|Number=Sing|Person=2|Tense=Past|VerbForm=Fin"],3)
+-- (["VERB","Mood=Sub|Number=Plur|Person=2|Tense=Pres|VerbForm=Fin"],3)
+-- (["VERB","Mood=Sub|Number=Sing|Person=2|Tense=Pres|VerbForm=Fin"],3)
+-- (["VERB","Gender=Fem|VerbForm=Fin"],2)
+-- (["VERB","Mood=Cnd|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin"],2)
+-- (["VERB","Mood=Ind|Number=Plur|Person=2|Tense=Pres|VerbForm=Fin"],2)
+-- (["VERB","Mood=Sub|Number=Plur|Person=1|Tense=Imp|VerbForm=Fin"],2)
