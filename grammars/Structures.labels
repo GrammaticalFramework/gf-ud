@@ -1,0 +1,276 @@
+AdAP advmod head
+AdAdv amod head
+AdNum advmod head
+AdVVP advmod head
+AdVVPSlash advmod head
+AddAdvQVP head advmod
+AdjCN amod head
+AdjDAP head amod
+AdjOrd head
+AdnCAdv head
+AdvAP head advmod
+AdvCN head nmod
+AdvIAdv advmod head
+AdvIP head advmod
+AdvNP head nmod
+AdvQVP head obj
+AdvS advmod head
+AdvSlash head advmod
+AdvVP head advmod
+AdvVPSlash head advmod
+ApposCN head appos
+BaseAP head conj
+BaseAdV head conj
+BaseAdv head conj
+BaseCN head conj
+BaseDAP head conj
+BaseIAdv head conj
+BaseNP head conj
+BaseRS head conj
+BaseS head conj
+CAdvAP case amod head
+CleftAdv head advcl
+CleftNP head acl
+CompAP head
+CompAdv head
+CompCN head
+CompIAdv head
+CompIP head
+CompNP head
+ComparA amod head
+ComparAdvAdj advmod head obl
+ComparAdvAdjS advmod head ccomp
+ComplA2 head nmod
+ComplN2 head nmod
+ComplN3 head nmod
+ComplSlash head obj
+ComplSlashIP head obj
+ComplVA head xcomp
+ComplVQ head ccomp
+ComplVS head ccomp
+ComplVV head xcomp
+ConjAP cc head
+ConjAdV cc head
+ConjAdv cc head
+ConjCN cc head
+ConjDet cc head
+ConjIAdv cc head
+ConjNP cc head
+ConjRS cc head
+ConjS cc head
+ConsAP head conj
+ConsAdV head conj
+ConsAdv head conj
+ConsCN head conj
+ConsDAP head conj
+ConsIAdv head conj
+ConsNP head conj
+ConsRS head conj
+ConsS head conj
+CountNP det head
+DetCN det head
+DetDAP head
+DetNP head
+DetQuant head nummod
+DetQuantOrd head nummod amod
+EmbedQS head
+EmbedS head
+EmbedVP head
+ExistIP head
+ExistIPAdv head advmod
+ExistNP head
+ExistNPAdv head nmod
+ExtAdvNP head nmod
+ExtAdvS advmod head
+ExtAdvVP head advmod
+FunRP case nmod head
+GenericCl head
+IDig head
+IIDig head goeswith
+IdetCN det head
+IdetIP head
+IdetQuant head nummod
+ImpP3 obj head --- mod mod
+ImpPl1 head
+ImpVP head
+ImpersCl head
+MassNP head
+NumCard head
+NumDigits head
+NumNumeral head
+OrdDigits head
+OrdNumeral head
+OrdNumeralSuperl nummod head
+OrdSuperl head
+PConjConj head
+PPartNP head xcomp
+PartNP head nmod
+PhrUtt cc head discourse
+PositA head
+PositAdAAdj head
+PositAdvAdj head
+PossNP head nmod
+PossPron head
+PredSCVP csubj head
+PredVP nsubj head
+PredetNP det:predet head
+PrepIP case head
+PrepNP case head
+ProgrVP head
+QuestCl head
+QuestIAdv advmod head
+QuestIComp head nsubj
+QuestQVP nsubj head
+QuestSlash obj head
+QuestVP nsubj head
+ReflA2 head
+RelCN head acl:relcl
+RelCl head
+RelNP head acl:relcl
+RelS head advcl
+RelSlash mark head
+RelVP mark head
+SSubjS head mark advcl
+SelfAdVVP head
+SelfAdvVP head
+SelfNP head
+SentAP head acl
+SentCN head acl
+Slash2V3 head iobj
+---Slash3V3 head obj
+SlashPrep head case
+SlashV2A head xcomp
+SlashV2Q head ccomp
+SlashV2S head ccomp
+SlashV2V head xcomp
+SlashV2VNP head obj xcomp
+SlashV2a head
+SlashVP nsubj head
+SlashVS nsubj head ccomp
+SlashVV head ccomp
+SubjS mark head
+TTAnt aux head --- head head
+Use2N3 head
+Use3N3 head
+UseA2 head
+UseCl aux advmod head
+UseComp head
+UseComparA head
+UseN head
+UsePN head
+UsePron head
+UseQCl aux advmod head
+UseRCl aux advmod head
+UseSlash aux advmod head
+UseV head
+UttAP head
+UttAdv head
+UttCN head
+UttCard head
+UttIAdv head
+UttIP head
+UttImpPl aux head
+UttImpPol aux head
+UttImpSg aux head
+UttInterj head
+UttNP head
+UttQS head
+UttS head
+UttVP head
+VPSlashPrep head case
+VocNP head
+
+UttPunctTop head punct
+UttVocativePunctTop head vocative punct
+ConjUttPunctTop cc head punct
+
+CompoundN compound head
+CompoundPN compound head
+FlatPN head flat
+GenModNP nummod nmod:poss head
+PredPassVPSlash nsubj:pass head
+PredPassSCVPSlash csubj:pass head
+UttList head list
+DirectComplVS head parataxis
+ApposNP head appos
+
+A ADJ
+A2 ADJ
+AdA ADV
+AdN ADV
+AdV ADV
+Adv ADV
+Ant X
+CAdv ADV
+Card NUM
+Cl X
+ClSlash X
+Comp X
+Conj CCONJ
+DAP DET
+Det DET
+Dig NUM
+Digit NUM
+Digits NUM
+Float NUM
+IAdv ADV
+IComp X
+IDet DET
+IP PRON
+IQuant DET
+Int NUM
+Interj INTJ
+ListAP X
+ListAdV X
+ListAdv X
+ListCN X
+ListDAP X
+ListIAdv X
+ListNP X
+ListRS X
+ListS X
+N NOUN
+N2 NOUN
+N3 NOUN
+NP PRON
+Num NUM
+Numeral NUM
+Ord NUM
+PConj CCONJ
+PN PROPN
+Phr X
+Pol X
+Predet DET
+Prep ADP
+Pron PRON
+QCl X
+QS X
+QVP X
+Quant DET
+RCl X
+RP PRON
+RS X
+S X
+SC X
+SSlash X
+String SYM
+Subj SCONJ
+Temp X
+Tense X
+Text X
+Utt X
+V VERB
+V2 VERB
+V2A VERB
+V2Q VERB
+V2S VERB
+V2V VERB
+V3 VERB
+VA VERB
+VQ VERB
+VS VERB
+VV VERB
+Voc INTJ
+
+Punct PUNCT
+

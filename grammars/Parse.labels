@@ -1,0 +1,394 @@
+#fun AdAP advmod head -- AdA -> AP -> AP
+#fun AdAdV amod head
+#fun AdAdv amod head
+#fun AdNum advmod head
+#fun AdVVP advmod head -- AdV -> VP -> VP
+#fun AdVVPSlash advmod head
+#fun AddAdvQVP head advmod
+#fun AdjCN amod head -- AP -> CN -> CN
+#fun AdjDAP head amod
+#fun AdnCAdv advmod head
+#fun AdvAP _ PrepNP > head nmod
+#fun AdvAP head advmod
+#fun AdvAdv head advmod
+#fun AdvCN head nmod -- CN -> Adv -> CN
+#fun AdvIAdv advmod head -- IAdv -> Adv -> IAdv
+#fun AdvIP head advmod -- IP -> Adv -> IP
+#fun AdvImp advmod head
+#fun AdvIsNP head nsubj
+#fun AdvNP _ PrepNP > head nmod
+#fun AdvNP head nmod
+#fun AdvQVP head obj
+#fun AdvQVP head obj -- VP -> IAdv -> QVP
+#fun AdvRAP head case nmod
+#fun AdvRNP head case nmod
+#fun AdvRVP head case nmod
+#fun AdvS PrepNP _ > obl head
+#fun AdvS advmod head
+#fun AdvSlash _ PrepNP > head obl
+#fun AdvSlash head advmod
+#fun AdvVP _ PrepNP > head obl -- VP -> (PrepNP : Prep -> NP -> Adv) -> VP
+#fun AdvVP _ SubjS > head advcl -- VP -> (PrepNP : Prep -> NP -> Adv) -> VP
+#fun AdvVP head advmod -- VP -> Adv -> VP
+#fun AdvVPSlash _ PrepNP > head obl
+#fun AdvVPSlash head advmod
+#fun ApposCN head appos
+#fun ApposNP head appos
+#fun BaseAP head conj -- AP -> AP -> ListAP
+#fun BaseAdV head conj -- AdV -> AdV -> ListAdV
+#fun BaseAdv head conj -- Adv -> Adv -> ListAdv
+#fun BaseCN head conj -- CN -> CN -> ListCN
+#fun BaseCNN nummod head nummod conj --- _ head _ head
+#fun BaseComp head conj
+#fun BaseDAP head conj -- DAP -> DAP -> ListDAP
+#fun BaseIAdv head conj -- IAdv -> IAdv -> ListIAdv
+#fun BaseImp head conj
+#fun BaseNP head conj -- NP -> NP -> ListNP
+#fun BaseRS head conj -- RS -> RS -> ListRS
+#fun BaseS head conj -- S -> S -> ListS
+#fun BaseVPI head conj -- VPI -> VPI -> ListVPI
+#fun BaseVPI2 head conj
+#fun BaseVPS head conj -- VPS -> VPS -> ListVPS
+#fun BaseVPS2 head conj
+#fun Base_nr_RNP head conj
+#fun Base_rn_RNP head conj
+#fun Base_rr_RNP head conj
+#fun CAdvAP advmod case amod head --- * 4 mod head mod
+#fun CleftAdv head advcl --- mod mod
+#fun CleftNP head acl --- mod mod
+#fun CompAP head -- AP -> Comp
+#fun CompAdv head -- Adv -> Comp
+#fun CompIAdv head -- IAdv -> IComp
+#fun CompIP head -- IP -> IComp
+#fun CompNP head -- NP -> Comp
+#fun CompVP aux advmod nsubj head --- mod mod _ head
+#fun ComparA amod head
+#fun ComparAdv advmod case head nmod --- _ head mod mod
+#fun ComplA2 head nmod
+#fun ComplBareVS head ccomp
+#fun ComplDirectVQ head ccomp
+#fun ComplDirectVS head ccomp
+#fun ComplN2 head nmod
+#fun ComplN3 head nmod --- head arg
+#fun ComplSlash head obj
+#fun ComplSlashIP head obj
+#fun ComplSlashIP head obj -- VPSlash -> IP -> QVP
+#fun ComplSlashPartLast head obj
+#fun ComplVA head xcomp
+#fun ComplVPI2 head obj
+#fun ComplVPIVV head xcomp
+#fun ComplVPS2 head obj
+#fun ComplVQ head ccomp
+#fun ComplVS head ccomp
+#fun ComplVV head aux advmod xcomp
+#fun CompoundAP nmod head --- comp head
+#fun CompoundN compound head
+#fun CompoundN compound head -- N -> N -> N
+#fun ConjAP cc head -- Conj -> ListAP -> AP
+#fun ConjAdV cc head -- Conj -> ListAdV -> AdV
+#fun ConjAdv cc head -- Conj -> ListAdv -> Adv
+#fun ConjCN cc head -- Conj -> ListCN -> CN
+#fun ConjComp cc head
+#fun ConjDet cc head -- Conj -> ListDAP -> Det
+#fun ConjIAdv cc head -- Conj -> ListIAdv -> IAdv
+#fun ConjImp cc head
+#fun ConjNP cc head -- Conj -> ListNP -> NP
+#fun ConjRNP cc head
+#fun ConjRS cc head -- Conj -> ListRS -> RS
+#fun ConjS cc head -- Conj -> ListS -> S
+#fun ConjVPI cc head -- Conj -> ListVPI -> VPI
+#fun ConjVPI2 cc head
+#fun ConjVPS cc head -- Conj -> ListVPS -> VPS
+#fun ConjVPS2 cc head
+#fun ConsAP head conj -- AP -> ListAP -> ListAP
+#fun ConsAdV head conj -- AdV -> ListAdV -> ListAdV
+#fun ConsAdv head conj -- Adv -> ListAdv -> ListAdv
+#fun ConsCN head conj -- CN -> ListCN -> ListCN
+#fun ConsComp head conj
+#fun ConsDAP head conj -- DAP -> ListDAP -> ListDAP
+#fun ConsIAdv head conj -- IAdv -> ListIAdv -> ListIAdv
+#fun ConsImp head conj
+#fun ConsNP head conj -- NP -> ListNP -> ListNP
+#fun ConsRS head conj -- RS -> ListRS -> ListRS
+#fun ConsS head conj -- S -> ListS -> ListS
+#fun ConsVPI head conj -- VPI -> ListVPI -> ListVPI
+#fun ConsVPI2 head conj
+#fun ConsVPS head conj -- VPS -> ListVPS -> ListVPS
+#fun ConsVPS2 head conj
+#fun Cons_nr_RNP head conj
+#fun Cons_rr_RNP head conj
+#fun CountNP det head
+#fun DetCN det head -- Det -> CN -> NP
+#fun DetCNN det cc head --- mod _ head
+#fun DetQuant head nummod
+#fun DetQuantOrd head nummod amod
+#fun EmbedVP aux advmod obj head --- _ _ _ head
+#fun EnoughAP head aux advmod xcomp --- head _ _ mod
+#fun ExistIPAdv head advmod
+#fun ExistIPQS aux advmod head -- Temp -> Pol -> NP -> S
+#fun ExistNPAdv head nmod
+#fun ExistNPQS aux advmod head -- Temp -> Pol -> NP -> S
+#fun ExistS aux advmod head -- Temp -> Pol -> NP -> S
+#fun ExtAdvAP head advmod
+#fun ExtAdvNP head nmod
+#fun ExtAdvS advmod head
+#fun ExtAdvVP head advmod
+#fun ExtRelNP head acl
+#fun FocusAdV advmod head
+#fun FocusAdv advmod head
+#fun FocusComp nmod head --- mod mod
+#fun FocusObj obj head
+#fun FrontComplDirectVQ nsubj head ccomp
+#fun FrontComplDirectVS nsubj head ccomp
+#fun FunRP case nmod head -- Prep -> NP -> RP -> RP
+#fun GenModIP nummod nmod head --- mod mod mod
+#fun GenModNP nummod nmod head --- _ poss head
+#fun GenRP nummod head
+#fun IDig head -- Dig -> Digits
+#fun IIDig nummod head -- Dig -> Digits -> Digits --- head goeswith
+#fun IdetCN det head -- IDet -> CN -> IP
+#fun IdetIP head -- IDet -> IP
+#fun IdetQuant head nummod -- IQuant -> Num -> IDet
+#fun ImpP3 obj head --- mod mod
+#fun ImpVP head -- VP -> Imp
+#fun InOrderToVP aux advmod nmod head
+#fun MassNP head -- CN -> NP
+#fun MkDefinition nsubj head --- _ _
+#fun MkDefinitionEx nsubj head advmod --- _ _ _
+#fun MkDocument head advmod nmod --- _ _ _
+#fun MkVPI head -- VP -> VPI
+#fun MkVPS aux advmod head
+#fun MkVPS aux advmod head -- Temp -> Pol -> VP -> VPS
+#fun MkVPS2 aux advmod head
+#fun OrdNumeral head -- Numeral -> Ord
+#fun OrdNumeralSuperl nummod head
+#fun PartNP head nmod
+#fun PassAgentVPSlash head nmod
+#fun PastPartAgentAP head obj
+#fun PhrUtt cc head discourse
+#fun PhrUttMark cc head discourse punct --- _ head _ _
+#fun PositA head -- A -> AP
+#fun PositAdvAdj head -- A -> Adv
+#fun PossCNN_RNP det cc head nmod --- _ _ head poss
+#fun PossNP head nmod
+#fun PossPronRNP nmod nummod head nmod --- poss _ head mod
+#fun PredAPVP amod head --- mod mod
+#fun PredIAdvVP advmod head
+#fun PredSCVP csubj head
+#fun PredVP _ PassAgentVPSlash > nsubj:pass head
+#fun PredVP _ PassVPSlash > nsubj:pass head
+#fun PredVP nsubj head
+#fun PredVPS _ PassAgentVPSlash > nsubj:pass head
+#fun PredVPS _ PassVPSlash > nsubj:pass head
+#fun PredVPS nsubj head -- NP -> VPS -> S
+#fun PredetNP det head
+#fun PredetRNP det head
+#fun PrepCN case head
+#fun PrepIP case head -- Prep -> IP -> IAdv
+#fun PrepNP case head -- Prep -> NP -> Adv
+#fun ProgrVP head -- VP -> VP
+#fun PunctUttText head punct -- Utt -> Punct -> Text
+#fun QuantPlCN det head -- Quant -> CN -> NP
+#fun QuantSgCN det head -- Quant -> CN -> NP
+#fun QuestCl head -- Cl -> QCl ---- not active
+#fun QuestIAdv advmod head -- IAdv -> Cl -> QCl ---- not active
+#fun QuestIAdvNPVP advmod nsubj head -- IAdv -> NP -> VP -> QCl ---- temporary
+#fun QuestIComp head nsubj -- IComp -> NP -> QCl
+#fun QuestQVP nsubj head -- IP -> QVP -> QCl
+#fun QuestSlash obj head -- IP -> ClSlash -> QCl
+#fun QuestVP nsubj head -- IP -> VP -> QCl
+#fun QuestVPS nsubj head -- IP -> VPS -> QS
+#fun RecipVPSlashCN head obj
+#fun ReflA2 head nmod
+#fun ReflPoss nummod head
+#fun ReflPossCNN cc head
+#fun ReflVPSlash head obj
+#fun RelCN head acl -- CN -> RS -> CN
+#fun RelCl head -- Cl -> RCl
+#fun RelNP head acl
+#fun RelS head advcl
+#fun RelSlash mark head
+#fun RelSlash mark head -- RP -> ClSlash -> RCl
+#fun RelVP mark head -- RP -> VP -> RCl
+#fun SQuestVPS nsubj head
+#fun SSubjS head mark advcl
+#fun SentAP head acl --- head mod
+#fun SentCN head acl --- head mod
+#fun Slash2V3 head iobj --- head obj
+#fun Slash3V3 head obj
+#fun SlashBareV2S head ccomp
+#fun SlashPrep head case
+#fun SlashV2A head xcomp
+#fun SlashV2Q head ccomp
+#fun SlashV2S head ccomp
+#fun SlashV2V head aux advmod xcomp
+#fun SlashV2VNP head obj aux advmod xcomp
+#fun SlashVP nsubj head
+#fun SlashVS nsubj head ccomp
+#fun SlashVV head aux advmod xcomp
+#fun StrandQuestSlash obj head
+#fun StrandRelSlash obj head
+#fun SubjRelNP head acl ---
+#fun SubjS mark head -- Subj -> S -> Adv
+#fun TTAnt aux head --- head head -- Tense -> Ant -> Temp
+#fun UseAdAACard advmod head
+#fun UseCl aux advmod head
+#fun UseComp head -- Comp -> VP
+#fun UseComparA head -- A -> AP
+#fun UseN head -- N -> CN
+#fun UsePN head -- PN -> NP
+#fun UsePron head -- Pron -> NP
+#fun UseQCl aux advmod head
+#fun UseRCl aux advmod head
+#fun UseSlash aux advmod head
+#fun UttImpPl aux head
+#fun UttImpPol aux head
+#fun UttImpSg advmod head -- Pol -> Imp -> Utt
+#fun UttImpSg aux head
+#fun UttVP aux advmod obj head --- _ _ _ head
+#fun UttVPS obj head --- _ head
+#fun VPSlashPrep head case --- head mod
+#fun come_to_adj_VP amod head --- mod head
+#fun dayMonthAdv head nmod --- mod mod
+#fun dayMonthYearAdv head nmod advmod --- mod mod mod
+#fun few_X_short_of_Y head nmod nmod --- mod mod mod
+#fun have_name_Cl nmod head --- mod mod
+#fun married_Cl nsubj head --- mod mod
+#fun monthYearAdv head nmod --- mod mod
+#fun n_unit_CN nummod nmod head ---
+#fun n_units_AP nummod nmod head --- mod mod head
+#fun n_units_of_NP nummod head nmod --- mod mod mod
+#fun num head -- Sub1000000 -> Numeral
+#fun pot0 head -- Digit -> Sub10
+#fun pot0as1 head -- Sub10 -> Sub100
+#fun pot1 head -- Digit -> Sub100
+#fun pot1as2 head -- Sub100 -> Sub1000
+#fun pot1plus nummod head -- Digit -> Sub10 -> Sub100
+#fun pot1to19 head -- Digit -> Sub100
+#fun pot2 head -- Sub10 -> Sub1000
+#fun pot2as3 head -- Sub1000 -> Sub1000000
+#fun pot2plus nummod head -- Sub10 -> Sub100 -> Sub1000
+#fun pot3 head -- Sub1000 -> Sub1000000
+#fun pot3plus nummod head -- Sub1000 -> Sub1000 -> Sub1000000
+#fun pot4plus nummod head -- Sub1000 -> Sub1000000 -> Sub1000000000
+#fun timeHourMinute head nummod
+#fun timeunitAdv nummod head
+#fun timeunitRange nummod nummod head ---
+
+#cat A ADJ primary
+#cat A2 ADJ
+#cat ACard ADV
+#cat AP ADJ
+#cat AdA ADV
+#cat AdN ADV
+#cat AdV ADV
+#cat Adv ADV primary
+#cat Ant X
+#cat Bracket X
+#cat CAdv ADV
+#cat CN NOUN
+#cat CNN NOUN
+#cat Card NUM
+#cat Cl X
+#cat ClSlash X
+#cat Comp X
+#cat Conj CCONJ
+#cat Conj CONJ
+#cat DAP DET
+#cat Definition X
+#cat Det DET primary
+#cat Dig NUM
+#cat Digit NUM
+#cat Digits NUM
+#cat Document X
+#cat Float NUM
+#cat Hour NUM
+#cat IAdv ADV
+#cat IComp X
+#cat IDet DET
+#cat IP PRON
+#cat IQuant DET
+#cat Imp VERB
+#cat Inflection X
+#cat Int NUM
+#cat Interj INTJ
+#cat Language NOUN
+#cat ListAP X
+#cat ListAdV X
+#cat ListAdv X
+#cat ListCN X
+#cat ListComp X
+#cat ListDAP X
+#cat ListIAdv X
+#cat ListImp X
+#cat ListNP X
+#cat ListRS X
+#cat ListS X
+#cat ListVPI X
+#cat ListVPI2 X
+#cat ListVPS X
+#cat ListVPS2 X
+#cat Mark PUNCT
+#cat Month NOUN
+#cat Monthday NUM
+#cat N NOUN primary
+#cat N2 NOUN
+#cat N3 NOUN
+#cat NP PRON ----
+#cat Num NUM
+#cat Numeral NUM
+#cat Ord NUM
+#cat PConj CCONJ
+#cat PConj CONJ
+#cat PN PROPN primary
+#cat Phr X
+#cat Pol X
+#cat Predet DET
+#cat Prep ADP primary
+#cat Pron PRON
+#cat QCl X
+#cat QS X
+#cat QVP X
+#cat Quant DET
+#cat Quote PUNCT
+#cat RCl X
+#cat RNP PRON
+#cat RNPList X
+#cat RP PRON
+#cat RS X
+#cat S X
+#cat SC X
+#cat SSlash X
+#cat Sub10 NUM
+#cat Sub100 NUM
+#cat Sub1000 NUM
+#cat Sub1000000 NUM
+#cat Sub1000000000 NUM
+#cat Subj SCONJ
+#cat Tag X
+#cat Temp X
+#cat Tense X
+#cat Text X
+#cat Timeunit NOUN
+#cat Utt X
+#cat V VERB primary
+#cat V2 VERB
+#cat V2A VERB
+#cat V2Q VERB
+#cat V2S VERB
+#cat V2V VERB
+#cat V3 VERB
+#cat VA VERB
+#cat VP X
+#cat VPI X
+#cat VPI2 X
+#cat VPS X
+#cat VPS2 X
+#cat VPSlash X
+#cat VQ VERB
+#cat VS VERB
+#cat VV VERB
+#cat Weekday NOUN
+#cat Year NUM
+
+

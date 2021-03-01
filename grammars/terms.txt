@@ -1,0 +1,3 @@
+OpTerm (FactorTerm (AtomFactor x)) (AtomFactor (OpFactor (AtomFactor z) y OTimes)) OPlus
+OpTerm (FactorTerm (AtomFactor (OpFactor (AtomFactor x) z OTimes))) (AtomFactor y) OPlus
+FactorTerm (AtomFactor (OpFactor (AtomFactor x) (parenth (OpTerm (FactorTerm (AtomFactor z)) (AtomFactor y) OPlus)) OTimes))

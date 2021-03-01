@@ -1,0 +1,32 @@
+#word är  be  Mood=Ind|Tense=Pres|VerbForm=Fin
+#word var be  Mood=Ind|Tense=Past|VerbForm=Fin
+#word varit be  Tense=Past|VerbForm=Part
+#word vara   be  VerbForm=Inf
+#word har  have  Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word ha have  VerbForm=Inf
+#word hade  have  Mood=Ind|Tense=Past|VerbForm=Fin
+#word skulle skola  Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act
+#word skall  skola  Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act
+#word att att _
+#word inte inte Polarity=Neg
+#word , , _
+
+#lemma DEFAULT_ be Cop cop head
+#lemma DEFAULT_ have Have aux head
+#lemma DEFAULT_ skola Will aux head
+#lemma DEFAULT_ att To mark head
+#lemma DEFAULT_ inte Neg advmod head
+#lemma DEFAULT_ , Comma punct head
+
+
+#auxcat Cop AUX
+#auxcat Do AUX
+#auxcat Have AUX
+#auxcat Will AUX
+#auxcat Would AUX
+#auxcat Neg PART
+#auxcat Gen PART
+#auxcat To PART
+#auxcat That PART
+#auxcat Comma PUNCT
+#auxcat There PRON

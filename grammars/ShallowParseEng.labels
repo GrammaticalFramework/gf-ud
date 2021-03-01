@@ -1,0 +1,65 @@
+#word is   be  Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word are  be  Mood=Ind|Tense=Pres|VerbForm=Fin
+#word am   be  Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin
+#word was  be  Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin
+#word were be  Mood=Ind|Tense=Past|VerbForm=Fin
+#word been be  Tense=Past|VerbForm=Part
+#word be   be  VerbForm=Inf
+#word has  have  Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word have have  VerbForm=Inf
+#word had  have  Mood=Ind|Tense=Past|VerbForm=Fin
+#word does  do  Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#word do do  VerbForm=Inf
+#word did  do  Mood=Ind|Tense=Past|VerbForm=Fin
+#word would would  VerbForm=Fin
+#word will  will   VerbForm=Fin
+#word to to _
+#word that that _
+#word there there _
+#word not not Polarity=Neg
+#word n't not Polarity=Neg
+#word 's 's _
+#word ' ' _
+#word , , _
+
+#lemma MkVPI to To mark head
+#lemma AddStoVP that That mark head
+#lemma UseComp,ProgrVP be Cop cop head
+#lemma UseComp,ProgrVP,UseV have Have aux head
+#lemma UseV,ImpVP do Do aux head
+#lemma UseComp,UseV will Will aux head
+#lemma UseComp,UseV would Would aux head
+#lemma UseComp,ProgrVP,UseV,ImpVP,PassVP not Neg advmod head
+#lemma PossPron 's Gen case head
+#lemma PossPron ' Gen case head
+#lemma ExtAdvS , Comma punct head
+#lemma PassVP be Cop aux:pass head
+
+#lemma ExistS there There expl head
+#lemma ExistS be V cop head  --- in UD, the copula is the head!
+
+#morpho N 0 Number=Sing
+#morpho N 2 Number=Plur
+
+#morpho A 0 Degree=Pos
+#morpho A 2 Degree=Cmp
+#morpho A 4 Degree=Sup
+
+#morpho Pron 0 Case=Nom|PronType=Prs -- --- Case=Nom|Number=Sing|Person=1|PronType=Prs
+#morpho Pron 1 Poss=Yes|PronType=Prs -- --- Number=Plur|Person=3|Poss=Yes|PronType=Prs ; as Det, nmod:poss
+#morpho Pron 2 Case=Acc|PronType=Prs -- --- Case=Acc|Number=Sing|Person=1|PronType=Prs
+
+#morpho V,V2,VS,VV,V2V 0 VerbForm=Inf
+#morpho V,V2,VS,VV,V2V 1 Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin
+#morpho V,V2,VS,VV,V2V 2 Tense=Past|VerbForm=Part
+#morpho V,V2,VS,VV,V2V 3 Tense=Pres|VerbForm=Part
+#morpho V,V2,VS,VV,V2V 4 Mood=Ind|Tense=Past|VerbForm=Fin
+
+#discont   V2    0-4,head  5,ADP,case,obj   6,ADP,compound:prt,head
+#discont   V2V   0-4,head  5,ADP,case,obj   6,ADP,mark,xcomp  7,ADP,compound:prt,head  --- 6 PART if to?
+
+#multiword Prep head-first fixed
+#multiword PN head-first flat
+
+-- to deal with the_Det / thePl_Det, together with #auxfun annotations in ShallowParse.labels
+#lemma the_Det,thePl_Det the The head head
