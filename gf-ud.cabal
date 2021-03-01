@@ -29,6 +29,7 @@ executable gf-ud
                , UDOptions
                , UDStandard
                , UDVisualization
+               , UDPatterns
 
   -- other-extensions:
   build-depends:       base, containers, pretty, gf, process, filepath
