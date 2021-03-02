@@ -164,11 +164,10 @@ prUDSentence i = prt . addMeta i
  where
    addMeta i u = u {
      udCommentLines = [
-       "# sent_id = " ++ show i,
+       "# sent_id = gfud" ++ show (1000000 + i),
        "# text = " ++ unwords (map udFORM (udWordLines u))
        ]
      }
-
 
 -- example input: "1 John John NOUN 2 nsubj ; 2 walks walk VERB 0 root"
 pQuickUDSentence :: String -> UDSentence
