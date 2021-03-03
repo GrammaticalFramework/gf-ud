@@ -2,6 +2,7 @@ module BuildGFGrammar where
 
 import GFConcepts
 import UDConcepts
+import RTree
 
 import PGF
 
@@ -9,20 +10,16 @@ import qualified Data.Map as M
 import System.Environment (getArgs)
 import Data.List
 
+import System.FilePath.Posix
+
 testBuildGrammar =
   readFile "data/example-eng-ita-aligns.txt" >>=
   buildGFGrammar "grammars/Extract.pgf" ["grammars/MorphoDictEng.pgf", "grammars/MorphoDictIta.pgf"]
 -- before running the test, do
 --
--- $ pgf -make MorphodictLang.gf -o MorphoDictLang
--- $ pgf -make Extract*.gf
---
+-- $ gf -make Morphodict*.gf and rename pgf files to without Abs
+-- $ gf -make Extract*.gf (*= nothing, Eng, Ita...)
 -- Then just evaluate testBuildGrammar in ghci.
--- After this, do
---
--- $ grep Abstr Extracted.tmp >Extracted.gf
--- $ grep Eng Extracted.tmp >ExtractedEng.gf
--- $ grep Ita Extracted.tmp >ExtractedIta.gf
 --
 -- Make sure Extract*.gf and MorphoDict*.gf are on your path in GF.
 -- Then, in GF,
@@ -39,8 +36,17 @@ buildGFGrammar abstr dicts als = do
   env <- getGrammarEnv abstr dicts
   let aligns = readAlignments als
   let ruless = map (tree2rules env) aligns
-  writeFile "out/Extracted.tmp" $ prBuiltGrammar env ruless
-
+  let allGrLines = filter (not . isPron) (lines $ prBuiltGrammar env ruless)
+  let (a:as) = filter (" -- Abstr" `isSuffixOf`) allGrLines 
+  let absGrLines = a:"flags startcat = Utt ;":as -- lines of (abstract) Extracted.gf
+  let langs = map fst (M.toList $ langenvs env)
+  let langGrLines = map (\l -> filter ((" -- " ++ l) `isSuffixOf`) allGrLines) langs -- lines of (concrete) ExtractedLang.gf
+  mapM_ 
+    (\(l,g) -> writeFile (grammarDir ++ "Extracted" ++ l ++ ".gf") g) 
+    (("":langs) `zip` map unlines (absGrLines:langGrLines))
+    where 
+      grammarDir = dropFileName abstr
+      isPron r = "Pron" `isInfixOf` r
 
 getGrammarEnv :: FilePath -> [FilePath] -> IO GrammarEnv
 getGrammarEnv abstr dicts = do
@@ -57,7 +63,7 @@ getGrammarEnv abstr dicts = do
          cncname = mkCId ("Extracted" ++ lang),
          dictpgf = pgf,
          basemodules = [synt++la++lang], --- extending the syntax module
-         resourcemodules = [morphodict ++ lang, "Paradigms" ++ lang]
+         resourcemodules = [morphodict ++ lang, "Paradigms" ++ lang, "MakeStructural" ++ lang]
          }) |
               (dict,pgf) <- zip dicts dictpgfs,
               let (_,morphodict,lang,_) = partsOfFileName dict
@@ -133,11 +139,11 @@ prBuiltRules br = unlines $ [
 
 prBuiltGrammar env ruless = unlines $ [
    unwords ["abstract", absn, "=",
-            concat (intersperse "," (absbasemodules env)), "**","{","-- Abstr"] 
+            concat (intersperse "," (depath (absbasemodules env))), "**","{","-- Abstr"] 
    ] ++ [
    unwords ["concrete", showCId (cncname lenv), "of", absn, "=",
-            concat (intersperse ", " (basemodules lenv)), "**",
-            "open", concat (intersperse ", " (resourcemodules lenv)), "in","{","--", lang]
+            concat (intersperse ", " (depath (basemodules lenv))), "**",
+            "open", concat (intersperse ", " (depath (resourcemodules lenv))), "in","{","--", lang]
      | (lang,lenv) <- M.assocs (langenvs env) 
    ] ++
    map prBuiltRules ruless ++ [
@@ -146,6 +152,7 @@ prBuiltGrammar env ruless = unlines $ [
  where
    absn = showCId (absname env)
    langs = M.keys (langenvs env)
+   depath modules = map takeFileName modules
 
 
 -- format:

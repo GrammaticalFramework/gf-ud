@@ -1,5 +1,6 @@
 module UDVisualization where
 
+import RTree
 import UDConcepts
 import GFConcepts
 import UDAnnotations

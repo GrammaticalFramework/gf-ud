@@ -1,9 +1,11 @@
+{-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
+
 module UDConcepts where
 
 -- AR 2019-11-14 implementing
 -- https://universaldependencies.org/format.html
 
-import GFConcepts
+import RTree
 import UDStandard
 
 import qualified Data.Set as S
@@ -38,10 +40,19 @@ data UDWord = UDWord {
   udDEPREL :: Label,    -- the label of this word
   udDEPS   :: String,   -- "Enhanced dependency graph in the form of a list of head-deprel pairs"
   udMISC   :: [UDData]  -- "any other annotation"
-  }
+  } deriving (Show,Eq,Ord)
 
 type POS = String
 type Label = String
+
+-- useless because one could just use isSubRTree, but...
+isSubUDTree :: UDTree -> UDTree -> Bool
+isSubUDTree t u = t == u || any (isSubUDTree t) (subtrees u)
+
+-- it is here to show the difference with isSubUDTree', which ignores a few
+-- fields (used for propagation)
+isSubUDTree' :: UDTree -> UDTree -> Bool
+isSubUDTree' t u = t =~ u || any (isSubUDTree' t) (subtrees u)
 
 data UDData = UDData {
   udArg  :: String,
@@ -62,8 +73,25 @@ parseUDFile f = readFile f >>= return . parseUDText
 parseUDText :: String -> [UDSentence]
 parseUDText = map prss . stanzas . lines
 
+-- shorthand
+conlluFile2UDTrees :: FilePath -> IO [UDTree]
+conlluFile2UDTrees p = parseUDFile p >>= return . map udSentence2tree
+
 errorsInUDSentences :: [UDSentence] -> [String]
 errorsInUDSentences = concatMap errors
+
+class Comparable a where
+  (=~) :: a -> a -> Bool
+
+instance Comparable UDWord where
+  (=~) w x = 
+    udFORM w == udFORM x && udUPOS w == udUPOS x && udDEPREL w == udDEPREL x
+
+instance Comparable UDTree where
+  (=~) (RTree n ts) (RTree m us) = 
+    n =~ m 
+    && length ts == length us 
+    && and [t =~ u | (t,u) <- ts `zip` us]
 
 class UDObject a where
   prt  :: a -> String  -- print
@@ -84,7 +112,7 @@ instance UDObject UDSentence where
 
 instance UDObject UDWord where
   prt w@(UDWord id fo le up xp fe he de ds mi) =
-    concat (intersperse "\t" [prt id,fo,le,up,xp,prt fe,prt he,de,ds,prt mi])
+    intercalate "\t" [prt id,fo,le,up,xp,prt fe,prt he,de,ds,prt mi]
   prs s = case getSeps '\t' (strip s) of
     id:fo:le:up:xp:fe:he:de:ds:mi:_ ->
       UDWord (prs $ strip id) fo le up xp (prs $ strip fe) (prs $ strip he) de ds (prs $ strip mi) 
@@ -96,7 +124,6 @@ instance UDObject UDWord where
              && (udHEAD w == udIdRoot || udDEPREL w /= "root"))         -- head 0 iff label root
           -> ["root iff 0 does not hold in:",prt w]
       _ -> []
-
 
 instance UDObject UDId where
   prt i = case i of
@@ -142,7 +169,6 @@ prUDSentence i = prt . addMeta i
        ]
      }
 
-
 -- example input: "1 John John NOUN 2 nsubj ; 2 walks walk VERB 0 root"
 pQuickUDSentence :: String -> UDSentence
 pQuickUDSentence = prss . map completeUDWord . getSeps ";" . words
@@ -185,6 +211,10 @@ udTree2sentence t = UDSentence {
 
 prUDTree :: UDTree -> String
 prUDTree = prLinesRTree prt
+
+-- "prints" the "linearized" UD tree 
+prUDTreeString :: UDTree -> String
+prUDTreeString t = unwords [udFORM n | n <- sortOn udID (allNodesRTree t)]
 
 --------------------
 -- checking for permissible values
@@ -394,4 +424,10 @@ udCorpusScore isMicro agree golds tests = UDScore {
     testgroups  = groupBy (\t u -> sent t == sent u) tests
     sent t = unwords $ map udFORM $ udWordLines t
 
+---------------------------
+-- transforming UD trees --
+---------------------------
 
+rewriteUDTree :: UDTree -> UDTree
+rewriteUDTree udt = udt
+---- TODO

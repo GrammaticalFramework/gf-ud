@@ -21,12 +21,15 @@ executable gf-ud
                , DBNF
                , GF2UD
                , GFConcepts
+               , RTree
                , UD2GF
+               , UDAnalysis
                , UDAnnotations
                , UDConcepts
                , UDOptions
                , UDStandard
                , UDVisualization
+               , UDPatterns
 
   -- other-extensions:
   build-depends:       base, containers, pretty, gf, process, filepath

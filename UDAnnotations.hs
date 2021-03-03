@@ -2,6 +2,7 @@ module UDAnnotations where
 
 import UDConcepts
 import PGF hiding (CncLabels)
+import RTree
 import GFConcepts
 
 import qualified Data.Map as M
@@ -10,7 +11,6 @@ import Data.List
 import Data.Char
 import Data.Maybe
 import System.FilePath.Posix (takeBaseName)
---------
 
 data UDEnv = UDEnv {
   udFormat    :: String, -- default .conllu
