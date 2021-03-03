@@ -12,8 +12,6 @@ import Data.Char
 import Data.Maybe
 import System.FilePath.Posix (takeBaseName)
 
---------
-
 data UDEnv = UDEnv {
   udFormat    :: String, -- default .conllu
   absLabels   :: AbsLabels,  -- language-independent labels
