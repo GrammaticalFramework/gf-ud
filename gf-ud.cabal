@@ -42,14 +42,17 @@ library
     UDStandard,
     UDConcepts,
     UDPatterns,
+    UDAnalysis,
+    UDOptions,
+    UDVisualization,
+    TransformUD,
     GFConcepts,
     UDAnnotations,
     UD2GF,
     BuildGFGrammar,
     Backend,
     DBNF,
-    UDAnalysis,
-    UDOptions,
-    UDVisualization
+    AutoAnnotations
+
   build-depends:       base, containers, pretty, gf, process, filepath
   default-language:    Haskell2010
