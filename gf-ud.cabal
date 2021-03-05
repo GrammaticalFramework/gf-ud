@@ -45,8 +45,7 @@ library
     GFConcepts,
     UDAnnotations,
     UD2GF,
-    BuildGFGrammar
-  other-modules:
+    BuildGFGrammar,
     Backend,
     DBNF,
     UDAnalysis,
