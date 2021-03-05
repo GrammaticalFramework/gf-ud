@@ -35,3 +35,22 @@ executable gf-ud
   build-depends:       base, containers, pretty, gf, process, filepath
   -- hs-source-dirs:
   default-language:    Haskell2010
+
+  library
+  exposed-modules:
+    RTree,
+    UDStandard,
+    UDConcepts,
+    UDPatterns,
+    GFConcepts,
+    UDAnnotations,
+    UD2GF,
+    BuildGFGrammar
+  other-modules:
+    Backend,
+    DBNF,
+    UDAnalysis,
+    UDOptions,
+    UDVisualization
+  build-depends:       base, containers, pretty, gf, process, filepath
+  default-language:    Haskell2010
