@@ -52,8 +52,7 @@ library
     BuildGFGrammar,
     Backend,
     DBNF,
-    AutoAnnotations,
-    TreeConv
+    AutoAnnotations
 
   build-depends:       base, containers, pretty, gf, process, filepath
   default-language:    Haskell2010
