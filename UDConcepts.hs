@@ -257,12 +257,18 @@ adjustUDIds uds =
   fixes = zip (map udID ws) (map UDIdInt [1..length ws])
   fix udw = udw {
     udID = let idw = udID udw in maybe idw id (lookup idw fixes),
-    udHEAD = let idw = udHEAD udw in maybe idw id (lookup idw fixes)--,
-    --udDEPS = "ADJUSTED"
+    udHEAD = let idw = udHEAD udw in maybe idw id (lookup idw fixes),
+    udMISC = UDData "ADJUSTED" [] : udMISC udw
     }
 
 createRoot :: UDTree -> UDTree
-createRoot tree = tree{root = (root tree){udDEPREL = root_Label, udHEAD = udIdRoot, udDEPS = udDEPREL (root tree)}}
+createRoot tree = tree {
+  root = (root tree) {
+    udDEPREL = root_Label, 
+    udHEAD = udIdRoot, 
+    udMISC = UDData "ORIG_LABEL" [udDEPREL (root tree)] : udMISC (root tree)
+  }
+}
 
 isProjective :: UDTree -> Bool
 isProjective udt = length nodes - 1 == maxId - minId
