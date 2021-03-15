@@ -92,7 +92,8 @@ typeOfUDTree tr@(RTree un uts) =
   UDType tun
          (map snd (sort (ptun:[(udID n, (udUPOS n,(udDEPREL n, udFEATS n))) | RTree n _ <- uts])))
  where
-   (position,tun) = (udID un, (udUPOS un,(udDEPREL un, udFEATS un)))
+   (position,tun) = (udID un, (udUPOS un,(head_Label, udFEATS un)))
+---   (position,tun) = (udID un, (udUPOS un,(udDEPREL un, udFEATS un)))
    ptun = (udID un, (udUPOS un,(head_Label, udFEATS un)))
 
 typesInUDTree :: UDTree -> [(UDType,String)] -- type and example
@@ -265,7 +266,18 @@ mkProbs max_digits file = do -- max_digits = 4 for en_ewt_train, i.e. 1000's of 
   putStrLn $ unlines $ map unwords $ map mkSum (collect pfs)
 
 
-
+extractDBNF :: Int -> String -> String
+extractDBNF threshold s = 
+  let
+    uds = parseUDText s
+    typs = udTypeFrequencies uds
+    prCat pos = pos ++ "_"
+    prRule (UDType val args,(n,_)) =
+        unwords $ prCat (fst val) : "::=" : (map (prCat . fst) args) ++ ["#"] ++ (map (fst . snd) args) ++ ["#"] ++ [show n]
+  in unlines $
+    (map prRule $ [t | t@(UDType _ args, (n,_)) <- typs, length args > 1, n >= threshold]) ++
+---    (map (("-- " ++ ) . prRule) $ [t | t@(UDType _ args, (n,_)) <- typs, length args > 1, n < threshold]) ++
+    [unwords ["#pos",cat,prCat cat] | t@(UDType (cat,_) args, _) <- typs, length args == 1]
 
 
 {- --- not used, no longer valid

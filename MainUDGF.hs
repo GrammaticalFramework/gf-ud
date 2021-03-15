@@ -94,6 +94,8 @@ main = do
     "extract-pos-words":_ -> getContents >>= putStrLn . unlines . map ud2poswords . parseUDText
     "extract-pos-feats-words":_ -> getContents >>= putStrLn . unlines . map ud2posfeatswords . parseUDText
 
+    "extract-dbnf":n:_ -> getContents >>= putStrLn . extractDBNF (read n) 
+    
     "lexical-entries":annots:_ -> do
        env <- getAnnotEnv annots
        uds <- getContents >>= return . parseUDText
@@ -147,6 +149,7 @@ helpMsg = unlines $ [
     " | gfud parse2latex <file>",
     " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile> units?",
     " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",
+    " | gfud extract-dbnf <int>",
     " | gfud check-annotations <path> <language> <startcat>",
     " | gfud (ud2gf|gf2ud|string2gf2ud|ud2gfparallel) <path> <language> <startcat> <option>*",
     "where path = grammardir/abstractprefix, language = concretesuffix.",

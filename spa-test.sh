@@ -1,5 +1,5 @@
-NUMBER=3200
-THRESHOLD=60
+NUMBER=6500
+THRESHOLD=65
 
 cd grammars
 gf -make StructuresSpa.gf
