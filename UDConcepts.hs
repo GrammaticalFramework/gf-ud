@@ -258,7 +258,7 @@ adjustUDIds uds =
   fix udw = udw {
     udID = let idw = udID udw in maybe idw id (lookup idw fixes),
     udHEAD = let idw = udHEAD udw in maybe idw id (lookup idw fixes),
-    udMISC = UDData "ADJUSTED" [] : udMISC udw
+    udMISC = UDData "ADJUSTED" ["True"] : udMISC udw
     }
 
 createRoot :: UDTree -> UDTree
