@@ -71,7 +71,8 @@ parseUDFile :: FilePath -> IO [UDSentence]
 parseUDFile f = readFile f >>= return . parseUDText
 
 parseUDText :: String -> [UDSentence]
-parseUDText = map prss . stanzas . lines
+parseUDText = map prss . stanzas . filter (not . isGeneralComment) . lines
+  where isGeneralComment line = "##" `isPrefixOf` line
 
 -- shorthand
 conlluFile2UDTrees :: FilePath -> IO [UDTree]
