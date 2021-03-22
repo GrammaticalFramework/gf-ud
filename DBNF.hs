@@ -417,3 +417,12 @@ checkGrammar g = case checks g of
    checks g =
      ["invalid labels in " ++ show r | r <- rules g, length (rhs r) /= length (labels r) || noUniqueHead r]
    noUniqueHead r = length (lhs r) > 0 && length (filter (=="head") (labels r)) /= 1
+
+
+prGrammar :: Grammar -> String
+prGrammar gr = unlines $ 
+  [unwords ([lhs r, "::="] ++ rhs r ++ ["#"] ++ labels r ++ ["#"] ++ [show (weight r)]) | r <- rules gr] ++
+  [unwords ["#token", cat, tok]  | (tok,cats) <- M.assocs (terminalmap gr), cat <- cats] ++
+  [unwords ("#pos" : pos : cats) | (pos,cats) <- M.assocs (posmap gr)] ++
+  [] ---- dep,dirdep
+

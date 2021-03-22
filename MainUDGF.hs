@@ -94,7 +94,14 @@ main = do
     "extract-pos-words":_ -> getContents >>= putStrLn . unlines . map ud2poswords . parseUDText
     "extract-pos-feats-words":_ -> getContents >>= putStrLn . unlines . map ud2posfeatswords . parseUDText
 
-    "extract-dbnf":n:_ -> getContents >>= putStrLn . extractDBNF (read n) 
+    "extract-dbnf":n:_ -> getContents >>= putStrLn . extractDBNF (read n)
+    
+    "calibrate-dbnf":tbfile:_ -> do
+      tb  <- parseUDFile tbfile
+      dbnf <- getContents >>= return . D.pGrammar
+      let cdbnf = calibrateDBNF tb dbnf
+      putStrLn $ D.prGrammar cdbnf
+
     
     "lexical-entries":annots:_ -> do
        env <- getAnnotEnv annots
@@ -150,6 +157,7 @@ helpMsg = unlines $ [
     " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile> units?",
     " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",
     " | gfud extract-dbnf <int>",
+    " | gfud calibrate-dbnf <file>",
     " | gfud check-annotations <path> <language> <startcat>",
     " | gfud (ud2gf|gf2ud|string2gf2ud|ud2gfparallel) <path> <language> <startcat> <option>*",
     "where path = grammardir/abstractprefix, language = concretesuffix.",

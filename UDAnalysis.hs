@@ -5,6 +5,7 @@ import GFConcepts
 import UDConcepts
 import UDAnnotations
 import UDOptions
+import qualified DBNF as D
 
 import PGF
 
@@ -271,13 +272,32 @@ extractDBNF threshold s =
   let
     uds = parseUDText s
     typs = udTypeFrequencies uds
+    luds = length uds
+    relfreq n = (fromIntegral n)/(fromIntegral luds)
     prCat pos = pos ++ "_"
     prRule (UDType val args,(n,_)) =
-        unwords $ prCat (fst val) : "::=" : (map (prCat . fst) args) ++ ["#"] ++ (map (fst . snd) args) ++ ["#"] ++ [show n]
+        unwords $ prCat (fst val) : "::=" : (map (prCat . fst) args) ++ ["#"] ++ (map (fst . snd) args) ++ ["#"] ++ [show (relfreq n)]
   in unlines $
     (map prRule $ [t | t@(UDType _ args, (n,_)) <- typs, length args > 1, n >= threshold]) ++
 ---    (map (("-- " ++ ) . prRule) $ [t | t@(UDType _ args, (n,_)) <- typs, length args > 1, n < threshold]) ++
     [unwords ["#pos",cat,prCat cat] | t@(UDType (cat,_) args, _) <- typs, length args == 1]
+
+
+calibrateDBNF :: [UDSentence] -> D.Grammar -> D.Grammar
+calibrateDBNF uds grammar =
+  let
+    typs = udTypeFrequencies uds
+    labs = [(map (fst . snd) args, n) | (UDType _ args, (n,_)) <- typs] -- sequence of labels
+    luds = length uds
+    relfreq n = (fromIntegral n)/(fromIntegral luds)
+    compatible ls rule = let lrs = D.labels rule in length lrs > 1 && ls == lrs  --- exact match of labels
+  in
+    grammar {D.rules = [rule {
+      D.weight = if length (D.labels rule) == 1
+                 then D.weight rule
+                 else relfreq (max 1 (sum [k | (ls,k) <- labs, compatible ls rule]))} | rule <- D.rules grammar
+                 ]}
+
 
 
 {- --- not used, no longer valid
