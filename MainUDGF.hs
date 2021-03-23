@@ -94,6 +94,8 @@ main = do
     "extract-pos-words":_ -> getContents >>= putStrLn . unlines . map ud2poswords . parseUDText
     "extract-pos-feats-words":_ -> getContents >>= putStrLn . unlines . map ud2posfeatswords . parseUDText
 
+    "sample":n:_ -> getContents >>= mapM_ (putStrLn . prt) . sampleFromList (read n) . parseUDText
+
     "extract-dbnf":n:_ -> getContents >>= putStrLn . extractDBNF (read n)
     
     "calibrate-dbnf":tbfile:_ -> do
@@ -148,6 +150,7 @@ helpMsg = unlines $ [
     " | gfud extract-pos-words",
     " | gfud extract-pos-feats-words",
     " | gfud lexical-entries <abslabels-file>",
+    " | gfud sample <int>",
     " | gfud conll2tree",
     " | gfud adjust-positions",
     " | gfud conll2pdf",
@@ -248,6 +251,11 @@ checkUDSentences :: [UDSentence] -> String
 checkUDSentences uds = case errorsInUDSentences uds of
   [] -> "# treebank OK"
   msgs -> unlines msgs
+
+
+sampleFromList n xs = take n [x | (x,i) <- zip xs [1..], mod i r == 0]
+  where
+    r = max 1 (div (length xs) n) 
 
 -------------------
 

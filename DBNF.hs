@@ -26,14 +26,14 @@ usage = "usage: RuleBased <grammar> <startcat> (-parsetrees | -deptrees) (-<numb
 
 processOne :: Grammar -> Symb -> [String] -> String -> String
 processOne gr cat opts s = case opts of
-  _ | elem "-onlyparsetrees" opts -> unlines ["# parsetree = " ++ pt | pt <- ptrees]
+  _ | elem "-onlyparsetrees" opts -> unlines ["# parsetree = " ++ prParseTree pt | pt <- parses]
   _ -> unlines $ [
     "# text = " ++ s,
     "# analyses = " ++ show (length rts)
     ] ++ dtreess
   where
     dtreess = map unlines [ 
-      ["# parsetree = " ++ pt, dt] | (pt,dt) <- zip ptrees dtrees
+      ["# parsetree = " ++ prParseTree pt, "# weight = " ++ show (treeWeight pt), dt] | (pt,dt) <- zip parses dtrees
       ]
     doshow = case filter (isPrefixOf "-show") opts of
       cut:_ -> take (read (drop 6 cut))
@@ -41,12 +41,11 @@ processOne gr cat opts s = case opts of
     docut  = case filter (isPrefixOf "-cut") opts of
       cut:_ -> take (read (drop 5 cut))
       _ -> id
-    parses = doshow raws
-    (totals,chunks) = parse gr cat (words s)
-    raws   = if null rts then chunks else rts
-    rts    = rankTrees $ docut totals 
-    ptrees = map prParseTree parses
     dtrees = map (prDepTree . markDependencies gr) parses
+    parses = doshow rts
+    rts    = rankTrees $ docut $ totals ++ chunks 
+    (totals,chunks) = parse gr cat (words s)
+
 
 -- chart parsing from Peter Ljunglöf, "Pure Functional Parsing", 2002
 
@@ -214,7 +213,7 @@ chunkParses gr subtrees =
 ----      ,prev mx revsubtreelist  -- right to left longest match
       ]
     chunknodes subs = [
-      ("Chunks", "chunks", take n dlabs ++ ["head"] ++ drop (n+1) dlabs, 0.0000001)
+      ("Chunks", "chunks", take n dlabs ++ ["head"] ++ drop (n+1) dlabs, 0.0001)
         | let len = length subs,
           n <- [0..len - 1],
           let sposs = [ (t,posOf t) | t <- subs],
