@@ -96,7 +96,6 @@ lin
     PluralNP cn = mkNP aPl_Det cn ;
 
     a_Det = S.a_Det ;
-    aPl_Det = S.aPl_Det ;
     the_Det = S.the_Det ;
     thePl_Det = S.thePl_Det ;
     this_Det = S.this_Det ;
