@@ -1,4 +1,4 @@
-concrete ExtractEng of Extract = GrammarEng [
+concrete ExtractSwe of Extract = GrammarSwe [
 
 -- collected from GF/lib/src/abstract/*.gf
 -- the functions marked ---s are shortcuts
@@ -74,7 +74,7 @@ concrete ExtractEng of Extract = GrammarEng [
     we_Pron    , -- Pron ;
     youPl_Pron , -- Pron ;
     they_Pron    -- Pron ;
-    ] ** open SyntaxEng, (S = SyntaxEng), (E = ExtendEng), ParadigmsEng in {
+    ] ** open SyntaxSwe, (S = SyntaxSwe), (E = ExtendSwe), ParadigmsSwe in {
 
 lincat
     PP = S.Adv ;

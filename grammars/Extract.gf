@@ -96,6 +96,7 @@ fun
     PluralNP  : CN -> NP ;              -- houses ---s
 
     a_Det     : Det ;                   -- indefinite singular ---s
+    aPl_Det   : Det ;                   -- indefinite plural ---s
     the_Det   : Det ;                   -- definite singular   ---s
     thePl_Det : Det ;                   -- definite plural     ---s
     this_Det  : Det ;
