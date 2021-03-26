@@ -170,6 +170,17 @@ prUDSentence i = prt . addMeta i
        ]
      }
 
+prQuickUDSentence :: UDSentence -> String
+prQuickUDSentence s = 
+  intercalate "\n" (map prQuickUDWord (udWordLines s))
+  where prQuickUDWord w = intercalate "\t" [
+          show $ udid2int $ udID w, 
+          udFORM w, 
+          udLEMMA w, 
+          udUPOS w, 
+          show $ udid2int $ udHEAD w, 
+          udDEPREL w]
+
 -- example input: "1 John John NOUN 2 nsubj ; 2 walks walk VERB 0 root"
 pQuickUDSentence :: String -> UDSentence
 pQuickUDSentence = prss . map completeUDWord . getSeps ";" . words
