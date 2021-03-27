@@ -164,15 +164,31 @@ cosineSimilarity xs ys = cosineSimilarityOfMaps fxs fys
 -----------------------------------------------------
 -- lexical entries obtained from lemma + primary cat
 
-lexicalEntries :: UDEnv -> [UDSentence] -> [((String, String),Int)] -- lemma, cat, #occurrences
-lexicalEntries env uds = M.assocs (M.fromListWith (+) [(wc,1) | Just wc <- map entry allwords])
+lexicalEntries :: UDEnv -> [UDSentence] -> [((String, String),[(Int,Int)])] -- lemma, cat, occurrence-locations
+lexicalEntries env uds = M.assocs (M.fromListWith (++) [(wc,[loc]) | Just (wc,loc) <- map entry allwords])
  where
-  allwords = concatMap udWordLines uds
-  entry udw = case M.lookup (udUPOS udw) (catsForPOS env) of
+ 
+  allwords = [(udw,sid) | (ud,sid) <- zip uds [1..], udw <- udWordLines ud] -- number sentences from 1..
+
+  entry (udw,loc) = case M.lookup (udUPOS udw) (catsForPOS env) of
     Just cps -> case [c | Left (c,True) <- cps] of
-      cat:_  -> Just (udLEMMA udw, showCId cat)
+      cat:_  -> Just ((udLEMMA udw, showCId cat),(loc,udid2int (udID udw)))
       _ -> Nothing
     _ -> Nothing
+
+lexicalEntriesGF :: UDEnv -> [UDSentence] -> [String]
+lexicalEntriesGF env = map getEntry . lexicalEntries env
+  where
+    getEntry ((lemma,cat),locs) =
+      let fun = mkCId (lemma ++ "_" ++ cat)
+          ef = showCId fun
+      in 
+           "fun " ++ ef ++ " : " ++ cat ++ " ; -- " ++ (show (length locs)) ++ "\n" ++
+           "lin " ++ ef ++ " = " ++
+           if (isKnown fun)
+             then "M." ++ ef ++ " ;"
+             else "mk" ++ cat ++ " \"" ++ lemma ++ "\" ;"
+    isKnown fun = maybe False (const True) $ functionType (pgfGrammar env) fun
 
 
 ----------------------------------------------------

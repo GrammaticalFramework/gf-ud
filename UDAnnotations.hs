@@ -36,10 +36,14 @@ getEnv pref eng cat = do
   let env = mkUDEnv pgf abslabels cnclabels actlang cat
   return $ addMissing env
 
-getAnnotEnv :: FilePath -> IO UDEnv
-getAnnotEnv file = do
+getAnnotEnv :: [FilePath] -> IO UDEnv
+getAnnotEnv files@(file:fs) = do
   abslabels <- readFile file >>= return . pAbsLabels
-  return $ initUDEnv {absLabels = abslabels}
+  case fs of
+    gfile:_ -> do
+      pgf <- readPGF gfile
+      return $ initUDEnv {absLabels = abslabels, pgfGrammar = pgf}
+    _ -> return $ initUDEnv {absLabels = abslabels}
 
 checkAnnotations :: String -> String -> String -> IO ()
 checkAnnotations pref eng cat = do

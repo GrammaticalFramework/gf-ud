@@ -106,10 +106,16 @@ main = do
 
     
     "lexical-entries":annots:_ -> do
-       env <- getAnnotEnv annots
+       env <- getAnnotEnv [annots]
        uds <- getContents >>= return . parseUDText
        let entries = lexicalEntries env uds
-       putStrLn $ unlines [unwords [w ++ "_" ++ c, c, "--", show i] | ((w,c),i) <- entries]
+       putStrLn $ unlines [unwords [w ++ "_" ++ c, "--", show (reverse i)] | ((w,c),i) <- entries]
+       
+    "lexical-entries-gf":annots:pgf:_ -> do
+       env <- getAnnotEnv [annots,pgf]
+       uds <- getContents >>= return . parseUDText
+       let entries = lexicalEntriesGF env uds
+       putStrLn $ unlines entries
 
     "eval":micmac:luas:goldf:testf:opts -> do
     
@@ -150,6 +156,7 @@ helpMsg = unlines $ [
     " | gfud extract-pos-words",
     " | gfud extract-pos-feats-words",
     " | gfud lexical-entries <abslabels-file>",
+    " | gfud lexical-entries-gf <abslabels-file> <morphodict-pgf-file>",
     " | gfud sample <int>",
     " | gfud conll2tree",
     " | gfud adjust-positions",
