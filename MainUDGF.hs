@@ -90,6 +90,8 @@ main = do
 
     "conll2tree":_ -> getContents >>= mapM_ putStrLn . map (prUDTree . udSentence2tree) . parseUDText
     "adjust-positions":_ -> getContents >>= mapM_ putStrLn . map (prt . udTree2sentence . createRoot . udSentence2tree . adjustUDIds) . parseUDText
+
+    "conll2reduced":patt:_ -> getContents >>= mapM_ putStrLn . map (prReducedUDSentence patt) . parseUDText
     
     "extract-pos-words":_ -> getContents >>= putStrLn . unlines . map ud2poswords . parseUDText
     "extract-pos-feats-words":_ -> getContents >>= putStrLn . unlines . map ud2posfeatswords . parseUDText

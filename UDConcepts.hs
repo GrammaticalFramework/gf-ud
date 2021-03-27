@@ -67,6 +67,10 @@ initUDWord i = UDWord (UDIdInt i) "" "" "" "" [] UDIdNone "" "" []
 -- printing and parsing
 -----------------------
 
+prUDWordParts :: UDWord -> [String]
+prUDWordParts (UDWord id fo le up xp fe he de ds mi) =
+    [prt id,fo,le,up,xp,prt fe,prt he,de,ds,prt mi]
+
 parseUDFile :: FilePath -> IO [UDSentence]
 parseUDFile f = readFile f >>= return . parseUDText
 
@@ -112,8 +116,7 @@ instance UDObject UDSentence where
   errors s = checkUDWords (udWordLines s)
 
 instance UDObject UDWord where
-  prt w@(UDWord id fo le up xp fe he de ds mi) =
-    intercalate "\t" [prt id,fo,le,up,xp,prt fe,prt he,de,ds,prt mi]
+  prt w = intercalate "\t" $ prUDWordParts w
   prs s = case getSeps '\t' (strip s) of
     id:fo:le:up:xp:fe:he:de:ds:mi:_ ->
       UDWord (prs $ strip id) fo le up xp (prs $ strip fe) (prs $ strip he) de ds (prs $ strip mi) 
@@ -170,16 +173,26 @@ prUDSentence i = prt . addMeta i
        ]
      }
 
+prReducedUDSentence :: String -> UDSentence -> String
+prReducedUDSentence parts s = unlines (udCommentLines s ++ map prReducedUDWord (udWordLines s))
+  where
+    prReducedUDWord w = intercalate "\t" [p | (p,b) <- zip (prUDWordParts w) pattern, b]
+    pattern = map (/='_') parts
+
 prQuickUDSentence :: UDSentence -> String
-prQuickUDSentence s = 
-  intercalate "\n" (map prQuickUDWord (udWordLines s))
-  where prQuickUDWord w = intercalate "\t" [
-          show $ udid2int $ udID w, 
-          udFORM w, 
-          udLEMMA w, 
-          udUPOS w, 
-          show $ udid2int $ udHEAD w, 
-          udDEPREL w]
+prQuickUDSentence = prReducedUDSentence "xxxx__xx"
+
+completeReducedUDWord :: String -> [String] -> UDWord
+completeReducedUDWord parts given = prss $ complete pattern given
+
+  where
+    complete ps gs = case (ps,gs) of
+      (True :pp, g:gg) -> g   : complete pp gg
+      (False:pp, _)    -> "_" : complete pp gs
+      _                -> []
+      
+    pattern = map (/='_') parts ++ replicate (10 - length parts) False
+
 
 -- example input: "1 John John NOUN 2 nsubj ; 2 walks walk VERB 0 root"
 pQuickUDSentence :: String -> UDSentence
