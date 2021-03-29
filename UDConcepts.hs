@@ -183,7 +183,7 @@ prQuickUDSentence :: UDSentence -> String
 prQuickUDSentence = prReducedUDSentence "xxxx__xx"
 
 completeReducedUDWord :: String -> [String] -> UDWord
-completeReducedUDWord parts given = prss $ complete pattern given
+completeReducedUDWord parts = prs . concat .  (intersperse "\t") . complete pattern
 
   where
     complete ps gs = case (ps,gs) of
@@ -193,9 +193,19 @@ completeReducedUDWord parts given = prss $ complete pattern given
       
     pattern = map (/='_') parts ++ replicate (10 - length parts) False
 
+pReducedUDSentence :: String -> [String] -> UDSentence
+pReducedUDSentence parts givens = UDSentence {
+  udCommentLines = cs,
+  udWordLines = map ((completeReducedUDWord parts) . words) ws  --- tab-sep not required
+  }
+ where (cs,ws) = break ((/="#") . take 1) givens
 
+pOneLineUDSentence :: String -> String -> UDSentence
+pOneLineUDSentence parts = pReducedUDSentence parts . getSeps ';'
+ 
 -- example input: "1 John John NOUN 2 nsubj ; 2 walks walk VERB 0 root"
 pQuickUDSentence :: String -> UDSentence
+---- pQuickUDSentence = pOneLineUDSentence "xxxx__xx" -- right?
 pQuickUDSentence = prss . map completeUDWord . getSeps ";" . words
  where
   completeUDWord ws = case ws of

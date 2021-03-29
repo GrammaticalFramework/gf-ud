@@ -92,6 +92,8 @@ main = do
     "adjust-positions":_ -> getContents >>= mapM_ putStrLn . map (prt . udTree2sentence . createRoot . udSentence2tree . adjustUDIds) . parseUDText
 
     "conll2reduced":patt:_ -> getContents >>= mapM_ putStrLn . map (prReducedUDSentence patt) . parseUDText
+    "reduced2conll":patt:_ -> getContents >>= mapM_ (putStrLn . prt) . map (pReducedUDSentence patt) . stanzas . lines
+    "oneliner2conll":patt:_ -> getContents >>= mapM_ (putStrLn . prt) . map (pOneLineUDSentence patt) . lines
     
     "extract-pos-words":_ -> getContents >>= putStrLn . unlines . map ud2poswords . parseUDText
     "extract-pos-feats-words":_ -> getContents >>= putStrLn . unlines . map ud2posfeatswords . parseUDText
@@ -161,6 +163,9 @@ helpMsg = unlines $ [
     " | gfud lexical-entries-gf <abslabels-file> <morphodict-pgf-file>",
     " | gfud sample <int>",
     " | gfud conll2tree",
+    " | gfud conll2reduced <reduce_pattern>",
+    " | gfud reduced2conll <reduce_pattern>",
+    " | gfud oneliner2conll <reduce_pattern>",
     " | gfud adjust-positions",
     " | gfud conll2pdf",
     " | gfud parse2pdf",
@@ -204,6 +209,10 @@ helpMsg = unlines $ [
     " | RETARGET <pattern> <pattern> <pattern>",
     " | CHANGES [ <replacement>,* ]",
     " | COMPOSE [ <replacement>,* ]",
+    "<reduce_pattern> is a string such as xx_x__xx that hides the _ fields of UD words in conll2reduced.",
+    "In reduced2conll it inserts _ to those fields to obtain legal CoNLL.",
+    "In oneliner2conll xx_x__xx, each sentence is given as in '1 John NOUN 2 nsubj ; 2 walks VERB 0 root'.",
+    "",
     "Options:"
     ] ++ ["  " ++ opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 
