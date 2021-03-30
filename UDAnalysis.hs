@@ -180,16 +180,40 @@ lexicalEntriesGF :: UDEnv -> [UDSentence] -> [String]
 lexicalEntriesGF env = map getEntry . lexicalEntries env
   where
     getEntry ((lemma,cat),locs) =
-      let fun = mkCId (lemma ++ "_" ++ cat)
+      let ofun  = mkCId (lemma ++ "_" ++ cat)
+          lfun = mkCId (map toLower lemma ++ "_" ++ cat)
+          (fun, isKnown) = case functionType (pgfGrammar env) ofun of
+            Just _ -> (ofun, True)
+            _ -> case functionType (pgfGrammar env) lfun of  -- try lowercase is original is not known
+              Just _ -> (lfun, True)
+              _ -> (lfun, False)  -- lowercase the new id to follow GF practice
           ef = showCId fun
       in 
            "fun " ++ ef ++ " : " ++ cat ++ " ; -- " ++ (show (length locs)) ++ "\n" ++
            "lin " ++ ef ++ " = " ++
-           if (isKnown fun)
-             then "M." ++ ef ++ " ;"
+           if isKnown
+             then "D." ++ ef ++ " ;"
              else "mk" ++ cat ++ " \"" ++ lemma ++ "\" ;"
-    isKnown fun = maybe False (const True) $ functionType (pgfGrammar env) fun
 
+{-
+---- TODO: add morphological analysis and compound analysis
+lookMorpho morpho w = case look w of
+  fs@(f:_) -> nub $ rank fs
+  _ -> tryCompounds w
+
+ where
+   look = map (showCId . fst) . lookupMorpho morpho
+   
+   tryCompounds w = case break (=='-') w of
+     (p,_:t) -> rank [p ++ " - " ++ m | m <- look t]
+     _ -> rank [p ++ " + " ++ m | (p,q) <- splits w, m <- look q]
+     
+   splits w = [splitAt i w | i <- [3 .. length w - 4]]
+   rank cs = case dropWhile badCat cs of
+     [] -> take 1 cs -- take the longest second part, but not if it is a verb
+     c:_ -> [c]
+   badCat c = last c == 'V' ---- should be parameterized on a cat list
+-}
 
 ----------------------------------------------------
 -- an analysis of UD types and their conversion to GF
