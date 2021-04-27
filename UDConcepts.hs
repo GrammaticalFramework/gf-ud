@@ -214,7 +214,6 @@ pQuickUDSentence = prss . map completeUDWord . getSeps ";" . words
   dum = "_"
     
 
-
 ----------------------------------------------
 -- extract word:<pos> sequences, or word:<pos_feats>
 ----------------------------------------------
@@ -304,6 +303,9 @@ createRoot tree = tree {
     udMISC = UDData "ORIG_LABEL" [udDEPREL (root tree)] : udMISC (root tree)
   }
 }
+
+adjustRootAndPositions :: UDTree -> UDTree
+adjustRootAndPositions = udSentence2tree . adjustUDIds . udTree2sentence . createRoot
 
 isProjective :: UDTree -> Bool
 isProjective udt = length nodes - 1 == maxId - minId

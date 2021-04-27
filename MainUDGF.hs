@@ -10,6 +10,7 @@ import GFConcepts (pAbsTree)
 import UDVisualization
 import UDAnalysis
 import UDPatterns
+import RTree
 
 import PGF
 
@@ -99,6 +100,10 @@ main = do
     "extract-pos-feats-words":_ -> getContents >>= putStrLn . unlines . map ud2posfeatswords . parseUDText
 
     "sample":n:_ -> getContents >>= mapM_ (putStrLn . prt) . sampleFromList (read n) . parseUDText
+    "first":n:_ -> getContents >>= mapM_ (putStrLn . prt) . take (read n) . parseUDText
+    "last":n:_ -> getContents >>= mapM_ (putStrLn . prt) . takeLast (read n) . parseUDText
+
+    "immediate-subtrees":_ -> getContents >>= mapM_ (putStrLn . prt . udTree2sentence . adjustRootAndPositions) . concatMap (subtrees . udSentence2tree) . parseUDText
 
     "extract-dbnf":n:_ -> getContents >>= putStrLn . extractDBNF (read n)
     
@@ -162,6 +167,9 @@ helpMsg = unlines $ [
     " | gfud lexical-entries <abslabels-file>",
     " | gfud lexical-entries-gf <abslabels-file> <morphodict-pgf-file>",
     " | gfud sample <int>",
+    " | gfud first <int>",
+    " | gfud last <int>",
+    " | gfud immediate-subtrees",
     " | gfud conll2tree",
     " | gfud conll2reduced <reduce_pattern>",
     " | gfud reduced2conll <reduce_pattern>",
@@ -274,6 +282,8 @@ checkUDSentences uds = case errorsInUDSentences uds of
 sampleFromList n xs = take n [x | (x,i) <- zip xs [1..], mod i r == 0]
   where
     r = max 1 (div (length xs) n) 
+
+takeLast n xs = drop (length xs - n) xs
 
 -------------------
 
