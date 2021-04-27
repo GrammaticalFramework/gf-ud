@@ -45,6 +45,9 @@ data UDWord = UDWord {
 type POS = String
 type Label = String
 
+instance Read UDWord where
+  readsPrec _ s = [(prs s :: UDWord, "")]
+
 -- useless because one could just use isSubRTree, but...
 isSubUDTree :: UDTree -> UDTree -> Bool
 isSubUDTree t u = t == u || any (isSubUDTree t) (subtrees u)
