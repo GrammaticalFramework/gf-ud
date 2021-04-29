@@ -11,6 +11,7 @@ import UDStandard
 import qualified Data.Set as S
 import qualified Data.Map as M
 import Data.List
+import Data.List.Split
 import Data.Char
 
 -- text paragraph representing the tree of a sentence
