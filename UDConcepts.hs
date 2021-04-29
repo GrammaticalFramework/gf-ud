@@ -237,6 +237,13 @@ udTree2sentence t = UDSentence {
   udWordLines = sortOn udID (allNodesRTree t)
   }
 
+-- return the id of a sentence, taken from the comment that precedes it
+sentId :: UDSentence -> String 
+sentId s = if hasSentId s then head $ words $ head idEtc else "missing sent_id"
+  where
+    hasSentId s = (not . null) idEtc
+    (_:idEtc) = splitOn "sent_id = " (unwords (concatMap words (udCommentLines s)))
+
 prUDTree :: UDTree -> String
 prUDTree = prLinesRTree prt
 
