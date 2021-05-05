@@ -11,6 +11,7 @@ import UDStandard
 import qualified Data.Set as S
 import qualified Data.Map as M
 import Data.List
+import Data.List.Split
 import Data.Char
 
 -- text paragraph representing the tree of a sentence
@@ -44,6 +45,9 @@ data UDWord = UDWord {
 
 type POS = String
 type Label = String
+
+instance Read UDWord where
+  readsPrec _ s = [(prs s :: UDWord, "")]
 
 -- useless because one could just use isSubRTree, but...
 isSubUDTree :: UDTree -> UDTree -> Bool
@@ -164,13 +168,13 @@ instance UDObject d => UDObject [d] where
 -- # sent_id = gfud1000001
 -- # text = in the computer
 prUDSentence :: Int -> UDSentence -> String
-prUDSentence i = prt . addMeta i
+prUDSentence i s = (prt . addMeta i) s
  where
    addMeta i u = u {
      udCommentLines = [
        "# sent_id = gfud" ++ show (1000000 + i),
        "# text = " ++ unwords (map udFORM (udWordLines u))
-       ]
+       ] ++ udCommentLines s
      }
 
 prReducedUDSentence :: String -> UDSentence -> String
@@ -242,6 +246,13 @@ udTree2sentence t = UDSentence {
   udCommentLines = [],
   udWordLines = sortOn udID (allNodesRTree t)
   }
+
+-- return the id of a sentence, taken from the comment that precedes it
+sentId :: UDSentence -> String 
+sentId s = if hasSentId s then head $ words $ head idEtc else error "missing sent_id"
+  where
+    hasSentId s = (not . null) idEtc
+    (_:idEtc) = splitOn "sent_id = " (unwords (concatMap words (udCommentLines s)))
 
 prUDTree :: UDTree -> String
 prUDTree = prLinesRTree prt

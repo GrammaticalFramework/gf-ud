@@ -5,7 +5,7 @@ data RTree a = RTree {
   root   :: a,
   subtrees :: [RTree a] 
   }
-  deriving (Eq,Show)
+  deriving (Eq,Show,Read)
 
 mapRTree :: (a -> b) -> RTree a -> RTree b
 mapRTree f (RTree c ts) = RTree (f c) (map (mapRTree f) ts)

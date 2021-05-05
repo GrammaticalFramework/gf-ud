@@ -32,7 +32,7 @@ executable gf-ud
                , UDPatterns
 
   -- other-extensions:
-  build-depends:       base, containers, pretty, gf, process, filepath
+  build-depends:       base, containers, pretty, gf, process, filepath, split
   -- hs-source-dirs:
   default-language:    Haskell2010
 
@@ -53,5 +53,5 @@ library
     DBNF,
     AutoAnnotations
 
-  build-depends:       base, containers, pretty, gf, process, filepath
+  build-depends:       base, containers, pretty, gf, process, filepath, split
   default-language:    Haskell2010
