@@ -168,13 +168,13 @@ instance UDObject d => UDObject [d] where
 -- # sent_id = gfud1000001
 -- # text = in the computer
 prUDSentence :: Int -> UDSentence -> String
-prUDSentence i = prt . addMeta i
+prUDSentence i s = (prt . addMeta i) s
  where
    addMeta i u = u {
      udCommentLines = [
        "# sent_id = gfud" ++ show (1000000 + i),
        "# text = " ++ unwords (map udFORM (udWordLines u))
-       ]
+       ] ++ udCommentLines s
      }
 
 prReducedUDSentence :: String -> UDSentence -> String
