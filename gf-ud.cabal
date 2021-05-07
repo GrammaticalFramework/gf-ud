@@ -49,6 +49,7 @@ library
     GFConcepts,
     UDAnnotations,
     UD2GF,
+    GF2UD,
     Backend,
     DBNF,
     AutoAnnotations
