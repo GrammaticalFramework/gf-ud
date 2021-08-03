@@ -254,6 +254,7 @@ sentId s = if hasSentId s then head $ words $ head idEtc else error "missing sen
     hasSentId s = (not . null) idEtc
     (_:idEtc) = splitOn "sent_id = " (unwords (concatMap words (udCommentLines s)))
 
+
 prUDTree :: UDTree -> String
 prUDTree = prLinesRTree prt
 
@@ -271,7 +272,7 @@ checkUDWords ws = concatMap errors ws ++ case ws of
         -> ["no unique root in:", pws]
   _ | ids /= [1 .. length ids]
         -> ["word id sequence not 1..n in " ++ pws]
-  _ | not (null [i | UDIdInt i <- map udHEAD ws, i > lws || i < 1])
+  _ | not (null [i | UDIdInt i <- map udHEAD ws, i > lws || i < 0])
         -> ["head outside sentence in " ++ pws]
   _ -> []
  where
