@@ -237,7 +237,10 @@ type UDTree = RTree UDWord
 udSentence2tree :: UDSentence -> UDTree
 udSentence2tree s = s2t rootWord where
   s2t hd = RTree hd [s2t w | w <- ws, udHEAD w == udID hd]
-  rootWord = head [w | w <- ws, udHEAD w == udIdRoot] -- unique if check succeeds
+  rootWord =
+    case [w | w <- ws, udHEAD w == udIdRoot] of -- unique if check succeeds
+      x:_ -> x
+      []  -> error $ "udSentence2tree: root word expected to have " ++ show udIdRoot ++ " as root, got instead\n" ++ (prUDSentence 1 (UDSentence [] ws))
   ws = udWordLines s
 
 -- opposite conversion
