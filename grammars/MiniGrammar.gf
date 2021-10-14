@@ -5,7 +5,7 @@ abstract MiniGrammar = {
 -- the leading comments, e.g. "-- Common", indicate the standard RGL module
 
   cat
-  
+
 -- Common
     Utt ;    -- sentence, question, word...         e.g. "be quiet"
     Pol ;    -- polarity                            e.g. positive, negative
@@ -14,7 +14,7 @@ abstract MiniGrammar = {
 -- Cat
     Imp ;    -- imperative                          e.g. "walk", "don't walk"
     S ;      -- declarative sentence                e.g. "she lives here"
-    QS ;     -- question sentence                   e.g. "does she live here"    
+    QS ;     -- question sentence                   e.g. "does she live here"
     Cl ;     -- declarative clause, with all tenses e.g. "she looks at this"
     QCl ;    -- question clause                     e.g. "does she look at this"
     VP ;     -- verb phrase                         e.g. "lives here"
@@ -25,14 +25,14 @@ abstract MiniGrammar = {
     Det ;    -- determiner phrase                   e.g. "those"
     Conj ;   -- conjunction                         e.g. "and"
     Prep ;   -- preposition, or just case           e.g. "in", dative
-    V ;      -- one-place verb                      e.g. "sleep" 
+    V ;      -- one-place verb                      e.g. "sleep"
     V2 ;     -- two-place verb                      e.g. "love"
     A ;      -- one-place adjective                 e.g. "warm"
     N ;      -- common noun                         e.g. "house"
     PN ;     -- proper name                         e.g. "Paris"
     Adv ;    -- adverbial phrase                    e.g. "in the house"
     IAdv ;   -- interrogative adverbial             e.g. "why"
-    
+
   fun
 -- Phrase
     UttS      : S  -> Utt ;         -- John walks
@@ -88,11 +88,12 @@ abstract MiniGrammar = {
 -- Structural
     and_Conj  : Conj ;
     or_Conj   : Conj ;
-    
+
     every_Det : Det ;
 
     in_Prep   : Prep ;
     on_Prep   : Prep ;
+    of_Prep   : Prep ;
     with_Prep : Prep ;
 
     i_Pron     : Pron ;
@@ -106,7 +107,7 @@ abstract MiniGrammar = {
     have_V2 : V2 ;
 
     where_IAdv : IAdv ;
-    
+
     why_IAdv : IAdv ;
 
 }

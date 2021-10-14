@@ -33,11 +33,13 @@ fun
   dog_N : N ;
   drink_V2 : V2 ;
   eat_V2 : V2 ;
+  eel_N : N ;
   find_V2 : V2 ;
   fire_N : N ;
   fish_N : N ;
   flower_N : N ;
   friend_N : N ;
+  full_A : A ;
   girl_N : N ;
   good_A : A ;
   go_V : V ;
@@ -48,6 +50,7 @@ fun
   horse_N : N ;
   hot_A : A ;
   house_N : N ;
+  hovercraft_N : N ;
   john_PN : PN ;
   jump_V : V ;
   kill_V2 : V2 ;
@@ -75,6 +78,7 @@ fun
   star_N : N ;
   swim_V : V ;
   teach_V2 : V2 ;
+  today_Adv : Adv ;
   train_N : N ;
   travel_V : V ;
   tree_N : N ;
