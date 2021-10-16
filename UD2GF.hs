@@ -18,6 +18,7 @@ import Text.PrettyPrint (render, cat)
 
 import Debug.Trace (trace, traceShowId, traceShow)
 import Data.Function (on)
+import Data.Ord (comparing)
 
 ---------
 -- to debug
@@ -318,8 +319,8 @@ combineTrees env =
 
   keepTryingVersion = keepTryingNew
   -- keepTryingVersion = keepTrying
-  -- allFunsLocalVersion = allFunsLocal
-  allFunsLocalVersion = allFunsLocalFast
+  -- allFunsLocalVersion = allFunsLocal ; fastTrees = False
+  allFunsLocalVersion = allFunsLocalFast ; fastTrees = True
 
   -- Apply all possible functions and iterate doing the same on the new trees until there's no new trees
   keepTryingNew :: DevTree -> DevTree
@@ -341,7 +342,18 @@ combineTrees env =
       onlyNewTree = tr {root = nd { devAbsTrees = map funInfoToAbsTreeInfo fis}}
       -- Add the new trees to the old ones. There shouldn't really be any duplicates now, so there's 
       -- a bit of redundant checking going on here.
-      nextTr =  tryCombine fis tr
+      nextTr = combineUnduplicated fis tr
+
+  combineUnduplicated :: [FunInfo] -> DevTree -> DevTree
+  combineUnduplicated finfos tree@(RTree dn ts)=
+    RTree dn{
+      devAbsTrees = let
+                   acu = funInfoToAbsTreeInfo <$> finfos
+                   dts = devAbsTrees dn
+                 in
+                     acu ++ dts,
+      devStatus = maximumBy (comparing length) (devStatus dn : map funUsage finfos)
+      } ts
 
 {-
 Ideas
@@ -420,7 +432,7 @@ But prioritize complete trees over correctly linearized trees
   -- Find non-head arguments for a function
   findOtherArgs :: ArgInfo -> [UDId] -> [(Cat,(Label,[UDData]))] -> [(UDId, [ArgInfo])] -> [[ArgInfo]]
   findOtherArgs _ usage [] argss = [[]]
-  findOtherArgs headArg usage (catlab : catlabs) argss 
+  findOtherArgs headArg usage (catlab : catlabs) argss
     | fst (snd catlab) == head_Label = map (headArg :) $ findOtherArgs headArg usage catlabs argss
   findOtherArgs headArg usage (catlab : catlabs) argss =
     [ arg : remaining
@@ -521,7 +533,8 @@ But prioritize complete trees over correctly linearized trees
     where
       acu finfo = (funTree finfo,(fst (funTyp finfo),funUsage finfo))
       dts = devAbsTrees dn
-      result = filter ((`notElem` dts) . funInfoToAbsTreeInfo) $ nubBy ((==) `on` funInfoToAbsTreeInfo) fis
+      result = filter ((`notElem` dts) . funInfoToAbsTreeInfo) (if fastTrees then fis else nubbed)
+      nubbed = nubBy ((==) `on` funInfoToAbsTreeInfo) fis
       -- TODO: nub won't be needed when the tree direct idea is implemented
       showFis = unlines . map ((" - "++) . showAbsTreeInfo . funInfoToAbsTreeInfo)
       showAbsTreeInfo acu = prRTree show (fst acu) ++ ", "  ++ show (snd acu)
