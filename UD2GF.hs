@@ -14,7 +14,7 @@ import qualified Data.Map as M
 import Data.List
 import Data.Char
 import Data.Maybe
-import Text.PrettyPrint (render)
+import Text.PrettyPrint (render, cat)
 
 import Debug.Trace (trace, traceShowId, traceShow)
 import Data.Function (on)
@@ -331,7 +331,7 @@ combineTrees env =
   tryEvenMore :: [FunInfo] -> DevTree -> DevTree
   tryEvenMore [] tr = tr
   tryEvenMore fis tr@RTree{root=nd} = tryEvenMore (newFuns (allFunsLocal onlyNewTree) nextTr) nextTr
-    where 
+    where
       -- The head only contains new trees that were created in the previous iteration
       onlyNewTree = tr {root = nd { devAbsTrees = map funInfoToAbsTreeInfo fis}}
       -- Add the new trees to the old ones. There shouldn't really be any duplicates now, so there's 
@@ -351,6 +351,7 @@ but search for each function which combinatons applicable
 Make pruneTrees less aggressive
 
 Prune by linearizing and verifying that it matches
+But prioritize complete trees over correctly linearized trees
 
 -}
 
@@ -367,6 +368,63 @@ Prune by linearizing and verifying that it matches
     --  f:fs -> tryCombine fs (addAbsTree f tr)
     --  [] -> tr
 
+  allFunsLocalFast :: DevTree -> [FunInfo]
+  allFunsLocalFast (RTree dn ts)=
+    [FunInfo f labtyp abstree usage |
+    -- for head and each immediate subtree, build the list of its already built abstrees, each with type and label
+    -- argalts :: [[Arg]] -- one list for root and for each subtree
+    let argalts =
+         [
+           (devIndex r, [ArgInfo i us (c, devLabel r) (devFeats r) e | (e,(c,us)) <- devAbsTrees r])
+         |
+         -- number the arguments: root node 0, subtrees 1,2,..
+         (i,r) <- (0,dn{devLabel = head_Label}) : zip [1..] (map root ts)
+         ],
+
+    -- TODO: Cache minimum common use for each line/dependent
+    (f,labtyp) <- allFunsEnv env,
+    (abstree,usage) <- tryFindArgsFast f labtyp argalts
+    ]
+  -- NOTE: argss is transposed compared to tryFindArgs
+  tryFindArgsFast :: CId -> LabelledType -> [(UDId, [ArgInfo])] -> [(AbsTree,[UDId])]
+  tryFindArgsFast  f (_, catlabs) (headArgs:argss) =
+    [ (abstree,usage)
+    | -- TODO Handle if no argument has head label (e.g. by letting this be a pattern guard in list comprehension)
+      -- or by throwing a more helpful error
+      let ([catlabHead], otherCatlabs) = partition (\(cat,(lab,feats)) -> lab == head_Label) catlabs
+      -- Select a headArg matching labcatHead
+      -- Filter out argss according to use from the headArg
+      -- Select other args until done
+    , headArg <- snd headArgs
+    , singleArgTypeMatches catlabHead headArg
+    , let headUsage = argUsage headArg -- TODO Use Set or IntSet for argUsage
+    , let unusedArgs = filter ((`notElem` headUsage) . fst) argss -- Don't include arguments used by the head
+    , dependentArgs <- findOtherArgs headUsage otherCatlabs unusedArgs
+    , let allArgs = (argTree headArg, headUsage) : dependentArgs
+    , let abstree = RTree f (map fst allArgs)
+    , let usage = sort (concatMap snd allArgs) -- head usage + dependents' argument numbers
+
+    ]
+  tryFindArgsFast  f (_, catlabs) [] = error "Avoidable partiality" -- TODO: Replace with e.g NonEmpty
+
+  -- Find non-head arguments for a function
+  findOtherArgs :: [UDId] -> [(Cat,(Label,[UDData]))] -> [(UDId, [ArgInfo])] -> [[(AbsTree,[UDId])]]
+  findOtherArgs usage [] argss = [[]]
+  findOtherArgs usage (catlab : catlabs) argss =
+    [ (argTree arg, argUsage arg) : remaining
+    | ((argNr, args), unusedArgs) <- select argss -- Pick any subtree
+    , arg <- args                                 -- Select any alternative from it
+    , all (`notElem` usage) $ argUsage arg        -- That doesn't overlap with already used args -- TODO Probably not needed, since
+    , singleArgTypeMatches catlab arg             -- And matches the signature of the function   --      subtrees shouldn't overlap
+    , remaining <- findOtherArgs (argUsage arg ++ usage) catlabs unusedArgs
+    ]
+
+  singleArgTypeMatches :: (Cat,(Label,[UDData])) -> ArgInfo -> Bool
+  singleArgTypeMatches catlab@(cat,(lab,feats)) arg =
+    argCatLab arg == (cat,lab) &&
+    all (`elem` argFeats arg) feats -- required features are found ---- TODO if feats or (argFeats arg) contain disjunctions
+
+
   allFunsLocal :: DevTree -> [FunInfo]
   allFunsLocal tr@(RTree dn ts) =
     [FunInfo f labtyp abstree usage |
@@ -379,7 +437,7 @@ Prune by linearizing and verifying that it matches
                              (i,r) <- (0,dn{devLabel = head_Label}) :  -- number the arguments: root node 0, subtrees 1,2,..
                                                  [(i,r) | (i,r) <- zip [1..] (map root ts)]
                       ],
-
+        -- trace (devWord dn ++ ":\n" ++ unlines (map ((" - " ++) . show) argalts)) True,
         -- argument sequences: an argument whose index is already in [Int] may not be used
         -- argseqsAfter :: [Int] -> [[Arg]] -> [[Arg]]
         let argseqsAfter us argss =
@@ -392,7 +450,7 @@ Prune by linearizing and verifying that it matches
         let argss = argseqs argalts,
         (f,labtyp) <-
           -- trace (devWord dn ++ ": head: " ++ show (length $ devAbsTrees dn) ++ ", total: " ++ show (length argss)) $
-          -- trace ("tr:\n " ++ prLinesRTree (prDevNode 4)  tr 
+          -- trace ("tr:\n " ++ prLinesRTree (prDevNode 4)  tr
           -- -- ++ "\n\tallFuns: " ++ show (length allF)
           -- ++ "\n\targss:\n" ++ unlines (("\t " ++) .show . map ((,,)<$> argNumber <*> argCatLab <*> prRTree show . argTree) <$> argss)
           -- )
@@ -443,7 +501,7 @@ Prune by linearizing and verifying that it matches
       } ts
 
   funInfoToAbsTreeInfo :: FunInfo -> AbsTreeInfo
-  funInfoToAbsTreeInfo finfo = (funTree finfo,(fst (funTyp finfo),funUsage finfo)) 
+  funInfoToAbsTreeInfo finfo = (funTree finfo,(fst (funTyp finfo),funUsage finfo))
 
   newFuns :: [FunInfo] -> DevTree -> [FunInfo]
   newFuns fis (RTree dn rts) = -- trace ("All funs:\n" ++ showFis fis ++ "\nFiltered funs:\n" ++ showFis result)
@@ -454,7 +512,7 @@ Prune by linearizing and verifying that it matches
       result = filter ((`notElem` dts) . funInfoToAbsTreeInfo) $ nubBy ((==) `on` funInfoToAbsTreeInfo) fis
       -- TODO: nub won't be needed when the tree direct idea is implemented
       showFis = unlines . map ((" - "++) . showAbsTreeInfo . funInfoToAbsTreeInfo)
-      showAbsTreeInfo acu = prRTree show (fst acu) ++ ", "  ++ show (snd acu) 
+      showAbsTreeInfo acu = prRTree show (fst acu) ++ ", "  ++ show (snd acu)
 
 analyseWords :: UDEnv -> DevTree -> DevTree
 analyseWords env = mapRTree lemma2fun
@@ -534,3 +592,10 @@ udtree2devtree = markClosest . initialize
     if udPosition ui == 1
       then nextUDId ui -- first word linked to next one --- does not work for one-word sentence
       else previousUDId ui  -- other words to previous ones, also works for the last word
+
+--  | Remove any element from a list
+-- >>> select [1,2,3]
+-- [(1,[2,3]),(2,[1,3]),(3,[1,2])]
+select :: [a] -> [(a,[a])]
+select [] = []
+select (a : as) = (a,as) : [ (b,a:bs) | (b,bs) <-select as ]
