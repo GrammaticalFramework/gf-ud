@@ -314,23 +314,28 @@ combineTrees env =
 
   comb :: DevTree -> DevTree
   comb tr@(RTree dn dts) = case map comb dts of
-    ts -> traceNoPrint (prDevNode 3 . root) "built" $ pruneDevTree $ rankDevTree $ keepTryingNew (RTree dn ts)
+    ts -> traceNoPrint (prDevNode 3 . root) "built" $ pruneDevTree $ rankDevTree $ keepTryingVersion (RTree dn ts)
+
+  keepTryingVersion = keepTryingNew
+  -- keepTryingVersion = keepTrying
+  -- allFunsLocalVersion = allFunsLocal
+  allFunsLocalVersion = allFunsLocalFast
 
   -- Apply all possible functions and iterate doing the same on the new trees until there's no new trees
   keepTryingNew :: DevTree -> DevTree
   keepTryingNew tr = tryEvenMore fs tr
-    where fs = newFuns (allFunsLocal tr) tr
+    where fs = newFuns (allFunsLocalVersion tr) tr
 
   -- Apply all possible functions to all trees, both old and new. This is needlessly slow.
   keepTrying :: DevTree -> DevTree
-  keepTrying tr = case tryCombine (allFunsLocal tr)  tr of
+  keepTrying tr = case tryCombine (allFunsLocalVersion tr)  tr of
     tr' | devAbsTrees (root tr') /= devAbsTrees (root tr) -> keepTrying tr'
     _ -> tr
 
   -- Apply all possible functions to the GF trees that were created in the previous iteration
   tryEvenMore :: [FunInfo] -> DevTree -> DevTree
   tryEvenMore [] tr = tr
-  tryEvenMore fis tr@RTree{root=nd} = tryEvenMore (newFuns (allFunsLocal onlyNewTree) nextTr) nextTr
+  tryEvenMore fis tr@RTree{root=nd} = tryEvenMore (newFuns (allFunsLocalVersion onlyNewTree) nextTr) nextTr
     where
       -- The head only contains new trees that were created in the previous iteration
       onlyNewTree = tr {root = nd { devAbsTrees = map funInfoToAbsTreeInfo fis}}
@@ -391,7 +396,7 @@ But prioritize complete trees over correctly linearized trees
     [ (abstree,usage)
     | -- TODO Handle if no argument has head label (e.g. by letting this be a pattern guard in list comprehension)
       -- or by throwing a more helpful error
-      let ([catlabHead], otherCatlabs) = partition (\(cat,(lab,feats)) -> lab == head_Label) catlabs
+      let [catlabHead] = filter (\(cat,(lab,feats)) -> lab == head_Label) catlabs
       -- Select a headArg matching labcatHead
       -- Filter out argss according to use from the headArg
       -- Select other args until done
@@ -399,24 +404,31 @@ But prioritize complete trees over correctly linearized trees
     , singleArgTypeMatches catlabHead headArg
     , let headUsage = argUsage headArg -- TODO Use Set or IntSet for argUsage
     , let unusedArgs = filter ((`notElem` headUsage) . fst) argss -- Don't include arguments used by the head
-    , dependentArgs <- findOtherArgs headUsage otherCatlabs unusedArgs
-    , let allArgs = (argTree headArg, headUsage) : dependentArgs
-    , let abstree = RTree f (map fst allArgs)
-    , let usage = sort (concatMap snd allArgs) -- head usage + dependents' argument numbers
+    , dependentArgs <- findOtherArgs headArg headUsage catlabs unusedArgs
+    -- , trace ("f: "++ show f ++ " catlabs: " ++ show (length catlabs) ++ ", args: " ++ show (length dependentArgs)
+    --       --  ++ "\n\tcatlabs: " ++ show catlabs
+    --        ++ "\n\targss:\n" ++ unlines (("\t " ++) .show . ((,,)<$> argNumber <*> argCatLab <*> prRTree show . argTree) <$> dependentArgs)
+    --    ) ((argNumber .head) dependentArgs >= 0 )
+    , let allArgs = dependentArgs
+    , let abstree = RTree f (map argTree allArgs)
+    -- , trace (prRTree show abstree) True
+    , let usage = sort (concatMap argUsage allArgs) -- head usage + dependents' argument numbers
 
     ]
   tryFindArgsFast  f (_, catlabs) [] = error "Avoidable partiality" -- TODO: Replace with e.g NonEmpty
 
   -- Find non-head arguments for a function
-  findOtherArgs :: [UDId] -> [(Cat,(Label,[UDData]))] -> [(UDId, [ArgInfo])] -> [[(AbsTree,[UDId])]]
-  findOtherArgs usage [] argss = [[]]
-  findOtherArgs usage (catlab : catlabs) argss =
-    [ (argTree arg, argUsage arg) : remaining
+  findOtherArgs :: ArgInfo -> [UDId] -> [(Cat,(Label,[UDData]))] -> [(UDId, [ArgInfo])] -> [[ArgInfo]]
+  findOtherArgs _ usage [] argss = [[]]
+  findOtherArgs headArg usage (catlab : catlabs) argss 
+    | fst (snd catlab) == head_Label = map (headArg :) $ findOtherArgs headArg usage catlabs argss
+  findOtherArgs headArg usage (catlab : catlabs) argss =
+    [ arg : remaining
     | ((argNr, args), unusedArgs) <- select argss -- Pick any subtree
     , arg <- args                                 -- Select any alternative from it
     , all (`notElem` usage) $ argUsage arg        -- That doesn't overlap with already used args -- TODO Probably not needed, since
     , singleArgTypeMatches catlab arg             -- And matches the signature of the function   --      subtrees shouldn't overlap
-    , remaining <- findOtherArgs (argUsage arg ++ usage) catlabs unusedArgs
+    , remaining <- findOtherArgs headArg (argUsage arg ++ usage) catlabs unusedArgs
     ]
 
   singleArgTypeMatches :: (Cat,(Label,[UDData])) -> ArgInfo -> Bool
@@ -493,7 +505,7 @@ But prioritize complete trees over correctly linearized trees
                  in
                  if elem acu dts  -- the same tree with the same usage of subtrees is not added again
                     ---- || length dts > 123 ---- TODO parameterize "beam" size
-                   then -- trace ("same " ++ prRTree show (fst acu) ++ ", "  ++ show (snd acu))
+                   then trace ("same " ++ prRTree show (fst acu) ++ ", "  ++ show (snd acu))
                      dts
                    else -- trace ("new " ++ prRTree show (fst acu) ++ ", "  ++ show (snd acu)) $
                      acu:dts,
