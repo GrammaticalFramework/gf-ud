@@ -293,7 +293,7 @@ splitDevTree env tr@(RTree dn trs) =
     False -> head $ splitDevTree env $ RTree (d{devNeedBackup = True}) ts ---- head
 
   isStartCat :: AbsTreeInfo -> Bool
-  isStartCat (rt, (ci, uis)) = startCategory env /= mkType [] ci []
+  isStartCat AbsTreeInfo { atiAbsTree = rt, atiCat = ci, atiUDIds = uis} = startCategory env /= mkType [] ci []
 
 prtStatus udids =  "[" ++ concat (intersperse "," (map prt udids)) ++ "]"
 
