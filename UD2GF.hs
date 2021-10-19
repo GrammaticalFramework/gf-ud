@@ -407,7 +407,7 @@ But prioritize complete trees over correctly linearized trees
   tryFindArgsFast  f (_, catlabs) (headArgs:argss) =
     [ (abstree,usage)
     | let catlabHeads = filter (\(cat,(lab,feats)) -> lab == head_Label) catlabs
-    , let catlabHead = case catlabHeads of [ch] -> ch; _ -> error ("Missing head label for function: " ++ show f)
+    , let catlabHead = case catlabHeads of [ch] -> ch; _ -> error ("Missing head label for function: " ++ show f ++ "\nlabels: " ++ show catlabs)
       -- Select a headArg matching labcatHead
       -- Filter out argss according to use from the headArg
       -- Select other args until done
