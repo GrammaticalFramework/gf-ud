@@ -185,7 +185,12 @@ data DevNode = DevNode {
  }
   deriving Show
 
-type AbsTreeInfo = (AbsTree,(Cat,[UDId]))
+data AbsTreeInfo = AbsTreeInfo
+  { atiAbsTree :: AbsTree
+  , atiCat :: Cat
+  , atiUDIds :: [UDId]
+  }
+  deriving (Show, Eq)
 
 -- n shows how many trees are to be shown
 prDevNode n d = unwords [
@@ -197,12 +202,12 @@ prDevNode n d = unwords [
   devPOS d,
   devLabel d,
   "(" ++ unwords (intersperse ";"
-    [prAbsTree e ++ " : " ++ showCId c ++ prtStatus us | (e,(c,us)) <- take n (devAbsTrees d)]) ++ ")",
+    [prAbsTree e ++ " : " ++ showCId c ++ prtStatus us | AbsTreeInfo e c us <- take n (devAbsTrees d)]) ++ ")",
   show (length (devAbsTrees d))
   ]
 
 devtree2abstrees :: DevTree -> [AbsTree]
-devtree2abstrees = map fst . devAbsTrees . root
+devtree2abstrees = map atiAbsTree . devAbsTrees . root
 
 -- to be applied to a DevTree with just one tree at each node
 addBackups :: DevTree -> DevTree
@@ -222,25 +227,25 @@ addBackups0 tr@(RTree dn trs) = case map collectBackup (tr:trs) of  -- backups f
 
   -- add backups to tree, update usage with the nodes used in the backups (if no backups, do nothing)
   replaceInfo :: [(AbsTree,AbsTreeInfo)] -> AbsTreeInfo -> AbsTreeInfo
-  replaceInfo btrs ai@(ast,(cat,usage)) =
-    (replace btrs ast,(cat,sort (nub (concat (usage:map (snd . snd . snd) btrs)))))
+  replaceInfo btrs ai@(AbsTreeInfo ast cat usage ) =
+    AbsTreeInfo (replace btrs ast)  cat (sort (nub (concat (usage:map (atiUDIds . snd) btrs))))
 
   -- check if thre are backups; if not, apply backups to subtrees
   replace :: [(AbsTree,AbsTreeInfo)] -> AbsTree -> AbsTree
   replace btrs tr@(RTree f trs) = case lookup tr btrs of
-    Just (btr,(c,_)) -> appBackup c btr (RTree f (map (replace btrs) trs))
+    Just AbsTreeInfo { atiAbsTree = btr, atiCat = c} -> appBackup c btr (RTree f (map (replace btrs) trs))
     _ -> RTree f (map (replace btrs) trs)
 
   collectBackup :: DevTree -> (DevTree,(AbsTree,Maybe AbsTreeInfo))
   collectBackup t@(RTree d ts) =
-    let ai@(ast,_) = theAbsTreeInfo t in
+    let ai@AbsTreeInfo { atiAbsTree = ast} = theAbsTreeInfo t in
     (t,(ast, mkBackupList ai [theAbsTreeInfo (addBackups0 u) | u <- ts, devNeedBackup (root u)]))
 
   mkBackupList :: AbsTreeInfo -> [AbsTreeInfo] -> Maybe AbsTreeInfo
-  mkBackupList ai@(ast,(cat,usage)) ts =
-    case unzip [(mkBackup a c,us) | (a,(c,us)) <- ts] of
+  mkBackupList ai@AbsTreeInfo { atiAbsTree = ast, atiCat = cat, atiUDIds = usage} ts =
+    case unzip [(mkBackup a c,us) | AbsTreeInfo { atiAbsTree = a, atiCat = c, atiUDIds = us} <- ts] of
       ([],_) -> Nothing
-      (bs,uss) -> Just (foldr cons nil bs, (cat,sort (nub (concat uss))))
+      (bs,uss) -> Just AbsTreeInfo { atiAbsTree = foldr cons nil bs, atiCat = cat, atiUDIds = sort $ nub $ concat uss}
 
   cons t u = RTree (mkCId "ConsBackup") [t,u]
   nil = RTree (mkCId "BaseBackup") []
@@ -259,8 +264,9 @@ splitDevTree :: DevTree -> [DevTree]
 splitDevTree tr@(RTree dn trs) = -- traceShow (startCategory env)
   [RTree (dn{devAbsTrees = [t]}) (map (chase t) trs) | t <- devAbsTrees dn]
  where
-  chase (ast,(cat,usage)) tr@(RTree d ts) = case elem (devIndex d) usage of
-    True -> case sortOn ((1000-) . sizeRTree . fst) [dt | dt@(t,_) <- devAbsTrees d, isSubRTree t ast] of
+  chase AbsTreeInfo { atiAbsTree = ast, atiCat = cat, atiUDIds = usage} tr@(RTree d ts) =
+   case elem (devIndex d) usage of
+    True -> case sortOn ((1000-) . sizeRTree . atiAbsTree) [dt | dt@AbsTreeInfo { atiAbsTree = t} <- devAbsTrees d, isSubRTree t ast] of
       t:_ -> RTree (d{devAbsTrees = [t]}) (map (chase t) ts)
       _ -> error $ "wrong indexing in\n" ++ prLinesRTree (prDevNode 1) tr
     False -> head $ splitDevTree $ RTree (d{devNeedBackup = True}) ts ---- head
@@ -273,14 +279,14 @@ rankDevTree :: DevTree -> DevTree
 rankDevTree tr@(RTree dn dts) = RTree dn{devAbsTrees = rankSort (devAbsTrees dn)} dts
  where
   rankSort = sortOn ((100-) . rank) -- descending order of rank
-  rank (t,(c,us)) = length us
+  rank AbsTreeInfo { atiUDIds = us } = length us
 
 -- omit (t2,(cat,usage2)) if there is (t1,(cat,usage1)) such that usage2 is a subset of usage1
 pruneDevTree :: DevTree -> DevTree
 pruneDevTree  tr@(RTree dn dts) = RTree dn{devAbsTrees = pruneCatGroups (groupCat (devAbsTrees dn))} dts
  where
-  cat = fst . snd
-  usage = snd . snd
+  cat = atiCat
+  usage = atiUDIds
   rank = length . usage
   groupCat = map (sortOn ((100-) . rank)) . groupBy (\x y -> cat x == cat y) . sortOn cat
   prune usages grp = case grp of
@@ -399,7 +405,7 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
     -- argalts :: [[Arg]] -- one list for root and for each subtree
     let argalts =
          [
-           (devIndex r, [ArgInfo i us (c, devLabel r) (devFeats r) e | (e,(c,us)) <- devAbsTrees r])
+           (devIndex r, [ArgInfo i us (c, devLabel r) (devFeats r) e | AbsTreeInfo { atiAbsTree = e, atiCat = c, atiUDIds = us} <- devAbsTrees r])
          |
          -- number the arguments: root node 0, subtrees 1,2,..
          (i,r) <- (0,dn{devLabel = head_Label}) : zip [1..] (map root ts)
@@ -461,7 +467,7 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
         -- for head and each immediate subtree, build the list of its already built abstrees, each with type and label
         -- argalts :: [[Arg]] -- one list for root and for each subtree
         let argalts = [
-                       [ArgInfo i us (c, devLabel r) (devFeats r) e | (e,(c,us)) <- devAbsTrees r]
+                       [ArgInfo i us (c, devLabel r) (devFeats r) e | AbsTreeInfo { atiAbsTree = e, atiCat = c, atiUDIds = us} <- devAbsTrees r]
                            |
                              (i,r) <- (0,dn{devLabel = head_Label}) :  -- number the arguments: root node 0, subtrees 1,2,..
                                                  [(i,r) | (i,r) <- zip [1..] (map root ts)]
@@ -517,12 +523,12 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
   addAbsTree finfo tr@(RTree dn ts) = -- trace (devWord dn ++ ": " ++ show (length $ devAbsTrees dn)) $ -- trace (show dn) $
     RTree dn{
       devAbsTrees = let
-                   acu = (funTree finfo,(fst (funTyp finfo),funUsage finfo))
+                   acu = AbsTreeInfo { atiAbsTree = funTree finfo, atiCat = fst $ funTyp finfo, atiUDIds = funUsage finfo}
                    dts = devAbsTrees dn
                  in
                  if elem acu dts  -- the same tree with the same usage of subtrees is not added again
                     ---- || length dts > 123 ---- TODO parameterize "beam" size
-                   then trace ("same " ++ prRTree show (fst acu) ++ ", "  ++ show (snd acu))
+                   then trace ("same " ++ prRTree show (atiAbsTree acu) ++ ", "  ++ show (atiCat acu) ++ ", " ++ show (atiUDIds acu))
                      dts
                    else -- trace ("new " ++ prRTree show (fst acu) ++ ", "  ++ show (snd acu)) $
                      acu:dts,
@@ -530,7 +536,7 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
       } ts
 
   funInfoToAbsTreeInfo :: FunInfo -> AbsTreeInfo
-  funInfoToAbsTreeInfo finfo = (funTree finfo,(fst (funTyp finfo),funUsage finfo))
+  funInfoToAbsTreeInfo finfo = AbsTreeInfo { atiAbsTree = funTree finfo, atiCat = fst $ funTyp finfo, atiUDIds = funUsage finfo}
 
   newFuns :: [FunInfo] -> DevTree -> [FunInfo]
   newFuns fis (RTree dn rts) = -- trace ("All funs:\n" ++ showFis fis ++ "\nFiltered funs:\n" ++ showFis result)
@@ -542,13 +548,13 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
       nubbed = nubBy ((==) `on` funInfoToAbsTreeInfo) fis
       -- TODO: nub won't be needed when the tree direct idea is implemented
       showFis = unlines . map ((" - "++) . showAbsTreeInfo . funInfoToAbsTreeInfo)
-      showAbsTreeInfo acu = prRTree show (fst acu) ++ ", "  ++ show (snd acu)
+      showAbsTreeInfo acu = prRTree show (atiAbsTree acu) ++ ", "  ++ show (atiCat acu) ++ ", "  ++ show (atiUDIds acu)
 
 analyseWords :: UDEnv -> DevTree -> DevTree
 analyseWords env = mapRTree lemma2fun
  where
   lemma2fun dn = dn {
-    devAbsTrees = [(t,(c,[devIndex dn])) | (t,c) <- justWords],
+    devAbsTrees = [AbsTreeInfo { atiAbsTree = t, atiCat = c, atiUDIds = [devIndex dn]} | (t,c) <- justWords],
     devStatus = [devIndex dn],
     devIsUnknown = isUnknown
     }
