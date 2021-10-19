@@ -406,9 +406,8 @@ But prioritize complete trees over correctly linearized trees
   tryFindArgsFast :: CId -> LabelledType -> [(UDId, [ArgInfo])] -> [(AbsTree,[UDId])]
   tryFindArgsFast  f (_, catlabs) (headArgs:argss) =
     [ (abstree,usage)
-    | -- TODO Handle if no argument has head label (e.g. by letting this be a pattern guard in list comprehension)
-      -- or by throwing a more helpful error
-      let [catlabHead] = filter (\(cat,(lab,feats)) -> lab == head_Label) catlabs
+    | let catlabHeads = filter (\(cat,(lab,feats)) -> lab == head_Label) catlabs
+    , let catlabHead = case catlabHeads of [ch] -> ch; _ -> error ("Missing head label for function: " ++ show f)
       -- Select a headArg matching labcatHead
       -- Filter out argss according to use from the headArg
       -- Select other args until done
