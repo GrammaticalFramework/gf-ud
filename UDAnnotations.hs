@@ -287,10 +287,13 @@ catsForPOS env = M.fromListWith (++) $
 -- CId (AbsType,(([CId],AbsTree),[Label]))
 expandMacro :: UDEnv -> AbsTree -> AbsTree
 expandMacro env tr@(RTree f ts) = case M.lookup f (macroFunctions (cncLabels env)) of
-  Just (MacroFunction _ xx df _) -> subst (zip xx (map (expandMacro env) ts)) df
-  _ -> RTree f (map (expandMacro env) ts)
+  Just (MacroFunction _ xx df _) | length ts' == length xx -> 
+    subst (zip xx ts') df
+  _ -> RTree f ts'
  where
-   subst xts t@(RTree h us) = case us of
+   ts' = map (expandMacro env) ts
+   subst xts t@(RTree h us) = 
+    case us of
      [] -> maybe t id (lookup h xts)
      -- Expand head: #auxfun Ex a b : A -> B -> C = a b ; cn head
      _ | Just (RTree h' hus) <- lookup h xts -> expandMacro env $ RTree h' (hus ++ map (subst xts) us)
