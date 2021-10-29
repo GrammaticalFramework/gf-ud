@@ -292,6 +292,8 @@ expandMacro env tr@(RTree f ts) = case M.lookup f (macroFunctions (cncLabels env
  where
    subst xts t@(RTree h us) = case us of
      [] -> maybe t id (lookup h xts)
+     -- Expand head: #auxfun Ex a b : A -> B -> C = a b ; cn head
+     _ | Just (RTree h' hus) <- lookup h xts -> RTree h' (hus ++ map (subst xts) us)
      _  -> RTree h (map (subst xts) us)
 
 ----------------------------------------------------------------------------
