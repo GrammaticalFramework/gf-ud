@@ -79,11 +79,19 @@ data CncLabels = CncLabels {
   multiLabels    :: M.Map Cat (Bool, Label),                -- cat -> (if-head-first, other-labels)      e.g. #multiword Prep head first fixed
   auxCategories  :: M.Map CId String,                       -- auxcat -> cat, in both gf2ud and ud2gf,   e.g. #auxcat Cop AUX
   changeLabels   :: M.Map Label [(Label,Condition)],        -- change to another label afterwards        e.g. #change obj>obl above case 
-  macroFunctions :: M.Map CId (AbsType,(([CId],AbsTree),[(Label,[UDData])])), -- ud2gf only,         e.g. #auxfun MkVPS_Fut will vp : Will -> VP -> VPS = MkVPS (TTAnt TFut ASimul) PPos vp ; aux head
+  macroFunctions :: M.Map CId MacroFunction, -- ud2gf only,         e.g. #auxfun MkVPS_Fut will vp : Will -> VP -> VPS = MkVPS (TTAnt TFut ASimul) PPos vp ; aux head
   altFunLabels   :: M.Map CId [[Label]],                                      -- ud2gf only,         e.g. #altfun ComplSlash head obl
   disabledFunctions :: M.Map Fun ()                                           -- not to be used in ud2gf, e.g. #disable the_Det thePl_Det
 
   }
+
+data MacroFunction = MacroFunction 
+  { mfType :: AbsType
+  , mfArgNames :: [CId]
+  , mfExpansion :: AbsTree
+  , mfLabels :: [(Label, [UDData])]
+  }
+  deriving (Show)
 
 data Condition =
     CAbove Label        -- to change a label if it dominates this label
@@ -187,10 +195,15 @@ addMissing env = env {
  
 -- #macro PredCop np cop comp : NP -> Cop -> Comp -> Cl = PredVP np (UseComp comp) ; subj cop head
 -- CId (AbsType,(([CId],AbsTree),[Label]))
-pMacroFunction (f:ws) = case break (==":") ws of
+pMacroFunction (f,ws) = case break (==":") ws of
   (xs,_:ww) -> case break (=="=") ww of
     (ty,_:tl) -> case break (==";") tl of
-      (df,_:ls) -> (pAbsType (unwords ty), ((map mkCId xs, pAbsTree (unwords df)),map labelAndMorpho ls))
+      (df,_:ls) -> MacroFunction
+                    { mfType = pAbsType (unwords ty)
+                    , mfArgNames = map mkCId xs
+                    , mfExpansion = pAbsTree (unwords df)
+                    , mfLabels = map labelAndMorpho ls
+                    }
       _ -> error $ "missing labels in #macro " ++ unwords (f:ws)
     _ -> error $ "missing definition in #macro " ++ unwords (f:ws)
   _ -> error $ "missing type in #macro " ++ unwords (f:ws)
@@ -214,7 +227,7 @@ pCncLabels = dispatch . map words . uncomment . lines
     "#multiword":c:hp:lab:_  -> labs{multiLabels = M.insert (mkCId c) (hp/="head-last",lab) (multiLabels labs)}
     "#auxcat":c:p:[]    -> labs{auxCategories = M.insert (mkCId c) p (auxCategories labs)}
     "#change":c1:">":c2:ws  -> labs{changeLabels = M.insert c1 [(c2, pCondition ws)] (changeLabels labs)}
-    "#auxfun":f:typdef  -> labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f:typdef)) (macroFunctions labs)}
+    "#auxfun":f:typdef  -> labs{macroFunctions = M.insert (mkCId f) (pMacroFunction (f,typdef)) (macroFunctions labs)}
     "#disable":fs       -> labs{disabledFunctions = inserts [(mkCId f,()) | f <- fs] (disabledFunctions labs)}
     "#altfun":f:xs      -> labs{altFunLabels = M.insertWith (++) (mkCId f) [xs] (altFunLabels labs)}
 
@@ -274,7 +287,7 @@ catsForPOS env = M.fromListWith (++) $
 -- CId (AbsType,(([CId],AbsTree),[Label]))
 expandMacro :: UDEnv -> AbsTree -> AbsTree
 expandMacro env tr@(RTree f ts) = case M.lookup f (macroFunctions (cncLabels env)) of
-  Just (_,((xx,df),_)) -> subst (zip xx (map (expandMacro env) ts)) df
+  Just (MacroFunction _ xx df _) -> subst (zip xx (map (expandMacro env) ts)) df
   _ -> RTree f (map (expandMacro env) ts)
  where
    subst xts t@(RTree h us) = case us of
@@ -285,23 +298,30 @@ expandMacro env tr@(RTree f ts) = case M.lookup f (macroFunctions (cncLabels env
 -- used in ud2gf: macros + real abstract functions, except the disabled ones
 
 allFunsEnv :: UDEnv -> [(Fun,LabelledType)]
-allFunsEnv env =
-    [(f,(val,zip args ls))  |
-      (f,((val,args),((xx,df),ls))) <- M.assocs (macroFunctions (cncLabels env))]
+allFunsEnv env = 
+   macroFuns
      ++
-    [(f, mkLabelledType typ labels) |
+   labeledFuns
+     ++
+   altFuns
+  where
+    macroFuns = 
+      [(f,(val,zip args ls))  |
+      (f,MacroFunction (val,args) xx df ls) <- M.assocs (macroFunctions (cncLabels env))]
+    labeledFuns = 
+      [(f, mkLabelledType typ labels) |
       (f,labelss) <- M.assocs (funLabels (absLabels env)),
                     M.notMember f (disabledFunctions (cncLabels env)),
                     not (isBackupFunction f), ---- apply backups only later
       Just typ   <- [functionType (pgfGrammar env) f],
                     (_,labels) <- labelss ---- TODO precise handling of generalized labels 
-    ]
-     ++
-    [(f, mkLabelledType typ labels) |
+      ] 
+    altFuns = 
+      [(f, mkLabelledType typ labels) |
       (f,labelss) <- M.assocs (altFunLabels (cncLabels env)),
       labels      <- labelss,
       Just typ    <- [functionType (pgfGrammar env) f]
-    ]
+      ]  
 
 mkBackup ast cat = RTree (mkCId (showCId cat ++ "Backup")) [ast]
 isBackupFunction f = isSuffixOf "Backup" (showCId f)
