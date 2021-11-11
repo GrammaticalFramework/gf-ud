@@ -16,7 +16,7 @@ import Data.Char
 import Data.Maybe
 import Text.PrettyPrint (render, cat)
 
-import Debug.Trace (trace, traceShowId, traceShow)
+import Debug.Trace (trace)
 import Data.Function (on)
 import Data.Ord (comparing)
 
@@ -261,7 +261,7 @@ theAbsTreeInfo dt = case devAbsTrees (root dt) of
 
 -- split trees showing just one GF tree in each DevTree
 splitDevTree :: DevTree -> [DevTree]
-splitDevTree tr@(RTree dn trs) = -- traceShow (startCategory env)
+splitDevTree tr@(RTree dn trs) =
   [RTree (dn{devAbsTrees = [t]}) (map (chase t) trs) | t <- devAbsTrees dn]
  where
   chase AbsTreeInfo { atiAbsTree = ast, atiCat = cat, atiUDIds = usage} tr@(RTree d ts) =
@@ -388,15 +388,7 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
 
   tryCombine :: [FunInfo] -> DevTree -> DevTree
   tryCombine finfos tr =
-    -- trace ("combining:\n" ++ unlines (map ((" - "++) . prRTree show . funTree) finfos)
-    --       ++ "\nwith:\n " ++ prLinesRTree (prDevNode 4)  tr
-    --       ++ "\nresult:\n " ++ prLinesRTree (prDevNode 4)  res) 
-          res
-    where res =
             foldl (flip addAbsTree) tr finfos
-    --case finfos of
-    --  f:fs -> tryCombine fs (addAbsTree f tr)
-    --  [] -> tr
 
   allFunsLocalFast :: DevTree -> [FunInfo]
   allFunsLocalFast (RTree dn ts)=
@@ -428,13 +420,8 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
     , let headUsage = argUsage headArg -- TODO Use Set or IntSet for argUsage
     , let unusedArgs = filter ((`notElem` headUsage) . fst) argss -- Don't include arguments used by the head
     , dependentArgs <- findOtherArgs headArg headUsage catlabs unusedArgs
-    -- , trace ("f: "++ show f ++ " catlabs: " ++ show (length catlabs) ++ ", args: " ++ show (length dependentArgs)
-    --       --  ++ "\n\tcatlabs: " ++ show catlabs
-    --        ++ "\n\targss:\n" ++ unlines (("\t " ++) .show . ((,,)<$> argNumber <*> argCatLab <*> prRTree show . argTree) <$> dependentArgs)
-    --    ) ((argNumber .head) dependentArgs >= 0 )
     , let allArgs = dependentArgs
     , let abstree = RTree f (map argTree allArgs)
-    -- , trace (prRTree show abstree) True
     , let usage = sort (concatMap argUsage allArgs) -- head usage + dependents' argument numbers
 
     ]
@@ -472,7 +459,6 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
                              (i,r) <- (0,dn{devLabel = head_Label}) :  -- number the arguments: root node 0, subtrees 1,2,..
                                                  [(i,r) | (i,r) <- zip [1..] (map root ts)]
                       ],
-        -- trace (devWord dn ++ ":\n" ++ unlines (map ((" - " ++) . show) argalts)) True,
         -- argument sequences: an argument whose index is already in [Int] may not be used
         -- argseqsAfter :: [Int] -> [[Arg]] -> [[Arg]]
         let argseqsAfter us argss =
@@ -483,22 +469,12 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
 
         let allF = allFunsEnv env,
         let argss = argseqs argalts,
-        (f,labtyp) <-
-          -- trace (devWord dn ++ ": head: " ++ show (length $ devAbsTrees dn) ++ ", total: " ++ show (length argss)) $
-          -- trace ("tr:\n " ++ prLinesRTree (prDevNode 4)  tr
-          -- -- ++ "\n\tallFuns: " ++ show (length allF)
-          -- ++ "\n\targss:\n" ++ unlines (("\t " ++) .show . map ((,,)<$> argNumber <*> argCatLab <*> prRTree show . argTree) <$> argss)
-          -- )
-           allF,
+        (f,labtyp) <- allF,
         (abstree,usage) <- tryFindArgs f labtyp argss
       ]
 
   tryFindArgs :: CId -> LabelledType -> [[ArgInfo]] -> [(AbsTree,[UDId])]
   tryFindArgs f labtyp@(valcat,catlabs) argss =
-    --  trace ("f: "++ show f ++ " catlabs: " ++ show (length catlabs) ++ ", argss: " ++ show (length argss) ++ ", max args: " ++ show (maximum $ map length argss)
-    --        ++ "\n\tcatlabs: " ++ show catlabs
-    --        ++ "\n\targss:\n" ++ unlines (("\t " ++) .show . map ((,,)<$> argNumber <*> argCatLab <*> prRTree show . argTree) <$> argss)
-    -- )
     [(abstree,usage) |
         args <- argss,
         xis  <- (argTypeMatches catlabs args),
@@ -520,7 +496,7 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
     _ -> [[]]
 
   addAbsTree :: FunInfo -> DevTree -> DevTree
-  addAbsTree finfo tr@(RTree dn ts) = -- trace (devWord dn ++ ": " ++ show (length $ devAbsTrees dn)) $ -- trace (show dn) $
+  addAbsTree finfo tr@(RTree dn ts) =
     RTree dn{
       devAbsTrees = let
                    acu = AbsTreeInfo { atiAbsTree = funTree finfo, atiCat = fst $ funTyp finfo, atiUDIds = funUsage finfo}
@@ -528,10 +504,8 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
                  in
                  if elem acu dts  -- the same tree with the same usage of subtrees is not added again
                     ---- || length dts > 123 ---- TODO parameterize "beam" size
-                   then trace ("same " ++ prRTree show (atiAbsTree acu) ++ ", "  ++ show (atiCat acu) ++ ", " ++ show (atiUDIds acu))
-                     dts
-                   else -- trace ("new " ++ prRTree show (fst acu) ++ ", "  ++ show (snd acu)) $
-                     acu:dts,
+                   then dts
+                   else acu:dts,
       devStatus = maximumBy (\x y -> compare (length x) (length y)) [devStatus dn, funUsage finfo]
       } ts
 
@@ -539,16 +513,13 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
   funInfoToAbsTreeInfo finfo = AbsTreeInfo { atiAbsTree = funTree finfo, atiCat = fst $ funTyp finfo, atiUDIds = funUsage finfo}
 
   newFuns :: [FunInfo] -> DevTree -> [FunInfo]
-  newFuns fis (RTree dn rts) = -- trace ("All funs:\n" ++ showFis fis ++ "\nFiltered funs:\n" ++ showFis result)
-   result
+  newFuns fis (RTree dn rts) = result
     where
       acu finfo = (funTree finfo,(fst (funTyp finfo),funUsage finfo))
       dts = devAbsTrees dn
       result = filter ((`notElem` dts) . funInfoToAbsTreeInfo) (if fastTrees then fis else nubbed)
       nubbed = nubBy ((==) `on` funInfoToAbsTreeInfo) fis
       -- TODO: nub won't be needed when the tree direct idea is implemented
-      showFis = unlines . map ((" - "++) . showAbsTreeInfo . funInfoToAbsTreeInfo)
-      showAbsTreeInfo acu = prRTree show (atiAbsTree acu) ++ ", "  ++ show (atiCat acu) ++ ", "  ++ show (atiUDIds acu)
 
 analyseWords :: UDEnv -> DevTree -> DevTree
 analyseWords env = mapRTree lemma2fun
