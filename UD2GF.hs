@@ -321,28 +321,17 @@ combineTrees env =
 
   comb :: DevTree -> DevTree
   comb tr@(RTree dn dts) = case map comb dts of
-    ts -> traceNoPrint (prDevNode 3 . root) "built" $ pruneDevTree $ rankDevTree $ keepTryingVersion (RTree dn ts)
-
-  keepTryingVersion = keepTryingNew
-  -- keepTryingVersion = keepTrying
-  -- allFunsLocalVersion = allFunsLocal ; fastTrees = False
-  allFunsLocalVersion = allFunsLocalFast ; fastTrees = True
+    ts -> traceNoPrint (prDevNode 3 . root) "built" $ pruneDevTree $ rankDevTree $ keepTryingNew (RTree dn ts)
 
   -- Apply all possible functions and iterate doing the same on the new trees until there's no new trees
   keepTryingNew :: DevTree -> DevTree
   keepTryingNew tr = tryEvenMore fs tr
-    where fs = newFuns (allFunsLocalVersion tr) tr
-
-  -- Apply all possible functions to all trees, both old and new. This is needlessly slow.
-  keepTrying :: DevTree -> DevTree
-  keepTrying tr = case tryCombine (allFunsLocalVersion tr)  tr of
-    tr' | devAbsTrees (root tr') /= devAbsTrees (root tr) -> keepTrying tr'
-    _ -> tr
+    where fs = newFuns (allFunsLocalFast tr) tr
 
   -- Apply all possible functions to the GF trees that were created in the previous iteration
   tryEvenMore :: [FunInfo] -> DevTree -> DevTree
   tryEvenMore [] tr = tr
-  tryEvenMore fis tr@RTree{root=nd} = tryEvenMore (newFuns (allFunsLocalVersion onlyNewTree) nextTr) nextTr
+  tryEvenMore fis tr@RTree{root=nd} = tryEvenMore (newFuns (allFunsLocalFast onlyNewTree) nextTr) nextTr
     where
       -- The head only contains new trees that were created in the previous iteration
       onlyNewTree = tr {root = nd { devAbsTrees = map funInfoToAbsTreeInfo fis}}
@@ -386,10 +375,6 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
 -}
 
 
-  tryCombine :: [FunInfo] -> DevTree -> DevTree
-  tryCombine finfos tr =
-            foldl (flip addAbsTree) tr finfos
-
   allFunsLocalFast :: DevTree -> [FunInfo]
   allFunsLocalFast (RTree dn ts)=
     [FunInfo f labtyp abstree usage |
@@ -406,6 +391,7 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
     (f,labtyp) <- allFunsEnv env,
     (abstree,usage) <- tryFindArgsFast f labtyp argalts
     ]
+
   -- NOTE: argss is transposed compared to tryFindArgs
   tryFindArgsFast :: CId -> LabelledType -> [(UDId, [ArgInfo])] -> [(AbsTree,[UDId])]
   tryFindArgsFast  f (_, catlabs) (headArgs:argss) =
@@ -446,80 +432,14 @@ Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
     argCatLab arg == (cat,lab) &&
     all (`elem` argFeats arg) feats -- required features are found ---- TODO if feats or (argFeats arg) contain disjunctions
 
-
-  allFunsLocal :: DevTree -> [FunInfo]
-  allFunsLocal tr@(RTree dn ts) =
-    [FunInfo f labtyp abstree usage |
-
-        -- for head and each immediate subtree, build the list of its already built abstrees, each with type and label
-        -- argalts :: [[Arg]] -- one list for root and for each subtree
-        let argalts = [
-                       [ArgInfo i us (c, devLabel r) (devFeats r) e | AbsTreeInfo { atiAbsTree = e, atiCat = c, atiUDIds = us} <- devAbsTrees r]
-                           |
-                             (i,r) <- (0,dn{devLabel = head_Label}) :  -- number the arguments: root node 0, subtrees 1,2,..
-                                                 [(i,r) | (i,r) <- zip [1..] (map root ts)]
-                      ],
-        -- argument sequences: an argument whose index is already in [Int] may not be used
-        -- argseqsAfter :: [Int] -> [[Arg]] -> [[Arg]]
-        let argseqsAfter us argss =
---- too slow!              [filter (\x -> all (flip notElem us) (argUsage x)) xs  | xs <- sequence argss],
-              sequence (filter (not . null) [filter (\x -> all (flip notElem us) (argUsage x)) xs  | xs <- argss]),
-
-        let argseqs (arg:args) = [x:xs | x <- arg, xs <- argseqsAfter (argUsage x) args],
-
-        let allF = allFunsEnv env,
-        let argss = argseqs argalts,
-        (f,labtyp) <- allF,
-        (abstree,usage) <- tryFindArgs f labtyp argss
-      ]
-
-  tryFindArgs :: CId -> LabelledType -> [[ArgInfo]] -> [(AbsTree,[UDId])]
-  tryFindArgs f labtyp@(valcat,catlabs) argss =
-    [(abstree,usage) |
-        args <- argss,
-        xis  <- (argTypeMatches catlabs args),
-        let abstree = RTree f (map fst xis),
-        let usage = sort (nub (concatMap argUsage (take 1 args) ++ concatMap snd xis)) -- head usage + dependents' argument numbers
-    ]
-
-  argTypeMatches :: [(Cat,(Label,[UDData]))] -> [ArgInfo] -> [[(AbsTree,[UDId])]]
-  argTypeMatches catlabs args = case catlabs of
-    catlab1@(cat,(lab,feats)):catlabs2 -> [
-      [(t,i) | (t,i) <- (argTree x, argUsage x):xs]
-        |
-          x  <- [arg | arg <- args,
-                       argCatLab arg == (cat,lab),
-                       all (\f -> elem f (argFeats arg)) feats -- required features are found ---- TODO if feats or (argFeats arg) contain disjunctions
-                ],
-          xs <- argTypeMatches catlabs2 [arg | arg <- args, argNumber arg /= argNumber x]
-      ]
-    _ -> [[]]
-
-  addAbsTree :: FunInfo -> DevTree -> DevTree
-  addAbsTree finfo tr@(RTree dn ts) =
-    RTree dn{
-      devAbsTrees = let
-                   acu = AbsTreeInfo { atiAbsTree = funTree finfo, atiCat = fst $ funTyp finfo, atiUDIds = funUsage finfo}
-                   dts = devAbsTrees dn
-                 in
-                 if elem acu dts  -- the same tree with the same usage of subtrees is not added again
-                    ---- || length dts > 123 ---- TODO parameterize "beam" size
-                   then dts
-                   else acu:dts,
-      devStatus = maximumBy (\x y -> compare (length x) (length y)) [devStatus dn, funUsage finfo]
-      } ts
-
   funInfoToAbsTreeInfo :: FunInfo -> AbsTreeInfo
   funInfoToAbsTreeInfo finfo = AbsTreeInfo { atiAbsTree = funTree finfo, atiCat = fst $ funTyp finfo, atiUDIds = funUsage finfo}
 
   newFuns :: [FunInfo] -> DevTree -> [FunInfo]
   newFuns fis (RTree dn rts) = result
     where
-      acu finfo = (funTree finfo,(fst (funTyp finfo),funUsage finfo))
       dts = devAbsTrees dn
-      result = filter ((`notElem` dts) . funInfoToAbsTreeInfo) (if fastTrees then fis else nubbed)
-      nubbed = nubBy ((==) `on` funInfoToAbsTreeInfo) fis
-      -- TODO: nub won't be needed when the tree direct idea is implemented
+      result = filter ((`notElem` dts) . funInfoToAbsTreeInfo) fis
 
 analyseWords :: UDEnv -> DevTree -> DevTree
 analyseWords env = mapRTree lemma2fun
