@@ -350,31 +350,6 @@ combineTrees env =
       devStatus = maximumBy (comparing length) (devStatus dn : map funUsage finfos)
       } ts
 
-{-
-Ideas
-make tryEvenMore more like an unfold returning [FunInfo] (or [ArgTreeInfo])
-deduplicate new funInfos prior to comparing them to old list
-
-
-DONE:
--- Handle one-argument functions differently
--- or even better, don't collapse the tree to the product of all immediate children and the head
--- but search for each function which combinatons applicable
-
-Make pruneTrees less aggressive
-
-Prune by linearizing and verifying that it matches
-But prioritize complete trees over correctly linearized trees
-
-Only parse each word with GF once, even if there are duplicates of the same word
-
-Use morphoanalyze instead of parse
-
-Use Yoneda's lemma to make TrieMap.map faster in PGF.parse
-
--}
-
-
   allFunsLocalFast :: DevTree -> [FunInfo]
   allFunsLocalFast (RTree dn ts)=
     [FunInfo f labtyp abstree usage |
