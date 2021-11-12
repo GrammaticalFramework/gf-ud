@@ -32,6 +32,26 @@ traceNoPrint _ _ x = x
 -- env <- getEnv
 
 
+getExprs :: [(String, String)] -> UDEnv -> String -> [[Expr]]
+getExprs opts env string = map getExpr sentences
+  where
+    eng = actLanguage env
+    sentences = map prss $ stanzas $ lines string -- the input string has many sentences
+
+    -- This fun is just showUD2GF without the printing.
+    getExpr :: UDSentence -> [Expr]
+    getExpr sentence = ts
+      where
+        udtree = udSentence2tree sentence
+        devtree0 = udtree2devtree udtree
+        devtree1 = analyseWords env devtree0
+        devtree = combineTrees env devtree1
+        besttree0 = head (splitDevTree env devtree)
+        besttree = addBackups besttree0
+        ts0 = devtree2abstrees besttree
+        ts1 = map (expandMacro env) ts0
+        crs = map (checkAbsTreeResult env) ts1
+        ts = mapMaybe resultTree crs
 test opts env string = do
   let eng = actLanguage env
   let sentences = map prss $ stanzas $ lines string
