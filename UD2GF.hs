@@ -487,8 +487,7 @@ analyseWords env = mapRTree lemma2fun
   morphoFallback w [] =
     [(RTree name [], c)
     | (name, _) <- lookupMorpho morpho w
-    , let expr = mkApp name []
-    , Right (e,tp) <- pure $ inferExpr (pgfGrammar env) expr
+    , Just tp <- pure $ functionType (pgfGrammar env) name
     , ([], c, []) <- pure $ unType tp
     ]
   morphoFallback _ xs = xs
