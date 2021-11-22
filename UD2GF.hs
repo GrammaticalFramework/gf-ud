@@ -449,6 +449,7 @@ combineTrees env =
 analyseWords :: UDEnv -> DevTree -> DevTree
 analyseWords env = mapRTree lemma2fun
  where
+  morpho = buildMorpho (pgfGrammar env) (actLanguage env)
   lemma2fun dn = dn {
     devAbsTrees = [AbsTreeInfo { atiAbsTree = t, atiCat = c, atiUDIds = [devIndex dn]} | (t,c) <- justWords],
     devStatus = [devIndex dn],
@@ -471,6 +472,7 @@ analyseWords env = mapRTree lemma2fun
   --- this can fail if c is discontinuous, or return false positives if w is a form of another word
   parseWord w ec = case ec of
     Left c -> case parse (pgfGrammar env) (actLanguage env) (mkType [] c []) w of
+      [] -> [(RTree name [], c) | (name, _) <- lookupMorpho morpho w]
       ts -> [(at,c) | t <- ts,
                       let at = expr2abstree t,
                       all (\f -> M.notMember f (disabledFunctions (cncLabels env))) (allNodesRTree at)]
