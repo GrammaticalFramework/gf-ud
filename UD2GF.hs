@@ -178,7 +178,7 @@ prCheckResult cr = unlines $
 checkAbsTreeResult :: UDEnv -> AbsTree -> CheckResult
 checkAbsTreeResult env t = CheckResult {
   resultTree = mt,
-  resultUnknowns = [f | f <- allNodesRTree t, "__strlit__" `isPrefixOf` showCId f, Nothing <- [functionType pgf f]],
+  resultUnknowns = [f | f <- allNodesRTree t, Nothing <- [asStringLiteral f], Nothing <- [functionType pgf f]],
   resultMessage = msg
   }
  where
@@ -494,7 +494,7 @@ analyseWords env = mapRTree lemma2fun
 
 -- auxiliaries
 -- newWordTree w c = RTree (mkCId (w ++ "_" ++ showCId c)) [] ---
-newWordTree w c = RTree (mkCId ("Str" ++ showCId c)) [RTree (mkCId ("__strlit__" ++ w)) []] ---
+newWordTree w c = RTree (mkCId ("Str" ++ showCId c)) [RTree (mkCId (stringLiteralPrefix ++ w)) []] ---
 isNewWordFun f = isInfixOf "__x__" (showCId f)
 unknownCat = mkCId "Adv" --- treat unknown words as adverbs ---- TODO: from config
 quote s = "\"" ++ s ++ "\""

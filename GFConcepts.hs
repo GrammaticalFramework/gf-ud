@@ -44,8 +44,13 @@ expr2abstree e = case unApp e of
 
 abstree2expr :: AbsTree -> PGF.Expr
 -- TODO: showCId escapes things more than I would like.
-abstree2expr tr@(RTree f []) | Just str <- stripPrefix "__strlit__" (showCId f) = mkStr str
+abstree2expr tr@(RTree f []) | Just str <- asStringLiteral f = mkStr str
 abstree2expr tr@(RTree f ts) = mkApp f (map abstree2expr ts)
+
+-- | Check if a CId is actually a string literal in disguise
+asStringLiteral :: CId -> Maybe String
+asStringLiteral f = stripPrefix stringLiteralPrefix (showCId f)
+stringLiteralPrefix = "__strlit__"
 
 postOrderRTree :: RTree a -> RTree (a,Int)
 postOrderRTree = post 0 where
@@ -54,7 +59,7 @@ postOrderRTree = post 0 where
   post n t = case t of
     RTree a ts -> case posts n ts of
       (nts,nn) -> RTree (a,nn) nts
-      
+
   posts :: Int -> [RTree a] -> ([RTree (a,Int)],Int)
   posts n ts = case ts of
     []   -> ([],n)
