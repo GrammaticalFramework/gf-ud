@@ -39,10 +39,12 @@ pgf2functions pgf = [(fun,(val,[arg | (_,_,ty) <- hs, let (_,arg,_) = unType ty]
 expr2abstree :: PGF.Expr -> AbsTree
 expr2abstree e = case unApp e of
   Just (f,es) -> RTree f (map expr2abstree es)
+  -- _ | Just q <- unStr e -> RTree (mkCId "StrLit") [RTree (mkCId (show q)) []]
   _ -> error ("ERROR: no constructor tree from " ++ showExpr [] e)
 
 abstree2expr :: AbsTree -> PGF.Expr
-abstree2expr tr@(RTree f []) | [(str,"")] <- reads (showCId f) = mkStr str
+-- TODO: showCId escapes things more than I would like.
+abstree2expr tr@(RTree f []) | Just str <- stripPrefix "__strlit__" (showCId f) = mkStr str
 abstree2expr tr@(RTree f ts) = mkApp f (map abstree2expr ts)
 
 postOrderRTree :: RTree a -> RTree (a,Int)
