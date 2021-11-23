@@ -42,6 +42,7 @@ expr2abstree e = case unApp e of
   _ -> error ("ERROR: no constructor tree from " ++ showExpr [] e)
 
 abstree2expr :: AbsTree -> PGF.Expr
+abstree2expr tr@(RTree f []) | [(str,"")] <- reads (showCId f) = mkStr str
 abstree2expr tr@(RTree f ts) = mkApp f (map abstree2expr ts)
 
 postOrderRTree :: RTree a -> RTree (a,Int)
