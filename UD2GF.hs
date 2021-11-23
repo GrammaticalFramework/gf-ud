@@ -178,7 +178,7 @@ prCheckResult cr = unlines $
 checkAbsTreeResult :: UDEnv -> AbsTree -> CheckResult
 checkAbsTreeResult env t = CheckResult {
   resultTree = mt,
-  resultUnknowns = [f | f <- allNodesRTree t, Nothing <- [functionType pgf f]],
+  resultUnknowns = [f | f <- allNodesRTree t, "__strlit__" `isPrefixOf` showCId f, Nothing <- [functionType pgf f]],
   resultMessage = msg
   }
  where
