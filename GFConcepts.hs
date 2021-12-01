@@ -43,13 +43,24 @@ expr2abstree e = case unApp e of
   _ -> error ("ERROR: no constructor tree from " ++ showExpr [] e)
 
 abstree2expr :: AbsTree -> PGF.Expr
--- TODO: showCId escapes things more than I would like.
 abstree2expr tr@(RTree f []) | Just str <- asStringLiteral f = mkStr str
 abstree2expr tr@(RTree f ts) = mkApp f (map abstree2expr ts)
 
 -- | Check if a CId is actually a string literal in disguise
 asStringLiteral :: CId -> Maybe String
-asStringLiteral f = stripPrefix stringLiteralPrefix (showCId f)
+asStringLiteral f = stripPrefix stringLiteralPrefix $ unescape (showCId f)
+
+-- | showCId will escape non-valid literals, so we need to unescape them
+unescape :: String -> String
+unescape ('\'':str) = unescapeBackslashes str
+unescape str = str
+
+unescapeBackslashes :: String -> String
+unescapeBackslashes ('\\':x:xs) = x : unescapeBackslashes xs
+unescapeBackslashes ['\''] = ""
+unescapeBackslashes (x:xs) = x : unescapeBackslashes xs
+unescapeBackslashes "" = error "missing final endquote"
+
 stringLiteralPrefix = "__strlit__"
 
 postOrderRTree :: RTree a -> RTree (a,Int)
