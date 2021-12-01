@@ -320,6 +320,7 @@ allFunsEnv env =
                     M.notMember f (disabledFunctions (cncLabels env)),
                     not (isBackupFunction f), ---- apply backups only later
       Just typ   <- [functionType (pgfGrammar env) f],
+                    won'tLoop typ,
                     (_,labels) <- labelss ---- TODO precise handling of generalized labels 
       ] 
     altFuns = 
@@ -328,6 +329,14 @@ allFunsEnv env =
       labels      <- labelss,
       Just typ    <- [functionType (pgfGrammar env) f]
       ]  
+
+-- Don't allow functions of type X -> X, since they cause infinite loops
+-- For example, ProgrVP : VP -> VP
+-- would generate trees ProgrVP (ProgrVP (...))
+won'tLoop :: Type -> Bool
+won'tLoop typ
+  | ([(_,arg,_)],ret,_) <- unType typ, arg == ret = False
+  | otherwise = True
 
 mkBackup ast cat = RTree (mkCId (showCId cat ++ "Backup")) [ast]
 isBackupFunction f = isSuffixOf "Backup" (showCId f)
