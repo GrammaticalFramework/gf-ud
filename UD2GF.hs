@@ -456,13 +456,13 @@ analyseWords env = mapRTree lemma2fun
     devIsUnknown = isUnknown
     }
    where
-    (isUnknown,justWords) = getWordTrees (devLemma dn) (cats (devPOS dn))
+    (isUnknown,justWords) = getWordTrees (devWord dn) (devLemma dn) (cats (devPOS dn))
 
   cats pos = maybe [] (map (either (Left. fst) Right)) $ M.lookup pos (catsForPOS env)
 
   -- find all functions that are possible parses of the word in any appropriate category
   --- it is still possible that some other category is meant
-  getWordTrees w cs = case morphoFallback w $ concatMap (parseWord w) cs of
+  getWordTrees wf w cs = case morphoFallback wf $ concatMap (parseWord w) cs of
     [] -> case cs of
       [] -> (True,[(newWordTree w unknownCat, unknownCat)])
       _  -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c])
