@@ -474,9 +474,13 @@ analyseWords env = mapRTree lemma2fun
   getWordTrees wf w cs = case morphoFallback wf $ concatMap (parseWord w) cs of
     [] -> case cs of
       [] -> (True,[(newWordTree w unknownCat, unknownCat)])
-      _  -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c])
+      _  -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c, strFunExists ec])
 
     fs -> (False,fs)
+
+  strFunExists c | Just typ  <- functionType (pgfGrammar env) f = True
+                 | otherwise                                    = False
+      where f = mkCId ("Str" ++ showCId c)
 
   --- this can fail if c is discontinuous, or return false positives if w is a form of another word
   parseWord w ec = case ec of
