@@ -465,10 +465,17 @@ analyseWords env = mapRTree lemma2fun
   getWordTrees wf w cs = case morphoFallback wf $ concatMap (parseWord w) cs of
     [] -> case cs of
       [] -> (True,[(newWordTree w unknownCat, unknownCat)])
-      _  -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c, strFunExists ec])
+      _  -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c, strFunExists ec] 
+                   `ifEmpty` [(newWordTree w ec, ec) | c <- cs, let ec = either id id c])
 
     fs -> (False,fs)
 
+  -- | Return the first non-empty list
+  ifEmpty [] xs = xs
+  ifEmpty xs _  = xs
+  infixl 3 `ifEmpty`
+
+  -- Verify that a StrSomeCat function exists in grammar
   strFunExists c | Just typ  <- functionType (pgfGrammar env) f = True
                  | otherwise                                    = False
       where f = mkCId ("Str" ++ showCId c)
