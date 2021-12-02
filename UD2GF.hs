@@ -471,7 +471,7 @@ analyseWords env = mapRTree lemma2fun
 
   -- find all functions that are possible parses of the word in any appropriate category
   --- it is still possible that some other category is meant
-  getWordTrees wf w cs = case morphoFallback wf $ concatMap (parseWord w) cs of
+  getWordTrees wf w cs = case concatMap (parseWord w) cs `ifEmpty` concatMap (parseWord (map toLower w)) cs `ifEmpty` morphoFallback wf of
     [] -> case cs of
       [] -> (True,[(newWordTree w unknownCat, unknownCat)])
       _  -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c, strFunExists ec] 
@@ -482,7 +482,7 @@ analyseWords env = mapRTree lemma2fun
   -- | Return the first non-empty list
   ifEmpty [] xs = xs
   ifEmpty xs _  = xs
-  infixl 3 `ifEmpty`
+  infixr 3 `ifEmpty`
 
   -- Verify that a StrSomeCat function exists in grammar
   strFunExists c | Just typ  <- functionType (pgfGrammar env) f = True
@@ -503,14 +503,13 @@ analyseWords env = mapRTree lemma2fun
 
   -- Fall back to morphoanalysis if gf parse fails
   -- TODO: We might want to use the morphoanalysis for all words, not just when parse fails
-  morphoFallback :: String -> [(RTree Lemma, CId)] -> [(RTree CId, CId)]
-  morphoFallback w [] =
+  morphoFallback :: String -> [(RTree CId, CId)]
+  morphoFallback w =
     [(RTree name [], c)
     | (name, _) <- lookupMorpho morpho w
     , Just tp <- pure $ functionType (pgfGrammar env) name
     , ([], c, []) <- pure $ unType tp
     ]
-  morphoFallback _ xs = xs
 
 -- auxiliaries
 -- newWordTree w c = RTree (mkCId (w ++ "_" ++ showCId c)) [] ---
