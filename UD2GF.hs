@@ -578,11 +578,15 @@ analyseWords env = mapRTree lemma2fun
   --- it is still possible that some other category is meant
   getWordTrees wf w cs = case concatMap (parseWord w) cs `ifEmpty` concatMap (parseWord (map toLower w)) cs `ifEmpty` morphoFallback wf of
     [] -> case cs of
-      [] -> (True,[(newWordTree w unknownCat, unknownCat)])
-      _  -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c, strFunExists ec] 
+      [] -> (True,[(newWordTree wfLiteral unknownCat, unknownCat)])
+      _  -> (True,[(newWordTree wfLiteral ec, ec) | c <- cs, let ec = either id id c, strFunExists ec]
                    `ifEmpty` [(newWordTree w ec, ec) | c <- cs, let ec = either id id c])
-
     fs -> (False,fs)
+    where
+      isAllCaps = all isUpper
+      isSame str1 str2 = map toLower str1 == map toLower str2
+      wfLiteral = if isAllCaps wf && (isSame w wf) then wf else w
+
 
   -- | Return the first non-empty list
   ifEmpty [] xs = xs
