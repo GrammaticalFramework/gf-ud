@@ -1,4 +1,5 @@
 module UDOptions where
+import Data.List (stripPrefix)
 
 -- what intermediate phases to show
 
@@ -11,19 +12,32 @@ nonPrintingOpts = selectOpts ["no-backups"]
 minimalOptsGF2UD = selectOpts ["ud"]
 defaultOptsGF2UD = selectOpts ["msg","gf","an3","ut","ud"]
 
-selectOpts opts = [(o,s) | (o,s) <- fullOpts, elem o opts]
+selectOpts :: [String] -> Opts
+-- selectOpts opts = [(o,("",s)) | (o,s) <- fullOpts, o `elem` opts]
+selectOpts opts = 
+  [(o,(arg,s)) 
+  | optArg <- opts
+  , let (o,arg') = break (=='=') optArg 
+  , let arg = drop 1 arg' -- Remove the '='
+  , Just s <- [lookup o fullOpts]
+  ]
+
 putStrMsg m s = putStrLn ("# " ++ m) >> putStrLn s
 
 
 
-type Opts = [(String,String)] -- option name, explanation
+type Opts = [(String,(String,String))] -- option name, (option arg, explanation)
 
-ifOpt opts o result = case lookup o opts of
-  Just msg | isOpt opts "msg" -> putStrMsg (o ++ ", " ++ msg ++ ":") result
-  Just msg                    -> putStrLn result
+ifOpt :: Opts -> String -> String -> IO ()
+ifOpt opts o result = ifOptArg opts o (const result)
+ifOptArg :: Opts -> String -> (String -> String) -> IO ()
+ifOptArg opts o result = case lookup o opts of
+  Just (arg, msg) | isOpt opts "msg" -> putStrMsg (o ++ ", " ++ msg ++ ":") (result arg)
+  Just (arg, msg)                    -> putStrLn (result arg)
   _ -> return ()
 
-isOpt opts o = elem o (map fst opts)
+isOpt :: Opts -> String -> Bool
+isOpt opts o = o `elem` map fst opts
 
 noOpts = []
 
@@ -43,6 +57,7 @@ fullOpts = [
   ("tc", "type checking the final GF tree"),
   ("no-backups", "don't add backups to incomplete trees"),
   ("sum","summary: GF tree built from the interpreted nodes"),
+  ("dbg","(ud2gf) 'dbg=Function arg1 arg2' tries to figure out why the tree 'Function arg1 arg2' fails to build"),
   ("gf", "(gf2ud) original GF tree"),
   ("an0","(gf2ud) initial annotated tree"),
   ("an1","(gf2ud) annotated tree with labels"),
@@ -54,7 +69,7 @@ fullOpts = [
   ("lin", "linearize tree using the active language of the environment"),
   ("units", "(eval) print evaluation per sentence, from lowest score upwards"),
   ("stat", "show statistics of original and interpreted words"),
-  ("adjust", "(pattern-match) adjust results to a valid UD trees with root"), 
+  ("adjust", "(pattern-match) adjust results to a valid UD trees with root"),
   ("prune", "(pattern-match) show only the roots of matching subtrees"),
   ("FORM", "(statistics) surface forms"),
   ("LEMMA", "(statistics) lemmas"),
