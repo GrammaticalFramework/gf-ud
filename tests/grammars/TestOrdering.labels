@@ -1,0 +1,29 @@
+#fun AdjCN	amod head
+#fun AdvVP 	head advmod
+#fun ComplV2	head obj
+#fun CoordS	cc head conj
+#fun DetCN	det head
+#fun PredVP	nsubj head
+#fun PrepNP	case head
+#fun QuestIAdv  advmod head
+#fun UseCl	aux advmod head
+#fun UseQCl	aux advmod head
+#fun UttImpSg      aux head
+
+#fun root_nsubj head nsubj
+#fun root_nsubj_obl head nsubj advmod
+
+#cat A	      ADJ
+#cat Adv      ADV
+#cat Conj     CCONJ
+#cat Det      DET
+#cat IAdv     ADV
+#cat N	      NOUN
+#cat PN	      PROPN
+#cat Pol	      PART
+#cat Prep	      ADP
+#cat Pron	      PRON
+#cat Temp	      AUX
+#cat V	      VERB
+#cat V2	      VERB
+

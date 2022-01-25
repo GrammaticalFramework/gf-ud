@@ -366,7 +366,16 @@ combineTrees env =
                    acu = funInfoToAbsTreeInfo <$> finfos
                    dts = devAbsTrees dn
                  in
-                     acu ++ dts,
+                   dts ++ acu, -- Newer suggestions are added to the end of the list, which prefers flatter trees.
+                               -- Consider a tree like         A
+                               --                                B
+                               --                                C
+                               -- which we can make into a GF tree 2 different ways:
+                               -- (i) ShallowFun A B C , or (ii) DeepFun (SubFun A B) C.
+                               -- Round 1: construct ShallowFun A B C and SubFun A B.
+                               -- Round 2: construct DeepFun, because now we have (SubFun A B).
+                               -- The list of devtrees undergoes many reorderings throughout the program, but
+                               -- this choice, dts++acu or acu++dts determines the order of (i) and (ii).
       devStatus = maximumBy (comparing length) (devStatus dn : map funUsage finfos)
       } ts
 
