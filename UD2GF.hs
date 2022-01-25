@@ -585,7 +585,7 @@ analyseWords env = mapRTree lemma2fun
     where
       isAllCaps = all isUpper
       isSame str1 str2 = map toLower str1 == map toLower str2
-      wfLiteral = if isAllCaps wf && (isSame w wf) then wf else w
+      wfLiteral = if isAllCaps wf && isSame w wf then wf else w
 
 
   -- | Return the first non-empty list
