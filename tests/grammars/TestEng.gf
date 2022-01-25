@@ -1,5 +1,5 @@
 --# -path=../../grammars
-concrete TestOrderingEng of TestOrdering = MiniLangEng - [PredVP] ** {
+concrete TestEng of Test = MiniLangEng - [PredVP] ** open (R=MiniResEng) in {
     lincat
       UDS = {s : Str} ;
     lin
@@ -7,4 +7,10 @@ concrete TestOrderingEng of TestOrdering = MiniLangEng - [PredVP] ** {
       root_nsubj_obl vp np adv = root_nsubj (AdvVP vp adv) np ;
       -- : VP -> NP -> UDS ;        -- [the cat]:NP [sleeps today]:VP
       root_nsubj vp np = UseCl TSim PPos (PredVP np vp) ;
+
+      -- : Det
+      someSg_Det = {s = "some" ; n = R.Sg} ;
+      somePl_Det = {s = "some" ; n = R.Pl} ;
+      anySg_Det = {s = "any" ; n = R.Sg} ;
+      anyPl_Det = {s = "any" ; n = R.Pl} ;
 }

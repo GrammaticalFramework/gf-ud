@@ -1,0 +1,12 @@
+1	any	any	DET	DT	_	2	det	_	_
+2	cat	cat	NOUN	NN	Number=Sing	0	root	_	_
+
+1	any	any	DET	DT	_	2	det	_	_
+2	cats	cat	NOUN	NN	Number=Plur	0	root	_	_
+
+
+1	some	some	DET	DT	_	2	det	_	_
+2	cat	cat	NOUN	NN	Number=Sing	0	root	_	_
+
+1	some	some	DET	DT	_	2	det	_	_
+2	cats	cat	NOUN	NN	Number=Plur	0	root	_	_
