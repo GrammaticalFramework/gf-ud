@@ -14,6 +14,7 @@ myUDEnv = getEnv (path "Test") "Eng" "UDS"
 main :: IO ()
 main = do
   env <- myUDEnv
+  -- TODO: run "gf --make TestOrderingEng.gf" to generate TestOrderingEng.pgf
   someCats <- readFile "tests/grammars/some_cats.conllu"
   tenHovercrafts <- readFile "tests/grammars/test_distance.conllu"
   hspec $ do
