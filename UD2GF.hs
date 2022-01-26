@@ -498,7 +498,8 @@ udtree2devtree = markClosest . initialize
       devAbsTrees = [],
       devLemma = udLEMMA un,
       devPOS   = udUPOS un,
-      devFeats = udFEATS un,
+      devFeats = udFEATS un ++ [UDData "LEMMA" [udLEMMA un]
+                               ,UDData "FORM"  [udFORM un]],
       devLabel = udDEPREL un,
       devIndex = udID un,
       devClosest = udIdRoot, --- junk value
