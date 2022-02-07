@@ -47,7 +47,7 @@ getExprs opts env string = map getExpr sentences
         devtree1 = analyseWords env devtree0
         devtree = combineTrees env devtree1
         besttree0 = head (splitDevTree devtree)
-        besttree = addBackups besttree0
+        besttree = addBackups opts besttree0
         ts0 = devtree2abstrees besttree
         ts1 = map (expandMacro env) ts0
         crs = map (checkAbsTreeResult env) ts1
@@ -84,7 +84,7 @@ showUD2GF opts env sentence = do
   let besttree0 = head (splitDevTree devtree)
   ifOpt opts "bt0" $ prLinesRTree (prDevNode 1) besttree0
 
-  let besttree = addBackups besttree0
+  let besttree = addBackups opts besttree0
   ifOpt opts "bt" $ prLinesRTree (prDevNode 1) besttree
 
   let ts0 = devtree2abstrees besttree
@@ -230,8 +230,9 @@ devtree2abstrees :: DevTree -> [AbsTree]
 devtree2abstrees = map atiAbsTree . devAbsTrees . root
 
 -- to be applied to a DevTree with just one tree at each node
-addBackups :: DevTree -> DevTree
-addBackups = addBackups0 ---- TODO: this must be improved
+addBackups :: Opts -> DevTree -> DevTree
+addBackups opts | isOpt opts "no-backup" = addBackups0 ---- TODO: this must be improved
+                | otherwise = id
 
 addBackups0 :: DevTree -> DevTree
 addBackups0 tr@(RTree dn trs) = case map collectBackup (tr:trs) of  -- backups from the tree itself and every subtree
