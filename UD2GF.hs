@@ -231,15 +231,15 @@ devtree2abstrees = map atiAbsTree . devAbsTrees . root
 
 -- to be applied to a DevTree with just one tree at each node
 addBackups :: Opts -> DevTree -> DevTree
-addBackups opts | isOpt opts "no-backup" = addBackups0 ---- TODO: this must be improved
-                | otherwise = id
+addBackups opts | isOpt opts "no-backups" = id
+                | otherwise = addBackups0 ---- TODO: this must be improved
 
 addBackups0 :: DevTree -> DevTree
 addBackups0 tr@(RTree dn trs) = case map collectBackup (tr:trs) of  -- backups from the tree itself and every subtree
   btrs -> RTree
     (dn {devAbsTrees = [
-           replaceInfo [(t,ai) | (_,(t,Just ai)) <- btrs]   -- 
-           (theAbsTreeInfo tr)]                             -- the only abstree that there is 
+           replaceInfo [(t,ai) | (_,(t,Just ai)) <- btrs]   --
+           (theAbsTreeInfo tr)]                             -- the only abstree that there is
         }
     )
     (map fst (tail btrs))
@@ -356,7 +356,7 @@ combineTrees env =
     where
       -- The head only contains new trees that were created in the previous iteration
       onlyNewTree = tr {root = nd { devAbsTrees = map funInfoToAbsTreeInfo fis}}
-      -- Add the new trees to the old ones. There shouldn't really be any duplicates now, so there's 
+      -- Add the new trees to the old ones. There shouldn't really be any duplicates now, so there's
       -- a bit of redundant checking going on here.
       nextTr = combineUnduplicated fis tr
 
@@ -480,7 +480,7 @@ analyseWords env = mapRTree lemma2fun
 
   auxWords = [(lemma,cat) | ((fun_,lemma),(cat,labels_)) <- M.assocs (lemmaLabels (cncLabels env))]
 
--- auxiliaries 
+-- auxiliaries
 newWordTree w c = RTree (mkCId (w ++ "_" ++ showCId c)) [] ---
 isNewWordFun f = isInfixOf "__x__" (showCId f)
 unknownCat = mkCId "Adv" --- treat unknown words as adverbs ---- TODO: from config
