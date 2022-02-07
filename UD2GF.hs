@@ -478,10 +478,11 @@ combineTrees env =
   combineUnduplicated finfos tree@(RTree dn ts)=
     RTree dn{
       devAbsTrees = let
-                   acu = funInfoToAbsTreeInfo <$> finfos
-                   dts = devAbsTrees dn
+                   newDevTrees = funInfoToAbsTreeInfo <$> finfos
+                   oldDevTrees = devAbsTrees dn
                  in
-                   dts ++ acu, -- Newer suggestions are added to the end of the list, which prefers flatter trees.
+                   oldDevTrees ++ newDevTrees, 
+                               -- Newer suggestions are added to the end of the list, which prefers flatter trees.
                                -- Consider a tree like         A
                                --                                B
                                --                                C
@@ -490,7 +491,7 @@ combineTrees env =
                                -- Round 1: construct ShallowFun A B C and SubFun A B.
                                -- Round 2: construct DeepFun, because now we have (SubFun A B).
                                -- The list of devtrees undergoes many reorderings throughout the program, but
-                               -- this choice, dts++acu or acu++dts determines the order of (i) and (ii).
+                               -- this choice, oldDevTrees++newDevTrees or newDevTrees++oldDevTrees determines the order of (i) and (ii).
       devStatus = maximumBy (comparing length) (devStatus dn : map funUsage finfos)
       } ts
 
