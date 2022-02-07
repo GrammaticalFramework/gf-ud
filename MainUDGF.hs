@@ -17,7 +17,7 @@ import PGF
 import System.Environment (getArgs)
 import Control.Concurrent
 import Control.Monad
-import Data.List(sortOn)
+import Data.List(sortOn, (\\))
 import Data.Char(isDigit)
 
 -- to get parallel processing:
@@ -225,10 +225,12 @@ helpMsg = unlines $ [
     ] ++ ["  " ++ opt ++ "\t" ++ msg | (opt,msg) <- fullOpts]
 
 convertGFUD :: String -> Opts -> UDEnv -> IO ()
-convertGFUD dir opts env = case dir of
-  "ud2gf" -> getContents >>= ud2gfOpts (if null opts then defaultOptsUD2GF else opts) env
-  "ud2gfparallel" -> getContents >>= ud2gfOptsPar (if null opts then defaultOptsUD2GF else opts) env
-  _ -> do
+convertGFUD dir opts env = 
+  let optsU2G = if null (opts \\ nonPrintingOpts) then opts ++ defaultOptsUD2GF else opts
+  in case dir of
+    "ud2gf" -> getContents >>= ud2gfOpts optsU2G env
+    "ud2gfparallel" -> getContents >>= ud2gfOptsPar optsU2G env
+    _ -> do
       s <- getContents
       let conv = case dir of
             "gf2ud" -> G.testTreeString

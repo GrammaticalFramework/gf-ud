@@ -5,6 +5,7 @@ module UDOptions where
 -- ud2gf
 minimalOptsUD2GF = selectOpts ["at"]
 defaultOptsUD2GF = selectOpts ["msg","ud","err","bt0","at","tc","lin","sum","stat"]
+nonPrintingOpts = selectOpts ["no-backups"]
 
 -- gf2ud
 minimalOptsGF2UD = selectOpts ["ud"]
