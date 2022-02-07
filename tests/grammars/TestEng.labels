@@ -82,3 +82,5 @@
 #auxfun DetCN_someSg det cn : Det -> CN -> NP = DetCN someSg_Det cn ; det[LEMMA=some] head[Number=Sing]
 #auxfun DetCN_somePl det cn : Det -> CN -> NP = DetCN somePl_Det cn ; det[LEMMA=some] head[Number=Plur]
 #disable somePl_Det someSg_Det
+
+#disable ImpVP
