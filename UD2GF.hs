@@ -622,7 +622,7 @@ analyseWords env = mapRTree lemma2fun
 
 -- auxiliaries
 -- newWordTree w c = RTree (mkCId (w ++ "_" ++ showCId c)) [] ---
-newWordTree w c = RTree (mkCId ("Str" ++ showCId c)) [RTree (mkCId (stringLiteralPrefix ++ w)) []] ---
+newWordTree w c = RTree (mkCId ("Str" ++ showCId c)) [strLitToAbsTree w] ---
 isNewWordFun f = isInfixOf "__x__" (showCId f)
 unknownCat = mkCId "Adv" --- treat unknown words as adverbs ---- TODO: from config
 quote s = "\"" ++ s ++ "\""

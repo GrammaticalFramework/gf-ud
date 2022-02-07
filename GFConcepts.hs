@@ -3,6 +3,8 @@ module GFConcepts where
 import PGF
 import RTree
 import Data.List
+import Debug.Trace (trace)
+import GHC.Stack (HasCallStack)
 
 
 
@@ -36,11 +38,17 @@ pgf2functions pgf = [(fun,(val,[arg | (_,_,ty) <- hs, let (_,arg,_) = unType ty]
 
 -- conversion from PGF to rose tree
 
-expr2abstree :: PGF.Expr -> AbsTree
-expr2abstree e = case unApp e of
-  Just (f,es) -> RTree f (map expr2abstree es)
-  -- _ | Just q <- unStr e -> RTree (mkCId "StrLit") [RTree (mkCId (show q)) []]
-  _ -> error ("ERROR: no constructor tree from " ++ showExpr [] e)
+expr2abstree :: HasCallStack => PGF.Expr -> AbsTree
+expr2abstree orig = -- (\res -> trace ("Converting: " ++ showExpr [] orig ++ " got " ++ show (length $ show res)) res) $
+                    go orig
+  where
+   go e = case unApp e of
+    Just (f,es) -> RTree f (map go es)
+    _ | Just q <- unStr e -> strLitToAbsTree q
+    _ -> error ("ERROR: no constructor tree from " ++ showExpr [] e ++ " in " ++ showExpr [] orig ++ "\nRaw: " ++ show e)
+
+strLitToAbsTree :: String -> AbsTree
+strLitToAbsTree w = RTree (mkCId (stringLiteralPrefix ++ w)) []
 
 abstree2expr :: AbsTree -> PGF.Expr
 abstree2expr tr@(RTree f []) | Just str <- asStringLiteral f = mkStr str
