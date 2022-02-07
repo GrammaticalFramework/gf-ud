@@ -39,6 +39,7 @@ fullOpts = [
   ("at0","resulting GF tree, with macros in place"),
   ("at", "final GF tree, macros expanded"),
   ("tc", "type checking the final GF tree"),
+  ("no-backups", "don't add backups to incomplete trees"),
   ("sum","summary: GF tree built from the interpreted nodes"),
   ("gf", "(gf2ud) original GF tree"),
   ("an0","(gf2ud) initial annotated tree"),
