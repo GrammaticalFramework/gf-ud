@@ -13,4 +13,11 @@ concrete TestEng of Test = MiniLangEng - [PredVP] ** open (R=MiniResEng) in {
       somePl_Det = {s = "some" ; n = R.Pl} ;
       anySg_Det = {s = "any" ; n = R.Sg} ;
       anyPl_Det = {s = "any" ; n = R.Pl} ;
+
+    -- To test distance feature
+    lincat Num = {s : Str ; n : R.Number} ;
+    lin ten_Num = {s = "10" ; n = R.Pl} ;
+    lin num2Det n = n ;
+    lin ApposNum cn num = cn ** {s = \\n => cn.s ! n ++ num.s} ;
+
 }

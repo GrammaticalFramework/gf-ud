@@ -15,6 +15,7 @@ main :: IO ()
 main = do
   env <- myUDEnv
   someCats <- readFile "tests/grammars/some_cats.conllu"
+  tenHovercrafts <- readFile "tests/grammars/test_distance.conllu"
   hspec $ do
     describe "Prefer flat trees" $ do
       it "should pick the flatter tree of the two alternatives" $ do
@@ -32,6 +33,12 @@ main = do
     describe "Parsing for labels" $ do
       it "should allow an escaped comma as a UD tag" $ do
         labelAndMorpho "head[LEMMA=\\,]" `shouldBe` ("head", [UDData "LEMMA" [","]])
+    describe "Match on DISTANCE" $ do
+      it "should handle 'DISTANCE' as keyword, CG-style" $ do
+        bestTrees env tenHovercrafts `shouldBe`
+          ["ApposNum (UseN hovercraft_N) ten_Num"
+          ,"DetCN (num2Det ten_Num) (UseN hovercraft_N)"]
+
 
 
 bestTrees :: UDEnv -> String -> [String]

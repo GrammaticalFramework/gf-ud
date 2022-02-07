@@ -73,7 +73,13 @@
 #auxfun DetCN_aPl cn : CN -> NP = DetCN aPl_Det cn ; head[Number=Plur]
 #disable MassNP
 
+-- to test DISTANCE
+-- nummod comes before head: "10 hovercrafts", "100 exquisitely beaufiful hovercrafts"
+#auxfun NumMod_ det cn : Det -> CN -> NP = DetCN det cn ; nummod[DISTANCE=-1*] head
 
+-- nummod comes after head: "Hovercraft #10"
+#auxfun ApposNum_ cn num : CN -> Num -> CN = ApposNum cn num ; head nummod[DISTANCE=+1]
+#disable ApposNum
 
 #auxfun DetCN_anySg det cn : Det -> CN -> NP = DetCN anySg_Det cn ; det[LEMMA=any] head[Number=Sing]
 #auxfun DetCN_anyPl det cn : Det -> CN -> NP = DetCN anyPl_Det cn ; det[LEMMA=any] head[Number=Plur]
