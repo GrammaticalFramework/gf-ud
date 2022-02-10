@@ -19,7 +19,7 @@ import Text.PrettyPrint (cat, render)
 import Debug.Trace (trace, traceM)
 import Data.Function (on)
 import Data.Ord (comparing)
-import Control.Monad (unless, forM)
+import Control.Monad (unless, forM, when)
 
 ---------
 -- to debug
@@ -343,6 +343,9 @@ getInt _ = Nothing
 debugAuxFun' :: UDEnv -> DevTree -> CId -> [Int] -> String
 debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
   traceM $ "\nStarting debug for " ++ showCId funId ++ ":"
+  unless (M.notMember funId (disabledFunctions (cncLabels env))) $
+    Left $ "The function " ++ showCId funId ++ " is disabled"
+
   (f,(outCat, argCatLabs)) <- case [(f,labtyp) | (f,labtyp) <- allFunsEnv env, f == funId] of
     [] -> Left $ "Unknown function: " ++ show funId
     [(f,labtyp)] -> pure (f,labtyp)
