@@ -19,7 +19,7 @@ import Text.PrettyPrint (cat, render)
 import Debug.Trace (trace, traceM)
 import Data.Function (on)
 import Data.Ord (comparing)
-import Control.Monad (unless, forM, when)
+import Control.Monad (unless, forM, when, forM_)
 
 ---------
 -- to debug
@@ -358,39 +358,50 @@ debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
          ++ showFun
   traceM showFun
   let catLabNrs = zip argNrs argCatLabs
-  let (catlabHeads,catlabRest) = partition (\(nr,(cat,(lab,feats))) -> lab == head_Label) catLabNrs
+  let catlabHeads = filter (\(nr,(cat,(lab,feats))) -> lab == head_Label) catLabNrs
   (headNr, catlabHead) <- case catlabHeads of [ch] -> pure ch; _ -> Left ("Missing head label for function: " ++ show f ++ "\nlabels: " ++ show argCatLabs)
+
   -- Step 1. find where the head is in the tree
   headTree <- case findNode env (UDIdInt headNr) dt of
     [] -> Left $ "Head node not found: " ++ show headNr
     [rt] -> pure rt
     (_:_:_) -> Left $ "Multiple head nodes: " ++ show headNr
   let headNode = root headTree
+
   -- Step 2. Verify that all arguments are children of the head
-  childNodes <- forM catlabRest $ \(nr,catlab) -> case find ((== UDIdInt nr) . devIndex . root) (subtrees headTree) of
+  argNodes <- forM catLabNrs $ \(nr,catlab) -> case find ((== UDIdInt nr) . devIndex) ((headNode{devLabel=head_Label}): map root (subtrees headTree)) of
     Nothing -> Left $ "Child node not found: " ++ show nr
-    Just rt -> pure (root rt,catlab)
-  traceM $ "Attempting to build: " ++ showCId funId ++ " " ++ unwords [ devWord (root nd) | nrs <- argNrs, nd <- findNode env (UDIdInt nrs) headTree]
-  
-  -- 3. Check if any version of the head is compatible with the function
-  let missingHeadFeats = filter (`notElem` devFeats headNode) $ snd (snd catlabHead)
-  unless (null missingHeadFeats) $ Left $ "Missing head features: " ++ showAttrs missingHeadFeats ++ " for " ++ showCId f ++ " with head \"" ++ devWord headNode 
-    ++ "\". Head features: " ++ showAttrs (devFeats headNode)
-  let headAT = devAbsTrees headNode
-  let goodTrees = [ x | x <- headAT , atiCat x == fst catlabHead]
-  when (null goodTrees) $ Left $ "No trees with expected category for " ++ showCId f ++ " with head \"" ++ devWord headNode ++ "\"\n" 
-    ++ "Expected category: " ++ show (fst catlabHead) ++ "\n"
-    ++ "Available categories: " ++ show (map atiCat headAT)
-  traceM $ "Found head trees with correct category: " ++ intercalate "\n" (map (prRTree showCId . atiAbsTree) goodTrees)
+    Just rt -> pure (rt,catlab)
+  traceM $ "Attempting to build: " ++ showCId funId ++ " " ++ unwords [ devWord nd | (nd,_) <- argNodes]
+  -- let allArgNodes = [(nd,catlab) | nr <- argNrs , (nd,catlab) <- (headNode,catlabHead): argNodes, devIndex nd == UDIdInt nr]
+
+  -- -- 3. Check if any version of the head is compatible with the function
+  -- let missingHeadFeats = filter (`notElem` devFeats headNode) $ snd (snd catlabHead)
+  -- unless (null missingHeadFeats) $ Left $ "Missing head features: " ++ showAttrs missingHeadFeats ++ " for " ++ showCId f ++ " with head \"" ++ devWord headNode
+  --   ++ "\". Head features: " ++ showAttrs (devFeats headNode)
+  -- let headAT = devAbsTrees headNode
+  -- let goodTrees = [ x | x <- headAT , atiCat x == fst catlabHead]
+  -- when (null goodTrees) $ Left $ "No trees with expected category for " ++ showCId f ++ " with head \"" ++ devWord headNode ++ "\"\n"
+  --   ++ "Expected category: " ++ show (fst catlabHead) ++ "\n"
+  --   ++ "Available categories: " ++ show (map atiCat headAT)
+  -- traceM $ "Found head trees with correct category: " ++ intercalate "\n" (map (prRTree showCId . atiAbsTree) goodTrees)
 
   -- 4. Check that the arguments are compatible with the function
-  let badLabels = [(node, lab) | (node, (cat,(lab,feats))) <- childNodes, devLabel node /= lab]
+  let badLabels = [(node, lab) | (node, (cat,(lab,feats))) <- argNodes, devLabel node /= lab]
   unless (null badLabels) $ Left $ ("Incompatible argument labels:\n" ++) $
     intercalate "\n" [ " - For " ++ show (devWord node) ++ ": Got " ++ devLabel node ++ " expected " ++ lab | (node,lab) <- badLabels]
-  let badAttrs = [(node, missingFeats) | (node, (cat,(lab,feats))) <- childNodes, let missingFeats = filter (`notElem`devFeats node) feats, not (null missingFeats)]
+  let badAttrs = [(node, missingFeats) | (node, (cat,(lab,feats))) <- argNodes, let missingFeats = filter (`notElem`devFeats node) feats, not (null missingFeats)]
   unless (null badAttrs) $ Left $ ("Missing argument features:\n" ++) $
     intercalate "\n" [ " - For " ++ show (devWord node) ++ ": Missing features " ++ showAttrs feats ++ " from " ++ showAttrs (devFeats node) | (node,feats) <- badAttrs]
-  -- TODO: Check the category of the arguments
+  forM_ argNodes $ \(node,(cat,(lab,feats))) -> do
+    traceM $ "\nArgument " ++ show (devWord node) ++ " : " ++ showCId cat ++ " ; " ++ lab ++ showAttrs feats ++ ":"
+    let nodeAT = devAbsTrees node
+    let goodTrees = [ x | x <- nodeAT , atiCat x == cat]
+    when (null goodTrees) $ Left $ "No trees with expected category for " ++ showCId f ++ " with arg \"" ++ devWord node ++ "\"\n"
+      ++ "Expected category: " ++ show cat ++ "\n"
+      ++ "Available categories: " ++ show (map atiCat nodeAT)
+    traceM $ "  Found trees with correct category:\n    - " ++ intercalate "\n    - " (map ((++ " : " ++ show cat) . prRTree showCId . atiAbsTree) goodTrees)
+  -- DONE: Check the category of the arguments
   -- TODO: Check that the constructed tree exists in the UD tree and if it would be selected
   --pure $ unlines [showFun, show funId, show argNrs, show argCatLabs, show headNr, prLinesRTree (prDevNode 3) headTree]
   pure "Success!"
