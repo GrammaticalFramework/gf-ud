@@ -393,6 +393,7 @@ debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
   let badAttrs = [(node, missingFeats) | (node, (cat,(lab,feats))) <- argNodes, let missingFeats = filter (`notElem`devFeats node) feats, not (null missingFeats)]
   unless (null badAttrs) $ Left $ ("Missing argument features:\n" ++) $
     intercalate "\n" [ " - For " ++ show (devWord node) ++ ": Missing features " ++ showAttrs feats ++ " from " ++ showAttrs (devFeats node) | (node,feats) <- badAttrs]
+  -- DONE: Check the category of the arguments
   forM_ argNodes $ \(node,(cat,(lab,feats))) -> do
     traceM $ "\nArgument " ++ show (devWord node) ++ " : " ++ showCId cat ++ " ; " ++ lab ++ showAttrs feats ++ ":"
     let nodeAT = devAbsTrees node
@@ -401,8 +402,16 @@ debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
       ++ "Expected category: " ++ show cat ++ "\n"
       ++ "Available categories: " ++ show (map atiCat nodeAT)
     traceM $ "  Found trees with correct category:\n    - " ++ intercalate "\n    - " (map ((++ " : " ++ show cat) . prRTree showCId . atiAbsTree) goodTrees)
-  -- DONE: Check the category of the arguments
-  -- TODO: Check that the constructed tree exists in the UD tree and if it would be selected
+
+  -- 5: Check that the constructed tree exists in the dev-tree
+  let headAT = devAbsTrees headNode
+  let matchingAbstrees = [ x | x <- headAT , root (atiAbsTree x) == f, all ((`elem` atiUDIds x) . UDIdInt) argNrs]
+  let sameCategory = [ x | x <- headAT, atiCat x == outCat]
+  when (null matchingAbstrees) $ Left $ "Can make tree, but tree not found in devtree. Found trees with same result category as "++ showCId f ++ ": " ++ intercalate "\n    " (map ((++ " : " ++ show outCat) . prRTree showCId . atiAbsTree) sameCategory)
+  traceM $ "Trees using " ++ showCId f ++ " found in devtree:\n    " ++ intercalate "\n    " (map ((++ " : " ++ show outCat) . prRTree showCId . atiAbsTree) matchingAbstrees)
+
+  -- TODO: Check if the tree would be selected
+
   --pure $ unlines [showFun, show funId, show argNrs, show argCatLabs, show headNr, prLinesRTree (prDevNode 3) headTree]
   pure "Success!"
 
