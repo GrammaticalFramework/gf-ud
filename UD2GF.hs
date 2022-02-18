@@ -369,14 +369,17 @@ debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
     ++ "\". Head features: " ++ showAttrs (devFeats headNode)
   let headAT = devAbsTrees headNode
   let goodTrees = [ x | x <- headAT , atiCat x == fst catlabHead]
+  when (null goodTrees) $ Left $ "No trees with expected category for " ++ showCId f ++ " with head \"" ++ devWord headNode ++ "\"\n" 
+    ++ "Expected category: " ++ show (fst catlabHead) ++ "\n"
+    ++ "Available categories: " ++ show (map atiCat headAT)
   traceM $ "Found head trees with correct category: " ++ intercalate "\n" (map (prRTree showCId . atiAbsTree) goodTrees)
 
   -- 4. Check that the arguments are compatible with the function
   let badLabels = [(node, lab) | (node, (cat,(lab,feats))) <- childNodes, devLabel node /= lab]
-  unless (null badLabels) $ Left $ ("Incompatible argument labels:\n" ++) $ 
+  unless (null badLabels) $ Left $ ("Incompatible argument labels:\n" ++) $
     intercalate "\n" [ " - For " ++ show (devWord node) ++ ": Got " ++ devLabel node ++ " expected " ++ lab | (node,lab) <- badLabels]
   let badAttrs = [(node, missingFeats) | (node, (cat,(lab,feats))) <- childNodes, let missingFeats = filter (`notElem`devFeats node) feats, not (null missingFeats)]
-  unless (null badAttrs) $ Left $ ("Missing argument features:\n" ++) $ 
+  unless (null badAttrs) $ Left $ ("Missing argument features:\n" ++) $
     intercalate "\n" [ " - For " ++ show (devWord node) ++ ": Missing features " ++ showAttrs feats ++ " from " ++ showAttrs (devFeats node) | (node,feats) <- badAttrs]
   -- TODO: Check the category of the arguments
   -- TODO: Check that the constructed tree exists in the UD tree and if it would be selected
