@@ -359,7 +359,7 @@ debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
   traceM showFun
   let catLabNrs = zip argNrs argCatLabs
   let catlabHeads = filter (\(nr,(cat,(lab,feats))) -> lab == head_Label) catLabNrs
-  (headNr, catlabHead) <- case catlabHeads of [ch] -> pure ch; _ -> Left ("Missing head label for function: " ++ show f ++ "\nlabels: " ++ show argCatLabs)
+  (headNr, catlabHead) <- case catlabHeads of [ch] -> pure ch; _ -> Left ("Missing head label for function: " ++ show f ++ "\nlabels: " ++ unwords (map (fst . snd) argCatLabs))
 
   -- Step 1. find where the head is in the tree
   headTree <- case findNode env (UDIdInt headNr) dt of
