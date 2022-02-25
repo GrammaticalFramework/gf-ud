@@ -355,8 +355,8 @@ debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
   (f,(outCat, argCatLabs)) <- case [(f,labtyp) | (f,labtyp) <- allFunsEnv env, f == funId] of
     [] -> Left $ "Unknown function: " ++ show funId
     [(f,labtyp)] -> pure (f,labtyp)
-    fs -> Left $ "Mulitple labels found for function: " ++ show funId ++ "\n" ++
-                unlines (map (\(f,(outCat, argCatlabs)) -> showCId f ++ ": " ++ showFun outCat argCatlabs) fs)
+    fs -> Left $ "Mulitple labels found for function " ++ show funId ++ "\n" ++
+                unlines (map (uncurry showFun . snd) fs)
   let showTheFun = showFun outCat argCatLabs
   traceM showTheFun
   unless (length argCatLabs == length argNrs) $ Left $ "Wrong number of arguments: " ++ show argNrs ++ " (expected " ++ show (length argCatLabs) ++ " args) for "
@@ -374,11 +374,13 @@ debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
   let headNode = root headTree
 
   let showWord nr = case findNode env (UDIdInt nr) dt of [rt] -> show (devWord (root rt)); _ -> "<not found>"
+  let showIdSimple (UDIdInt nr) = show nr
+      showIdSimple nr = show nr
 
   -- Step 2. Verify that all arguments are children of the head
   argNodes <- forM catLabNrs $ \(nr,catlab) -> case find ((== UDIdInt nr) . devIndex) ((headNode{devLabel=head_Label}): map root (subtrees headTree)) of
     Nothing -> Left $ "Word number " ++ show nr ++ " (" ++ showWord nr ++ ") " ++ " is not a child of " ++ show headNr ++ " (" ++ show (devWord headNode) ++ ").\n"
-            ++ "    Available children: " ++ show [(devIndex t, devWord t) | t <- map root $ subtrees headTree]
+            ++ "    Available children: " ++ show [(showIdSimple (devIndex t), devWord t) | t <- map root $ subtrees headTree]
     Just rt -> pure (rt,catlab)
   traceM $ "Attempting to build: " ++ showCId funId ++ " " ++ unwords [ devWord nd | (nd,_) <- argNodes]
   -- let allArgNodes = [(nd,catlab) | nr <- argNrs , (nd,catlab) <- (headNode,catlabHead): argNodes, devIndex nd == UDIdInt nr]
@@ -401,7 +403,9 @@ debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
   let badAttrs = [(node, missingFeats) | (node, (cat,(lab,feats))) <- argNodes, let missingFeats = filter (`notElem`devFeats node) feats, not (null missingFeats)]
   unless (null badAttrs) $ Left $ ("Missing argument features:\n" ++) $
     intercalate "\n" [ " - For " ++ show (devWord node) ++ ": Missing features " ++ showAttrs feats ++ " from " ++ showAttrs (devFeats node) | (node,feats) <- badAttrs]
-  -- DONE: Check the category of the arguments
+
+  -- Check the category of the arguments
+  -- TODO: Be less confusing when the node is deeply nested because of pruning
   forM_ argNodes $ \(node,(cat,(lab,feats))) -> do
     traceM $ "\nArgument " ++ show (devWord node) ++ " : " ++ showCId cat ++ " ; " ++ lab ++ showAttrs feats ++ ":"
     let nodeAT = devAbsTrees node
