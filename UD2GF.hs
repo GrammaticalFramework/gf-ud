@@ -346,17 +346,22 @@ debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
   unless (M.notMember funId (disabledFunctions (cncLabels env))) $
     Left $ "The function " ++ showCId funId ++ " is disabled"
 
+  let showAttrs [] = ""
+      showAttrs xs = "[" ++ intercalate "," (map prt xs) ++ "]"
+  let showFun outCat argCatLabs = show funId ++ " : " ++ intercalate " -> " (map (show . fst) argCatLabs) ++ " -> " ++ show outCat ++ " ; "
+       ++ unwords ([ lab ++ showAttrs b | (_,(lab,b)) <- argCatLabs])
+  
+  -- Find the function definition
   (f,(outCat, argCatLabs)) <- case [(f,labtyp) | (f,labtyp) <- allFunsEnv env, f == funId] of
     [] -> Left $ "Unknown function: " ++ show funId
     [(f,labtyp)] -> pure (f,labtyp)
-    _ -> Left $ "Ambiguous function: " ++ show funId
-  let showAttrs [] = ""
-      showAttrs xs = "[" ++ intercalate "," (map prt xs) ++ "]"
-  let showFun = show f ++ " : " ++ intercalate " -> " (map (show . fst) argCatLabs) ++ " -> " ++ show outCat ++ " ; "
-       ++ unwords ([ lab ++ showAttrs b | (_,(lab,b)) <- argCatLabs])
+    fs -> Left $ "Mulitple labels found for function: " ++ show funId ++ "\n" ++
+                unlines (map (\(f,(outCat, argCatlabs)) -> showCId f ++ ": " ++ showFun outCat argCatlabs) fs)
+  let showTheFun = showFun outCat argCatLabs
+  traceM showTheFun
   unless (length argCatLabs == length argNrs) $ Left $ "Wrong number of arguments: " ++ show argNrs ++ " (expected " ++ show (length argCatLabs) ++ " args) for "
-         ++ showFun
-  traceM showFun
+         ++ showTheFun
+
   let catLabNrs = zip argNrs argCatLabs
   let catlabHeads = filter (\(nr,(cat,(lab,feats))) -> lab == head_Label) catLabNrs
   (headNr, catlabHead) <- case catlabHeads of [ch] -> pure ch; _ -> Left ("Missing head label for function: " ++ show f ++ "\nlabels: " ++ unwords (map (fst . snd) argCatLabs))
@@ -368,9 +373,12 @@ debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
     (_:_:_) -> Left $ "Multiple head nodes: " ++ show headNr
   let headNode = root headTree
 
+  let showWord nr = case findNode env (UDIdInt nr) dt of [rt] -> show (devWord (root rt)); _ -> "<not found>"
+
   -- Step 2. Verify that all arguments are children of the head
   argNodes <- forM catLabNrs $ \(nr,catlab) -> case find ((== UDIdInt nr) . devIndex) ((headNode{devLabel=head_Label}): map root (subtrees headTree)) of
-    Nothing -> Left $ "Child node not found: " ++ show nr
+    Nothing -> Left $ "Word number " ++ show nr ++ " (" ++ showWord nr ++ ") " ++ " is not a child of " ++ show headNr ++ " (" ++ show (devWord headNode) ++ ").\n"
+            ++ "    Available children: " ++ show [(devIndex t, devWord t) | t <- map root $ subtrees headTree]
     Just rt -> pure (rt,catlab)
   traceM $ "Attempting to build: " ++ showCId funId ++ " " ++ unwords [ devWord nd | (nd,_) <- argNodes]
   -- let allArgNodes = [(nd,catlab) | nr <- argNrs , (nd,catlab) <- (headNode,catlabHead): argNodes, devIndex nd == UDIdInt nr]
