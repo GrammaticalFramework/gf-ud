@@ -5,6 +5,8 @@ import UDConcepts
 import GFConcepts
 import UDAnalysis
 import UDOptions
+import Data.Maybe (listToMaybe)
+import Data.List (intercalate)
 
 
 showMatchesInUDSentence :: Opts -> UDPattern -> UDSentence -> String
@@ -43,6 +45,8 @@ data UDPattern =
     FORM String
   | LEMMA String
   | POS String
+  | XPOS String
+  | MISC String String
   | FEATS String  -- feature list matches exactly
   | FEATS_ String -- a sublist of features matches exactly
   | DEPREL String   -- deprel matches exactly
@@ -70,6 +74,8 @@ ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
   FORM s -> matchString s (udFORM node)
   LEMMA s -> matchString s (udLEMMA node)
   POS s -> matchString s (udUPOS node)
+  XPOS s -> matchString s (udXPOS node)
+  MISC name s -> maybe False (matchString s) $ listToMaybe [ intercalate "," vals | UDData arg vals <- udMISC node , arg == name  ]
   FEATS udds -> udFEATS node == prs udds
   FEATS_ udds -> 
     let uddlist = prs udds in
@@ -123,6 +129,8 @@ data UDReplacement =
     REPLACE_FORM String String
   | REPLACE_LEMMA String String
   | REPLACE_POS String String
+  | REPLACE_XPOS String String
+  | REPLACE_MISC String String String
   | REPLACE_DEPREL String String
   | REPLACE_DEPREL_ String String
   | REPLACE_FEATS String String
@@ -143,6 +151,8 @@ replaceWithUDPattern rep tree@(RTree node subtrs) = case rep of
   REPLACE_FORM old new | ifMatchUDPattern (FORM old) tree -> true $ tree{root = node{udFORM = new}}
   REPLACE_LEMMA old new | ifMatchUDPattern (LEMMA old) tree -> true $ tree{root = node{udLEMMA = new}}
   REPLACE_POS old new | ifMatchUDPattern (POS old) tree -> true $ tree{root = node{udUPOS = new}}
+  REPLACE_XPOS old new | ifMatchUDPattern (XPOS old) tree -> true $ tree{root = node{udXPOS = new}}
+  REPLACE_MISC name old new | ifMatchUDPattern (MISC name old) tree -> true $ tree{root = node{udMISC = map (\ud -> if udArg ud == name then ud{udVals = getSeps ',' new} else ud) (udMISC node)}}
   REPLACE_DEPREL old new | ifMatchUDPattern (DEPREL old) tree -> true $ tree{root = node{udDEPREL = new}}
   REPLACE_DEPREL_ old new | ifMatchUDPattern (DEPREL_ old) tree -> true $ tree{root = node{udDEPREL = new}}
   REPLACE_FEATS old new | ifMatchUDPattern (FEATS old) tree -> true $ tree{root = node{udFEATS = prs new}}
