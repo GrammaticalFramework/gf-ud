@@ -501,7 +501,8 @@ udtree2devtree = markClosest . initialize
       devPOS   = udUPOS un,
       devFeats = udFEATS un ++ [UDData "LEMMA" [udLEMMA un]
                                ,UDData "FORM"  [udFORM un]
-                               ,UDData "XPOS"  [udXPOS un]]
+                               ,UDData "XPOS"  [udXPOS un]
+                               ,UDData "POS"   [udUPOS un]]
                                ++ map (\udData -> udData{udArg = "MISC-" ++ udArg udData}) (udMISC un),
       devLabel = udDEPREL un,
       devIndex = udID un,
