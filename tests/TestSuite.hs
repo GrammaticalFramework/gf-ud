@@ -4,6 +4,7 @@ import Test.Hspec
 import UD2GF
 import PGF
 import UDAnnotations
+import UDConcepts (UDData(UDData))
 
 
 myUDEnv :: IO UDEnv
@@ -28,6 +29,9 @@ main = do
           ,"ImpVP (UseNP (DetCN anyPl_Det (UseN cat_N)))"
           ,"ImpVP (UseNP (DetCN someSg_Det (UseN cat_N)))"
           ,"ImpVP (UseNP (DetCN somePl_Det (UseN cat_N)))"]
+    describe "Parsing for labels" $ do
+      it "should allow an escaped comma as a UD tag" $ do
+        labelAndMorpho "head[LEMMA=\\,]" `shouldBe` ("head", [UDData "LEMMA" [","]])
 
 
 bestTrees :: UDEnv -> String -> [String]
@@ -48,4 +52,9 @@ bestTree env conll = exprStr
         _ -> "bestTree: ud2gf failed"
 
 theCatSleepsAlready :: String
-theCatSleepsAlready = "1\tthe\tthe\tDET\tQuant\tFORM=0\t2\tdet\t_\tFUN=DefArt\n2\tcat\tcat\tNOUN\tNN\tNumber=Sing\t3\tnsubj\t_\tFUN=cat_N\n3\tsleeps\tsleep\tVERB\tVBZ\tMood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin\t0\troot\t_\tFUN=sleepVBZ\n4\talready\talready\tADV\tRB\t_\t3\tadvmod\t_\t_"
+theCatSleepsAlready = unlines 
+  [ "1\tthe\tthe\tDET\tQuant\tFORM=0\t2\tdet\t_\tFUN=DefArt"
+  , "2\tcat\tcat\tNOUN\tNN\tNumber=Sing\t3\tnsubj\t_\tFUN=cat_N"
+  , "3\tsleeps\tsleep\tVERB\tVBZ\tMood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin\t0\troot\t_\tFUN=sleepVBZ"
+  , "4\talready\talready\tADV\tRB\t_\t3\tadvmod\t_\t_"
+  ]
