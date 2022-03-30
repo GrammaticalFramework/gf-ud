@@ -13,6 +13,10 @@ import qualified Data.Map as M
 import Data.List
 import Data.List.Split
 import Data.Char
+-- import Text.ParserCombinators.ReadP (readP_to_S, (<++))
+-- import qualified Text.ParserCombinators.ReadP as ReadP
+import qualified Data.List.NonEmpty as NonEmpty
+import Data.List.NonEmpty (NonEmpty((:|)), (<|))
 
 -- text paragraph representing the tree of a sentence
 data UDSentence = UDSentence {
@@ -151,7 +155,7 @@ instance UDObject UDId where
 instance UDObject UDData where
   prt d = udArg d ++ "=" ++ concat (intersperse "," (udVals d))
   prs s = case break (=='=') (strip s) of
-    (a,_:vs@(_:_)) -> UDData a (getSeps ',' vs)
+    (a,_:vs@(_:_)) -> UDData a (getSepsEsc ',' vs) -- ...Esc to allow comma in values
     (a,_) -> UDData a [] ---- error ("ERROR:" ++ s ++ " invalid UDData")
 
 --- this works only for | separated lists...
@@ -386,6 +390,66 @@ getSeps p xs = filter (not .null) getSeps'
     getSeps' = case break (==p) xs of
       (c,_:xx) -> c : getSeps p xx
       (c,_) -> [c]
+
+-- | Like `getSeps` but allows escaping the separator with backslash.
+--
+-- __Warning__: This doesn't work if the function is called recursively with different separators. A full parser or a separate lexer step should be used instead.
+--
+--  >>> getSepsEsc ',' "a,\\\\b,c\\,d,,\\,"
+-- ["a","\\b","c,d",","]
+getSepsEsc :: Char -> String -> [String]
+getSepsEsc p = filter (not . null) . NonEmpty.toList . getSepsEsc'
+  where
+    getSepsEsc' [] = pure []
+    getSepsEsc' ('\\' : c : s) = mapHead (c:) $ getSepsEsc' s
+    getSepsEsc' (c : s) 
+      | c == p = [] <| getSepsEsc' s
+      | otherwise = mapHead (c:) $ getSepsEsc' s
+
+    mapHead f ~(x :| xs) = f x :| xs
+
+-- Alternative 0
+-- getSepsEsc p = filter (not . null) . uncurry (:) . getSepsEsc'
+--   where
+--     getSepsEsc' [] = ([],[])
+--     getSepsEsc' ('\\' : c : s) = addHead c $ getSepsEsc' s
+--     getSepsEsc' (c : s) 
+--       | c == p = ((,) [] . uncurry (:)) $ getSepsEsc' s
+--       | otherwise = addHead c $ getSepsEsc' s
+
+--     addHead c ~(x,xs) =  ((c : x) , xs)
+
+-- -- Alternative 1
+-- getSepsEsc p = filter (not . null) . getSepsEsc'
+--   where
+--     getSepsEsc' [] = []
+--     getSepsEsc' ('\\' : c : s) = addHead c $ getSepsEsc' s
+--     getSepsEsc' (c : s) 
+--       | c == p = [] : getSepsEsc' s
+--       | otherwise = addHead c $ getSepsEsc' s
+
+--     addHead c (x:xs) =  (c : x) : xs
+--     addHead c [] = [[c]]
+
+-- Alternative 2, using ReadP
+-- getSepsEsc p xs = case readP_to_S myParser xs of
+--   [(xs,[])] -> xs
+--   _ -> error "getSepsEsc: invalid input"
+--   where 
+--     singleChar = (ReadP.char '\\' *> ReadP.get) <++ (ReadP.satisfy (/= p))
+--     myParser = (ReadP.many singleChar) `ReadP.sepBy` ReadP.char p
+
+-- Not sure if correct
+-- getSepsEsc p xs = filter (not .null) getSepVsEsc'
+--   where
+--     getSepsEsc' = case break (`elem`[p,'\\']) xs of
+--       (c,'\\':'\\':xx) -> addHead c $ getSepsEsc p xx
+--       (c,'\\':p':xx) | p' == p -> addHead c $ getSepsEsc p xx
+--       (c,'\\':p':xx) -> addHead c $ getSepsEsc p xx
+--       (c,_:xx) -> c : getSepsEsc p xx
+--       (c,_) -> [c]
+--     addHead c (x:xs) =  (c ++ x) : xs
+--     addHead c [] = [c] 
 
 stanzas :: [String] -> [[String]]
 stanzas ls = case dropWhile (all isSpace) ls of
