@@ -16,10 +16,11 @@ import Data.Char
 import Data.Maybe
 import Text.PrettyPrint (render, cat)
 
-import Debug.Trace (trace, traceM)
+import Debug.Trace (trace, traceM, traceShowId)
 import Data.Function (on)
 import Data.Ord (comparing)
 import Control.Monad (unless, forM, when, forM_)
+import qualified Data.Set as Set
 
 ---------
 -- to debug
@@ -344,7 +345,7 @@ debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
       showAttrs xs = "[" ++ intercalate "," (map prt xs) ++ "]"
   let showFun outCat argCatLabs = show funId ++ " : " ++ intercalate " -> " (map (show . fst) argCatLabs) ++ " -> " ++ show outCat ++ " ; "
        ++ unwords ([ lab ++ showAttrs b | (_,(lab,b)) <- argCatLabs])
-  
+
   -- Find the function definition
   (f,(outCat, argCatLabs)) <- case [(f,labtyp) | (f,labtyp) <- allFunsEnv env, f == funId] of
     [] -> Left $ "Unknown function: " ++ show funId
@@ -477,11 +478,7 @@ combineTrees env =
   combineUnduplicated :: [FunInfo] -> DevTree -> DevTree
   combineUnduplicated finfos tree@(RTree dn ts)=
     RTree dn{
-      devAbsTrees = let
-                   newDevTrees = funInfoToAbsTreeInfo <$> finfos
-                   oldDevTrees = devAbsTrees dn
-                 in
-                   oldDevTrees ++ newDevTrees, 
+      devAbsTrees = oldDevTrees ++ newDevTrees,
                                -- Newer suggestions are added to the end of the list, which prefers flatter trees.
                                -- Consider a tree like         A
                                --                                B
@@ -494,6 +491,11 @@ combineTrees env =
                                -- this choice, oldDevTrees++newDevTrees or newDevTrees++oldDevTrees determines the order of (i) and (ii).
       devStatus = maximumBy (comparing length) (devStatus dn : map funUsage finfos)
       } ts
+    where
+      --  traceWith x = trace (show $ fmap (prAbsTree . atiAbsTree) x) x 
+        traceWith x = x
+        newDevTrees = traceWith $ funInfoToAbsTreeInfo <$> finfos
+        oldDevTrees = devAbsTrees dn
 
   allFunsLocalFast :: DevTree -> [FunInfo]
   allFunsLocalFast (RTree dn ts)=
@@ -509,7 +511,8 @@ combineTrees env =
          ],
 
     (f,labtyp) <- allFunsEnv env,
-    (abstree,usage) <- tryFindArgsFast f labtyp argalts
+    (abstree,usage) <- tryFindArgsFast f labtyp argalts,
+    not $ isLooping abstree
     ]
 
   -- NOTE: argss is transposed compared to tryFindArgs
@@ -560,6 +563,16 @@ combineTrees env =
     where
       dts = devAbsTrees dn
       result = filter ((`notElem` dts) . funInfoToAbsTreeInfo) fis
+
+isLooping :: AbsTree -> Bool
+isLooping = go Set.empty
+  where
+    go :: Set.Set Fun -> AbsTree -> Bool
+    go seen tr@(RTree fn [nxt]) 
+      | fn `Set.member` seen = trace ("Looping set: " ++ show (Set.toList seen) ++ " on " ++ take 100 (prAbsTree tr)) True
+      | otherwise = go (Set.insert fn seen) nxt
+    go seen (RTree fn _) = False
+    notrace x = id
 
 analyseWords :: UDEnv -> DevTree -> DevTree
 analyseWords env = mapRTree lemma2fun
