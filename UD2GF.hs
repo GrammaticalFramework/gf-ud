@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 module UD2GF where
 
 import RTree
@@ -568,7 +569,7 @@ isLooping :: AbsTree -> Bool
 isLooping = go Set.empty
   where
     go :: Set.Set Fun -> AbsTree -> Bool
-    go seen tr@(RTree fn [nxt]) 
+    go seen tr@(RTree fn [nxt])
       | fn `Set.member` seen = trace ("Looping set: " ++ show (Set.toList seen) ++ " on " ++ take 100 (prAbsTree tr)) True
       | otherwise = go (Set.insert fn seen) nxt
     go seen (RTree fn _) = False
@@ -617,10 +618,8 @@ analyseWords env = mapRTree lemma2fun
     Left c -> case parse (pgfGrammar env) (actLanguage env) (mkType [] c []) w of
       ts -> [(at,c) | t <- ts,
                       let at = expr2abstree t,
-                      all (\f -> M.notMember f (disabledFunctions (cncLabels env))) (allNodesRTree at)]
-    Right c -> case elem (w,c) auxWords of
-      True -> [(newWordTree w c, c)]
-      _ -> []
+                      all (\f -> f `M.notMember` disabledFunctions (cncLabels env)) (allNodesRTree at)]
+    Right c -> [(newWordTree w c, c) | (w,c) `elem` auxWords]
 
   auxWords = [(lemma,cat) | ((fun_,lemma),(cat,labels_)) <- M.assocs (lemmaLabels (cncLabels env))]
 
@@ -637,7 +636,6 @@ analyseWords env = mapRTree lemma2fun
 -- auxiliaries
 -- newWordTree w c = RTree (mkCId (w ++ "_" ++ showCId c)) [] ---
 newWordTree w c = RTree (mkCId ("Str" ++ showCId c)) [strLitToAbsTree w] ---
-isNewWordFun f = isInfixOf "__x__" (showCId f)
 unknownCat = mkCId "Adv" --- treat unknown words as adverbs ---- TODO: from config
 quote s = "\"" ++ s ++ "\""
 
