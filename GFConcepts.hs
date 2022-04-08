@@ -42,10 +42,11 @@ expr2abstree :: HasCallStack => PGF.Expr -> AbsTree
 expr2abstree orig = -- (\res -> trace ("Converting: " ++ showExpr [] orig ++ " got " ++ show (length $ show res)) res) $
                     go orig
   where
-   go e = case unApp e of
-    Just (f,es) -> RTree f (map go es)
-    _ | Just q <- unStr e -> strLitToAbsTree q
-    _ -> error ("ERROR: no constructor tree from " ++ showExpr [] e ++ " in " ++ showExpr [] orig ++ "\nRaw: " ++ show e)
+    go e 
+      | Just (f,es) <- unApp e  = RTree f (map go es)
+      | Just q      <- unStr e  = strLitToAbsTree q
+      | Just n      <- unMeta e = RTree (mkCId $ "?" ++ show n) []
+      | otherwise               = error ("ERROR: no constructor tree from " ++ showExpr [] e ++ " in " ++ showExpr [] orig ++ "\nRaw: " ++ show e)
 
 strLitToAbsTree :: String -> AbsTree
 strLitToAbsTree w = RTree (mkCId (stringLiteralPrefix ++ w)) []
