@@ -18,14 +18,21 @@ data UDEnv = UDEnv {
   cncLabels   :: CncLabels, -- language-dependent labels, even those that work on AST only
   pgfGrammar  :: PGF,
   actLanguage :: Language,
-  startCategory :: PGF.Type
+  startCategory :: PGF.Type,
+  morphology  :: PGF.Morpho -- Derived from pgf and language. Here to prevent recomputation
   }
 
 initUDEnv =
-  UDEnv "conllu" initAbsLabels initCncLabels (error "no pgf") (error "no language") (error "no startcat")
+  UDEnv "conllu" initAbsLabels initCncLabels (error "no pgf") (error "no language") (error "no startcat") (error "no morpho")
 
 mkUDEnv pgf absl cncl eng cat =
-  initUDEnv {pgfGrammar = pgf, absLabels = absl, cncLabels = cncl, actLanguage = eng, startCategory = maybe undefined id $ readType cat}
+  initUDEnv { pgfGrammar = pgf
+            , absLabels = absl
+            , cncLabels = cncl
+            , actLanguage = eng
+            , startCategory = maybe undefined id $ readType cat
+            , morphology = buildMorpho pgf eng
+            }
 
 getEnv :: String -> String -> String -> IO UDEnv
 getEnv pref eng cat = do

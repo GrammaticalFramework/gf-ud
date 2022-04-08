@@ -577,7 +577,7 @@ isLooping = go Set.empty
 analyseWords :: UDEnv -> DevTree -> DevTree
 analyseWords env = mapRTree lemma2fun
  where
-  morpho = buildMorpho (pgfGrammar env) (actLanguage env)
+  morpho = morphology env
   lemma2fun dn = dn {
     devAbsTrees = [AbsTreeInfo { atiAbsTree = t, atiCat = c, atiUDIds = [devIndex dn]} | (t,c) <- justWords],
     devStatus = [devIndex dn],
