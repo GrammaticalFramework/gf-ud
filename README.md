@@ -149,6 +149,10 @@ $ cat en_pud-ud-test.conllu | gfud pattern-replace -f grammars/predicates.hst
 4       learn   learn   VERB    VBP     Mood=Ind|Tense=Pres|VerbForm=Fin        0       root    ADJUSTED        _
 5       Y       content       NOUN    NN      Number=Sing     4       obj     ADJUSTED        _
 ```
+
+More details on pattern matching can be found in
+https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md 
+
 `conll2latex`, `conll2pdf`: Visualize a treebank by creating a LaTeX file or showing a pdf directly (requires pdflatex)
 ```
 $ gfud conll2latex <test.conllu 
@@ -174,10 +178,6 @@ UDScore {udScore = 0.7777777777777778, udMatching = 1, udTotalLength = 9, udSame
 8  change  change  NOUN  NN  Number=Sing  6  nmod        |    8  change  change  NOUN  NN  Number=Sing  4  obj
 9  .  .  PUNCT  .  _  4  punct                           |    9  .  .  PUNCT  .  _  4  mark
 ```
-More details on pattern matching can be found in
-https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md 
-
-
 
 ### Parsing with DBNF
 
