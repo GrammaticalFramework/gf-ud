@@ -1,7 +1,7 @@
 # This default stack file is a copy of stack-ghc8.6.5.yaml
 # But committing a symlink is probably a bad idea, so it's a real copy
 
-resolver: lts-16.20
+resolver: lts-18.28
 
 
 extra-deps:
