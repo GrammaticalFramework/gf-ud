@@ -46,7 +46,7 @@ getExprs opts env string = map getExpr sentences
         devtree0 = udtree2devtree udtree
         devtree1 = analyseWords env devtree0
         devtree = combineTrees env devtree1
-        besttree0 = head (splitDevTree devtree)
+        besttree0 = head (splitDevTree env devtree)
         besttree = addBackups opts besttree0
         ts0 = devtree2abstrees besttree
         ts1 = map (expandMacro env) ts0
@@ -81,7 +81,7 @@ showUD2GF opts env sentence = do
   let devtree = combineTrees env devtree1
   ifOpt opts "dt" $ prLinesRTree (prDevNode 4) devtree
 
-  let besttree0 = head (splitDevTree devtree)
+  let besttree0 = head (splitDevTree env devtree)
   ifOpt opts "bt0" $ prLinesRTree (prDevNode 1) besttree0
 
   let besttree = addBackups opts besttree0
@@ -281,16 +281,19 @@ theAbsTreeInfo dt = case devAbsTrees (root dt) of
   _ -> error $ "no unique abstree in " ++ prDevNode 2 (root dt)
 
 -- split trees showing just one GF tree in each DevTree
-splitDevTree :: DevTree -> [DevTree]
-splitDevTree tr@(RTree dn trs) =
-  [RTree (dn{devAbsTrees = [t]}) (map (chase t) trs) | t <- devAbsTrees dn]
+splitDevTree :: UDEnv -> DevTree -> [DevTree]
+splitDevTree env tr@(RTree dn trs) =
+  [RTree (dn{devAbsTrees = [t]}) (map (chase t) trs) | t <- sortOn isStartCat $ devAbsTrees dn]
  where
   chase AbsTreeInfo { atiAbsTree = ast, atiCat = cat, atiUDIds = usage} tr@(RTree d ts) =
    case elem (devIndex d) usage of
     True -> case sortOn ((1000-) . sizeRTree . atiAbsTree) [dt | dt@AbsTreeInfo { atiAbsTree = t} <- devAbsTrees d, isSubRTree t ast] of
       t:_ -> RTree (d{devAbsTrees = [t]}) (map (chase t) ts)
       _ -> error $ "wrong indexing in\n" ++ prLinesRTree (prDevNode 1) tr
-    False -> head $ splitDevTree $ RTree (d{devNeedBackup = True}) ts ---- head
+    False -> head $ splitDevTree env $ RTree (d{devNeedBackup = True}) ts ---- head
+
+  isStartCat :: AbsTreeInfo -> Bool
+  isStartCat AbsTreeInfo { atiAbsTree = rt, atiCat = ci, atiUDIds = uis} = startCategory env /= mkType [] ci []
 
 prtStatus udids =  "[" ++ concat (intersperse "," (map prt udids)) ++ "]"
 
