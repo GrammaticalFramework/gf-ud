@@ -84,6 +84,9 @@ showUD2GF opts env sentence = do
   let besttree0 = head (splitDevTree devtree)
   ifOpt opts "bt0" $ prLinesRTree (prDevNode 1) besttree0
 
+  let besttree0Expanded = (mapRTree . mapDevAbsTree . mapAtiAt) (expandMacro env) besttree0
+  ifOpt opts "bt0me" $ prLinesRTree (prDevNode 1) besttree0Expanded
+
   let besttree = addBackups opts besttree0
   ifOpt opts "bt" $ prLinesRTree (prDevNode 1) besttree
 
@@ -205,12 +208,18 @@ data DevNode = DevNode {
  }
   deriving Show
 
+mapDevAbsTree :: (AbsTreeInfo -> AbsTreeInfo) -> DevNode -> DevNode
+mapDevAbsTree f dn = dn { devAbsTrees = map f (devAbsTrees dn) } 
+
 data AbsTreeInfo = AbsTreeInfo
   { atiAbsTree :: AbsTree
   , atiCat :: Cat
   , atiUDIds :: [UDId]
   }
   deriving (Show, Eq)
+
+mapAtiAt :: (AbsTree -> AbsTree) -> AbsTreeInfo -> AbsTreeInfo
+mapAtiAt f ati = ati { atiAbsTree = f (atiAbsTree ati) }
 
 -- n shows how many trees are to be shown
 prDevNode n d = unwords [
