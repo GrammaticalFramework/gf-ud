@@ -13,4 +13,11 @@ abstract Test = MiniLang - [PredVP] ** {
     -- To test lemma/wordform in auxfuns
     fun someSg_Det, somePl_Det, anySg_Det, anyPl_Det : Det ;
 
+    -- To test distance feature
+    cat Num ;
+    fun ten_Num : Num ;
+    fun num2Det : Num -> Det ;
+
+    fun ApposNum : CN -> Num -> CN ; -- Section 10
+
 }

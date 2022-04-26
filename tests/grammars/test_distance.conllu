@@ -1,0 +1,5 @@
+1	Hovercraft	hovercraft	NOUN	NN	Number=Sing	0	root	_	FUN=hovercraft_N
+2	10	10	NUM	CD	NumType=Card	1	nummod	_	_
+
+1	10	10	NUM	CD	NumType=Card	2	nummod	_	_
+2	hovercrafts	hovercraft	NOUN	NNS	Number=Plur	0	root	_	FUN=hovercraft_N
