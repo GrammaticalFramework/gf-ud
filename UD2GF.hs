@@ -20,6 +20,8 @@ import Debug.Trace (trace, traceM)
 import Data.Function (on)
 import Data.Ord (comparing)
 import Control.Monad (unless, forM, when, forM_)
+import Control.Applicative ((<|>))
+import Data.Either (partitionEithers)
 
 ---------
 -- to debug
@@ -332,7 +334,7 @@ debugAuxfun :: UDEnv -> DevTree -> String -> String
 debugAuxfun env dt funArg
   | (funName:args) <- words funArg
   , funCid <- mkCId funName
-  , Just argsI <- traverse (getInt . reads) args = debugAuxFun' env dt funCid argsI
+  , Just argsI <- traverse getArg args = debugAuxFun' env dt funCid argsI
   | otherwise = error "Usage: dbg='FunName 4 9 2' where the numbers represent word numbers"
 
 -- Check for successful int parse
@@ -340,11 +342,35 @@ getInt :: [(Int, String)] -> Maybe Int
 getInt [(n,"")] = Just n
 getInt _ = Nothing
 
-debugAuxFun' :: UDEnv -> DevTree -> CId -> [Int] -> String
-debugAuxFun' env dt funId argNrs = either ("Error: " ++) id $ do
+data DbgArg = ArgIdx Int | ArgStr String
+
+getArg :: String -> Maybe DbgArg
+getArg x = ArgIdx <$> getInt (reads x) <|>  Just (ArgStr x)
+
+debugAuxFun' :: UDEnv -> DevTree -> CId -> [DbgArg] -> String
+debugAuxFun' env dt funId argIds = either ("Error: " ++) id $ do
   traceM $ "\nStarting debug for " ++ showCId funId ++ ":"
   unless (M.notMember funId (disabledFunctions (cncLabels env))) $
     Left $ "The function " ++ showCId funId ++ " is disabled"
+  
+  -- Allow arguments to be passed as words as an alternative to numbers
+  let collectErrors :: [Either String a] -> Either String [a]
+      collectErrors xs = case partitionEithers xs of
+        ([],xs) -> Right xs
+        (errs,_) -> Left $ "Invalid arguments:\n - " ++ intercalate "\n - " errs
+
+      showUDId :: UDId -> String
+      showUDId (UDIdInt n ) = show n
+      showUDId x = show x
+
+      getArg :: DbgArg -> Either String Int
+      getArg (ArgIdx n) = Right n
+      getArg (ArgStr s) = case filter (\x -> devWord x == s || devLemma x == s) $ allNodesRTree dt of
+        [] -> Left $ "Couldn't find word " ++ s
+        [DevNode {devIndex=UDIdInt x}] -> Right x
+        xs -> Left $ "Ambiguous word " ++ s ++ ". Found at " ++ intercalate ", " (map (showUDId . devIndex) xs)
+  
+  argNrs <- collectErrors $ map getArg argIds
 
   let showAttrs [] = ""
       showAttrs xs = "[" ++ intercalate "," (map prt xs) ++ "]"
