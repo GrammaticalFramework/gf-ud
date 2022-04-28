@@ -378,6 +378,7 @@ debugAuxFun' env dt funId argIds = either ("Error: " ++) id $ do
        ++ unwords ([ lab ++ showAttrs b | (_,(lab,b)) <- argCatLabs])
   
   -- Find the function definition
+  -- TODO: Merge this with the arg handling below
   (f,(outCat, argCatLabs)) <- case [(f,labtyp) | (f,labtyp) <- allFunsEnv env, f == funId] of
     [] -> Left $ "Unknown function: " ++ show funId
     [(f,labtyp)] -> pure (f,labtyp)
