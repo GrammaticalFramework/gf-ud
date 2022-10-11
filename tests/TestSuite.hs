@@ -1,10 +1,10 @@
 module Main where
 
+import PGF
 import Test.Hspec
 import UD2GF
-import PGF
 import UDAnnotations
-import UDConcepts (UDData(UDData))
+import UDConcepts (UDData (UDData))
 
 
 myUDEnv :: IO UDEnv
@@ -40,7 +40,7 @@ bestTrees env conll = map exprStr exprs
       exprs = getExprs [] env conll
       exprStr expr = case expr of
         (x : _xs) -> showExpr [] x
-        _ -> "bestTree: ud2gf failed"
+        _         -> "bestTree: ud2gf failed"
 
 
 bestTree :: UDEnv -> String -> String
@@ -49,10 +49,10 @@ bestTree env conll = exprStr
       exprs = getExprs [] env conll
       exprStr = case exprs of
         (x : _xs) : _xss -> showExpr [] x
-        _ -> "bestTree: ud2gf failed"
+        _                -> "bestTree: ud2gf failed"
 
 theCatSleepsAlready :: String
-theCatSleepsAlready = unlines 
+theCatSleepsAlready = unlines
   [ "1\tthe\tthe\tDET\tQuant\tFORM=0\t2\tdet\t_\tFUN=DefArt"
   , "2\tcat\tcat\tNOUN\tNN\tNumber=Sing\t3\tnsubj\t_\tFUN=cat_N"
   , "3\tsleeps\tsleep\tVERB\tVBZ\tMood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin\t0\troot\t_\tFUN=sleepVBZ"

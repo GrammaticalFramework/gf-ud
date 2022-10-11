@@ -1,24 +1,24 @@
 module UD2GF where
 
-import RTree
-import UDConcepts
-import UDAnnotations
+import Backend
 import GFConcepts
+import RTree
+import UDAnnotations
+import UDConcepts
 import UDOptions
 import UDVisualization
-import Backend
 
 import PGF hiding (CncLabels)
 
-import qualified Data.Map as M
-import Data.List
 import Data.Char
+import Data.List
+import qualified Data.Map as M
 import Data.Maybe
-import Text.PrettyPrint (render, cat)
+import Text.PrettyPrint (cat, render)
 
-import Debug.Trace (trace)
 import Data.Function (on)
 import Data.Ord (comparing)
+import Debug.Trace (trace)
 
 ---------
 -- to debug
@@ -46,7 +46,7 @@ getExprs opts env string = map getExpr sentences
         devtree0 = udtree2devtree udtree
         devtree1 = analyseWords env devtree0
         devtree = combineTrees env devtree1
-        besttree0 = head (splitDevTree devtree)
+        besttree0 = head (splitDevTree env devtree)
         besttree = addBackups opts besttree0
         ts0 = devtree2abstrees besttree
         ts1 = map (expandMacro env) ts0
@@ -66,7 +66,7 @@ showUD2GF opts env sentence = do
   ifOpt opts "ud" $ prt sentence
 
   case errors sentence of
-    [] -> return ()
+    []   -> return ()
     errs -> ifOpt opts "err" $ unlines errs
 
   let udtree = udSentence2tree sentence
@@ -81,7 +81,7 @@ showUD2GF opts env sentence = do
   let devtree = combineTrees env devtree1
   ifOpt opts "dt" $ prLinesRTree (prDevNode 4) devtree
 
-  let besttree0 = head (splitDevTree devtree)
+  let besttree0 = head (splitDevTree env devtree)
   ifOpt opts "bt0" $ prLinesRTree (prDevNode 1) besttree0
 
   let besttree0Expanded = (mapRTree . mapDevAbsTree . mapAtiAt) (expandMacro env) besttree0
@@ -132,11 +132,11 @@ showUD2GF opts env sentence = do
 
 
 data UD2GFStat = UD2GFStat {
-  totalWords :: Int,
-  interpretedWords :: Int,
-  unknownWords :: Int,
-  totalSentences :: Int,
-  completeSentences :: Int,
+  totalWords           :: Int,
+  interpretedWords     :: Int,
+  unknownWords         :: Int,
+  totalSentences       :: Int,
+  completeSentences    :: Int,
   typecorrectSentences :: Int
   }
  deriving Show
@@ -172,7 +172,7 @@ data CheckResult = CheckResult {
 
 prCheckResult cr = unlines $
   case resultUnknowns cr of
-    [] -> []
+    []  -> []
     uks -> [unwords $ "unknown words:" : map showCId uks]
   ++
   [resultMessage cr]
@@ -187,7 +187,7 @@ checkAbsTreeResult env t = CheckResult {
  where
   pgf = pgfGrammar env
   (mt,msg) = case inferExpr pgf (abstree2expr t) of
-    Left tce -> (Nothing, render (ppTcError tce))
+    Left tce        -> (Nothing, render (ppTcError tce))
     Right (exp,typ) -> (Just exp, "type checking OK")
 
 
@@ -209,12 +209,12 @@ data DevNode = DevNode {
   deriving Show
 
 mapDevAbsTree :: (AbsTreeInfo -> AbsTreeInfo) -> DevNode -> DevNode
-mapDevAbsTree f dn = dn { devAbsTrees = map f (devAbsTrees dn) } 
+mapDevAbsTree f dn = dn { devAbsTrees = map f (devAbsTrees dn) }
 
 data AbsTreeInfo = AbsTreeInfo
   { atiAbsTree :: AbsTree
-  , atiCat :: Cat
-  , atiUDIds :: [UDId]
+  , atiCat     :: Cat
+  , atiUDIds   :: [UDId]
   }
   deriving (Show, Eq)
 
@@ -287,19 +287,22 @@ addBackups0 tr@(RTree dn trs) = case map collectBackup (tr:trs) of  -- backups f
 theAbsTreeInfo :: DevTree -> AbsTreeInfo
 theAbsTreeInfo dt = case devAbsTrees (root dt) of
   [t] -> t
-  _ -> error $ "no unique abstree in " ++ prDevNode 2 (root dt)
+  _   -> error $ "no unique abstree in " ++ prDevNode 2 (root dt)
 
 -- split trees showing just one GF tree in each DevTree
-splitDevTree :: DevTree -> [DevTree]
-splitDevTree tr@(RTree dn trs) =
-  [RTree (dn{devAbsTrees = [t]}) (map (chase t) trs) | t <- devAbsTrees dn]
+splitDevTree :: UDEnv -> DevTree -> [DevTree]
+splitDevTree env tr@(RTree dn trs) =
+  [RTree (dn{devAbsTrees = [t]}) (map (chase t) trs) | t <- sortOn isStartCat $ devAbsTrees dn]
  where
   chase AbsTreeInfo { atiAbsTree = ast, atiCat = cat, atiUDIds = usage} tr@(RTree d ts) =
    case elem (devIndex d) usage of
     True -> case sortOn ((1000-) . sizeRTree . atiAbsTree) [dt | dt@AbsTreeInfo { atiAbsTree = t} <- devAbsTrees d, isSubRTree t ast] of
       t:_ -> RTree (d{devAbsTrees = [t]}) (map (chase t) ts)
       _ -> error $ "wrong indexing in\n" ++ prLinesRTree (prDevNode 1) tr
-    False -> head $ splitDevTree $ RTree (d{devNeedBackup = True}) ts ---- head
+    False -> head $ splitDevTree env $ RTree (d{devNeedBackup = True}) ts ---- head
+
+  isStartCat :: AbsTreeInfo -> Bool
+  isStartCat AbsTreeInfo { atiAbsTree = rt, atiCat = ci, atiUDIds = uis} = startCategory env /= mkType [] ci []
 
 prtStatus udids =  "[" ++ concat (intersperse "," (map prt udids)) ++ "]"
 
@@ -485,7 +488,7 @@ analyseWords env = mapRTree lemma2fun
                       all (\f -> M.notMember f (disabledFunctions (cncLabels env))) (allNodesRTree at)]
     Right c -> case elem (w,c) auxWords of
       True -> [(newWordTree w c, c)]
-      _ -> []
+      _    -> []
 
   auxWords = [(lemma,cat) | ((fun_,lemma),(cat,labels_)) <- M.assocs (lemmaLabels (cncLabels env))]
 
@@ -542,5 +545,5 @@ udtree2devtree = markClosest . initialize
 -- >>> select [1,2,3]
 -- [(1,[2,3]),(2,[1,3]),(3,[1,2])]
 select :: [a] -> [(a,[a])]
-select [] = []
+select []       = []
 select (a : as) = (a,as) : [ (b,a:bs) | (b,bs) <-select as ]
