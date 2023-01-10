@@ -4,7 +4,7 @@ module UDOptions where
 
 -- ud2gf
 minimalOptsUD2GF = selectOpts ["at"]
-defaultOptsUD2GF = selectOpts ["msg","ud","err","bt0","at","tc","lin","sum","stat"]
+defaultOptsUD2GF = selectOpts ["msg","ud","err","bt0", "bt0me","at","tc","lin","sum","stat"]
 nonPrintingOpts = selectOpts ["no-backups"]
 
 -- gf2ud
@@ -36,6 +36,7 @@ fullOpts = [
   ("dt1","internal development tree, with words annotated"),
   ("dt", "final development tree, with all alternatives but no backups"),
   ("bt0","the best (most complete) tree, without backups"),
+  ("bt0me","the same as bt0, but with macros expanded"),
   ("bt", "the best tree, backups added"),
   ("at0","resulting GF tree, with macros in place"),
   ("at", "final GF tree, macros expanded"),
