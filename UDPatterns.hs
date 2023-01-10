@@ -67,7 +67,7 @@ data UDPattern =
   | LENGTH Int
   | LENGTH_UNDER Int
   | LENGTH_OVER Int
- deriving (Show,Read)
+ deriving (Show,Read,Eq)
 
 ifMatchUDPattern :: UDPattern -> UDTree -> Bool
 ifMatchUDPattern patt tree@(RTree node subtrees) = case patt of
@@ -144,7 +144,7 @@ data UDReplacement =
   | RETARGET UDPattern UDPattern UDPattern -- retarget subtrees that satisfy patt1 to their (first) sister that patt2  
   | CHANGES [UDReplacement] -- try different replacements in this order, break after first applicable
   | COMPOSE [UDReplacement] -- make all changes one after the other
- deriving (Show,Read)
+ deriving (Show,Read,Eq)
 
 replaceWithUDPattern :: UDReplacement -> UDTree -> (UDTree,Bool)
 replaceWithUDPattern rep tree@(RTree node subtrs) = case rep of
