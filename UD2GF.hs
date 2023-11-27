@@ -1,24 +1,27 @@
 module UD2GF where
 
-import RTree
-import UDConcepts
-import UDAnnotations
+import Backend
 import GFConcepts
+import RTree
+import UDAnnotations
+import UDConcepts
 import UDOptions
 import UDVisualization
-import Backend
 
 import PGF hiding (CncLabels)
 
-import qualified Data.Map as M
-import Data.List
 import Data.Char
+import Data.List
+import qualified Data.Map as M
 import Data.Maybe
-import Text.PrettyPrint (render, cat)
+import Text.PrettyPrint (cat, render)
 
-import Debug.Trace (trace)
+import Debug.Trace (trace, traceM)
 import Data.Function (on)
 import Data.Ord (comparing)
+import Control.Monad (unless, forM, when, forM_)
+import Control.Applicative ((<|>))
+import Data.Either (partitionEithers)
 
 ---------
 -- to debug
@@ -32,10 +35,11 @@ traceNoPrint _ _ x = x
 -- env <- getEnv
 
 
-getExprs :: [(String, String)] -> UDEnv -> String -> [[Expr]]
-getExprs opts env string = map getExpr sentences
+getExprs :: [String] -> UDEnv -> String -> [[Expr]]
+getExprs rawOpts env string = map getExpr sentences
   where
     eng = actLanguage env
+    opts = selectOpts rawOpts
     sentences = map prss $ stanzas $ lines string -- the input string has many sentences
 
     -- This fun is just showUD2GF without the printing.
@@ -66,7 +70,7 @@ showUD2GF opts env sentence = do
   ifOpt opts "ud" $ prt sentence
 
   case errors sentence of
-    [] -> return ()
+    []   -> return ()
     errs -> ifOpt opts "err" $ unlines errs
 
   let udtree = udSentence2tree sentence
@@ -80,6 +84,8 @@ showUD2GF opts env sentence = do
 
   let devtree = combineTrees env devtree1
   ifOpt opts "dt" $ prLinesRTree (prDevNode 4) devtree
+
+  ifOptArg opts "dbg" (debugAuxfun env devtree)
 
   let besttree0 = head (splitDevTree devtree)
   ifOpt opts "bt0" $ prLinesRTree (prDevNode 1) besttree0
@@ -130,13 +136,12 @@ showUD2GF opts env sentence = do
 
   return (ts,stat)
 
-
 data UD2GFStat = UD2GFStat {
-  totalWords :: Int,
-  interpretedWords :: Int,
-  unknownWords :: Int,
-  totalSentences :: Int,
-  completeSentences :: Int,
+  totalWords           :: Int,
+  interpretedWords     :: Int,
+  unknownWords         :: Int,
+  totalSentences       :: Int,
+  completeSentences    :: Int,
   typecorrectSentences :: Int
   }
  deriving Show
@@ -172,7 +177,7 @@ data CheckResult = CheckResult {
 
 prCheckResult cr = unlines $
   case resultUnknowns cr of
-    [] -> []
+    []  -> []
     uks -> [unwords $ "unknown words:" : map showCId uks]
   ++
   [resultMessage cr]
@@ -187,7 +192,7 @@ checkAbsTreeResult env t = CheckResult {
  where
   pgf = pgfGrammar env
   (mt,msg) = case inferExpr pgf (abstree2expr t) of
-    Left tce -> (Nothing, render (ppTcError tce))
+    Left tce        -> (Nothing, render (ppTcError tce))
     Right (exp,typ) -> (Just exp, "type checking OK")
 
 
@@ -209,12 +214,12 @@ data DevNode = DevNode {
   deriving Show
 
 mapDevAbsTree :: (AbsTreeInfo -> AbsTreeInfo) -> DevNode -> DevNode
-mapDevAbsTree f dn = dn { devAbsTrees = map f (devAbsTrees dn) } 
+mapDevAbsTree f dn = dn { devAbsTrees = map f (devAbsTrees dn) }
 
 data AbsTreeInfo = AbsTreeInfo
   { atiAbsTree :: AbsTree
-  , atiCat :: Cat
-  , atiUDIds :: [UDId]
+  , atiCat     :: Cat
+  , atiUDIds   :: [UDId]
   }
   deriving (Show, Eq)
 
@@ -287,7 +292,7 @@ addBackups0 tr@(RTree dn trs) = case map collectBackup (tr:trs) of  -- backups f
 theAbsTreeInfo :: DevTree -> AbsTreeInfo
 theAbsTreeInfo dt = case devAbsTrees (root dt) of
   [t] -> t
-  _ -> error $ "no unique abstree in " ++ prDevNode 2 (root dt)
+  _   -> error $ "no unique abstree in " ++ prDevNode 2 (root dt)
 
 -- split trees showing just one GF tree in each DevTree
 splitDevTree :: DevTree -> [DevTree]
@@ -298,7 +303,7 @@ splitDevTree tr@(RTree dn trs) =
    case elem (devIndex d) usage of
     True -> case sortOn ((1000-) . sizeRTree . atiAbsTree) [dt | dt@AbsTreeInfo { atiAbsTree = t} <- devAbsTrees d, isSubRTree t ast] of
       t:_ -> RTree (d{devAbsTrees = [t]}) (map (chase t) ts)
-      _ -> error $ "wrong indexing in\n" ++ prLinesRTree (prDevNode 1) tr
+      _   -> error $ "wrong indexing in\n" ++ prLinesRTree (prDevNode 1) tr
     False -> head $ splitDevTree $ RTree (d{devNeedBackup = True}) ts ---- head
 
 prtStatus udids =  "[" ++ concat (intersperse "," (map prt udids)) ++ "]"
@@ -324,6 +329,139 @@ pruneDevTree  tr@(RTree dn dts) = RTree dn{devAbsTrees = pruneCatGroups (groupCa
     t:ts -> t : prune (usage t : usages) ts
     _ -> grp
   pruneCatGroups = concatMap (prune [])
+
+debugAuxfun :: UDEnv -> DevTree -> String -> String
+debugAuxfun env dt funArg
+  | (funName:args) <- words funArg
+  , funCid <- mkCId funName
+  , Just argsI <- traverse getArg args = debugAuxFun' env dt funCid argsI
+  | otherwise = error "Usage: dbg='FunName 4 9 2' where the numbers represent word numbers"
+
+-- Check for successful int parse
+getInt :: [(Int, String)] -> Maybe Int
+getInt [(n,"")] = Just n
+getInt _ = Nothing
+
+data DbgArg = ArgIdx Int | ArgStr String
+
+getArg :: String -> Maybe DbgArg
+getArg x = ArgIdx <$> getInt (reads x) <|>  Just (ArgStr x)
+
+debugAuxFun' :: UDEnv -> DevTree -> CId -> [DbgArg] -> String
+debugAuxFun' env dt funId argIds = either ("Error: " ++) id $ do
+  traceM $ "\nStarting debug for " ++ showCId funId ++ ":"
+  unless (M.notMember funId (disabledFunctions (cncLabels env))) $
+    Left $ "The function " ++ showCId funId ++ " is disabled"
+  
+  -- Allow arguments to be passed as words as an alternative to numbers
+  let collectErrors :: [Either String a] -> Either String [a]
+      collectErrors xs = case partitionEithers xs of
+        ([],xs) -> Right xs
+        (errs,_) -> Left $ "Invalid arguments:\n - " ++ intercalate "\n - " errs
+
+      showUDId :: UDId -> String
+      showUDId (UDIdInt n ) = show n
+      showUDId x = show x
+
+      getArg :: DbgArg -> Either String Int
+      getArg (ArgIdx n) = Right n
+      getArg (ArgStr s) = case filter (\x -> devWord x == s || devLemma x == s) $ allNodesRTree dt of
+        [] -> Left $ "Couldn't find word " ++ s
+        [DevNode {devIndex=UDIdInt x}] -> Right x
+        xs -> Left $ "Ambiguous word " ++ s ++ ". Found at " ++ intercalate ", " (map (showUDId . devIndex) xs)
+  
+  argNrs <- collectErrors $ map getArg argIds
+
+  let showAttrs [] = ""
+      showAttrs xs = "[" ++ intercalate "," (map prt xs) ++ "]"
+  let showFun outCat argCatLabs = show funId ++ " : " ++ intercalate " -> " (map (show . fst) argCatLabs) ++ " -> " ++ show outCat ++ " ; "
+       ++ unwords ([ lab ++ showAttrs b | (_,(lab,b)) <- argCatLabs])
+  
+  -- Find the function definition
+  -- TODO: Merge this with the arg handling below
+  (f,(outCat, argCatLabs)) <- case [(f,labtyp) | (f,labtyp) <- allFunsEnv env, f == funId] of
+    [] -> Left $ "Unknown function: " ++ show funId
+    [(f,labtyp)] -> pure (f,labtyp)
+    fs -> Left $ "Mulitple labels found for function " ++ show funId ++ "\n" ++
+                unlines (map (uncurry showFun . snd) fs)
+  let showTheFun = showFun outCat argCatLabs
+  traceM showTheFun
+  unless (length argCatLabs == length argNrs) $ Left $ "Wrong number of arguments: " ++ show argNrs ++ " (expected " ++ show (length argCatLabs) ++ " args) for "
+         ++ showTheFun
+
+  let catLabNrs = zip argNrs argCatLabs
+  let catlabHeads = filter (\(nr,(cat,(lab,feats))) -> lab == head_Label) catLabNrs
+  (headNr, catlabHead) <- case catlabHeads of [ch] -> pure ch; _ -> Left ("Missing head label for function: " ++ show f ++ "\nlabels: " ++ unwords (map (fst . snd) argCatLabs))
+
+  -- Step 1. find where the head is in the tree
+  headTree <- case findNode env (UDIdInt headNr) dt of
+    [] -> Left $ "Head node not found: " ++ show headNr
+    [rt] -> pure rt
+    (_:_:_) -> Left $ "Multiple head nodes: " ++ show headNr
+  let headNode = root headTree
+
+  let showWord nr = case findNode env (UDIdInt nr) dt of [rt] -> show (devWord (root rt)); _ -> "<not found>"
+  let showIdSimple (UDIdInt nr) = show nr
+      showIdSimple nr = show nr
+
+  -- Step 2. Verify that all arguments are children of the head
+  argNodes <- forM catLabNrs $ \(nr,catlab) -> case find ((== UDIdInt nr) . devIndex) ((headNode{devLabel=head_Label}): map root (subtrees headTree)) of
+    Nothing -> Left $ "Word number " ++ show nr ++ " (" ++ showWord nr ++ ") " ++ " is not a child of " ++ show headNr ++ " (" ++ show (devWord headNode) ++ ").\n"
+            ++ "    Available children: " ++ show [(showIdSimple (devIndex t), devWord t) | t <- map root $ subtrees headTree]
+    Just rt -> pure (rt,catlab)
+  traceM $ "Attempting to build: " ++ showCId funId ++ " " ++ unwords [ devWord nd | (nd,_) <- argNodes]
+  -- let allArgNodes = [(nd,catlab) | nr <- argNrs , (nd,catlab) <- (headNode,catlabHead): argNodes, devIndex nd == UDIdInt nr]
+
+  -- -- 3. Check if any version of the head is compatible with the function
+  -- let missingHeadFeats = filter (`notElem` devFeats headNode) $ snd (snd catlabHead)
+  -- unless (null missingHeadFeats) $ Left $ "Missing head features: " ++ showAttrs missingHeadFeats ++ " for " ++ showCId f ++ " with head \"" ++ devWord headNode
+  --   ++ "\". Head features: " ++ showAttrs (devFeats headNode)
+  -- let headAT = devAbsTrees headNode
+  -- let goodTrees = [ x | x <- headAT , atiCat x == fst catlabHead]
+  -- when (null goodTrees) $ Left $ "No trees with expected category for " ++ showCId f ++ " with head \"" ++ devWord headNode ++ "\"\n"
+  --   ++ "Expected category: " ++ show (fst catlabHead) ++ "\n"
+  --   ++ "Available categories: " ++ show (map atiCat headAT)
+  -- traceM $ "Found head trees with correct category: " ++ intercalate "\n" (map (prRTree showCId . atiAbsTree) goodTrees)
+
+  -- 4. Check that the arguments are compatible with the function
+  let badLabels = [(node, lab) | (node, (cat,(lab,feats))) <- argNodes, devLabel node /= lab]
+  unless (null badLabels) $ Left $ ("Incompatible argument labels:\n" ++) $
+    intercalate "\n" [ " - For " ++ show (devWord node) ++ ": Got " ++ devLabel node ++ " expected " ++ lab | (node,lab) <- badLabels]
+  let badAttrs = [(node, missingFeats) | (node, (cat,(lab,feats))) <- argNodes, let missingFeats = filter (`notElem`devFeats node) feats, not (null missingFeats)]
+  unless (null badAttrs) $ Left $ ("Missing argument features:\n" ++) $
+    intercalate "\n" [ " - For " ++ show (devWord node) ++ ": Missing features " ++ showAttrs feats ++ " from " ++ showAttrs (devFeats node) | (node,feats) <- badAttrs]
+
+  -- Check the category of the arguments
+  -- TODO: Be less confusing when the node is deeply nested because of pruning
+  forM_ argNodes $ \(node,(cat,(lab,feats))) -> do
+    traceM $ "\nArgument " ++ show (devWord node) ++ " : " ++ showCId cat ++ " ; " ++ lab ++ showAttrs feats ++ ":"
+    let nodeAT = devAbsTrees node
+    let goodTrees = [ x | x <- nodeAT , atiCat x == cat]
+    when (null goodTrees) $ Left $ "No trees with expected category for " ++ showCId f ++ " with arg \"" ++ devWord node ++ "\"\n"
+      ++ "Expected category: " ++ show cat ++ "\n"
+      ++ "Available categories: " ++ show (map atiCat nodeAT)
+    traceM $ "  Found trees with correct category:\n    - " ++ intercalate "\n    - " (map ((++ " : " ++ show cat) . prRTree showCId . atiAbsTree) goodTrees)
+
+  -- 5: Check that the constructed tree exists in the dev-tree
+  let headAT = devAbsTrees headNode
+  let matchingAbstrees = [ x | x <- headAT , root (atiAbsTree x) == f, all ((`elem` atiUDIds x) . UDIdInt) argNrs]
+  let sameCategory = [ x | x <- headAT, atiCat x == outCat]
+  when (null matchingAbstrees) $ Left $ "Can make tree, but tree not found in devtree. Found trees with same result category as "++ showCId f ++ ": " ++ intercalate "\n    " (map ((++ " : " ++ show outCat) . prRTree showCId . atiAbsTree) sameCategory)
+  traceM $ "Trees using " ++ showCId f ++ " found in devtree:\n    " ++ intercalate "\n    " (map ((++ " : " ++ show outCat) . prRTree showCId . atiAbsTree) matchingAbstrees)
+
+  -- TODO: Check if the tree would be selected
+
+  --pure $ unlines [showFun, show funId, show argNrs, show argCatLabs, show headNr, prLinesRTree (prDevNode 3) headTree]
+  pure "Success!"
+
+findNode :: UDEnv -> UDId -> DevTree -> [DevTree]
+findNode env nr dt@(RTree dn rts)
+  | devIndex dn == nr = pure dt
+  | otherwise = findNode env nr =<< rts
+  -- Steps:
+
+
+
 
 -- function application to a given set of arguments when building up DevTree
 data FunInfo = FunInfo {
@@ -411,7 +549,7 @@ combineTrees env =
   tryFindArgsFast  f (_, catlabs) (headArgs:argss) =
     [ (abstree,usage)
     | let catlabHeads = filter (\(cat,(lab,feats)) -> lab == head_Label) catlabs
-    , let catlabHead = case catlabHeads of [ch] -> ch; _ -> error ("Missing head label for function: " ++ show f ++ "\nlabels: " ++ show catlabs)
+    , let catlabHead = case catlabHeads of [ch] -> ch; _ -> error ("Missing head label for function: " ++ show f ++ "\nlabels: " ++ unwords (map (fst . snd) catlabs))
       -- Select a headArg matching labcatHead
       -- Filter out argss according to use from the headArg
       -- Select other args until done
@@ -485,7 +623,7 @@ analyseWords env = mapRTree lemma2fun
                       all (\f -> M.notMember f (disabledFunctions (cncLabels env))) (allNodesRTree at)]
     Right c -> case elem (w,c) auxWords of
       True -> [(newWordTree w c, c)]
-      _ -> []
+      _    -> []
 
   auxWords = [(lemma,cat) | ((fun_,lemma),(cat,labels_)) <- M.assocs (lemmaLabels (cncLabels env))]
 
@@ -542,5 +680,5 @@ udtree2devtree = markClosest . initialize
 -- >>> select [1,2,3]
 -- [(1,[2,3]),(2,[1,3]),(3,[1,2])]
 select :: [a] -> [(a,[a])]
-select [] = []
+select []       = []
 select (a : as) = (a,as) : [ (b,a:bs) | (b,bs) <-select as ]
