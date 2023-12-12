@@ -9,7 +9,7 @@ import UDConcepts
 ---import GFConcepts (pAbsTree)
 ---import UDVisualization
 import UDAnalysisOnly
-import UDPatterns
+import UDPatternsOnly
 import RTree
 
 ---import PGF
