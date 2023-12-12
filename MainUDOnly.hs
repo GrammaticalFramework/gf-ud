@@ -6,9 +6,9 @@ import qualified DBNF as D
 import UDAnnotations
 import UDOptions
 import UDConcepts
-import GFConcepts (pAbsTree)
+---import GFConcepts (pAbsTree)
 ---import UDVisualization
-import UDAnalysis
+import UDAnalysisOnly
 import UDPatterns
 import RTree
 
