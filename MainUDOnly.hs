@@ -3,7 +3,7 @@ module Main where
 ---import qualified UD2GF as U 
 ---import qualified GF2UD as G
 import qualified DBNF as D
-import UDAnnotations
+---import UDAnnotations
 import UDOptions
 import UDConcepts
 ---import GFConcepts (pAbsTree)
@@ -36,7 +36,7 @@ main = do
   
     "check-treebank":_ -> getContents >>= putStrLn . checkUDSentences . parseUDText
 
-    "check-annotations":path:lang:cat:_ -> checkAnnotations path lang cat
+---    "check-annotations":path:lang:cat:_ -> checkAnnotations path lang cat
     
     "statistics":opts -> getContents >>= mapM_ print . udFrequencies (selectOpts opts) . parseUDText
 
@@ -113,7 +113,7 @@ main = do
       let cdbnf = calibrateDBNF tb dbnf
       putStrLn $ D.prGrammar cdbnf
 
-    
+{-    
     "lexical-entries":annots:_ -> do
        env <- getAnnotEnv [annots]
        uds <- getContents >>= return . parseUDText
@@ -125,7 +125,7 @@ main = do
        uds <- getContents >>= return . parseUDText
        let entries = lexicalEntriesGF env uds
        putStrLn $ unlines entries
-
+-}
     "eval":micmac:luas:goldf:testf:opts -> do
     
       putStrLn (unwords ("evaluating": tail xx))
