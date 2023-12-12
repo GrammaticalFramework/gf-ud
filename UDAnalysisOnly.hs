@@ -3,11 +3,11 @@ module UDAnalysisOnly where
 import RTree
 ---import GFConcepts
 import UDConcepts
-import UDAnnotations
+---import UDAnnotations
 import UDOptions
 import qualified DBNF as D
 
-import PGF
+---import PGF
 
 import Data.List
 import Data.Char
@@ -164,11 +164,11 @@ cosineSimilarity xs ys = cosineSimilarityOfMaps fxs fys
 
 -----------------------------------------------------
 -- lexical entries obtained from lemma + primary cat
-
+{-
 lexicalEntries :: UDEnv -> [UDSentence] -> [((String, String),[(Int,Int)])] -- lemma, cat, occurrence-locations
 lexicalEntries env uds = M.assocs (M.fromListWith (++) [(wc,[loc]) | Just (wc,loc) <- map entry allwords])
  where
- 
+
   allwords = [(udw,sid) | (ud,sid) <- zip uds [1..], udw <- udWordLines ud] -- number sentences from 1..
 
   entry (udw,loc) = case M.lookup (udUPOS udw) (catsForPOS env) of
@@ -195,7 +195,7 @@ lexicalEntriesGF env = map getEntry . lexicalEntries env
            if isKnown
              then "D." ++ ef ++ " ;"
              else "mk" ++ cat ++ " \"" ++ lemma ++ "\" ;"
-
+-}
 {-
 ---- TODO: add morphological analysis and compound analysis
 lookMorpho morpho w = case look w of
