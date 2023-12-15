@@ -7,7 +7,7 @@ import qualified DBNF as D
 import UDOptions
 import UDConcepts
 ---import GFConcepts (pAbsTree)
----import UDVisualization
+import UDVisualizationOnly
 import UDAnalysisOnly
 import UDPatternsOnly
 import RTree
@@ -30,9 +30,9 @@ main = do
 
     "dbnf":grammarfile:startcat:opts -> D.processRuleBased grammarfile startcat opts
 
----    "conll2latex":_ -> getContents >>= putStrLn . ud2latex . parseUDText
+    "conll2latex":_ -> getContents >>= putStrLn . ud2latex . parseUDText
   
----    "conll2pdf":_ -> getContents >>= visualizeUDSentences . parseUDText
+    "conll2pdf":_ -> getContents >>= visualizeUDSentences . parseUDText
   
     "check-treebank":_ -> getContents >>= putStrLn . checkUDSentences . parseUDText
 
