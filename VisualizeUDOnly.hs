@@ -1,5 +1,7 @@
 ----------------------------------------------------------------------
--- Pruned from
+-- Based on
+-- https://github.com/GrammaticalFramework/gf-ud/blob/master/VisualizeUDOnly.hs
+-- as pruned from
 -- https://github.com/GrammaticalFramework/gf-core/blob/master/src/runtime/haskell/PGF/VisualizeTree.hs
 -- Work by Aarne Ranta, Björn Bringert, Peter Ljunglöf, Thomas Hallgren, and others
 -- 
@@ -8,7 +10,7 @@
 module VisualizeUDOnly
              ( 
                 conlls2latexDoc
-	      --, conll2svg
+              , conlls2svgHTMLDoc
              ) where
 import Prelude hiding ((<>)) -- GHC 8.4.1 clash with Text.PrettyPrint
 
@@ -19,12 +21,24 @@ import Data.Ord (comparing)
 import Data.Char (isDigit)
 import Data.Maybe (fromMaybe)
 import Text.PrettyPrint
+import System.Environment (getArgs)
 
 ---------------------- should be a separate module?
 
 -- visualization with SVG and LaTeX output. AR Nov 2015 - Dec 2023
 
--- conll2svg :: [String] -> String
+main = do
+  tgt <- getArgs
+  interact (wrap (mk tgt))
+  where
+    mk tgt = case tgt of
+      ["latex"] -> conlls2latexDoc
+      ["svg"] -> conlls2svgHTMLDoc
+      _ -> error ("usage: VisualizeUD (latex | svg)")
+    wrap mk = mk . map unlines . stanzas . lines
+    stanzas ls = case break null ls of
+      (l1, _:l2) -> l1 : stanzas l2
+      _ -> [ls]
 
 
 conlls2latexDoc :: [String] -> String
@@ -35,6 +49,18 @@ conlls2latexDoc =
   intersperse (text "" $+$ app "vspace" (text "4mm")) .
   map conll2latex .
   filter (not . null)
+
+conlls2svgHTMLDoc :: [String] -> String
+conlls2svgHTMLDoc =
+  render .
+  embedInHTML .
+  map conll2svg .
+  filter (not . null)
+
+-- toSVG :: [LaTeX] -> [SVG]
+
+conll2svg :: String -> Doc
+conll2svg = ppSVG . toSVG . conll2latex' . parseCoNLL
 
 conll2latex :: String -> Doc
 conll2latex = ppLaTeX . conll2latex' . parseCoNLL
@@ -103,22 +129,25 @@ dep2latex d =
 
 type CoNLL = [[String]]
 parseCoNLL :: String -> CoNLL
-parseCoNLL = map words . lines
+parseCoNLL = map words . filter ((/="#") . take 1) . lines
 
 --conll2dep :: String -> Dep
 --conll2dep = conll2dep' . parseCoNLL
+
+readInt :: String -> Int
+readInt s = if all isDigit s then read s else error ("not int " ++ s)
 
 conll2dep' :: CoNLL -> Dep
 conll2dep' ls = Dep {
     wordLength = wld 
   , tokens = toks
   , deps = dps
-  , root = head $ [read x-1 | x:_:_:_:_:_:"0":_ <- ls] ++ [1]
+  , root = head $ [readInt x-1 | x:_:_:_:_:_:"0":_ <- ls] ++ [1]
   }
  where
    wld i = maximum (0:[charWidth * fromIntegral (length w) | w <- let (tok,(pos,feat)) = toks !! i in [tok,pos {-,feat-}]]) --- feat not shown
    toks = [(w,(c,m)) | _:w:_:c:_:m:_ <- ls]
-   dps = [((read y-1, read x-1),lab) | x:_:_:_:_:_:y:lab:_ <- ls, y /="0"]
+   dps = [((readInt y-1, readInt x-1),lab) | x:_:_:_:_:_:y:lab:_ <- ls, y /="0"]
    --maxdist = maximum [abs (x-y) | ((x,y),_) <- dps]
 
 
@@ -248,12 +277,28 @@ data SVG = CharData String | Elem TagName Attrs [SVG]
 type TagName = String
 type Attrs = [(String,String)]
 
-ppSVG svg =
-  vcat [text "<?xml version=\"1.0\" standalone=\"no\"?>",
+embedInHTML svgs =
+  vcat $
+     [
+      text "<!DOCTYPE html>",
+      text "<html>",
+      text "<body>",
+      vcat svgs,
+      text "</body>",
+      text "</html>"
+     ] 
+
+addHeaderSVG svgs =
+  vcat $
+       [text "<?xml version=\"1.0\" standalone=\"no\"?>",
         text "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"",
         text "\"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">",
-        text "",
-        vcat (map ppSVG1 svg)] -- It should be a single <svg> element...
+        text ""] ++
+        svgs -- It should be a single <svg> element...
+
+
+ppSVG svg =
+  vcat (map ppSVG1 svg) -- It should be a single <svg> element...
   where
     ppSVG1 svg1 =
       case svg1 of

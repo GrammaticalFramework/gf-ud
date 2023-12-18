@@ -8,6 +8,7 @@ import UDAnnotations
 import DBNF as D
 
 import PGF
+import qualified VisualizeUDOnly as V
 
 import System.Process (system)
 
@@ -54,7 +55,14 @@ visualizeUDSentences uds = do
 
 ud2latex :: [UDSentence] -> String
 ud2latex = 
-  conlls2latexDoc .
+  V.conlls2latexDoc .
+  map (unlines  . map (trim . prt) . udWordLines)
+ where
+   trim = concatMap (\c -> if elem c "%$&" then "\\"++[c] else [c])
+
+ud2svg :: [UDSentence] -> String
+ud2svg = 
+  V.conlls2svgHTMLDoc .
   map (unlines  . map (trim . prt) . udWordLines)
  where
    trim = concatMap (\c -> if elem c "%$&" then "\\"++[c] else [c])

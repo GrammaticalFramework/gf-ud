@@ -30,6 +30,8 @@ main = do
 
     "dbnf":grammarfile:startcat:opts -> D.processRuleBased grammarfile startcat opts
 
+    "conll2svg":_ -> getContents >>= putStrLn . ud2svg . parseUDText
+    
     "conll2latex":_ -> getContents >>= putStrLn . ud2latex . parseUDText
   
     "conll2pdf":_ -> getContents >>= visualizeUDSentences . parseUDText
@@ -178,6 +180,7 @@ helpMsg = unlines $ [
     " | gfud conll2pdf",
     " | gfud parse2pdf",
     " | gfud conll2latex",
+    " | gfud conll2svg",
     " | gfud parse2latex <file>",
     " | gfud eval (micro|macro) (LAS|UAS) <goldfile> <testablefile> units?",
     " | gfud dbnf <dbnf-grammarfile> <startcat> <-cut=NUMBER>? <-show=NUMBER>? <-onlyparsetrees>?",

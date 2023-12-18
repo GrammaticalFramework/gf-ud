@@ -60,6 +60,13 @@ ud2latex =
   map (unlines  . map (trim . prt) . udWordLines)
  where
    trim = concatMap (\c -> if elem c "%$&" then "\\"++[c] else [c])
+   
+ud2svg :: [UDSentence] -> String
+ud2svg = 
+  conlls2svgHTMLDoc .
+  map (unlines  . map (trim . prt) . udWordLines)
+ where
+   trim = concatMap (\c -> if elem c "%$&" then "\\"++[c] else [c])
 
 {- ---
 --- pretends that parse trees are abstract trees, for easy visualization
