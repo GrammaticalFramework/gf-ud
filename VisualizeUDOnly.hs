@@ -9,8 +9,8 @@
 
 module VisualizeUDOnly
              ( 
-                conlls2latexDoc
-              , conlls2svgHTMLDoc
+               conlls2latexDoc
+             , conlls2svgHTMLDoc
              ) where
 import Prelude hiding ((<>)) -- GHC 8.4.1 clash with Text.PrettyPrint
 
@@ -81,11 +81,12 @@ defaultUnit       = 0.2   -- unit in latex pictures, 0.2 millimetres
 spaceLength       = 10.0
 charWidth = 1.8
 
+labellength l  = fromIntegral (length l) * 4.5  -- assuming each char is 4.5 units wide
 wsize rwld  w  = 100 * rwld w + spaceLength                   -- word length, units
 wpos rwld i    = sum [wsize rwld j | j <- [0..i-1]]           -- start position of the i'th word
 wdist rwld x y = sum [wsize rwld i | i <- [min x y .. max x y - 1]]    -- distance between words x and y
 labelheight h  = h + arcbase + 3    -- label just above arc; 25 would put it just below
-labelstart c   = c - 15.0           -- label starts 15u left of arc centre
+labelstart c l = c - (labellength l)/2 -- label starts half of its length left of arc centre
 arcbase        = 30.0               -- arcs start and end 40u above the bottom
 arcfactor r    = r * 600            -- reduction of arc size from word distance
 xyratio        = 3                  -- width/height ratio of arcs
@@ -94,7 +95,7 @@ putArc :: (Int -> Double) -> Int -> Int -> Int -> String -> [DrawingCommand]
 putArc frwld height x y label = [oval,arrowhead,labelling] where
   oval = Put (ctr,arcbase) (OvalTop (wdth,hght))
   arrowhead = Put (endp,arcbase + 5) (ArrowDown 5)   -- downgoing arrow 5u above the arc base
-  labelling = Put (labelstart ctr,labelheight (hght/2)) (TinyText label)
+  labelling = Put (labelstart ctr label,labelheight (hght/2)) (TinyText label)
   dxy  = wdist frwld x y             -- distance between words, >>= 20.0
   ndxy = 100 * rwld * fromIntegral height  -- distance that is indep of word length
   hdxy = dxy / 2                     -- half the distance
