@@ -186,7 +186,7 @@ prCheckResult cr = unlines $
 checkAbsTreeResult :: UDEnv -> AbsTree -> CheckResult
 checkAbsTreeResult env t = CheckResult {
   resultTree = mt,
-  resultUnknowns = [f | f <- allNodesRTree t, Nothing <- [functionType pgf f]],
+  resultUnknowns = [f | f <- allNodesRTree t, Nothing <- [asStringLiteral f], Nothing <- [functionType pgf f]],
   resultMessage = msg
   }
  where
@@ -596,24 +596,36 @@ combineTrees env =
 analyseWords :: UDEnv -> DevTree -> DevTree
 analyseWords env = mapRTree lemma2fun
  where
+  morpho = buildMorpho (pgfGrammar env) (actLanguage env)
   lemma2fun dn = dn {
     devAbsTrees = [AbsTreeInfo { atiAbsTree = t, atiCat = c, atiUDIds = [devIndex dn]} | (t,c) <- justWords],
     devStatus = [devIndex dn],
     devIsUnknown = isUnknown
     }
    where
-    (isUnknown,justWords) = getWordTrees (devLemma dn) (cats (devPOS dn))
+    (isUnknown,justWords) = getWordTrees (devWord dn) (devLemma dn) (cats (devPOS dn))
 
   cats pos = maybe [] (map (either (Left. fst) Right)) $ M.lookup pos (catsForPOS env)
 
   -- find all functions that are possible parses of the word in any appropriate category
   --- it is still possible that some other category is meant
-  getWordTrees w cs = case concatMap (parseWord w) cs of
+  getWordTrees wf w cs = case concatMap (parseWord w) cs `ifEmpty` concatMap (parseWord (map toLower w)) cs `ifEmpty` morphoFallback wf of
     [] -> case cs of
       [] -> (True,[(newWordTree w unknownCat, unknownCat)])
-      _  -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c])
+      _  -> (True,[(newWordTree w ec, ec) | c <- cs, let ec = either id id c, strFunExists ec] 
+                   `ifEmpty` [(newWordTree w ec, ec) | c <- cs, let ec = either id id c])
 
     fs -> (False,fs)
+
+  -- | Return the first non-empty list
+  ifEmpty [] xs = xs
+  ifEmpty xs _  = xs
+  infixr 3 `ifEmpty`
+
+  -- Verify that a StrSomeCat function exists in grammar
+  strFunExists c | Just typ  <- functionType (pgfGrammar env) f = True
+                 | otherwise                                    = False
+      where f = mkCId ("Str" ++ showCId c)
 
   --- this can fail if c is discontinuous, or return false positives if w is a form of another word
   parseWord w ec = case ec of
@@ -627,8 +639,19 @@ analyseWords env = mapRTree lemma2fun
 
   auxWords = [(lemma,cat) | ((fun_,lemma),(cat,labels_)) <- M.assocs (lemmaLabels (cncLabels env))]
 
+  -- Fall back to morphoanalysis if gf parse fails
+  -- TODO: We might want to use the morphoanalysis for all words, not just when parse fails
+  morphoFallback :: String -> [(RTree CId, CId)]
+  morphoFallback w =
+    [(RTree name [], c)
+    | (name, _) <- lookupMorpho morpho w
+    , Just tp <- pure $ functionType (pgfGrammar env) name
+    , ([], c, []) <- pure $ unType tp
+    ]
+
 -- auxiliaries
-newWordTree w c = RTree (mkCId (w ++ "_" ++ showCId c)) [] ---
+-- newWordTree w c = RTree (mkCId (w ++ "_" ++ showCId c)) [] ---
+newWordTree w c = RTree (mkCId ("Str" ++ showCId c)) [RTree (mkCId (stringLiteralPrefix ++ w)) []] ---
 isNewWordFun f = isInfixOf "__x__" (showCId f)
 unknownCat = mkCId "Adv" --- treat unknown words as adverbs ---- TODO: from config
 quote s = "\"" ++ s ++ "\""
