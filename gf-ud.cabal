@@ -30,6 +30,7 @@ executable gf-ud
                , UDStandard
                , UDVisualization
                , UDPatterns
+               , VisualizeUDOnly
 
   -- other-extensions:
   build-depends:       base, containers, pretty, gf, process, filepath, split
@@ -46,6 +47,7 @@ library
     UDOptions,
     UDVisualization,
     TransformUD,
+    VisualizeUDOnly,
     GFConcepts,
     UDAnnotations,
     UD2GF,
