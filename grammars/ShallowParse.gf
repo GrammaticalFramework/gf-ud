@@ -2,7 +2,7 @@ abstract ShallowParse =
 
   Backups,
   
-  JustWordsWordNet,
+  MorphoDictEngAbs,
 
  Phrase [
     Text,Utt,S,QS,Adv,NP,Pol,Imp,
