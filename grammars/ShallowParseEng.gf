@@ -1,9 +1,9 @@
---# -path=.:gf-wordnet
+--# -path=.:morphodict
 
 concrete ShallowParseEng of ShallowParse =
 
   BackupsEng,
-  JustWordsWordNetEng,
+  MorphoDictEng,
 
  PhraseEng [
     Utt,S,QS,Adv,NP,Pol,Imp,
